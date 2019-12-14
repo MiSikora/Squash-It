@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+  <TextView
+      android:id="@+id/warningLabel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="@string/squash_it_misconfiguration"
+      android:textAppearance="?attr/textAppearanceHeadline5" />
+
+  <TextView
+      android:id="@+id/misconfigurationInfo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:text="@string/squash_it_misconfiguration_info"
+      android:textAppearance="?attr/textAppearanceBody1" />
+
+  <TextView
+      android:id="@+id/projectKeyLabel"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/fira_mono"
+      android:text="@string/squash_it_jira_project_key_res_name"
+      android:textAppearance="?attr/textAppearanceBody2" />
+
+  <TextView
+      android:id="@+id/serverUrlLabel"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/fira_mono"
+      android:text="@string/squash_it_jira_server_url_res_name"
+      android:textAppearance="?attr/textAppearanceBody2" />
+
+  <TextView
+      android:id="@+id/userEmailLabel"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/fira_mono"
+      android:text="@string/squash_it_jira_user_email_res_name"
+      android:textAppearance="?attr/textAppearanceBody2" />
+
+  <TextView
+      android:id="@+id/userTokenLabel"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/fira_mono"
+      android:text="@string/squash_it_jira_user_token_res_name"
+      android:textAppearance="?attr/textAppearanceBody2" />
+
+  <Button
+      android:id="@+id/goBackButton"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:text="@string/squash_it_go_back" />
+
+</LinearLayout>

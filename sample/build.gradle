@@ -1,0 +1,27 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+  signingConfigs {
+    squashIt {
+      keyAlias 'squashit'
+      keyPassword 'squashit'
+      storeFile file('squashit.keystore')
+      storePassword 'squashit'
+    }
+  }
+
+  defaultConfig {
+    applicationId "io.mehow.squashit.sample"
+    versionCode 1
+    versionName "1.0"
+
+    signingConfig signingConfigs.squashIt
+  }
+}
+
+dependencies {
+  implementation project(':squash-it:timber')
+  implementation deps.kotlin.stdLib.jdk7
+  implementation deps.android.x.appCompat
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.mehow.squashit.view.InitFailureView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/initFailureRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/squash_it_init_failure"
+      android:textAppearance="?attr/textAppearanceHeadline4" />
+
+  <Button
+      android:id="@+id/retryInitializationButton"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:text="@string/squash_it_retry" />
+
+</io.mehow.squashit.view.InitFailureView>

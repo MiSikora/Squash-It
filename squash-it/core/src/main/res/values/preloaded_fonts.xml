@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <array name="preloaded_fonts" translatable="false">
+    <item>@font/fira_mono</item>
+    <item>@font/fira_sans</item>
+    <item>@font/fira_sans_bold</item>
+    <item>@font/fira_sans_medium</item>
+    <item>@font/fira_sans_semibold</item>
+  </array>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="squash_it_jira_project_key" />
+  <string name="squash_it_jira_server_url" />
+  <string name="squash_it_jira_user_email" />
+  <string name="squash_it_jira_user_token" />
+  <string name="squash_it_jira_epic_read_field_name">customfield_10009</string>
+  <string name="squash_it_jira_epic_write_field_name">customfield_10008</string>
+  <string-array name="squash_it_jira_user_filter" />
+  <string-array name="squash_it_jira_issue_types_filter" />
+  <integer name="squash_it_report_pointer_count">2</integer>
+  <color name="squash_it_report_progress_color">@color/royal_blue700</color>
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.mehow.squashit.view.NewIssueCreatedWithoutAttachmentsView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/newIssueWithoutAttachmentsRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+  <TextView
+      android:id="@+id/createdIssueInfo"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:textAppearance="?attr/textAppearanceHeadline4"
+      app:layout_constraintBottom_toTopOf="@+id/errorInfo"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_chainStyle="packed" />
+
+  <TextView
+      android:id="@+id/errorInfo"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:text="@string/squash_it_attach_error_info"
+      android:textAppearance="?attr/textAppearanceBody1"
+      app:layout_constraintBottom_toTopOf="@+id/goBackButton"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/createdIssueInfo" />
+
+  <Button
+      android:id="@+id/goBackButton"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:layout_marginEnd="4dp"
+      android:text="@string/squash_it_go_back"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/retryButton"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/errorInfo" />
+
+  <Button
+      android:id="@+id/retryButton"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="4dp"
+      android:text="@string/squash_it_retry"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/goBackButton"
+      app:layout_constraintTop_toTopOf="@+id/goBackButton" />
+
+</io.mehow.squashit.view.NewIssueCreatedWithoutAttachmentsView>

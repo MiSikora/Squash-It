@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Base.Theme.SquashIt.Day" parent="Base.Theme.SquashIt.DayNight">
+    <item name="colorPrimary">@color/royal_blue700</item>
+    <item name="colorPrimaryVariant">@color/royal_blue800</item>
+    <item name="colorSecondary">@color/myrtle_green_500</item>
+    <item name="colorSecondaryVariant">@color/myrtle_green_400</item>
+
+    <item name="android:colorBackground">@color/timberwolf</item>
+    <item name="colorSurface">@color/timberwolf</item>
+
+    <item name="colorOnPrimary">@color/white</item>
+    <item name="colorOnSecondary">@color/white</item>
+    <item name="colorOnBackground">@color/black</item>
+    <item name="colorOnSurface">@color/black</item>
+    <item name="colorError">@color/jelly_bean_500</item>
+  </style>
+
+  <style name="Base.Theme.SquashIt" parent="Base.Theme.SquashIt.Day" />
+
+</resources>

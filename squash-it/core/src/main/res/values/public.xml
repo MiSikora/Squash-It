@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <public name="squash_it_jira_project_key" type="string" />
+  <public name="squash_it_jira_server_url" type="string" />
+  <public name="squash_it_jira_user_email" type="string" />
+  <public name="squash_it_jira_user_token" type="string" />
+  <public name="squash_it_jira_epic_read_field_name" type="string" />
+  <public name="squash_it_jira_epic_write_field_name" type="string" />
+  <public name="squash_it_jira_user_filter" type="string-array" />
+  <public name="squash_it_jira_issue_types_filter" type="string-array" />
+  <public name="squash_it_report_pointer_count" type="integer" />
+  <public name="squash_it_report_progress_color" type="integer" />
+</resources>

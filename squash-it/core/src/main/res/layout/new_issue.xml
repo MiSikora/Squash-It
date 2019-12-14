@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.widget.LinearLayout">
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/issueTypeLayout"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="@string/squash_it_issue_type"
+      android:labelFor="@+id/issueTypeInput"
+      app:errorEnabled="true">
+
+    <AutoCompleteTextView
+        android:id="@+id/issueTypeInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:inputType="textPhonetic" />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/summaryLayout"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:hint="@string/squash_it_summary"
+      app:counterEnabled="true"
+      app:counterMaxLength="80">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/summaryInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLength="80" />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+</merge>

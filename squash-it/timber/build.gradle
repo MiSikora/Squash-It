@@ -1,0 +1,11 @@
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+dependencies {
+  api deps.timber
+
+  implementation project(':squash-it:core')
+  implementation deps.kotlin.stdLib.jdk7
+}
+
+apply from: rootProject.file("gradle/gradle-mvn-push.gradle")

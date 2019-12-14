@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.mehow.squashit.view.NewIssueCreatedView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/newIssueRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+
+  <TextView
+      android:id="@+id/createdIssueInfo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textAppearance="?attr/textAppearanceHeadline4" />
+
+  <Button
+      android:id="@+id/goBackButton"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:text="@string/squash_it_go_back" />
+
+</io.mehow.squashit.view.NewIssueCreatedView>

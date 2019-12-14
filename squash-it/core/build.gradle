@@ -1,0 +1,25 @@
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
+
+android {
+  androidExtensions {
+    features = ["parcelize"]
+  }
+}
+
+dependencies {
+  implementation project(':squash-it:backend')
+
+  implementation deps.kotlin.stdLib.jdk7
+  implementation deps.android.x.appCompat
+  implementation deps.android.x.constraintLayout
+  implementation deps.android.x.coreKtx
+  implementation deps.android.material
+  implementation deps.telescope
+  implementation deps.kotlin.coroutines.android
+  implementation deps.byteunits
+}
+
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

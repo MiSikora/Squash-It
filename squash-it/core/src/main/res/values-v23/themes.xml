@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Base.V23.Theme.SquashIt" parent="Base.Theme.SquashIt">
+    <item name="android:windowLightStatusBar">@bool/use_light_system_ui</item>
+  </style>
+
+  <style name="Theme.SquashIt" parent="Base.V23.Theme.SquashIt" />
+
+</resources>
