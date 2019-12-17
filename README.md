@@ -19,7 +19,7 @@ Unfortunately, since JIRA API does not allow to set comment's author, when you a
 To integrate the tool with your app you need to add the dependency to your project.
 
 ```groovy
-debugImplementation 'io.mehow.squashit:core:0.1.0'
+debugImplementation 'io.mehow.squashit:core:0.1.1'
 ```
 
 You should also delegate logs to `SquashItLogger` so they can be attached to the reports.
@@ -32,7 +32,7 @@ myLogger.log { priority, tag, message -> SquashItLogger.log(priority, tag, messa
 If you use [Timber](https://github.com/JakeWharton/timber) all you need to do is to depend on a Timber artifact instead.
 
 ```groovy
-debugImplementation 'io.mehow.squashit:timber:0.1.0'
+debugImplementation 'io.mehow.squashit:timber:0.1.1'
 ```
 
 Also, you need to configure the tool with your JIRA project. For that, you have to override some `string` resources.
