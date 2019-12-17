@@ -1,13 +1,13 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
 
 android {
   signingConfigs {
     squashIt {
-      keyAlias 'squashit'
-      keyPassword 'squashit'
-      storeFile file('squashit.keystore')
-      storePassword 'squashit'
+      keyAlias "squashit"
+      keyPassword "squashit"
+      storeFile file("squashit.keystore")
+      storePassword "squashit"
     }
   }
 
@@ -21,7 +21,7 @@ android {
 }
 
 dependencies {
-  implementation project(':squash-it:timber')
+  implementation project(":squash-it:timber")
   implementation deps.kotlin.stdLib.jdk7
   implementation deps.android.x.appCompat
 }

@@ -4,7 +4,7 @@ apply plugin: "kotlin-android"
 dependencies {
   api deps.timber
 
-  implementation project(':squash-it:core')
+  implementation project(":squash-it:core")
   implementation deps.kotlin.stdLib.jdk7
 }
 

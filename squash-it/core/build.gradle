@@ -10,7 +10,7 @@ android {
 }
 
 dependencies {
-  implementation project(':squash-it:backend')
+  implementation project(":squash-it:backend")
 
   implementation deps.kotlin.stdLib.jdk7
   implementation deps.android.x.appCompat
@@ -22,4 +22,4 @@ dependencies {
   implementation deps.byteunits
 }
 
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+apply from: rootProject.file("gradle/gradle-mvn-push.gradle")

@@ -57,6 +57,7 @@ buildscript {
           "gradlePlugin": "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${versions.detekt}",
           "formattingPlugin": "io.gitlab.arturbosch.detekt:detekt-formatting:${versions.detekt}",
       ],
+      "mavenPublishGradlePlugin": "com.vanniktech:gradle-maven-publish-plugin:0.8.0",
   ]
 
   repositories {
@@ -69,6 +70,7 @@ buildscript {
     classpath deps.kotlin.gradlePlugin
     classpath deps.detekt.gradlePlugin
     classpath deps.versionsGradlePlugin
+    classpath deps.mavenPublishGradlePlugin
   }
 }
 
@@ -117,15 +119,15 @@ allprojects {
       }
 
       lintOptions {
-        lintConfig rootProject.file('lint.xml')
+        lintConfig rootProject.file("lint.xml")
 
         htmlReport !isCi()
 
         xmlReport isCi()
-        xmlOutput file('build/reports/lint/lint-results.xml')
+        xmlOutput file("build/reports/lint/lint-results.xml")
 
         textReport true
-        textOutput 'stdout'
+        textOutput "stdout"
         explainIssues false
 
         checkDependencies false
@@ -134,9 +136,9 @@ allprojects {
         checkReleaseBuilds false
       }
 
-//      variantFilter { variant ->
-//        if (variant.name == "debug") setIgnore(true)
-//      }
+      variantFilter { variant ->
+        if (variant.name == "debug") setIgnore(true)
+      }
     }
   }
 
