@@ -15,3 +15,5 @@ dependencies {
   testImplementation deps.kotlinTestAssertions
   testImplementation deps.kotlin.coroutines.test
 }
+
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
