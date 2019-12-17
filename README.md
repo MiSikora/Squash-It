@@ -16,10 +16,25 @@ Unfortunately, since JIRA API does not allow to set comment's author, when you a
 
 ## Integration
 
+Squash It requires Java 8 bytecode. To enable Java 8 desugaring configure it in your Gradle script.
+
+```groovy
+android {
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  // For Kotlin projects
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+}
+```
+
 To integrate the tool with your app you need to add the dependency to your project.
 
 ```groovy
-debugImplementation 'io.mehow.squashit:core:0.1.1'
+debugImplementation 'io.mehow.squashit:core:0.1.2'
 ```
 
 You should also delegate logs to `SquashItLogger` so they can be attached to the reports.
@@ -32,7 +47,7 @@ myLogger.log { priority, tag, message -> SquashItLogger.log(priority, tag, messa
 If you use [Timber](https://github.com/JakeWharton/timber) all you need to do is to depend on a Timber artifact instead.
 
 ```groovy
-debugImplementation 'io.mehow.squashit:timber:0.1.1'
+debugImplementation 'io.mehow.squashit:timber:0.1.2'
 ```
 
 Also, you need to configure the tool with your JIRA project. For that, you have to override some `string` resources.

@@ -134,9 +134,9 @@ allprojects {
         checkReleaseBuilds false
       }
 
-      variantFilter { variant ->
-        if (variant.name == "debug") setIgnore(true)
-      }
+//      variantFilter { variant ->
+//        if (variant.name == "debug") setIgnore(true)
+//      }
     }
   }
 
