@@ -16,10 +16,10 @@ internal sealed class SquashItConfig : Parcelable {
 
   @Parcelize
   data class Invalid(
-    val projectKey: Boolean,
-    val jiraUrl: Boolean,
-    val userEmail: Boolean,
-    val userToken: Boolean
+    val hasProjectKey: Boolean,
+    val hasJiraUrl: Boolean,
+    val hasUserEmail: Boolean,
+    val hasUserToken: Boolean
   ) : SquashItConfig() {
     override fun startActivity(activity: Activity, screenshotFile: File?) {
       MisconfigurationActivity.start(activity, MisconfigurationActivity.Args(this))

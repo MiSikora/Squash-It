@@ -19,10 +19,10 @@ internal class MisconfigurationActivity : AppCompatActivity() {
     val config = intent.getParcelableExtra<Args>(ArgsKey)!!.config
     setContentView(R.layout.squash_it_misconfiguration)
 
-    findViewById<View>(R.id.projectKeyLabel).isVisible = config.projectKey
-    findViewById<View>(R.id.serverUrlLabel).isVisible = config.jiraUrl
-    findViewById<View>(R.id.userEmailLabel).isVisible = config.userEmail
-    findViewById<View>(R.id.userTokenLabel).isVisible = config.userToken
+    findViewById<View>(R.id.projectKeyLabel).isVisible = !config.hasProjectKey
+    findViewById<View>(R.id.serverUrlLabel).isVisible = !config.hasJiraUrl
+    findViewById<View>(R.id.userEmailLabel).isVisible = !config.hasUserEmail
+    findViewById<View>(R.id.userTokenLabel).isVisible = !config.hasUserToken
     findViewById<View>(R.id.goBackButton).setOnClickListener { onBackPressed() }
     ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.warningLabel)) { view, insets ->
       view.updatePadding(top = insets.systemWindowInsetTop)
