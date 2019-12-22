@@ -1,5 +1,10 @@
 # Squash It - JIRA report tool
 
+[![Maven Central](https://img.shields.io/maven-central/v/io.mehow.squashit/core.svg)](https://search.maven.org/search?q=g:io.mehow.squashit)
+[![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0)
+
+[![Build Status](https://app.bitrise.io/app/d05c685963b4f009/status.svg?token=BcDiRXjSbF_95LiAmxH26w&branch=master)](https://app.bitrise.io/app/d05c685963b4f009)
+
 ## How it works?
 
 Squash It allows you to report JIRA issues or add comments to existing ones. You can open the report tool by holding two fingers on your screen. This will capture a screenshot of the app's current window and let you provide the issue details.
