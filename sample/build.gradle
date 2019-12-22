@@ -3,11 +3,11 @@ apply plugin: "kotlin-android"
 
 android {
   signingConfigs {
-    squashIt {
-      keyAlias "squashit"
-      keyPassword "squashit"
-      storeFile file("squashit.keystore")
-      storePassword "squashit"
+    config {
+      keyAlias "mehow-io"
+      keyPassword "mehow-io"
+      storeFile file("mehow-io.keystore")
+      storePassword "mehow-io"
     }
   }
 
@@ -16,7 +16,7 @@ android {
     versionCode 1
     versionName "1.0"
 
-    signingConfig signingConfigs.squashIt
+    signingConfig signingConfigs.config
   }
 }
 
