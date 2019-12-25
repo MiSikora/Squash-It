@@ -19,15 +19,12 @@ import androidx.core.view.isNotEmpty
 import androidx.transition.Fade
 import androidx.transition.TransitionManager
 import io.mehow.squashit.SubmitState.AddedAttachments
-import io.mehow.squashit.SubmitState.AddedComment
-import io.mehow.squashit.SubmitState.CreatedNew
 import io.mehow.squashit.SubmitState.Failed
-import io.mehow.squashit.SubmitState.FailedToAttachForComment
-import io.mehow.squashit.SubmitState.FailedToAttachForNew
+import io.mehow.squashit.SubmitState.FailedToAttach
 import io.mehow.squashit.SubmitState.Idle
-import io.mehow.squashit.SubmitState.RetryingAttachmentsForComment
-import io.mehow.squashit.SubmitState.RetryingAttachmentsForNew
-import io.mehow.squashit.SubmitState.RetryingSubmission
+import io.mehow.squashit.SubmitState.Reattaching
+import io.mehow.squashit.SubmitState.Resubmitting
+import io.mehow.squashit.SubmitState.Submitted
 import io.mehow.squashit.SubmitState.Submitting
 import io.mehow.squashit.extensions.enableEdgeToEdgeAndNightMode
 import io.mehow.squashit.presentation.Event.AddAttachment
@@ -74,12 +71,10 @@ internal class ReportActivity : AppCompatActivity() {
     InitState.Initializing -> R.layout.init_progress
     InitState.Failure -> R.layout.init_failure
     else -> when (uiModel.submitState) {
-      Idle, Submitting -> R.layout.report
-      is CreatedNew -> R.layout.new_issue_created
-      is FailedToAttachForNew, RetryingAttachmentsForNew -> R.layout.new_issue_created_without_attachments
-      is AddedComment -> R.layout.comment_added
-      is FailedToAttachForComment, RetryingAttachmentsForComment -> R.layout.comment_added_without_attachments
-      is Failed, RetryingSubmission -> R.layout.submit_failure
+      is Idle, is Submitting -> R.layout.report
+      is Submitted -> R.layout.created_report
+      is FailedToAttach, is Reattaching -> R.layout.failed_to_attach
+      is Failed, is Resubmitting -> R.layout.submit_failure
       is AddedAttachments -> R.layout.attachments_added
     }
   }

@@ -11,7 +11,7 @@ import io.mehow.squashit.R
 import io.mehow.squashit.Report
 import io.mehow.squashit.SubmitState
 import io.mehow.squashit.SubmitState.Failed
-import io.mehow.squashit.SubmitState.RetryingSubmission
+import io.mehow.squashit.SubmitState.Resubmitting
 import io.mehow.squashit.extensions.activity
 import io.mehow.squashit.extensions.clicks
 import io.mehow.squashit.extensions.hideProgress
@@ -62,7 +62,7 @@ internal class FailedToSubmitView(
       if (initFailure) initFailure = false
       else Toast.makeText(context, R.string.squash_it_error, LENGTH_LONG).show()
     }
-    val isRetrying = state is RetryingSubmission
+    val isRetrying = state is Resubmitting
     retryButton.isActivated = !isRetrying
     if (isRetrying) retryButton.showProgress(R.string.squash_it_retrying)
     else retryButton.hideProgress(R.string.squash_it_retry)

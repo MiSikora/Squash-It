@@ -6,10 +6,10 @@ import android.util.AttributeSet
 import android.widget.Button
 import android.widget.LinearLayout
 import io.mehow.squashit.R
-import io.mehow.squashit.presentation.ReportPresenter
-import io.mehow.squashit.presentation.Event.SyncProject
 import io.mehow.squashit.extensions.clicks
 import io.mehow.squashit.extensions.viewScope
+import io.mehow.squashit.presentation.Event.SyncProject
+import io.mehow.squashit.presentation.ReportPresenter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 

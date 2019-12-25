@@ -1,11 +1,11 @@
 package io.mehow.squashit.presentation
 
-import io.mehow.squashit.presentation.Event.SetNewIssueSummary
+import io.mehow.squashit.presentation.Event.SetSummary
 
 internal class SetNewIssueSummaryConsumer(
   sender: ModelSender
-) : EventConsumer<SetNewIssueSummary>(sender, SetNewIssueSummary::class) {
-  override suspend fun consume(event: SetNewIssueSummary) {
+) : EventConsumer<SetSummary>(sender, SetSummary::class) {
+  override suspend fun consume(event: SetSummary) {
     send { copy(newIssue = newIssue.copy(summary = event.summary)) }
   }
 }

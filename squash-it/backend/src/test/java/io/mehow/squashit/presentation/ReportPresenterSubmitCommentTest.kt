@@ -12,13 +12,13 @@ import io.mehow.squashit.SubmitState
 import io.mehow.squashit.User
 import io.mehow.squashit.api.AttachmentBody
 import io.mehow.squashit.presentation.Event.MentionUser
-import io.mehow.squashit.presentation.Event.RetryAttachmentsForComment
+import io.mehow.squashit.presentation.Event.Reattach
 import io.mehow.squashit.presentation.Event.RetrySubmission
-import io.mehow.squashit.presentation.Event.SetIssueDescription
+import io.mehow.squashit.presentation.Event.SetDescription
+import io.mehow.squashit.presentation.Event.SetIssueKey
 import io.mehow.squashit.presentation.Event.SetLogsState
 import io.mehow.squashit.presentation.Event.SetReportType
 import io.mehow.squashit.presentation.Event.SetReporter
-import io.mehow.squashit.presentation.Event.SetUpdateIssueKey
 import io.mehow.squashit.presentation.Event.SubmitReport
 import io.mehow.squashit.presentation.extensions.PresenterAssert
 import org.junit.Test
@@ -28,7 +28,7 @@ class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     sendEvent(SubmitReport)
     expectItem() shouldBe addCommentModel.copy(submitState = SubmitState.Submitting)
     expectItem() shouldBe addCommentModel.copy(
-        submitState = SubmitState.AddedComment(IssueKey("Issue ID"))
+        submitState = SubmitState.Submitted(IssueKey("Issue ID"))
     )
   }
 
@@ -50,9 +50,9 @@ class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     presenterFactory.jiraApi.commentFactory.disableErrors()
 
     sendEvent(RetrySubmission(addCommentReport))
-    expectItem() shouldBe addCommentModel.copy(submitState = SubmitState.RetryingSubmission)
+    expectItem() shouldBe addCommentModel.copy(submitState = SubmitState.Resubmitting)
     expectItem() shouldBe addCommentModel.copy(
-        submitState = SubmitState.AddedComment(IssueKey("Issue ID"))
+        submitState = SubmitState.Submitted(IssueKey("Issue ID"))
     )
   }
 
@@ -63,7 +63,7 @@ class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
       sendEvent(SubmitReport)
       expectItem()
       expectItem() shouldBe addCommentModel.copy(
-          submitState = SubmitState.AddedComment(IssueKey("Issue ID"))
+          submitState = SubmitState.Submitted(IssueKey("Issue ID"))
       )
     }
 
@@ -79,7 +79,7 @@ class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     sendEvent(SubmitReport)
     expectItem()
     expectItem() shouldBe model.copy(
-        submitState = SubmitState.FailedToAttachForComment(IssueKey("Issue ID"), attachments)
+        submitState = SubmitState.FailedToAttach(IssueKey("Issue ID"), attachments)
     )
   }
 
@@ -100,8 +100,8 @@ class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     presenterFactory.jiraApi.attachmentsFactory.disableErrors()
     presenterFactory.jiraApi.commentFactory.enableErrors()
 
-    sendEvent(RetryAttachmentsForComment(IssueKey("Issue ID"), attachments))
-    expectItem() shouldBe model.copy(submitState = SubmitState.RetryingAttachmentsForComment)
+    sendEvent(Reattach(IssueKey("Issue ID"), attachments))
+    expectItem() shouldBe model.copy(submitState = SubmitState.Reattaching)
     expectItem() shouldBe model.copy(
         submitState = SubmitState.AddedAttachments(IssueKey("Issue ID"))
     )
@@ -128,9 +128,9 @@ class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     expectItem()
     sendEvent(SetReporter(User("Reporter Name", "Reporter ID")))
     expectItem()
-    sendEvent(SetUpdateIssueKey(IssueKey("Issue ID")))
+    sendEvent(SetIssueKey(IssueKey("Issue ID")))
     expectItem()
-    sendEvent(SetIssueDescription(Description("Description")))
+    sendEvent(SetDescription(Description("Description")))
     expectItem()
     sendEvent(MentionUser(User("Mention Name", "Mention ID")))
     expectItem()

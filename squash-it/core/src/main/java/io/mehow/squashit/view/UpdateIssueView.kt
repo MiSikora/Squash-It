@@ -15,7 +15,7 @@ import io.mehow.squashit.extensions.focuses
 import io.mehow.squashit.extensions.textChanges
 import io.mehow.squashit.extensions.viewScope
 import io.mehow.squashit.presentation.Event.HideError
-import io.mehow.squashit.presentation.Event.SetUpdateIssueKey
+import io.mehow.squashit.presentation.Event.SetIssueKey
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
 import kotlinx.coroutines.flow.debounce
@@ -47,7 +47,7 @@ internal class UpdateIssueView(
         .debounce(200)
         .mapNotNull { it.trim().toLongOrNull() }
         .map { IssueKey("$projectKey-$it") }
-        .onEach { presenter.sendEvent(SetUpdateIssueKey(it)) }
+        .onEach { presenter.sendEvent(SetIssueKey(it)) }
         .launchIn(viewScope)
     issueIdInput.focuses
         .onEach { presenter.sendEvent(HideError(NoIssueId)) }

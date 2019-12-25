@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="view_coroutine_scope">View scope ID.</string>
   <string name="squash_it_issue_tab_title">Issue</string>
   <string name="squash_it_add_ons_tab_title">Add-ons</string>
-  <string name="view_coroutine_scope">View scope ID.</string>
-
-  <string name="squash_it_created_issue">Successfully created issue %s.</string>
-  <string name="squash_it_commented">Successfully commented on issue %s.</string>
+  <string name="squash_it_reported">Successfully created report for issue %s.</string>
   <string name="squash_it_added_attachments">Successfully added attachments to %s.</string>
-
   <string name="squash_it_remove_attachment">Remove attachment</string>
   <string name="squash_it_attachments">Attachments</string>
   <string name="squash_it_screenshot">Screenshot</string>

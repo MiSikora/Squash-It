@@ -13,11 +13,11 @@ import io.mehow.squashit.SubmitState
 import io.mehow.squashit.Summary
 import io.mehow.squashit.User
 import io.mehow.squashit.presentation.Event.HideError
-import io.mehow.squashit.presentation.Event.SetNewIssueSummary
-import io.mehow.squashit.presentation.Event.SetNewIssueType
+import io.mehow.squashit.presentation.Event.SetIssueKey
+import io.mehow.squashit.presentation.Event.SetIssueType
 import io.mehow.squashit.presentation.Event.SetReportType
 import io.mehow.squashit.presentation.Event.SetReporter
-import io.mehow.squashit.presentation.Event.SetUpdateIssueKey
+import io.mehow.squashit.presentation.Event.SetSummary
 import io.mehow.squashit.presentation.Event.SubmitReport
 import org.junit.Test
 
@@ -57,7 +57,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     var expected = syncedModel.copy(inputErrors = setOf(NoReporter, ShortSummary))
     expectItem() shouldBe expected
 
-    sendEvent(SetNewIssueType(IssueType("ID", "Name")))
+    sendEvent(SetIssueType(IssueType("ID", "Name")))
     expected = expected.copy(newIssue = NewIssue(IssueType("ID", "Name"), null, null))
     expectItem() shouldBe expected
 
@@ -75,7 +75,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     var expected = syncedModel.copy(inputErrors = setOf(NoReporter, NoIssueType))
     expectItem() shouldBe expected
 
-    sendEvent(SetNewIssueSummary(Summary("012345678")))
+    sendEvent(SetSummary(Summary("012345678")))
     expected = expected.copy(newIssue = NewIssue(null, Summary("012345678"), null))
     expectItem() shouldBe expected
 
@@ -84,7 +84,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     expected = expected.copy(inputErrors = setOf(NoReporter, NoIssueType, ShortSummary))
     expectItem() shouldBe expected
 
-    sendEvent(SetNewIssueSummary(Summary("0123456789")))
+    sendEvent(SetSummary(Summary("0123456789")))
     expected = expected.copy(newIssue = NewIssue(null, Summary("0123456789"), null))
     expectItem() shouldBe expected
 
@@ -145,7 +145,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     expected = expected.copy(inputErrors = setOf(NoReporter))
     expectItem() shouldBe expected
 
-    sendEvent(SetUpdateIssueKey(IssueKey("Key")))
+    sendEvent(SetIssueKey(IssueKey("Key")))
     expected = expected.copy(updateIssueKey = IssueKey("Key"))
     expectItem() shouldBe expected
 

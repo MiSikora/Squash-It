@@ -15,7 +15,7 @@ import io.mehow.squashit.ReportType
 import io.mehow.squashit.ReportType.CreateNewIssue
 import io.mehow.squashit.extensions.textChanges
 import io.mehow.squashit.extensions.viewScope
-import io.mehow.squashit.presentation.Event.SetNewIssueEpic
+import io.mehow.squashit.presentation.Event.SetEpic
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
 import kotlinx.coroutines.flow.launchIn
@@ -42,7 +42,7 @@ internal class EpicView(
     super.onAttachedToWindow()
     epicInput.textChanges
         .mapNotNull { text -> adapter.epics.find { it.name == text } }
-        .onEach { presenter.sendEvent(SetNewIssueEpic(it)) }
+        .onEach { presenter.sendEvent(SetEpic(it)) }
         .launchIn(viewScope)
     presenter.uiModels
         .onEach { renderUiModel(it) }

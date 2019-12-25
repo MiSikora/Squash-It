@@ -16,15 +16,15 @@ import io.mehow.squashit.User
 import io.mehow.squashit.presentation.Event.AddAttachment
 import io.mehow.squashit.presentation.Event.MentionUser
 import io.mehow.squashit.presentation.Event.RemoveAttachment
-import io.mehow.squashit.presentation.Event.SetIssueDescription
+import io.mehow.squashit.presentation.Event.SetDescription
+import io.mehow.squashit.presentation.Event.SetEpic
+import io.mehow.squashit.presentation.Event.SetIssueKey
+import io.mehow.squashit.presentation.Event.SetIssueType
 import io.mehow.squashit.presentation.Event.SetLogsState
-import io.mehow.squashit.presentation.Event.SetNewIssueEpic
-import io.mehow.squashit.presentation.Event.SetNewIssueSummary
-import io.mehow.squashit.presentation.Event.SetNewIssueType
 import io.mehow.squashit.presentation.Event.SetReportType
 import io.mehow.squashit.presentation.Event.SetReporter
 import io.mehow.squashit.presentation.Event.SetScreenshotState
-import io.mehow.squashit.presentation.Event.SetUpdateIssueKey
+import io.mehow.squashit.presentation.Event.SetSummary
 import io.mehow.squashit.presentation.Event.UnmentionUser
 import org.junit.Test
 
@@ -43,27 +43,27 @@ class ReportPresenterInputTest : BaseReportPresenterTest() {
   }
 
   @Test fun `issue type can be changed`() = testPresenter {
-    sendEvent(SetNewIssueType(IssueType("ID", "Name")))
+    sendEvent(SetIssueType(IssueType("ID", "Name")))
     expectItem() shouldBe syncedModel.copy(newIssue = NewIssue(IssueType("ID", "Name"), null, null))
   }
 
   @Test fun `new issue summary can be changed`() = testPresenter {
-    sendEvent(SetNewIssueSummary(Summary("Summary")))
+    sendEvent(SetSummary(Summary("Summary")))
     expectItem() shouldBe syncedModel.copy(newIssue = NewIssue(null, Summary("Summary"), null))
   }
 
   @Test fun `new issue epic can be changed`() = testPresenter {
-    sendEvent(SetNewIssueEpic(Epic("ID", "Name")))
+    sendEvent(SetEpic(Epic("ID", "Name")))
     expectItem() shouldBe syncedModel.copy(newIssue = NewIssue(null, null, Epic("ID", "Name")))
   }
 
   @Test fun `issue key can be changed`() = testPresenter {
-    sendEvent(SetUpdateIssueKey(IssueKey("Key")))
+    sendEvent(SetIssueKey(IssueKey("Key")))
     expectItem() shouldBe syncedModel.copy(updateIssueKey = IssueKey("Key"))
   }
 
   @Test fun `issue description can bed changed`() = testPresenter {
-    sendEvent(SetIssueDescription(Description("Description")))
+    sendEvent(SetDescription(Description("Description")))
     expectItem() shouldBe syncedModel.copy(issueDescription = Description("Description"))
   }
 

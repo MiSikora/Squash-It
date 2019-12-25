@@ -3,26 +3,25 @@ package io.mehow.squashit.presentation
 import io.mehow.squashit.IssueKey
 import io.mehow.squashit.JiraService
 import io.mehow.squashit.SubmitState
-import io.mehow.squashit.SubmitState.FailedToAttachForComment
-import io.mehow.squashit.SubmitState.RetryingAttachmentsForComment
+import io.mehow.squashit.SubmitState.Reattaching
 import io.mehow.squashit.api.AttachmentBody
 import io.mehow.squashit.api.Response.Failure
 import io.mehow.squashit.api.Response.Success
-import io.mehow.squashit.presentation.Event.RetryAttachmentsForComment
+import io.mehow.squashit.presentation.Event.Reattach
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
-internal class RetryAttachmentsForCommentConsumer(
+internal class ReattachConsumer(
   private val jiraService: JiraService,
   sender: ModelSender
-) : EventConsumer<RetryAttachmentsForComment>(sender, RetryAttachmentsForComment::class) {
+) : EventConsumer<Reattach>(sender, Reattach::class) {
   private var currentJob: Job? = null
 
-  override suspend fun consume(event: RetryAttachmentsForComment) = coroutineScope {
+  override suspend fun consume(event: Reattach) = coroutineScope {
     currentJob?.cancel()
     currentJob = launch {
-      send { copy(submitState = RetryingAttachmentsForComment) }
+      send { copy(submitState = Reattaching) }
       send { addAttachments(event.key, event.attachments) }
     }
   }
@@ -31,10 +30,9 @@ internal class RetryAttachmentsForCommentConsumer(
     key: IssueKey,
     attachments: Set<AttachmentBody>
   ): UiModel {
-    val state = when (jiraService.addAttachments(key, attachments)) {
-      is Success -> SubmitState.AddedAttachments(key)
-      is Failure -> FailedToAttachForComment(key, attachments)
+    return when (jiraService.addAttachments(key, attachments)) {
+      is Success -> copy(submitState = SubmitState.AddedAttachments(key))
+      is Failure -> copy(submitState = SubmitState.FailedToAttach(key, attachments))
     }
-    return copy(submitState = state)
   }
 }

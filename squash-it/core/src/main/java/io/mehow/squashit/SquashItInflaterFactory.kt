@@ -6,18 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.view.AddedAttachmentsView
-import io.mehow.squashit.view.AddedCommentView
-import io.mehow.squashit.view.AddedCommentWithoutAttachmentsView
 import io.mehow.squashit.view.AttachmentsView
 import io.mehow.squashit.view.EpicView
+import io.mehow.squashit.view.FailedToAttachView
 import io.mehow.squashit.view.FailedToSubmitView
 import io.mehow.squashit.view.InitFailureView
 import io.mehow.squashit.view.IssueDescriptionView
 import io.mehow.squashit.view.IssueView
 import io.mehow.squashit.view.MentionsView
-import io.mehow.squashit.view.NewIssueCreatedView
-import io.mehow.squashit.view.NewIssueCreatedWithoutAttachmentsView
 import io.mehow.squashit.view.NewIssueView
+import io.mehow.squashit.view.ReportCreatedView
 import io.mehow.squashit.view.ReporterView
 import io.mehow.squashit.view.UpdateIssueView
 import kotlin.reflect.KClass
@@ -37,10 +35,8 @@ internal class SquashItInflaterFactory(
       ReporterView::class to ::ReporterView,
       EpicView::class to ::EpicView,
       InitFailureView::class to ::InitFailureView,
-      NewIssueCreatedView::class to ::NewIssueCreatedView,
-      NewIssueCreatedWithoutAttachmentsView::class to ::NewIssueCreatedWithoutAttachmentsView,
-      AddedCommentView::class to ::AddedCommentView,
-      AddedCommentWithoutAttachmentsView::class to ::AddedCommentWithoutAttachmentsView,
+      ReportCreatedView::class to ::ReportCreatedView,
+      FailedToAttachView::class to ::FailedToAttachView,
       FailedToSubmitView::class to ::FailedToSubmitView,
       AddedAttachmentsView::class to ::AddedAttachmentsView
   ).mapKeys { (key, _) -> key.java.canonicalName!! }

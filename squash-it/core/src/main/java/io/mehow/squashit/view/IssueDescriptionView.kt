@@ -9,11 +9,11 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import io.mehow.squashit.Description
 import io.mehow.squashit.R
-import io.mehow.squashit.presentation.Event.SetIssueDescription
-import io.mehow.squashit.presentation.ReportPresenter
-import io.mehow.squashit.presentation.UiModel
 import io.mehow.squashit.extensions.textChanges
 import io.mehow.squashit.extensions.viewScope
+import io.mehow.squashit.presentation.Event.SetDescription
+import io.mehow.squashit.presentation.ReportPresenter
+import io.mehow.squashit.presentation.UiModel
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -39,7 +39,7 @@ internal class IssueDescriptionView(
     descriptionInput.textChanges
         .debounce(200)
         .map { it.trim() }
-        .onEach { presenter.sendEvent(SetIssueDescription(Description(it))) }
+        .onEach { presenter.sendEvent(SetDescription(Description(it))) }
         .launchIn(viewScope)
     presenter.uiModels
         .onEach { renderUiModel(it) }

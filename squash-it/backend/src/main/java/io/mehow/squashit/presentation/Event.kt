@@ -16,19 +16,19 @@ import io.mehow.squashit.api.AttachmentBody
 sealed class Event {
   object SyncProject : Event()
 
-  data class SetReporter(val user: User) : Event()
+  data class SetReporter(val reporter: User) : Event()
 
   data class SetReportType(val type: ReportType) : Event()
 
-  data class SetNewIssueType(val type: IssueType) : Event()
+  data class SetIssueType(val type: IssueType) : Event()
 
-  data class SetNewIssueSummary(val summary: Summary) : Event()
+  data class SetSummary(val summary: Summary) : Event()
 
-  data class SetNewIssueEpic(val epic: Epic) : Event()
+  data class SetEpic(val epic: Epic) : Event()
 
-  data class SetUpdateIssueKey(val key: IssueKey) : Event()
+  data class SetIssueKey(val key: IssueKey) : Event()
 
-  data class SetIssueDescription(val description: Description) : Event()
+  data class SetDescription(val description: Description) : Event()
 
   data class MentionUser(val user: User) : Event()
 
@@ -42,7 +42,7 @@ sealed class Event {
 
   data class RemoveAttachment(val attachment: Attachment) : Event()
 
-  data class HideError(val inputError: InputError) : Event()
+  data class HideError(val error: InputError) : Event()
 
   object SubmitReport : Event()
 
@@ -50,13 +50,5 @@ sealed class Event {
 
   data class RetrySubmission(val report: Report) : Event()
 
-  data class RetryAttachmentsForNew(
-    val key: IssueKey,
-    val attachments: Set<AttachmentBody>
-  ) : Event()
-
-  data class RetryAttachmentsForComment(
-    val key: IssueKey,
-    val attachments: Set<AttachmentBody>
-  ) : Event()
+  data class Reattach(val key: IssueKey, val attachments: Set<AttachmentBody>) : Event()
 }

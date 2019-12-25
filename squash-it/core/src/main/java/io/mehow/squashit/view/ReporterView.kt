@@ -11,13 +11,13 @@ import com.google.android.material.textfield.TextInputLayout
 import io.mehow.squashit.InputError.NoReporter
 import io.mehow.squashit.R
 import io.mehow.squashit.User
+import io.mehow.squashit.extensions.clicks
+import io.mehow.squashit.extensions.textChanges
+import io.mehow.squashit.extensions.viewScope
 import io.mehow.squashit.presentation.Event.HideError
 import io.mehow.squashit.presentation.Event.SetReporter
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
-import io.mehow.squashit.extensions.clicks
-import io.mehow.squashit.extensions.textChanges
-import io.mehow.squashit.extensions.viewScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach

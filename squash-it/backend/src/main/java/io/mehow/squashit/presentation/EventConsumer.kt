@@ -37,8 +37,7 @@ internal abstract class EventConsumer<EventT : Event>(
           SubmitReportConsumer(service, sender)::handle,
           SetSubmitStateConsumer(sender)::handle,
           RetrySubmissionConsumer(service, sender)::handle,
-          RetryAttachmentsForNewConsumer(service, sender)::handle,
-          RetryAttachmentsForCommentConsumer(service, sender)::handle
+          ReattachConsumer(service, sender)::handle
       )
     }
   }

@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import io.mehow.squashit.R
-import io.mehow.squashit.SubmitState.CreatedNew
+import io.mehow.squashit.SubmitState.Submitted
 import io.mehow.squashit.extensions.activity
 import io.mehow.squashit.extensions.viewScope
 import io.mehow.squashit.presentation.ReportPresenter
@@ -17,12 +17,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 @SuppressLint("ViewConstructor") // Created with a custom factory.
-internal class NewIssueCreatedView(
+internal class ReportCreatedView(
   context: Context,
   attrs: AttributeSet?,
   private val presenter: ReportPresenter
 ) : LinearLayout(context, attrs) {
-  private lateinit var createdIssueInfo: TextView
+  private lateinit var reportedIssueInfo: TextView
   private lateinit var goBackButton: Button
 
   init {
@@ -31,7 +31,7 @@ internal class NewIssueCreatedView(
 
   override fun onFinishInflate() {
     super.onFinishInflate()
-    createdIssueInfo = findViewById(R.id.createdIssueInfo)
+    reportedIssueInfo = findViewById(R.id.createdReportInfo)
     goBackButton = findViewById(R.id.goBackButton)
   }
 
@@ -39,10 +39,10 @@ internal class NewIssueCreatedView(
     super.onAttachedToWindow()
     presenter.uiModels
         .map { it.submitState }
-        .filterIsInstance<CreatedNew>()
+        .filterIsInstance<Submitted>()
         .onEach { submitState ->
-          val text = resources.getString(R.string.squash_it_created_issue, submitState.key.value)
-          createdIssueInfo.text = text
+          val text = resources.getString(R.string.squash_it_reported, submitState.key.value)
+          reportedIssueInfo.text = text
         }
         .launchIn(viewScope)
     goBackButton.setOnClickListener { activity.onBackPressed() }

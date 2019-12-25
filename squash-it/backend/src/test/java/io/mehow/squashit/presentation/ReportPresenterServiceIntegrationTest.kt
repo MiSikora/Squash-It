@@ -12,13 +12,13 @@ import io.mehow.squashit.api.IssueTypeResponse
 import io.mehow.squashit.api.ProjectResponse
 import io.mehow.squashit.api.RoleFactory.Record
 import io.mehow.squashit.presentation.Event.MentionUser
-import io.mehow.squashit.presentation.Event.SetIssueDescription
-import io.mehow.squashit.presentation.Event.SetNewIssueEpic
-import io.mehow.squashit.presentation.Event.SetNewIssueSummary
-import io.mehow.squashit.presentation.Event.SetNewIssueType
+import io.mehow.squashit.presentation.Event.SetDescription
+import io.mehow.squashit.presentation.Event.SetEpic
+import io.mehow.squashit.presentation.Event.SetIssueKey
+import io.mehow.squashit.presentation.Event.SetIssueType
 import io.mehow.squashit.presentation.Event.SetReportType
 import io.mehow.squashit.presentation.Event.SetReporter
-import io.mehow.squashit.presentation.Event.SetUpdateIssueKey
+import io.mehow.squashit.presentation.Event.SetSummary
 import io.mehow.squashit.presentation.Event.SubmitReport
 import io.mehow.squashit.test
 import org.junit.Test
@@ -153,10 +153,10 @@ class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest() {
 
   private fun recordWithNewIssue(block: suspend ReportPresenter.() -> Unit) = testPresenter {
     sendEvent(SetReporter(User("Reporter Name", "Reporter ID")))
-    sendEvent(SetNewIssueType(IssueType("Issue ID", "Issue Name")))
-    sendEvent(SetNewIssueSummary(Summary("Valid Summary")))
-    sendEvent(SetNewIssueEpic(Epic("Epic ID", "Epic Name")))
-    sendEvent(SetIssueDescription(Description("Description")))
+    sendEvent(SetIssueType(IssueType("Issue ID", "Issue Name")))
+    sendEvent(SetSummary(Summary("Valid Summary")))
+    sendEvent(SetEpic(Epic("Epic ID", "Epic Name")))
+    sendEvent(SetDescription(Description("Description")))
     sendEvent(MentionUser(User("Mention Name", "Mention ID")))
     presenter.block()
     cancelAndIgnoreRemainingEvents()
@@ -165,8 +165,8 @@ class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest() {
   private fun recordWithAddComment(block: suspend ReportPresenter.() -> Unit) = testPresenter {
     sendEvent(SetReportType(UpdateIssue))
     sendEvent(SetReporter(User("Reporter Name", "Reporter ID")))
-    sendEvent(SetUpdateIssueKey(IssueKey("Issue ID")))
-    sendEvent(SetIssueDescription(Description("Description")))
+    sendEvent(SetIssueKey(IssueKey("Issue ID")))
+    sendEvent(SetDescription(Description("Description")))
     sendEvent(MentionUser(User("Mention Name", "Mention ID")))
     presenter.block()
     cancelAndIgnoreRemainingEvents()

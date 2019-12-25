@@ -14,14 +14,14 @@ import io.mehow.squashit.Summary
 import io.mehow.squashit.User
 import io.mehow.squashit.api.AttachmentBody
 import io.mehow.squashit.presentation.Event.MentionUser
-import io.mehow.squashit.presentation.Event.RetryAttachmentsForNew
+import io.mehow.squashit.presentation.Event.Reattach
 import io.mehow.squashit.presentation.Event.RetrySubmission
-import io.mehow.squashit.presentation.Event.SetIssueDescription
+import io.mehow.squashit.presentation.Event.SetDescription
+import io.mehow.squashit.presentation.Event.SetEpic
+import io.mehow.squashit.presentation.Event.SetIssueType
 import io.mehow.squashit.presentation.Event.SetLogsState
-import io.mehow.squashit.presentation.Event.SetNewIssueEpic
-import io.mehow.squashit.presentation.Event.SetNewIssueSummary
-import io.mehow.squashit.presentation.Event.SetNewIssueType
 import io.mehow.squashit.presentation.Event.SetReporter
+import io.mehow.squashit.presentation.Event.SetSummary
 import io.mehow.squashit.presentation.Event.SubmitReport
 import io.mehow.squashit.presentation.extensions.PresenterAssert
 import org.junit.Test
@@ -31,7 +31,7 @@ class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
     sendEvent(SubmitReport)
     expectItem() shouldBe newIssueModel.copy(submitState = SubmitState.Submitting)
     expectItem() shouldBe newIssueModel.copy(
-        submitState = SubmitState.CreatedNew(IssueKey("Issue ID"))
+        submitState = SubmitState.Submitted(IssueKey("Issue ID"))
     )
   }
 
@@ -53,9 +53,9 @@ class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
     presenterFactory.jiraApi.newIssueFactory.disableErrors()
 
     sendEvent(RetrySubmission(newIssueReport))
-    expectItem() shouldBe newIssueModel.copy(submitState = SubmitState.RetryingSubmission)
+    expectItem() shouldBe newIssueModel.copy(submitState = SubmitState.Resubmitting)
     expectItem() shouldBe newIssueModel.copy(
-        submitState = SubmitState.CreatedNew(IssueKey("Issue ID"))
+        submitState = SubmitState.Submitted(IssueKey("Issue ID"))
     )
   }
 
@@ -66,7 +66,7 @@ class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
       sendEvent(SubmitReport)
       expectItem()
       expectItem() shouldBe newIssueModel.copy(
-          submitState = SubmitState.CreatedNew(IssueKey("Issue ID"))
+          submitState = SubmitState.Submitted(IssueKey("Issue ID"))
       )
     }
 
@@ -82,7 +82,7 @@ class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
     sendEvent(SubmitReport)
     expectItem()
     expectItem() shouldBe model.copy(
-        submitState = SubmitState.FailedToAttachForNew(IssueKey("Issue ID"), attachments)
+        submitState = SubmitState.FailedToAttach(IssueKey("Issue ID"), attachments)
     )
   }
 
@@ -103,8 +103,8 @@ class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
     presenterFactory.jiraApi.attachmentsFactory.disableErrors()
     presenterFactory.jiraApi.newIssueFactory.enableErrors()
 
-    sendEvent(RetryAttachmentsForNew(IssueKey("Issue ID"), attachments))
-    expectItem() shouldBe model.copy(submitState = SubmitState.RetryingAttachmentsForNew)
+    sendEvent(Reattach(IssueKey("Issue ID"), attachments))
+    expectItem() shouldBe model.copy(submitState = SubmitState.Reattaching)
     expectItem() shouldBe model.copy(
         submitState = SubmitState.AddedAttachments(IssueKey("Issue ID"))
     )
@@ -134,13 +134,13 @@ class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
   private fun testNewIssueReport(block: suspend PresenterAssert.() -> Unit) = testPresenter {
     sendEvent(SetReporter(User("Reporter Name", "Reporter ID")))
     expectItem()
-    sendEvent(SetNewIssueType(IssueType("Issue ID", "Issue Name")))
+    sendEvent(SetIssueType(IssueType("Issue ID", "Issue Name")))
     expectItem()
-    sendEvent(SetNewIssueSummary(Summary("Valid Summary")))
+    sendEvent(SetSummary(Summary("Valid Summary")))
     expectItem()
-    sendEvent(SetNewIssueEpic(Epic("Epic ID", "Epic Name")))
+    sendEvent(SetEpic(Epic("Epic ID", "Epic Name")))
     expectItem()
-    sendEvent(SetIssueDescription(Description("Description")))
+    sendEvent(SetDescription(Description("Description")))
     expectItem()
     sendEvent(MentionUser(User("Mention Name", "Mention ID")))
     expectItem()

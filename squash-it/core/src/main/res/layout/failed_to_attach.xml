@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.mehow.squashit.view.NewIssueCreatedWithoutAttachmentsView
+<io.mehow.squashit.view.FailedToAttachView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/newIssueWithoutAttachmentsRoot"
@@ -8,7 +8,7 @@
     android:padding="16dp">
 
   <TextView
-      android:id="@+id/createdIssueInfo"
+      android:id="@+id/createdReportInfo"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:textAppearance="?attr/textAppearanceHeadline4"
@@ -28,7 +28,7 @@
       app:layout_constraintBottom_toTopOf="@+id/goBackButton"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/createdIssueInfo" />
+      app:layout_constraintTop_toBottomOf="@id/createdReportInfo" />
 
   <Button
       android:id="@+id/goBackButton"
@@ -52,4 +52,4 @@
       app:layout_constraintStart_toEndOf="@+id/goBackButton"
       app:layout_constraintTop_toTopOf="@+id/goBackButton" />
 
-</io.mehow.squashit.view.NewIssueCreatedWithoutAttachmentsView>
+</io.mehow.squashit.view.FailedToAttachView>

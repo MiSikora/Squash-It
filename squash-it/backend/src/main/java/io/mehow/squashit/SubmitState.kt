@@ -7,27 +7,15 @@ sealed class SubmitState {
 
   object Submitting : SubmitState()
 
-  data class CreatedNew(val key: IssueKey) : SubmitState()
-
-  data class FailedToAttachForNew(
-    val key: IssueKey,
-    val attachments: Set<AttachmentBody>
-  ) : SubmitState()
-
-  object RetryingAttachmentsForNew : SubmitState()
-
-  data class AddedComment(val key: IssueKey) : SubmitState()
-
-  data class FailedToAttachForComment(
-    val key: IssueKey,
-    val attachments: Set<AttachmentBody>
-  ) : SubmitState()
-
-  object RetryingAttachmentsForComment : SubmitState()
-
-  data class AddedAttachments(val key: IssueKey) : SubmitState()
+  data class Submitted(val key: IssueKey) : SubmitState()
 
   data class Failed(val report: Report) : SubmitState()
 
-  object RetryingSubmission : SubmitState()
+  object Resubmitting : SubmitState()
+
+  data class FailedToAttach(val key: IssueKey, val attachments: Set<AttachmentBody>) : SubmitState()
+
+  object Reattaching : SubmitState()
+
+  data class AddedAttachments(val key: IssueKey) : SubmitState()
 }

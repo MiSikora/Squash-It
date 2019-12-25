@@ -19,8 +19,8 @@ import io.mehow.squashit.extensions.focuses
 import io.mehow.squashit.extensions.textChanges
 import io.mehow.squashit.extensions.viewScope
 import io.mehow.squashit.presentation.Event.HideError
-import io.mehow.squashit.presentation.Event.SetNewIssueSummary
-import io.mehow.squashit.presentation.Event.SetNewIssueType
+import io.mehow.squashit.presentation.Event.SetIssueType
+import io.mehow.squashit.presentation.Event.SetSummary
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
 import kotlinx.coroutines.flow.debounce
@@ -63,7 +63,7 @@ internal class NewIssueView(
   private fun emitIssueTypeChanges() {
     issueTypeInput.textChanges
         .mapNotNull { text -> adapter.issueTypes.find { it.name == text } }
-        .onEach { presenter.sendEvent(SetNewIssueType(it)) }
+        .onEach { presenter.sendEvent(SetIssueType(it)) }
         .launchIn(viewScope)
   }
 
@@ -71,7 +71,7 @@ internal class NewIssueView(
     summaryInput.textChanges
         .debounce(200)
         .map { it.trim() }
-        .onEach { presenter.sendEvent(SetNewIssueSummary(Summary(it))) }
+        .onEach { presenter.sendEvent(SetSummary(Summary(it))) }
         .launchIn(viewScope)
   }
 
