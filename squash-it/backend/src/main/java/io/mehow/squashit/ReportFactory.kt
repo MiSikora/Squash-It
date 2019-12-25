@@ -36,7 +36,7 @@ internal object ReportFactory {
   private fun UiModel.asNewIssueReport() = Report.NewIssue(
       description = issueDescription,
       mentions = mentions,
-      attachments = attachments,
+      attachments = allAttachments,
       reporter = reporter!!,
       issueType = newIssue.type!!,
       summary = newIssue.summary!!,
@@ -62,17 +62,17 @@ internal object ReportFactory {
   private fun UiModel.asAddCommentReport() = Report.AddComment(
       description = issueDescription,
       mentions = mentions,
-      attachments = attachments,
+      attachments = allAttachments,
       reporter = Reporter(reporter!!),
       issueKey = updateIssueKey!!
   )
 
-  private val UiModel.attachments: Set<AttachmentBody>
+  private val UiModel.allAttachments: Set<AttachmentBody>
     get() {
       val list = listOfNotNull(
           screenshotState.file?.let { AttachmentBody.fromFile(it) },
           logsState.file?.let { AttachmentBody.fromFile(it) }
-      ) + customAttachments.map { AttachmentBody.fromAttachmentItem(it) }
+      ) + attachments.map { AttachmentBody.fromAttachment(it) }
       return list.toSet()
     }
 }

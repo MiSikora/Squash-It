@@ -2,14 +2,14 @@ package io.mehow.squashit
 
 import okio.Source
 
-class AttachmentItem(
+class Attachment(
   val type: AttachmentType,
   val name: String,
   val size: String,
   val source: () -> Source?
 ) {
   override fun equals(other: Any?): Boolean {
-    if (other !is AttachmentItem) return false
+    if (other !is Attachment) return false
 
     if (type != other.type) return false
     if (name != other.name) return false

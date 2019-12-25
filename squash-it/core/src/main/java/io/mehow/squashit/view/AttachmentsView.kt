@@ -15,7 +15,7 @@ import io.mehow.squashit.AttachState
 import io.mehow.squashit.AttachState.Attach
 import io.mehow.squashit.AttachState.DoNotAttach
 import io.mehow.squashit.AttachState.Unavailable
-import io.mehow.squashit.AttachmentItemFactory
+import io.mehow.squashit.AttachmentFactory
 import io.mehow.squashit.R
 import io.mehow.squashit.extensions.activity
 import io.mehow.squashit.extensions.checkChanges
@@ -44,7 +44,7 @@ internal class AttachmentsView(
   private var screenshot: File? = null
   private var logs: File? = null
 
-  private val attachmentsAdapter = AttachmentsAdapter(LayoutInflater.from(context)) {
+  private val attachmentsAdapter = AttachmentAdapter(LayoutInflater.from(context)) {
     viewScope.launch { presenter.sendEvent(RemoveAttachment(it)) }
   }
 
@@ -55,7 +55,7 @@ internal class AttachmentsView(
     addAttachmentButton = findViewById(R.id.addAttachmentButton)
     additionalAttachments = findViewById(R.id.additionalAttachments)
 
-    addAttachmentButton.setOnClickListener { AttachmentItemFactory.requestAttachment(activity) }
+    addAttachmentButton.setOnClickListener { AttachmentFactory.requestAttachment(activity) }
     additionalAttachments.adapter = attachmentsAdapter
     additionalAttachments.addItemDecoration(DividerItemDecoration(context, VERTICAL))
   }
@@ -96,7 +96,7 @@ internal class AttachmentsView(
   private fun renderUiModel(uiModel: UiModel) {
     screenshot = uiModel.screenshotState.file
     logs = uiModel.logsState.file
-    attachmentsAdapter.submitList(uiModel.customAttachments.toList())
+    attachmentsAdapter.submitList(uiModel.attachments.toList())
     screenshotCheckBox.setState(uiModel.screenshotState)
     logsCheckBox.setState(uiModel.logsState)
   }

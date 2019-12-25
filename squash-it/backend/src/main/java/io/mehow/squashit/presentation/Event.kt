@@ -1,7 +1,7 @@
 package io.mehow.squashit.presentation
 
 import io.mehow.squashit.AttachState
-import io.mehow.squashit.AttachmentItem
+import io.mehow.squashit.Attachment
 import io.mehow.squashit.Description
 import io.mehow.squashit.Epic
 import io.mehow.squashit.InputError
@@ -38,9 +38,9 @@ sealed class Event {
 
   data class SetLogsState(val state: AttachState) : Event()
 
-  data class AddAttachment(val item: AttachmentItem) : Event()
+  data class AddAttachment(val attachment: Attachment) : Event()
 
-  data class RemoveAttachment(val item: AttachmentItem) : Event()
+  data class RemoveAttachment(val attachment: Attachment) : Event()
 
   data class HideError(val inputError: InputError) : Event()
 

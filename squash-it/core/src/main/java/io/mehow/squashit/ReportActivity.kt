@@ -142,9 +142,9 @@ internal class ReportActivity : AppCompatActivity() {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode != RESULT_OK) return
 
-    if (requestCode == AttachmentItemFactory.RequestCode) {
+    if (requestCode == AttachmentFactory.RequestCode) {
       val uri = data?.data ?: return
-      val item = AttachmentItemFactory.create(contentResolver, uri)
+      val item = AttachmentFactory.create(contentResolver, uri)
       if (item != null) mainScope.launch { presenter.sendEvent(AddAttachment(item)) }
       else Toast.makeText(this, R.string.squash_it_error, LENGTH_LONG).show()
     }

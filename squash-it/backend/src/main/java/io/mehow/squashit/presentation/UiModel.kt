@@ -2,7 +2,7 @@ package io.mehow.squashit.presentation
 
 import io.mehow.squashit.AttachState
 import io.mehow.squashit.AttachState.Unavailable
-import io.mehow.squashit.AttachmentItem
+import io.mehow.squashit.Attachment
 import io.mehow.squashit.Description
 import io.mehow.squashit.InitState
 import io.mehow.squashit.InputError
@@ -26,7 +26,7 @@ data class UiModel(
   val mentions: Mentions,
   val screenshotState: AttachState,
   val logsState: AttachState,
-  val customAttachments: Set<AttachmentItem>,
+  val attachments: Set<Attachment>,
   val inputErrors: Set<InputError>,
   val submitState: SubmitState
 ) {
@@ -46,7 +46,7 @@ data class UiModel(
         mentions = Mentions(emptySet()),
         screenshotState = Unavailable,
         logsState = Unavailable,
-        customAttachments = emptySet(),
+        attachments = emptySet(),
         inputErrors = emptySet(),
         submitState = SubmitState.Idle
     )

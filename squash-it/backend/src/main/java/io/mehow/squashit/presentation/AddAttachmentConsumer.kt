@@ -6,6 +6,6 @@ internal class AddAttachmentConsumer(
   sender: ModelSender
 ) : EventConsumer<AddAttachment>(sender, AddAttachment::class) {
   override suspend fun consume(event: AddAttachment) {
-    send { copy(customAttachments = customAttachments + event.item) }
+    send { copy(attachments = attachments + event.attachment) }
   }
 }

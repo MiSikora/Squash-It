@@ -2,7 +2,7 @@ package io.mehow.squashit.presentation
 
 import io.kotlintest.shouldBe
 import io.mehow.squashit.AttachState
-import io.mehow.squashit.AttachmentItem
+import io.mehow.squashit.Attachment
 import io.mehow.squashit.AttachmentType
 import io.mehow.squashit.Description
 import io.mehow.squashit.Epic
@@ -110,19 +110,19 @@ class ReportPresenterInputTest : BaseReportPresenterTest() {
   }
 
   @Test fun `custom attachments can be added`() = testPresenter {
-    val attachment1 = AttachmentItem(AttachmentType.Image, "Name 1", "Size 1") { null }
+    val attachment1 = Attachment(AttachmentType.Image, "Name 1", "Size 1") { null }
     sendEvent(AddAttachment(attachment1))
-    expectItem() shouldBe syncedModel.copy(customAttachments = setOf(attachment1))
+    expectItem() shouldBe syncedModel.copy(attachments = setOf(attachment1))
 
-    val attachment2 = AttachmentItem(AttachmentType.Video, "Name 2", "Size 2") { null }
+    val attachment2 = Attachment(AttachmentType.Video, "Name 2", "Size 2") { null }
     sendEvent(AddAttachment(attachment2))
-    expectItem() shouldBe syncedModel.copy(customAttachments = setOf(attachment1, attachment2))
+    expectItem() shouldBe syncedModel.copy(attachments = setOf(attachment1, attachment2))
   }
 
   @Test fun `custom attachments can be removed`() = testPresenter {
-    val attachment1 = AttachmentItem(AttachmentType.Image, "Name 1", "Size 1") { null }
-    val attachment2 = AttachmentItem(AttachmentType.Video, "Name 2", "Size 2") { null }
-    val attachment3 = AttachmentItem(AttachmentType.Video, "Name 3", "Size 3") { null }
+    val attachment1 = Attachment(AttachmentType.Image, "Name 1", "Size 1") { null }
+    val attachment2 = Attachment(AttachmentType.Video, "Name 2", "Size 2") { null }
+    val attachment3 = Attachment(AttachmentType.Video, "Name 3", "Size 3") { null }
     sendEvent(AddAttachment(attachment1))
     expectItem()
 
@@ -133,6 +133,6 @@ class ReportPresenterInputTest : BaseReportPresenterTest() {
     expectNoEvents()
 
     sendEvent(RemoveAttachment(attachment1))
-    expectItem() shouldBe syncedModel.copy(customAttachments = setOf(attachment2))
+    expectItem() shouldBe syncedModel.copy(attachments = setOf(attachment2))
   }
 }

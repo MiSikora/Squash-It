@@ -13,10 +13,10 @@ import com.jakewharton.byteunits.DecimalByteUnit
 import io.mehow.squashit.AttachmentType.Companion.fromMimeType
 import okio.source
 
-internal object AttachmentItemFactory {
+internal object AttachmentFactory {
   const val RequestCode = 200
 
-  fun create(contentResolver: ContentResolver, uri: Uri): AttachmentItem? {
+  fun create(contentResolver: ContentResolver, uri: Uri): Attachment? {
     return contentResolver.query(uri, null, null, null, null)?.use { cursor ->
       if (!cursor.moveToFirst()) return@use null
 
@@ -30,7 +30,7 @@ internal object AttachmentItemFactory {
       val type = cursor.getStringOrNull(mimeIndex)?.let { fromMimeType(it) } ?: return@use null
 
       contentResolver.openInputStream(uri)
-      return@use AttachmentItem(type, name, size) {
+      return@use Attachment(type, name, size) {
         contentResolver.openInputStream(uri)?.source()
       }
     }
