@@ -6,6 +6,6 @@ internal class HideErrorConsumer(
   sender: ModelSender
 ) : EventConsumer<HideError>(sender, HideError::class) {
   override suspend fun consume(event: HideError) {
-    send { copy(inputErrors = inputErrors - event.error) }
+    send { copy(errors = errors - event.error) }
   }
 }

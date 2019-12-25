@@ -16,9 +16,9 @@ internal object ReportFactory {
   }
 
   private fun createNewReport(model: UiModel): ReportAttempt {
-    val inputErrors = model.newReportErrors
-    return if (inputErrors.isEmpty()) ReportAttempt.Valid(model.asNewIssueReport())
-    else ReportAttempt.Invalid(inputErrors)
+    val errors = model.newReportErrors
+    return if (errors.isEmpty()) ReportAttempt.Valid(model.asNewIssueReport())
+    else ReportAttempt.Invalid(errors)
   }
 
   private val UiModel.newReportErrors: Set<InputError>
@@ -44,15 +44,15 @@ internal object ReportFactory {
   )
 
   private fun createUpdateReport(model: UiModel): ReportAttempt {
-    val inputErrors = model.addCommentErrors
-    return if (inputErrors.isEmpty()) ReportAttempt.Valid(model.asAddCommentReport())
-    else ReportAttempt.Invalid(inputErrors)
+    val errors = model.addCommentErrors
+    return if (errors.isEmpty()) ReportAttempt.Valid(model.asAddCommentReport())
+    else ReportAttempt.Invalid(errors)
   }
 
   private val UiModel.addCommentErrors: Set<InputError>
     get() {
       val hasReporter = reporter != null
-      val hasIssueId = updateIssueKey != null
+      val hasIssueId = issueKey != null
       return listOfNotNull(
           if (!hasReporter) NoReporter else null,
           if (!hasIssueId) NoIssueId else null
@@ -64,7 +64,7 @@ internal object ReportFactory {
       mentions = mentions,
       attachments = allAttachments,
       reporter = Reporter(reporter!!),
-      issueKey = updateIssueKey!!
+      issueKey = issueKey!!
   )
 
   private val UiModel.allAttachments: Set<AttachmentBody>

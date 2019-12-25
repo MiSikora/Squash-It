@@ -26,7 +26,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     sendEvent(SubmitReport)
     expectItem() shouldBe syncedModel.copy(submitState = SubmitState.Submitting)
     expectItem() shouldBe syncedModel.copy(
-        inputErrors = setOf(NoReporter, NoIssueType, ShortSummary)
+        errors = setOf(NoReporter, NoIssueType, ShortSummary)
     )
   }
 
@@ -36,7 +36,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     expectItem()
 
     sendEvent(HideError(NoReporter))
-    var expected = syncedModel.copy(inputErrors = setOf(NoIssueType, ShortSummary))
+    var expected = syncedModel.copy(errors = setOf(NoIssueType, ShortSummary))
     expectItem() shouldBe expected
 
     sendEvent(SetReporter(User("Bob", "123")))
@@ -54,7 +54,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     expectItem()
 
     sendEvent(HideError(NoIssueType))
-    var expected = syncedModel.copy(inputErrors = setOf(NoReporter, ShortSummary))
+    var expected = syncedModel.copy(errors = setOf(NoReporter, ShortSummary))
     expectItem() shouldBe expected
 
     sendEvent(SetIssueType(IssueType("ID", "Name")))
@@ -72,7 +72,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     expectItem()
 
     sendEvent(HideError(ShortSummary))
-    var expected = syncedModel.copy(inputErrors = setOf(NoReporter, NoIssueType))
+    var expected = syncedModel.copy(errors = setOf(NoReporter, NoIssueType))
     expectItem() shouldBe expected
 
     sendEvent(SetSummary(Summary("012345678")))
@@ -81,7 +81,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
 
     sendEvent(SubmitReport)
     expectItem() shouldBe expected.copy(submitState = SubmitState.Submitting)
-    expected = expected.copy(inputErrors = setOf(NoReporter, NoIssueType, ShortSummary))
+    expected = expected.copy(errors = setOf(NoReporter, NoIssueType, ShortSummary))
     expectItem() shouldBe expected
 
     sendEvent(SetSummary(Summary("0123456789")))
@@ -90,7 +90,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
 
     sendEvent(SubmitReport)
     expectItem() shouldBe expected.copy(submitState = SubmitState.Submitting)
-    expectItem() shouldBe expected.copy(inputErrors = setOf(NoReporter, NoIssueType))
+    expectItem() shouldBe expected.copy(errors = setOf(NoReporter, NoIssueType))
   }
 
   @Test fun `invalid add comment input is detected`() = testPresenter {
@@ -101,7 +101,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
 
     sendEvent(SubmitReport)
     expectItem() shouldBe expected.copy(submitState = SubmitState.Submitting)
-    expectItem() shouldBe expected.copy(inputErrors = setOf(NoReporter, NoIssueId))
+    expectItem() shouldBe expected.copy(errors = setOf(NoReporter, NoIssueId))
   }
 
   @Test fun `missing reporter error can be fixed for add comment`() = testPresenter {
@@ -115,7 +115,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     sendEvent(HideError(NoReporter))
     var expected = syncedModel.copy(
         reportType = ReportType.UpdateIssue,
-        inputErrors = setOf(NoIssueId)
+        errors = setOf(NoIssueId)
     )
     expectItem() shouldBe expected
 
@@ -138,15 +138,15 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
 
     var expected = syncedModel.copy(
         reportType = ReportType.UpdateIssue,
-        inputErrors = setOf(NoReporter, NoIssueId)
+        errors = setOf(NoReporter, NoIssueId)
     )
 
     sendEvent(HideError(NoIssueId))
-    expected = expected.copy(inputErrors = setOf(NoReporter))
+    expected = expected.copy(errors = setOf(NoReporter))
     expectItem() shouldBe expected
 
     sendEvent(SetIssueKey(IssueKey("Key")))
-    expected = expected.copy(updateIssueKey = IssueKey("Key"))
+    expected = expected.copy(issueKey = IssueKey("Key"))
     expectItem() shouldBe expected
 
     sendEvent(SubmitReport)

@@ -54,7 +54,7 @@ internal class ReporterView(
 
   private fun renderUiModel(uiModel: UiModel) {
     createReporters(uiModel.projectInfo?.users.orEmpty(), uiModel.reporter)
-    renderError(NoReporter in uiModel.inputErrors)
+    renderError(NoReporter in uiModel.errors)
   }
 
   private fun createReporters(users: Set<User>, reporter: User?) {

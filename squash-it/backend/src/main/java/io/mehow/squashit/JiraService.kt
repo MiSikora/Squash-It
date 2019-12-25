@@ -103,9 +103,7 @@ internal class JiraService(
 
   private suspend fun getEpics(): List<Epic> {
     return when (val response = jiraApi.getEpics(EpicJql(config.projectKey))) {
-      is Success -> response.value.issues.map {
-        Epic(it.key, it.fields.epicName)
-      }
+      is Success -> response.value.issues.map { Epic(it.key, it.fields.epicName) }
       is Failure -> emptyList()
     }
   }
@@ -127,14 +125,7 @@ internal class JiraService(
         .awaitAll()
         .filterIsInstance<Success<RoleResponse>>()
         .flatMap { it.value.actors }
-        .mapNotNull { actor ->
-          actor.actorUser?.let {
-            User(
-                actor.displayName,
-                it.accountId
-            )
-          }
-        }
+        .mapNotNull { actor -> actor.actorUser?.let { User(actor.displayName, it.accountId) } }
         .distinct()
         .filter { it.accountId !in config.filteredUsers }
   }

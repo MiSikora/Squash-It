@@ -32,7 +32,7 @@ internal class SubmitReportConsumer(
       send {
         when (val reportAttempt = ReportFactory.create(this)) {
           is ReportAttempt.Valid -> sendReport(reportAttempt.report)
-          is ReportAttempt.Invalid -> copy(submitState = Idle, inputErrors = reportAttempt.errors)
+          is ReportAttempt.Invalid -> copy(submitState = Idle, errors = reportAttempt.errors)
         }
       }
     }

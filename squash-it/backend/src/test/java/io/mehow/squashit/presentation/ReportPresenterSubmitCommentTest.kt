@@ -110,7 +110,7 @@ class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
   private val addCommentModel = syncedModel.copy(
       reportType = ReportType.UpdateIssue,
       reporter = User("Reporter Name", "Reporter ID"),
-      updateIssueKey = IssueKey("Issue ID"),
+      issueKey = IssueKey("Issue ID"),
       issueDescription = Description("Description"),
       mentions = Mentions(setOf(User("Mention Name", "Mention ID")))
   )

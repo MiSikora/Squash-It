@@ -59,7 +59,7 @@ class ReportPresenterInputTest : BaseReportPresenterTest() {
 
   @Test fun `issue key can be changed`() = testPresenter {
     sendEvent(SetIssueKey(IssueKey("Key")))
-    expectItem() shouldBe syncedModel.copy(updateIssueKey = IssueKey("Key"))
+    expectItem() shouldBe syncedModel.copy(issueKey = IssueKey("Key"))
   }
 
   @Test fun `issue description can bed changed`() = testPresenter {

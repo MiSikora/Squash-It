@@ -21,13 +21,13 @@ data class UiModel(
   val reporter: User?,
   val reportType: ReportType,
   val newIssue: NewIssue,
-  val updateIssueKey: IssueKey?,
+  val issueKey: IssueKey?,
   val issueDescription: Description?,
   val mentions: Mentions,
   val screenshotState: AttachState,
   val logsState: AttachState,
   val attachments: Set<Attachment>,
-  val inputErrors: Set<InputError>,
+  val errors: Set<InputError>,
   val submitState: SubmitState
 ) {
   companion object {
@@ -41,13 +41,13 @@ data class UiModel(
             summary = null,
             epic = null
         ),
-        updateIssueKey = null,
+        issueKey = null,
         issueDescription = null,
         mentions = Mentions(emptySet()),
         screenshotState = Unavailable,
         logsState = Unavailable,
         attachments = emptySet(),
-        inputErrors = emptySet(),
+        errors = emptySet(),
         submitState = SubmitState.Idle
     )
   }

@@ -58,8 +58,8 @@ internal class UpdateIssueView(
   }
 
   private fun renderUiModel(uiModel: UiModel) {
-    showIssueId(uiModel.updateIssueKey?.toIssueId())
-    renderIssueIdError(NoIssueId in uiModel.inputErrors)
+    showIssueId(uiModel.issueKey?.toIssueId())
+    renderIssueIdError(NoIssueId in uiModel.errors)
   }
 
   private fun renderIssueIdError(noIssueId: Boolean) {
