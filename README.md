@@ -2,7 +2,7 @@
 
 [![Build Status](https://app.bitrise.io/app/d05c685963b4f009/status.svg?token=BcDiRXjSbF_95LiAmxH26w&branch=master)](https://app.bitrise.io/app/d05c685963b4f009)
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.mehow.squashit/core.svg)](https://search.maven.org/search?q=g:io.mehow.squashit)
+[![Maven Central](https://img.shields.io/maven-central/v/io.mehow.squashit/squashit.svg)](https://search.maven.org/search?q=g:io.mehow.squashit)
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## How it works?
