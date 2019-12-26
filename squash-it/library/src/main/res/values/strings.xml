@@ -24,7 +24,7 @@
   <string name="squash_it_summary">Summary</string>
   <string name="squash_it_reporter">Reporter</string>
   <string name="squash_it_misconfiguration">Misconfiguration!</string>
-  <string name="squash_it_misconfiguration_info">It appears that SquashIt plugin is not configured properly.\n\nPlease configure following resources:</string>
+  <string name="squash_it_misconfiguration_info">It appears that Squash It plugin is not configured properly.\n\nPlease configure following resources:</string>
   <string name="squash_it_jira_project_key_res_name"> • R.string.squash_it_jira_project_key</string>
   <string name="squash_it_jira_server_url_res_name"> • R.string.squash_it_jira_server_url</string>
   <string name="squash_it_jira_user_email_res_name"> • R.string.squash_it_jira_user_email</string>
