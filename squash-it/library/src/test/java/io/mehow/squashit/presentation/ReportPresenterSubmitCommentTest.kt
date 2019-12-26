@@ -21,14 +21,21 @@ import io.mehow.squashit.presentation.Event.SetReportType
 import io.mehow.squashit.presentation.Event.SetReporter
 import io.mehow.squashit.presentation.Event.SubmitReport
 import io.mehow.squashit.presentation.extensions.PresenterAssert
+import io.mehow.squashit.presentation.extensions.withDescription
+import io.mehow.squashit.presentation.extensions.withIssueKey
+import io.mehow.squashit.presentation.extensions.withLogs
+import io.mehow.squashit.presentation.extensions.withMentions
+import io.mehow.squashit.presentation.extensions.withReportType
+import io.mehow.squashit.presentation.extensions.withReporter
+import io.mehow.squashit.presentation.extensions.withSubmitState
 import org.junit.Test
 
 internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
   @Test fun `comment can be created from UI model`() = testNewIssueReport {
     sendEvent(SubmitReport)
-    expectItem() shouldBe addCommentModel.copy(submitState = SubmitState.Submitting)
-    expectItem() shouldBe addCommentModel.copy(
-        submitState = SubmitState.Submitted(IssueKey("Issue ID"))
+    expectItem() shouldBe addCommentModel.withSubmitState(SubmitState.Submitting)
+    expectItem() shouldBe addCommentModel.withSubmitState(
+        SubmitState.Submitted(IssueKey("Issue ID"))
     )
   }
 
@@ -37,7 +44,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
 
     sendEvent(SubmitReport)
     expectItem()
-    expectItem() shouldBe addCommentModel.copy(submitState = SubmitState.Failed(addCommentReport))
+    expectItem() shouldBe addCommentModel.withSubmitState(SubmitState.Failed(addCommentReport))
   }
 
   @Test fun `comment creation can be retried`() = testNewIssueReport {
@@ -50,9 +57,9 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     presenterFactory.jiraApi.commentFactory.disableErrors()
 
     sendEvent(RetrySubmission(addCommentReport))
-    expectItem() shouldBe addCommentModel.copy(submitState = SubmitState.Resubmitting)
-    expectItem() shouldBe addCommentModel.copy(
-        submitState = SubmitState.Submitted(IssueKey("Issue ID"))
+    expectItem() shouldBe addCommentModel.withSubmitState(SubmitState.Resubmitting)
+    expectItem() shouldBe addCommentModel.withSubmitState(
+        SubmitState.Submitted(IssueKey("Issue ID"))
     )
   }
 
@@ -62,8 +69,8 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
 
       sendEvent(SubmitReport)
       expectItem()
-      expectItem() shouldBe addCommentModel.copy(
-          submitState = SubmitState.Submitted(IssueKey("Issue ID"))
+      expectItem() shouldBe addCommentModel.withSubmitState(
+          SubmitState.Submitted(IssueKey("Issue ID"))
       )
     }
 
@@ -71,15 +78,15 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     presenterFactory.jiraApi.attachmentsFactory.enableErrors()
 
     val logsFile = folder.newFile()
-    val model = addCommentModel.copy(logsState = AttachState.Attach(logsFile))
+    val model = addCommentModel.withLogs(AttachState.Attach(logsFile))
     val attachments = setOf(AttachmentBody.fromFile(logsFile))
     sendEvent(SetLogsState(AttachState.Attach(logsFile)))
     expectItem()
 
     sendEvent(SubmitReport)
     expectItem()
-    expectItem() shouldBe model.copy(
-        submitState = SubmitState.FailedToAttach(IssueKey("Issue ID"), attachments)
+    expectItem() shouldBe model.withSubmitState(
+        SubmitState.FailedToAttach(IssueKey("Issue ID"), attachments)
     )
   }
 
@@ -94,26 +101,23 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     expectItem()
     expectItem()
 
-    val model = addCommentModel.copy(logsState = AttachState.Attach(logsFile))
+    val model = addCommentModel.withLogs(AttachState.Attach(logsFile))
     val attachments = setOf(AttachmentBody.fromFile(logsFile))
 
     presenterFactory.jiraApi.attachmentsFactory.disableErrors()
     presenterFactory.jiraApi.commentFactory.enableErrors()
 
     sendEvent(Reattach(IssueKey("Issue ID"), attachments))
-    expectItem() shouldBe model.copy(submitState = SubmitState.Reattaching)
-    expectItem() shouldBe model.copy(
-        submitState = SubmitState.AddedAttachments(IssueKey("Issue ID"))
-    )
+    expectItem() shouldBe model.withSubmitState(SubmitState.Reattaching)
+    expectItem() shouldBe model.withSubmitState(SubmitState.AddedAttachments(IssueKey("Issue ID")))
   }
 
-  private val addCommentModel = syncedModel.copy(
-      reportType = ReportType.UpdateIssue,
-      reporter = User("Reporter Name", "Reporter ID"),
-      issueKey = IssueKey("Issue ID"),
-      issueDescription = Description("Description"),
-      mentions = Mentions(setOf(User("Mention Name", "Mention ID")))
-  )
+  private val addCommentModel = syncedModel
+      .withReportType(ReportType.UpdateIssue)
+      .withReporter(User("Reporter Name", "Reporter ID"))
+      .withIssueKey(IssueKey("Issue ID"))
+      .withDescription(Description("Description"))
+      .withMentions(User("Mention Name", "Mention ID"))
 
   private val addCommentReport = Report.AddComment(
       reporter = Reporter(User("Reporter Name", "Reporter ID")),

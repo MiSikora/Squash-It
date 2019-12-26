@@ -58,8 +58,9 @@ internal class UpdateIssueView(
   }
 
   private fun renderUiModel(uiModel: UiModel) {
-    showIssueId(uiModel.issueKey?.toIssueId())
-    renderIssueIdError(NoIssueId in uiModel.errors)
+    val input = uiModel.input
+    showIssueId(input.issueKey?.toIssueId())
+    renderIssueIdError(NoIssueId in input.errors)
   }
 
   private fun renderIssueIdError(noIssueId: Boolean) {

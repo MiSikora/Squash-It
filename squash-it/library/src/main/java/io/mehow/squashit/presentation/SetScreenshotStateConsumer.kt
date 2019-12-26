@@ -6,6 +6,6 @@ internal class SetScreenshotStateConsumer(
   sender: ModelSender
 ) : EventConsumer<SetScreenshotState>(sender, SetScreenshotState::class) {
   override suspend fun consume(event: SetScreenshotState) {
-    send { copy(screenshotState = event.state) }
+    send { copy(input = input.copy(screenshotState = event.state)) }
   }
 }

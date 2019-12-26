@@ -30,9 +30,12 @@ internal class SubmitReportConsumer(
     currentJob = launch {
       send { copy(submitState = Submitting) }
       send {
-        when (val reportAttempt = ReportFactory.create(this)) {
+        when (val reportAttempt = ReportFactory.create(input)) {
           is ReportAttempt.Valid -> sendReport(reportAttempt.report)
-          is ReportAttempt.Invalid -> copy(submitState = Idle, errors = reportAttempt.errors)
+          is ReportAttempt.Invalid -> copy(
+              submitState = Idle,
+              input = input.copy(errors = reportAttempt.errors)
+          )
         }
       }
     }

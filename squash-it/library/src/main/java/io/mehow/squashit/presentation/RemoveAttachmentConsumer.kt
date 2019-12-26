@@ -6,6 +6,6 @@ internal class RemoveAttachmentConsumer(
   sender: ModelSender
 ) : EventConsumer<RemoveAttachment>(sender, RemoveAttachment::class) {
   override suspend fun consume(event: RemoveAttachment) {
-    send { copy(attachments = attachments - event.attachment) }
+    send { copy(input = input.copy(attachments = input.attachments - event.attachment)) }
   }
 }

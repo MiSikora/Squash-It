@@ -94,11 +94,12 @@ internal class AttachmentsView(
   }
 
   private fun renderUiModel(uiModel: UiModel) {
-    screenshot = uiModel.screenshotState.file
-    logs = uiModel.logsState.file
-    attachmentsAdapter.submitList(uiModel.attachments.toList())
-    screenshotCheckBox.setState(uiModel.screenshotState)
-    logsCheckBox.setState(uiModel.logsState)
+    val input = uiModel.input
+    screenshot = input.screenshotState.file
+    logs = input.logsState.file
+    attachmentsAdapter.submitList(input.attachments.toList())
+    screenshotCheckBox.setState(input.screenshotState)
+    logsCheckBox.setState(input.logsState)
   }
 
   private fun CheckBox.setState(state: AttachState) {

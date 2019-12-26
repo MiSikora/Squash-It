@@ -47,7 +47,8 @@ internal class IssueDescriptionView(
   }
 
   private fun renderUiModel(uiModel: UiModel) {
-    showDescription(uiModel.issueDescription)
+    val input = uiModel.input
+    showDescription(input.description)
   }
 
   private fun showDescription(description: Description?) {

@@ -94,10 +94,11 @@ internal class NewIssueView(
   }
 
   private fun renderUiModel(uiModel: UiModel) {
-    createIssueTypes(uiModel.projectInfo?.issueTypes.orEmpty(), uiModel.newIssue.type)
-    showSummary(uiModel.newIssue.summary)
-    renderIssueTypeError(NoIssueType in uiModel.errors)
-    renderSummaryError(ShortSummary in uiModel.errors)
+    val input = uiModel.input
+    createIssueTypes(uiModel.projectInfo?.issueTypes.orEmpty(), input.newIssue.type)
+    showSummary(input.newIssue.summary)
+    renderIssueTypeError(NoIssueType in input.errors)
+    renderSummaryError(ShortSummary in input.errors)
   }
 
   private fun createIssueTypes(issueTypes: Set<IssueType>, issueType: IssueType?) {

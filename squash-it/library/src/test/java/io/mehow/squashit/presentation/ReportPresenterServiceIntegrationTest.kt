@@ -20,6 +20,7 @@ import io.mehow.squashit.presentation.Event.SetReportType
 import io.mehow.squashit.presentation.Event.SetReporter
 import io.mehow.squashit.presentation.Event.SetSummary
 import io.mehow.squashit.presentation.Event.SubmitReport
+import io.mehow.squashit.presentation.extensions.withProjectInfo
 import io.mehow.squashit.test
 import org.junit.Test
 
@@ -37,11 +38,9 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
     presenterFactory = factory
 
     testPresenter(skipSyncEvent = false) {
-      expectItem() shouldBe syncedModel.copy(
-          projectInfo = syncedModel.projectInfo?.copy(
-              users = setOf(User("User 2", "ID 2"), User("User 3", "ID 3"))
-          )
-      )
+      expectItem() shouldBe syncedModel.withProjectInfo {
+        copy(users = setOf(User("User 2", "ID 2"), User("User 3", "ID 3")))
+      }
     }
   }
 
@@ -63,11 +62,9 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
     presenterFactory = factory
 
     testPresenter(skipSyncEvent = false) {
-      expectItem() shouldBe syncedModel.copy(
-          projectInfo = syncedModel.projectInfo?.copy(
-              issueTypes = setOf(IssueType("ID 1", "Name 1"), IssueType("ID 4", "Name 4"))
-          )
-      )
+      expectItem() shouldBe syncedModel.withProjectInfo {
+        copy(issueTypes = setOf(IssueType("ID 1", "Name 1"), IssueType("ID 4", "Name 4")))
+      }
     }
   }
 

@@ -17,6 +17,8 @@ import io.mehow.squashit.User
 import io.mehow.squashit.api.FakeJiraApi
 import io.mehow.squashit.presentation.extensions.PresenterAssert
 import io.mehow.squashit.presentation.extensions.test
+import io.mehow.squashit.presentation.extensions.withInitState
+import io.mehow.squashit.presentation.extensions.withProjectInfo
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -38,23 +40,22 @@ internal open class BaseReportPresenterTest {
   }
 
   val idleModel = UiModel.Initial
-  val syncedModel = idleModel.copy(
-      initState = InitState.Idle,
-      projectInfo = ProjectInfo(
-          epics = setOf(Epic("Epic ID", "Epic Name")),
-          users = setOf(User("User Name", "User ID")),
-          issueTypes = setOf(IssueType("Issue ID", "Issue Name"))
+  val syncedModel = idleModel
+      .withInitState(InitState.Idle)
+      .withProjectInfo(
+          ProjectInfo(
+              epics = setOf(Epic("Epic ID", "Epic Name")),
+              users = setOf(User("User Name", "User ID")),
+              issueTypes = setOf(IssueType("Issue ID", "Issue Name"))
+          )
       )
-  )
 
   internal fun testPresenter(
     skipSyncEvent: Boolean = true,
     block: suspend PresenterAssert.() -> Unit
   ) = runBlockingTest {
     presenterFactory.create().test(testDispatcher) {
-      if (skipSyncEvent) {
-        expectItem()
-      }
+      if (skipSyncEvent) expectItem()
       block()
     }
   }

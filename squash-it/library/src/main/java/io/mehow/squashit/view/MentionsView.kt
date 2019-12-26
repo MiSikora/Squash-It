@@ -46,7 +46,8 @@ internal class MentionsView(
   }
 
   private fun renderUiModel(uiModel: UiModel) {
-    createMentionGroup(uiModel.projectInfo?.users.orEmpty(), uiModel.mentions)
+    val input = uiModel.input
+    createMentionGroup(uiModel.projectInfo?.users.orEmpty(), input.mentions)
   }
 
   private fun createMentionGroup(users: Set<User>, mentions: Mentions) {

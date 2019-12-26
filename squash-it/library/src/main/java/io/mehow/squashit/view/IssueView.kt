@@ -88,7 +88,8 @@ internal class IssueView(
   }
 
   private fun renderUiModel(uiModel: UiModel) {
-    selectIssueType(uiModel.reportType)
+    val input = uiModel.input
+    selectIssueType(input.reportType)
     val isInitialized = uiModel.projectInfo != null
     val isSubmitting = uiModel.submitState == Submitting
     submitButton.isActivated = isInitialized && !isSubmitting

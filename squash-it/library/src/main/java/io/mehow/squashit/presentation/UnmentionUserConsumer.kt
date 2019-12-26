@@ -7,6 +7,6 @@ internal class UnmentionUserConsumer(
   sender: ModelSender
 ) : EventConsumer<UnmentionUser>(sender, UnmentionUser::class) {
   override suspend fun consume(event: UnmentionUser) {
-    send { copy(mentions = Mentions(mentions.users - event.user)) }
+    send { copy(input = input.copy(mentions = Mentions(input.mentions.users - event.user))) }
   }
 }

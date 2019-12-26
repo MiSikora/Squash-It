@@ -7,6 +7,6 @@ internal class MentionUserConsumer(
   sender: ModelSender
 ) : EventConsumer<MentionUser>(sender, MentionUser::class) {
   override suspend fun consume(event: MentionUser) {
-    send { copy(mentions = Mentions(mentions.users + event.user)) }
+    send { copy(input = input.copy(mentions = Mentions(input.mentions.users + event.user))) }
   }
 }

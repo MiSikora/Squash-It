@@ -6,6 +6,6 @@ internal class SetUpdateIssueKeyConsumer(
   sender: ModelSender
 ) : EventConsumer<SetIssueKey>(sender, SetIssueKey::class) {
   override suspend fun consume(event: SetIssueKey) {
-    send { copy(issueKey = event.key) }
+    send { copy(input = input.copy(issueKey = event.key)) }
   }
 }

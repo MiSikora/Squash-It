@@ -4,6 +4,10 @@ import io.kotlintest.shouldBe
 import io.mehow.squashit.AttachState
 import io.mehow.squashit.InitState
 import io.mehow.squashit.presentation.Event.SyncProject
+import io.mehow.squashit.presentation.extensions.withInitState
+import io.mehow.squashit.presentation.extensions.withLogs
+import io.mehow.squashit.presentation.extensions.withProjectInfo
+import io.mehow.squashit.presentation.extensions.withScreenshot
 import org.junit.Test
 
 internal class ReportPresenterInitTest : BaseReportPresenterTest() {
@@ -12,7 +16,7 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
     presenterFactory = presenterFactory.copy(screenshotFile = screenshot)
 
     testPresenter(skipSyncEvent = false) {
-      expectItem() shouldBe idleModel.copy(screenshotState = AttachState.Attach(screenshot))
+      expectItem() shouldBe idleModel.withScreenshot(AttachState.Attach(screenshot))
 
       cancelAndIgnoreRemainingEvents()
     }
@@ -23,7 +27,7 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
     presenterFactory = presenterFactory.copy(logsFile = logs)
 
     testPresenter(skipSyncEvent = false) {
-      expectItem() shouldBe idleModel.copy(logsState = AttachState.Attach(logs))
+      expectItem() shouldBe idleModel.withLogs(AttachState.Attach(logs))
 
       cancelAndIgnoreRemainingEvents()
     }
@@ -39,7 +43,7 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
     presenterFactory.jiraApi.projectFactory.enableErrors()
 
     testPresenter(skipSyncEvent = false) {
-      expectItem() shouldBe idleModel.copy(initState = InitState.Failure)
+      expectItem() shouldBe idleModel.withInitState(InitState.Failure)
     }
   }
 
@@ -47,7 +51,7 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
     presenterFactory.jiraApi.roleFactory.enableErrors()
 
     testPresenter(skipSyncEvent = false) {
-      expectItem() shouldBe idleModel.copy(initState = InitState.Failure)
+      expectItem() shouldBe idleModel.withInitState(InitState.Failure)
     }
   }
 
@@ -59,7 +63,7 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
     }
 
     sendEvent(SyncProject)
-    expectItem() shouldBe syncedModel.copy(initState = InitState.Initializing)
+    expectItem() shouldBe syncedModel.withInitState(InitState.Initializing)
     expectItem() shouldBe syncedModel
   }
 
@@ -67,9 +71,7 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
     presenterFactory.jiraApi.epicsFactory.enableErrors()
 
     testPresenter(skipSyncEvent = false) {
-      expectItem() shouldBe syncedModel.copy(
-          projectInfo = syncedModel.projectInfo?.copy(epics = emptySet())
-      )
+      expectItem() shouldBe syncedModel.withProjectInfo { copy(epics = emptySet()) }
     }
   }
 }

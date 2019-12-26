@@ -6,6 +6,6 @@ internal class SetNewIssueSummaryConsumer(
   sender: ModelSender
 ) : EventConsumer<SetSummary>(sender, SetSummary::class) {
   override suspend fun consume(event: SetSummary) {
-    send { copy(newIssue = newIssue.copy(summary = event.summary)) }
+    send { copy(input = input.copy(newIssue = input.newIssue.copy(summary = event.summary))) }
   }
 }

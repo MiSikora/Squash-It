@@ -6,6 +6,6 @@ internal class SetLogsStateConsumer(
   sender: ModelSender
 ) : EventConsumer<SetLogsState>(sender, SetLogsState::class) {
   override suspend fun consume(event: SetLogsState) {
-    send { copy(logsState = event.state) }
+    send { copy(input = input.copy(logsState = event.state)) }
   }
 }

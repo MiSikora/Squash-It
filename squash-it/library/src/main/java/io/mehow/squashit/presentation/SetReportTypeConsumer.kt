@@ -6,6 +6,6 @@ internal class SetReportTypeConsumer(
   sender: ModelSender
 ) : EventConsumer<SetReportType>(sender, SetReportType::class) {
   override suspend fun consume(event: SetReportType) {
-    send { copy(reportType = event.type) }
+    send { copy(input = input.copy(reportType = event.type)) }
   }
 }

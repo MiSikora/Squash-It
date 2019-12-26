@@ -6,6 +6,6 @@ internal class SetIssueDescriptionConsumer(
   sender: ModelSender
 ) : EventConsumer<SetDescription>(sender, SetDescription::class) {
   override suspend fun consume(event: SetDescription) {
-    send { copy(issueDescription = event.description) }
+    send { copy(input = input.copy(description = event.description)) }
   }
 }

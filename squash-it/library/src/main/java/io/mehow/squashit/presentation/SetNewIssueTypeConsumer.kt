@@ -6,6 +6,6 @@ internal class SetNewIssueTypeConsumer(
   sender: ModelSender
 ) : EventConsumer<SetIssueType>(sender, SetIssueType::class) {
   override suspend fun consume(event: SetIssueType) {
-    send { copy(newIssue = newIssue.copy(type = event.type)) }
+    send { copy(input = input.copy(newIssue = input.newIssue.copy(type = event.type))) }
   }
 }
