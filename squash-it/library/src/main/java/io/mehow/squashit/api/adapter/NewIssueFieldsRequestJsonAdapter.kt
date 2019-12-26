@@ -26,22 +26,16 @@ internal class NewIssueFieldsRequestJsonAdapter(
   private val issueTypeRequestAdapter: JsonAdapter<IssueTypeRequest> =
     moshi.adapter(IssueTypeRequest::class.java, emptySet(), "issueType")
 
-  private val stringAdapter: JsonAdapter<String> = moshi.adapter(
-      String::class.java, emptySet(),
-      "summary"
-  )
+  private val stringAdapter: JsonAdapter<String> =
+    moshi.adapter(String::class.java, emptySet(), "summary")
 
   private val reporterRequestAdapter: JsonAdapter<ReporterRequest> =
     moshi.adapter(ReporterRequest::class.java, emptySet(), "reporter")
 
-  private val nullableStringAdapter: JsonAdapter<String?> = moshi.adapter(
-      String::class.java,
-      emptySet(), "epic"
-  )
+  private val nullableStringAdapter: JsonAdapter<String?> =
+    moshi.adapter(String::class.java, emptySet(), "epic")
 
-  override fun toString(): String = buildString(43) {
-    append("GeneratedJsonAdapter(").append("NewIssueFieldsRequest").append(')')
-  }
+  override fun toString(): String = "GeneratedJsonAdapter(NewIssueFieldsRequest)"
 
   override fun fromJson(reader: JsonReader): NewIssueFieldsRequest {
     var project: ProjectRequest? = null

@@ -14,14 +14,10 @@ internal class EpicFieldsResponseJsonAdapter(
 ) : JsonAdapter<EpicFieldsResponse>() {
   private val options: JsonReader.Options = JsonReader.Options.of(fieldName)
 
-  private val stringAdapter: JsonAdapter<String> = moshi.adapter(
-      String::class.java, emptySet(),
-      "epicName"
-  )
+  private val stringAdapter: JsonAdapter<String> =
+    moshi.adapter(String::class.java, emptySet(), "epicName")
 
-  override fun toString(): String = buildString(40) {
-    append("GeneratedJsonAdapter(").append("EpicFieldsResponse").append(')')
-  }
+  override fun toString(): String = "GeneratedJsonAdapter(EpicFieldsResponse)"
 
   override fun fromJson(reader: JsonReader): EpicFieldsResponse {
     var epicName: String? = null

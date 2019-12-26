@@ -41,8 +41,7 @@ internal fun View.enableEdgeToEdgeAndNightMode() {
   val flags = SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
       SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
       SYSTEM_UI_FLAG_LAYOUT_STABLE or
-      if (Build.VERSION.SDK_INT == 26 && isDarkMode) SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-      else 0
+      if (Build.VERSION.SDK_INT == 26 && isDarkMode) SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR else 0
   systemUiVisibility = systemUiVisibility or flags
 }
 
