@@ -11,6 +11,7 @@ import io.mehow.squashit.api.EpicFieldsResponse
 import io.mehow.squashit.api.JiraApi
 import io.mehow.squashit.api.NewIssueFieldsRequest
 import io.mehow.squashit.api.adapter.EpicFieldsResponseJsonAdapter
+import io.mehow.squashit.api.adapter.NewIssueFieldsRequestJsonAdapter
 import io.mehow.squashit.presentation.Event.SyncProject
 import io.mehow.squashit.presentation.Event.UpdateInput
 import kotlinx.coroutines.CoroutineDispatcher
@@ -109,7 +110,7 @@ internal class ReportPresenter internal constructor(
     ): JsonAdapter<*>? {
       return when (type) {
         EpicFieldsResponse::class.java -> EpicFieldsResponseJsonAdapter(readName, moshi)
-        NewIssueFieldsRequest::class.java -> EpicFieldsResponseJsonAdapter(writeName, moshi)
+        NewIssueFieldsRequest::class.java -> NewIssueFieldsRequestJsonAdapter(writeName, moshi)
         else -> null
       }
     }
