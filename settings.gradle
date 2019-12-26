@@ -1,7 +1,6 @@
 rootProject.name = "SquashIt"
 
-include ":squash-it:backend"
-include ":squash-it:core"
+include ':squash-it:library'
 include ":squash-it:timber"
 
 include ":sample"
