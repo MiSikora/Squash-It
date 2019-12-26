@@ -51,11 +51,14 @@ internal open class BaseReportPresenterTest {
       )
 
   internal fun testPresenter(
-    skipSyncEvent: Boolean = true,
+    skipInitialization: Boolean = true,
     block: suspend PresenterAssert.() -> Unit
   ) = runBlockingTest {
     presenterFactory.create().test(testDispatcher) {
-      if (skipSyncEvent) expectItem()
+      if (skipInitialization) {
+        expectItem()
+        expectItem()
+      }
       block()
     }
   }

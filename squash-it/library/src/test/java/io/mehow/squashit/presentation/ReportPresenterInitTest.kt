@@ -15,7 +15,8 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
     val screenshot = folder.newFile()
     presenterFactory = presenterFactory.copy(screenshotFile = screenshot)
 
-    testPresenter(skipSyncEvent = false) {
+    testPresenter(skipInitialization = false) {
+      expectItem()
       expectItem() shouldBe idleModel.withScreenshot(AttachState.Attach(screenshot))
 
       cancelAndIgnoreRemainingEvents()
@@ -26,7 +27,8 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
     val logs = folder.newFile()
     presenterFactory = presenterFactory.copy(logsFile = logs)
 
-    testPresenter(skipSyncEvent = false) {
+    testPresenter(skipInitialization = false) {
+      expectItem()
       expectItem() shouldBe idleModel.withLogs(AttachState.Attach(logs))
 
       cancelAndIgnoreRemainingEvents()
@@ -34,7 +36,8 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
   }
 
   @Test fun `data is synced on launch`() {
-    testPresenter(skipSyncEvent = false) {
+    testPresenter(skipInitialization = false) {
+      expectItem()
       expectItem() shouldBe syncedModel
     }
   }
@@ -42,7 +45,8 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
   @Test fun `missing project data is handled gracefully`() {
     presenterFactory.jiraApi.projectFactory.enableErrors()
 
-    testPresenter(skipSyncEvent = false) {
+    testPresenter(skipInitialization = false) {
+      expectItem()
       expectItem() shouldBe idleModel.withInitState(InitState.Failure)
     }
   }
@@ -50,7 +54,8 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
   @Test fun `missing users data is handled gracefully`() {
     presenterFactory.jiraApi.roleFactory.enableErrors()
 
-    testPresenter(skipSyncEvent = false) {
+    testPresenter(skipInitialization = false) {
+      expectItem()
       expectItem() shouldBe idleModel.withInitState(InitState.Failure)
     }
   }
@@ -70,7 +75,8 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
   @Test fun `missing epics are not treated as a blocker`() {
     presenterFactory.jiraApi.epicsFactory.enableErrors()
 
-    testPresenter(skipSyncEvent = false) {
+    testPresenter(skipInitialization = false) {
+      expectItem()
       expectItem() shouldBe syncedModel.withProjectInfo { copy(epics = emptySet()) }
     }
   }

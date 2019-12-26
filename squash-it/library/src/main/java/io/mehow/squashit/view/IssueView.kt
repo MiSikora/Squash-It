@@ -30,13 +30,15 @@ import io.mehow.squashit.extensions.clicks
 import io.mehow.squashit.extensions.hideProgress
 import io.mehow.squashit.extensions.showProgress
 import io.mehow.squashit.extensions.viewScope
-import io.mehow.squashit.presentation.Event.SetReportType
 import io.mehow.squashit.presentation.Event.SubmitReport
+import io.mehow.squashit.presentation.Event.UpdateInput
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
+import io.mehow.squashit.presentation.UserInput
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlin.math.absoluteValue
 
@@ -53,6 +55,8 @@ internal class IssueView(
   private val newIssueView: NewIssueView
   private val descriptionView: IssueDescriptionView
   private val submitButton: Button
+
+  private var userInput: UserInput? = null
 
   init {
     overScrollMode = OVER_SCROLL_NEVER
@@ -76,11 +80,12 @@ internal class IssueView(
     displayIssueType(newIssueCheckBox.isChecked, false)
     newIssueCheckBox.checkChanges
         .map { isChecked -> if (isChecked) CreateNewIssue else UpdateIssue }
-        .onEach { presenter.sendEvent(SetReportType(it)) }
+        .onEach { presenter.sendEvent(UpdateInput.reportType(it)) }
         .launchIn(viewScope)
     submitButton.clicks
         .filter { submitButton.isActivated }
-        .onEach { presenter.sendEvent(SubmitReport) }
+        .mapNotNull { userInput }
+        .onEach { presenter.sendEvent(SubmitReport(it)) }
         .launchIn(viewScope)
     presenter.uiModels
         .onEach { renderUiModel(it) }
@@ -89,6 +94,7 @@ internal class IssueView(
 
   private fun renderUiModel(uiModel: UiModel) {
     val input = uiModel.input
+    userInput = input
     selectIssueType(input.reportType)
     val isInitialized = uiModel.projectInfo != null
     val isSubmitting = uiModel.submitState == Submitting

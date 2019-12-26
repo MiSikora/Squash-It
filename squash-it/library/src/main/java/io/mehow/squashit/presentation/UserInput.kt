@@ -25,6 +25,14 @@ internal data class UserInput(
   val attachments: Set<Attachment>,
   val errors: Set<InputError>
 ) {
+  fun withReporter(reporter: User): UserInput {
+    return copy(reporter = reporter)
+  }
+
+  fun withReportType(type: ReportType): UserInput {
+    return copy(reportType = type)
+  }
+
   private fun withNewIssue(builder: NewIssue.() -> NewIssue): UserInput {
     return copy(newIssue = newIssue.builder())
   }
@@ -41,12 +49,28 @@ internal data class UserInput(
     return withNewIssue { copy(epic = epic) }
   }
 
+  fun withIssueKey(key: IssueKey): UserInput {
+    return copy(issueKey = key)
+  }
+
+  fun withDescription(description: Description): UserInput {
+    return copy(description = description)
+  }
+
   fun withMentions(vararg users: User): UserInput {
     return copy(mentions = mentions.withUsers(*users))
   }
 
   fun withoutMentions(vararg users: User): UserInput {
     return copy(mentions = mentions.withoutUsers(*users))
+  }
+
+  fun withScreenshot(state: AttachState): UserInput {
+    return copy(screenshotState = state)
+  }
+
+  fun withLogs(state: AttachState): UserInput {
+    return copy(logsState = state)
   }
 
   fun withAttachments(vararg attachments: Attachment): UserInput {

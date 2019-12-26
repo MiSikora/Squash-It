@@ -12,25 +12,20 @@ import io.mehow.squashit.SubmitState.FailedToAttach
 import io.mehow.squashit.SubmitState.Resubmitting
 import io.mehow.squashit.SubmitState.Submitted
 import io.mehow.squashit.presentation.Event.RetrySubmission
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.transformLatest
 
 internal class RetrySubmissionConsumer(
-  private val jiraService: JiraService,
-  sender: ModelSender
-) : EventConsumer<RetrySubmission>(sender, RetrySubmission::class) {
-  private var currentJob: Job? = null
-
-  override suspend fun consume(event: RetrySubmission) = coroutineScope {
-    currentJob?.cancel()
-    currentJob = launch {
-      send { copy(submitState = Resubmitting) }
-      send { sendReport(event.report) }
+  private val jiraService: JiraService
+) : EventConsumer<RetrySubmission> {
+  override fun transform(events: Flow<RetrySubmission>): Flow<Accumulator> {
+    return events.transformLatest { event ->
+      emit(Accumulator { copy(submitState = Resubmitting) })
+      emit(sendReport(event.report))
     }
   }
 
-  private suspend fun UiModel.sendReport(report: Report): UiModel {
+  private suspend fun sendReport(report: Report): Accumulator {
     val attempt = when (report) {
       is NewIssue -> jiraService.createNewIssue(report)
       is AddComment -> jiraService.addComment(report)
@@ -40,6 +35,6 @@ internal class RetrySubmissionConsumer(
       is NoAttachments -> FailedToAttach(attempt.key, report.attachments)
       is Failure -> Failed(report)
     }
-    return copy(submitState = state)
+    return Accumulator { copy(submitState = state) }
   }
 }

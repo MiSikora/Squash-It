@@ -5,25 +5,19 @@ import io.mehow.squashit.InitState.Idle
 import io.mehow.squashit.InitState.Initializing
 import io.mehow.squashit.JiraService
 import io.mehow.squashit.presentation.Event.SyncProject
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.transformLatest
 
 internal class SyncProjectConsumer(
-  private val jiraService: JiraService,
-  sender: ModelSender
-) : EventConsumer<SyncProject>(sender, SyncProject::class) {
-  private var currentJob: Job? = null
-
-  override suspend fun consume(event: SyncProject) {
-    coroutineScope {
-      currentJob?.cancel()
-      currentJob = launch {
-        send { copy(initState = Initializing) }
-        val projectInfo = jiraService.getProjectInfo()
-        if (projectInfo == null) send { copy(initState = Failure) }
-        else send { copy(initState = Idle, projectInfo = projectInfo) }
-      }
+  private val jiraService: JiraService
+) : EventConsumer<SyncProject> {
+  override fun transform(events: Flow<SyncProject>): Flow<Accumulator> {
+    return events.transformLatest {
+      emit(Accumulator { copy(initState = Initializing) })
+      val info = jiraService.getProjectInfo()
+      val accumulator = if (info == null) Accumulator { copy(initState = Failure) }
+      else Accumulator { copy(initState = Idle, projectInfo = info) }
+      emit(accumulator)
     }
   }
 }

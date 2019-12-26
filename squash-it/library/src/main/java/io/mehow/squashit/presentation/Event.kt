@@ -16,39 +16,43 @@ import io.mehow.squashit.api.AttachmentBody
 internal sealed class Event {
   object SyncProject : Event()
 
-  data class SetReporter(val reporter: User) : Event()
-
-  data class SetReportType(val type: ReportType) : Event()
-
-  data class SetIssueType(val type: IssueType) : Event()
-
-  data class SetSummary(val summary: Summary) : Event()
-
-  data class SetEpic(val epic: Epic) : Event()
-
-  data class SetIssueKey(val key: IssueKey) : Event()
-
-  data class SetDescription(val description: Description) : Event()
-
-  data class MentionUser(val user: User) : Event()
-
-  data class UnmentionUser(val user: User) : Event()
-
-  data class SetScreenshotState(val state: AttachState) : Event()
-
-  data class SetLogsState(val state: AttachState) : Event()
-
-  data class AddAttachment(val attachment: Attachment) : Event()
-
-  data class RemoveAttachment(val attachment: Attachment) : Event()
-
-  data class DismissError(val error: InputError) : Event()
-
-  object SubmitReport : Event()
+  data class SubmitReport(val input: UserInput) : Event()
 
   object GoIdle : Event()
 
   data class RetrySubmission(val report: Report) : Event()
 
   data class Reattach(val key: IssueKey, val attachments: Set<AttachmentBody>) : Event()
+
+  data class UpdateInput(val builder: UserInput.() -> UserInput) : Event() {
+    companion object {
+      fun reporter(user: User) = UpdateInput { withReporter(user) }
+
+      fun reportType(type: ReportType) = UpdateInput { withReportType(type) }
+
+      fun issueType(type: IssueType) = UpdateInput { withNewIssueType(type) }
+
+      fun summary(summary: Summary) = UpdateInput { withNewIssueSummary(summary) }
+
+      fun epic(epic: Epic) = UpdateInput { withNewIssueEpic(epic) }
+
+      fun issueKey(key: IssueKey) = UpdateInput { withIssueKey(key) }
+
+      fun description(description: Description) = UpdateInput { withDescription(description) }
+
+      fun mention(user: User) = UpdateInput { withMentions(user) }
+
+      fun unmention(user: User) = UpdateInput { withoutMentions(user) }
+
+      fun screenshot(state: AttachState) = UpdateInput { withScreenshot(state) }
+
+      fun logs(state: AttachState) = UpdateInput { withLogs(state) }
+
+      fun attach(attachment: Attachment) = UpdateInput { withAttachments(attachment) }
+
+      fun detach(attachment: Attachment) = UpdateInput { withoutAttachments(attachment) }
+
+      fun hideError(error: InputError) = UpdateInput { withoutError(error) }
+    }
+  }
 }

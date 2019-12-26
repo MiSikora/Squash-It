@@ -11,19 +11,7 @@ import io.mehow.squashit.IssueType
 import io.mehow.squashit.ReportType
 import io.mehow.squashit.Summary
 import io.mehow.squashit.User
-import io.mehow.squashit.presentation.Event.AddAttachment
-import io.mehow.squashit.presentation.Event.MentionUser
-import io.mehow.squashit.presentation.Event.RemoveAttachment
-import io.mehow.squashit.presentation.Event.SetDescription
-import io.mehow.squashit.presentation.Event.SetEpic
-import io.mehow.squashit.presentation.Event.SetIssueKey
-import io.mehow.squashit.presentation.Event.SetIssueType
-import io.mehow.squashit.presentation.Event.SetLogsState
-import io.mehow.squashit.presentation.Event.SetReportType
-import io.mehow.squashit.presentation.Event.SetReporter
-import io.mehow.squashit.presentation.Event.SetScreenshotState
-import io.mehow.squashit.presentation.Event.SetSummary
-import io.mehow.squashit.presentation.Event.UnmentionUser
+import io.mehow.squashit.presentation.Event.UpdateInput
 import io.mehow.squashit.presentation.extensions.withAttachments
 import io.mehow.squashit.presentation.extensions.withDescription
 import io.mehow.squashit.presentation.extensions.withIssueKey
@@ -39,90 +27,90 @@ import org.junit.Test
 
 internal class ReportPresenterInputTest : BaseReportPresenterTest() {
   @Test fun `reporter can be changed`() = testPresenter {
-    sendEvent(SetReporter(User("Name", "ID")))
+    sendEvent(UpdateInput.reporter(User("Name", "ID")))
     expectItem() shouldBe syncedModel.withReporter(User("Name", "ID"))
   }
 
   @Test fun `report type can be changed`() = testPresenter {
-    sendEvent(SetReportType(ReportType.UpdateIssue))
+    sendEvent(UpdateInput.reportType(ReportType.UpdateIssue))
     expectItem() shouldBe syncedModel.withReportType(ReportType.UpdateIssue)
 
-    sendEvent(SetReportType(ReportType.CreateNewIssue))
+    sendEvent(UpdateInput.reportType(ReportType.CreateNewIssue))
     expectItem() shouldBe syncedModel
   }
 
   @Test fun `issue type can be changed`() = testPresenter {
-    sendEvent(SetIssueType(IssueType("ID", "Name")))
+    sendEvent(UpdateInput.issueType(IssueType("ID", "Name")))
     expectItem() shouldBe syncedModel.withNewIssueType(IssueType("ID", "Name"))
   }
 
   @Test fun `new issue summary can be changed`() = testPresenter {
-    sendEvent(SetSummary(Summary("Summary")))
+    sendEvent(UpdateInput.summary(Summary("Summary")))
     expectItem() shouldBe syncedModel.withNewIssueSummary(Summary("Summary"))
   }
 
   @Test fun `new issue epic can be changed`() = testPresenter {
-    sendEvent(SetEpic(Epic("ID", "Name")))
+    sendEvent(UpdateInput.epic(Epic("ID", "Name")))
     expectItem() shouldBe syncedModel.withNewIssueEpic(Epic("ID", "Name"))
   }
 
   @Test fun `issue key can be changed`() = testPresenter {
-    sendEvent(SetIssueKey(IssueKey("Key")))
+    sendEvent(UpdateInput.issueKey(IssueKey("Key")))
     expectItem() shouldBe syncedModel.withIssueKey(IssueKey("Key"))
   }
 
   @Test fun `issue description can bed changed`() = testPresenter {
-    sendEvent(SetDescription(Description("Description")))
+    sendEvent(UpdateInput.description(Description("Description")))
     expectItem() shouldBe syncedModel.withDescription(Description("Description"))
   }
 
   @Test fun `users can be mentioned`() = testPresenter {
-    sendEvent(MentionUser(User("Name 1", "ID 1")))
+    sendEvent(UpdateInput.mention(User("Name 1", "ID 1")))
     expectItem() shouldBe syncedModel.withMentions(User("Name 1", "ID 1"))
 
-    sendEvent(MentionUser(User("Name 2", "ID 2")))
+    sendEvent(UpdateInput.mention(User("Name 2", "ID 2")))
     expectItem() shouldBe syncedModel.withMentions(User("Name 1", "ID 1"), User("Name 2", "ID 2"))
   }
 
   @Test fun `users can be unmentioned`() = testPresenter {
-    sendEvent(MentionUser(User("Name 1", "ID 1")))
+    sendEvent(UpdateInput.mention(User("Name 1", "ID 1")))
     expectItem()
 
-    sendEvent(MentionUser(User("Name 2", "ID 2")))
+    sendEvent(UpdateInput.mention(User("Name 2", "ID 2")))
     expectItem()
 
-    sendEvent(UnmentionUser(User("Name 3", "ID 3")))
+    sendEvent(UpdateInput.unmention(User("Name 3", "ID 3")))
     expectNoEvents()
 
-    sendEvent(UnmentionUser(User("Name 1", "ID 1")))
+    sendEvent(UpdateInput.unmention(User("Name 1", "ID 1")))
     expectItem() shouldBe syncedModel.withMentions(User("Name 2", "ID 2"))
   }
 
   @Test fun `screenshot state can be changed`() = testPresenter {
     val screenshot = folder.newFile()
-    sendEvent(SetScreenshotState(AttachState.Attach(screenshot)))
+    sendEvent(UpdateInput.screenshot(AttachState.Attach(screenshot)))
     expectItem() shouldBe syncedModel.withScreenshot(AttachState.Attach(screenshot))
 
-    sendEvent(SetScreenshotState(AttachState.DoNotAttach(screenshot)))
+    sendEvent(UpdateInput.screenshot(AttachState.DoNotAttach(screenshot)))
     expectItem() shouldBe syncedModel.withScreenshot(AttachState.DoNotAttach(screenshot))
   }
 
   @Test fun `logs state can be changed`() = testPresenter {
     val logs = folder.newFile()
-    sendEvent(SetLogsState(AttachState.Attach(logs)))
+    sendEvent(UpdateInput.logs(AttachState.Attach(logs)))
     expectItem() shouldBe syncedModel.withLogs(AttachState.Attach(logs))
 
-    sendEvent(SetLogsState(AttachState.DoNotAttach(logs)))
+    sendEvent(UpdateInput.logs(AttachState.DoNotAttach(logs)))
     expectItem() shouldBe syncedModel.withLogs(AttachState.DoNotAttach(logs))
   }
 
   @Test fun `custom attachments can be added`() = testPresenter {
     val attachment1 = Attachment(AttachmentType.Image, "Name 1", "Size 1") { null }
-    sendEvent(AddAttachment(attachment1))
+    sendEvent(UpdateInput.attach(attachment1))
     expectItem() shouldBe syncedModel.withAttachments(attachment1)
 
     val attachment2 = Attachment(AttachmentType.Video, "Name 2", "Size 2") { null }
-    sendEvent(AddAttachment(attachment2))
+    sendEvent(UpdateInput.attach(attachment2))
     expectItem() shouldBe syncedModel.withAttachments(attachment1, attachment2)
   }
 
@@ -130,16 +118,16 @@ internal class ReportPresenterInputTest : BaseReportPresenterTest() {
     val attachment1 = Attachment(AttachmentType.Image, "Name 1", "Size 1") { null }
     val attachment2 = Attachment(AttachmentType.Video, "Name 2", "Size 2") { null }
     val attachment3 = Attachment(AttachmentType.Video, "Name 3", "Size 3") { null }
-    sendEvent(AddAttachment(attachment1))
+    sendEvent(UpdateInput.attach(attachment1))
     expectItem()
 
-    sendEvent(AddAttachment(attachment2))
+    sendEvent(UpdateInput.attach(attachment2))
     expectItem()
 
-    sendEvent(RemoveAttachment(attachment3))
+    sendEvent(UpdateInput.detach(attachment3))
     expectNoEvents()
 
-    sendEvent(RemoveAttachment(attachment1))
+    sendEvent(UpdateInput.detach(attachment1))
     expectItem() shouldBe syncedModel.withAttachments(attachment2)
   }
 }

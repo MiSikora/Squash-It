@@ -11,7 +11,7 @@ import io.mehow.squashit.Description
 import io.mehow.squashit.R
 import io.mehow.squashit.extensions.textChanges
 import io.mehow.squashit.extensions.viewScope
-import io.mehow.squashit.presentation.Event.SetDescription
+import io.mehow.squashit.presentation.Event.UpdateInput
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
 import kotlinx.coroutines.flow.debounce
@@ -39,7 +39,7 @@ internal class IssueDescriptionView(
     descriptionInput.textChanges
         .debounce(200)
         .map { it.trim() }
-        .onEach { presenter.sendEvent(SetDescription(Description(it))) }
+        .onEach { presenter.sendEvent(UpdateInput.description(Description(it))) }
         .launchIn(viewScope)
     presenter.uiModels
         .onEach { renderUiModel(it) }

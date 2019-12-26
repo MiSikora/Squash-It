@@ -20,9 +20,7 @@ import io.mehow.squashit.R
 import io.mehow.squashit.extensions.activity
 import io.mehow.squashit.extensions.checkChanges
 import io.mehow.squashit.extensions.viewScope
-import io.mehow.squashit.presentation.Event.RemoveAttachment
-import io.mehow.squashit.presentation.Event.SetLogsState
-import io.mehow.squashit.presentation.Event.SetScreenshotState
+import io.mehow.squashit.presentation.Event.UpdateInput
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
 import kotlinx.coroutines.flow.launchIn
@@ -45,7 +43,7 @@ internal class AttachmentsView(
   private var logs: File? = null
 
   private val attachmentsAdapter = AttachmentAdapter(LayoutInflater.from(context)) {
-    viewScope.launch { presenter.sendEvent(RemoveAttachment(it)) }
+    viewScope.launch { presenter.sendEvent(UpdateInput.detach(it)) }
   }
 
   init {
@@ -72,7 +70,7 @@ internal class AttachmentsView(
         .mapNotNull { isChecked -> screenshot?.let { isChecked to it } }
         .onEach { (isChecked, screenshot) ->
           val state = createAttachState(isChecked, screenshot)
-          presenter.sendEvent(SetScreenshotState(state))
+          presenter.sendEvent(UpdateInput.screenshot(state))
         }
         .launchIn(viewScope)
   }
@@ -82,7 +80,7 @@ internal class AttachmentsView(
         .mapNotNull { isChecked -> logs?.let { isChecked to it } }
         .onEach { (isChecked, logs) ->
           val state = createAttachState(isChecked, logs)
-          presenter.sendEvent(SetLogsState(state))
+          presenter.sendEvent(UpdateInput.logs(state))
         }
         .launchIn(viewScope)
   }

@@ -14,8 +14,7 @@ import io.mehow.squashit.User
 import io.mehow.squashit.extensions.doInflate
 import io.mehow.squashit.extensions.layoutInflater
 import io.mehow.squashit.extensions.viewScope
-import io.mehow.squashit.presentation.Event.MentionUser
-import io.mehow.squashit.presentation.Event.UnmentionUser
+import io.mehow.squashit.presentation.Event.UpdateInput
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
 import kotlinx.coroutines.flow.launchIn
@@ -61,7 +60,7 @@ internal class MentionsView(
       chip.isChecked = user in mentions.users
       chip.setOnCheckedChangeListener { _, isChecked ->
         viewScope.launch {
-          val event = if (isChecked) MentionUser(user) else UnmentionUser(user)
+          val event = if (isChecked) UpdateInput.mention(user) else UpdateInput.unmention(user)
           presenter.sendEvent(event)
         }
       }

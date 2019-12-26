@@ -11,15 +11,8 @@ import io.mehow.squashit.User
 import io.mehow.squashit.api.IssueTypeResponse
 import io.mehow.squashit.api.ProjectResponse
 import io.mehow.squashit.api.RoleFactory.Record
-import io.mehow.squashit.presentation.Event.MentionUser
-import io.mehow.squashit.presentation.Event.SetDescription
-import io.mehow.squashit.presentation.Event.SetEpic
-import io.mehow.squashit.presentation.Event.SetIssueKey
-import io.mehow.squashit.presentation.Event.SetIssueType
-import io.mehow.squashit.presentation.Event.SetReportType
-import io.mehow.squashit.presentation.Event.SetReporter
-import io.mehow.squashit.presentation.Event.SetSummary
 import io.mehow.squashit.presentation.Event.SubmitReport
+import io.mehow.squashit.presentation.Event.UpdateInput
 import io.mehow.squashit.presentation.extensions.withProjectInfo
 import io.mehow.squashit.test
 import org.junit.Test
@@ -37,7 +30,8 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
     )
     presenterFactory = factory
 
-    testPresenter(skipSyncEvent = false) {
+    testPresenter(skipInitialization = false) {
+      expectItem()
       expectItem() shouldBe syncedModel.withProjectInfo {
         copy(users = setOf(User("User 2", "ID 2"), User("User 3", "ID 3")))
       }
@@ -61,7 +55,8 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
     )
     presenterFactory = factory
 
-    testPresenter(skipSyncEvent = false) {
+    testPresenter(skipInitialization = false) {
+      expectItem()
       expectItem() shouldBe syncedModel.withProjectInfo {
         copy(issueTypes = setOf(IssueType("ID 1", "Name 1"), IssueType("ID 4", "Name 4")))
       }
@@ -69,7 +64,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
   }
 
   @Test fun `description is properly formatted for new issue`() = recordWithNewIssue {
-    sendEvent(SubmitReport)
+    sendEvent(SubmitReport(newIssueInput))
 
     presenterFactory.jiraApi.newIssueRecords.test {
       expectItem().request.fields.description shouldBe """
@@ -107,7 +102,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
   }
 
   @Test fun `body is properly formatted for comment`() = recordWithAddComment {
-    sendEvent(SubmitReport)
+    sendEvent(SubmitReport(addCommentInput))
 
     presenterFactory.jiraApi.addCommentRecords.test {
       expectItem().request.body shouldBe """
@@ -148,23 +143,29 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
     }
   }
 
+  private val newIssueInput = syncedModel.input
+      .withReporter(User("Reporter Name", "Reporter ID"))
+      .withNewIssueType(IssueType("Issue ID", "Issue Name"))
+      .withNewIssueSummary(Summary("Valid Summary"))
+      .withNewIssueEpic(Epic("Epic ID", "Epic Name"))
+      .withDescription(Description("Description"))
+      .withMentions(User("Mention Name", "Mention ID"))
+
   private fun recordWithNewIssue(block: suspend ReportPresenter.() -> Unit) = testPresenter {
-    sendEvent(SetReporter(User("Reporter Name", "Reporter ID")))
-    sendEvent(SetIssueType(IssueType("Issue ID", "Issue Name")))
-    sendEvent(SetSummary(Summary("Valid Summary")))
-    sendEvent(SetEpic(Epic("Epic ID", "Epic Name")))
-    sendEvent(SetDescription(Description("Description")))
-    sendEvent(MentionUser(User("Mention Name", "Mention ID")))
+    sendEvent(UpdateInput { newIssueInput })
     presenter.block()
     cancelAndIgnoreRemainingEvents()
   }
 
+  private val addCommentInput = syncedModel.input
+      .withReportType(UpdateIssue)
+      .withReporter(User("Reporter Name", "Reporter ID"))
+      .withIssueKey(IssueKey("Issue ID"))
+      .withDescription(Description("Description"))
+      .withMentions(User("Mention Name", "Mention ID"))
+
   private fun recordWithAddComment(block: suspend ReportPresenter.() -> Unit) = testPresenter {
-    sendEvent(SetReportType(UpdateIssue))
-    sendEvent(SetReporter(User("Reporter Name", "Reporter ID")))
-    sendEvent(SetIssueKey(IssueKey("Issue ID")))
-    sendEvent(SetDescription(Description("Description")))
-    sendEvent(MentionUser(User("Mention Name", "Mention ID")))
+    sendEvent(UpdateInput { addCommentInput })
     presenter.block()
     cancelAndIgnoreRemainingEvents()
   }

@@ -27,8 +27,8 @@ import io.mehow.squashit.SubmitState.Resubmitting
 import io.mehow.squashit.SubmitState.Submitted
 import io.mehow.squashit.SubmitState.Submitting
 import io.mehow.squashit.extensions.enableEdgeToEdgeAndNightMode
-import io.mehow.squashit.presentation.Event.AddAttachment
 import io.mehow.squashit.presentation.Event.GoIdle
+import io.mehow.squashit.presentation.Event.UpdateInput
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
 import kotlinx.android.parcel.Parceler
@@ -140,7 +140,7 @@ internal class ReportActivity : AppCompatActivity() {
     if (requestCode == AttachmentFactory.RequestCode) {
       val uri = data?.data ?: return
       val item = AttachmentFactory.create(contentResolver, uri)
-      if (item != null) mainScope.launch { presenter.sendEvent(AddAttachment(item)) }
+      if (item != null) mainScope.launch { presenter.sendEvent(UpdateInput.attach(item)) }
       else Toast.makeText(this, R.string.squash_it_error, LENGTH_LONG).show()
     }
   }

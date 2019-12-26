@@ -14,8 +14,7 @@ import io.mehow.squashit.User
 import io.mehow.squashit.extensions.clicks
 import io.mehow.squashit.extensions.textChanges
 import io.mehow.squashit.extensions.viewScope
-import io.mehow.squashit.presentation.Event.DismissError
-import io.mehow.squashit.presentation.Event.SetReporter
+import io.mehow.squashit.presentation.Event.UpdateInput
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
 import kotlinx.coroutines.flow.launchIn
@@ -42,10 +41,10 @@ internal class ReporterView(
     super.onAttachedToWindow()
     reporterInput.textChanges
         .mapNotNull { text -> adapter.users.find { it.nameHandle == text } }
-        .onEach { presenter.sendEvent(SetReporter(it)) }
+        .onEach { presenter.sendEvent(UpdateInput.reporter(it)) }
         .launchIn(viewScope)
     reporterInput.clicks
-        .onEach { presenter.sendEvent(DismissError(NoReporter)) }
+        .onEach { presenter.sendEvent(UpdateInput.hideError(NoReporter)) }
         .launchIn(viewScope)
     presenter.uiModels
         .onEach { renderUiModel(it) }

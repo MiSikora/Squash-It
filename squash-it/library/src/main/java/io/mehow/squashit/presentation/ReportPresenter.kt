@@ -11,18 +11,20 @@ import io.mehow.squashit.api.EpicFieldsResponse
 import io.mehow.squashit.api.JiraApi
 import io.mehow.squashit.api.NewIssueFieldsRequest
 import io.mehow.squashit.api.adapter.EpicFieldsResponseJsonAdapter
-import io.mehow.squashit.presentation.Event.SetLogsState
-import io.mehow.squashit.presentation.Event.SetScreenshotState
 import io.mehow.squashit.presentation.Event.SyncProject
-import io.mehow.squashit.presentation.UiModel.Companion.Initial
+import io.mehow.squashit.presentation.Event.UpdateInput
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.launch
 import java.io.File
 import java.lang.reflect.Type
@@ -33,12 +35,16 @@ internal class ReportPresenter internal constructor(
   private val createLogFile: suspend () -> File?
 ) {
   private val uiModelsChannel = ConflatedBroadcastChannel<UiModel>()
-  private val modelSender = ModelSender(Initial) {
-    if (!uiModelsChannel.isClosedForSend) uiModelsChannel.send(it)
-  }
 
-  private val eventsChannel = Channel<Event>()
-  private val eventConsumers = EventConsumer.createConsumers(jiraService, modelSender)
+  private val eventsChannel = BroadcastChannel<Event>(1)
+  private val eventConsumers = setOf(
+      SyncProjectConsumer(jiraService)::consume,
+      UpdateInputConsumer::consume,
+      SubmitReportConsumer(jiraService)::consume,
+      RetrySubmissionConsumer(jiraService)::consume,
+      ReattachConsumer(jiraService)::consume,
+      GoIdleConsumer::consume
+  )
 
   private val presenterScope = CoroutineScope(SupervisorJob().apply {
     invokeOnCompletion {
@@ -55,15 +61,20 @@ internal class ReportPresenter internal constructor(
 
   fun start(dispatcher: CoroutineDispatcher) {
     presenterScope.launch(dispatcher) {
-      launch {
-        createScreenshotFile()?.let { sendEvent(SetScreenshotState(Attach(it))) }
-        createLogFile()?.let { sendEvent(SetLogsState(Attach(it))) }
-        sendEvent(SyncProject)
-      }
-      eventsChannel.consumeEach { event ->
-        for (consumeEvent in eventConsumers) consumeEvent(event)
-      }
+      eventConsumers.map { it.invoke(eventsChannel.asFlow()) }
+          .merge()
+          .scan(UiModel.Initial) { model, (update) -> model.update() }
+          .distinctUntilChanged()
+          .onEach(uiModelsChannel::send)
+          .launchIn(this)
+      sendInitEvents()
     }
+  }
+
+  private fun CoroutineScope.sendInitEvents() = launch {
+    createScreenshotFile()?.let { sendEvent(UpdateInput.screenshot(Attach(it))) }
+    createLogFile()?.let { sendEvent(UpdateInput.logs(Attach(it))) }
+    sendEvent(SyncProject)
   }
 
   fun stop() {

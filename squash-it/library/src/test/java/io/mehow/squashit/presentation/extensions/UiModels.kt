@@ -28,7 +28,7 @@ internal fun UiModel.withProjectInfo(builder: ProjectInfo.() -> ProjectInfo): Ui
   return copy(projectInfo = projectInfo?.builder())
 }
 
-internal fun UiModel.withSubmitState(state: SubmitState) : UiModel {
+internal fun UiModel.withSubmitState(state: SubmitState): UiModel {
   return copy(submitState = state)
 }
 
@@ -37,11 +37,11 @@ internal fun UiModel.withUserInput(builder: UserInput.() -> UserInput): UiModel 
 }
 
 internal fun UiModel.withReporter(reporter: User): UiModel {
-  return withUserInput { copy(reporter = reporter) }
+  return withUserInput { withReporter(reporter) }
 }
 
 internal fun UiModel.withReportType(type: ReportType): UiModel {
-  return withUserInput { copy(reportType = type) }
+  return withUserInput { withReportType(type) }
 }
 
 internal fun UiModel.withNewIssueType(type: IssueType): UiModel {
@@ -57,11 +57,11 @@ internal fun UiModel.withNewIssueEpic(epic: Epic): UiModel {
 }
 
 internal fun UiModel.withIssueKey(key: IssueKey): UiModel {
-  return withUserInput { copy(issueKey = key) }
+  return withUserInput { withIssueKey(key) }
 }
 
 internal fun UiModel.withDescription(description: Description): UiModel {
-  return withUserInput { copy(description = description) }
+  return withUserInput { withDescription(description) }
 }
 
 internal fun UiModel.withMentions(vararg users: User): UiModel {
@@ -73,11 +73,11 @@ internal fun UiModel.withoutMentions(vararg users: User): UiModel {
 }
 
 internal fun UiModel.withScreenshot(state: AttachState): UiModel {
-  return withUserInput { copy(screenshotState = state) }
+  return withUserInput { withScreenshot(state) }
 }
 
 internal fun UiModel.withLogs(state: AttachState): UiModel {
-  return withUserInput { copy(logsState = state) }
+  return withUserInput { withLogs(state) }
 }
 
 internal fun UiModel.withAttachments(vararg attachments: Attachment): UiModel {

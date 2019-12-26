@@ -11,15 +11,10 @@ import io.mehow.squashit.Reporter
 import io.mehow.squashit.SubmitState
 import io.mehow.squashit.User
 import io.mehow.squashit.api.AttachmentBody
-import io.mehow.squashit.presentation.Event.MentionUser
 import io.mehow.squashit.presentation.Event.Reattach
 import io.mehow.squashit.presentation.Event.RetrySubmission
-import io.mehow.squashit.presentation.Event.SetDescription
-import io.mehow.squashit.presentation.Event.SetIssueKey
-import io.mehow.squashit.presentation.Event.SetLogsState
-import io.mehow.squashit.presentation.Event.SetReportType
-import io.mehow.squashit.presentation.Event.SetReporter
 import io.mehow.squashit.presentation.Event.SubmitReport
+import io.mehow.squashit.presentation.Event.UpdateInput
 import io.mehow.squashit.presentation.extensions.PresenterAssert
 import io.mehow.squashit.presentation.extensions.withDescription
 import io.mehow.squashit.presentation.extensions.withIssueKey
@@ -32,7 +27,7 @@ import org.junit.Test
 
 internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
   @Test fun `comment can be created from UI model`() = testNewIssueReport {
-    sendEvent(SubmitReport)
+    sendEvent(SubmitReport(addCommentModel.input))
     expectItem() shouldBe addCommentModel.withSubmitState(SubmitState.Submitting)
     expectItem() shouldBe addCommentModel.withSubmitState(
         SubmitState.Submitted(IssueKey("Issue ID"))
@@ -42,7 +37,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
   @Test fun `comment creation failure is handled gracefully`() = testNewIssueReport {
     presenterFactory.jiraApi.commentFactory.enableErrors()
 
-    sendEvent(SubmitReport)
+    sendEvent(SubmitReport(addCommentModel.input))
     expectItem()
     expectItem() shouldBe addCommentModel.withSubmitState(SubmitState.Failed(addCommentReport))
   }
@@ -50,7 +45,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
   @Test fun `comment creation can be retried`() = testNewIssueReport {
     presenterFactory.jiraApi.commentFactory.enableErrors()
 
-    sendEvent(SubmitReport)
+    sendEvent(SubmitReport(addCommentModel.input))
     expectItem()
     expectItem()
 
@@ -67,7 +62,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     testNewIssueReport {
       presenterFactory.jiraApi.attachmentsFactory.enableErrors()
 
-      sendEvent(SubmitReport)
+      sendEvent(SubmitReport(addCommentModel.input))
       expectItem()
       expectItem() shouldBe addCommentModel.withSubmitState(
           SubmitState.Submitted(IssueKey("Issue ID"))
@@ -80,10 +75,10 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     val logsFile = folder.newFile()
     val model = addCommentModel.withLogs(AttachState.Attach(logsFile))
     val attachments = setOf(AttachmentBody.fromFile(logsFile))
-    sendEvent(SetLogsState(AttachState.Attach(logsFile)))
+    sendEvent(UpdateInput.logs(AttachState.Attach(logsFile)))
     expectItem()
 
-    sendEvent(SubmitReport)
+    sendEvent(SubmitReport(addCommentModel.input.withLogs(AttachState.Attach(logsFile))))
     expectItem()
     expectItem() shouldBe model.withSubmitState(
         SubmitState.FailedToAttach(IssueKey("Issue ID"), attachments)
@@ -94,10 +89,10 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     presenterFactory.jiraApi.attachmentsFactory.enableErrors()
 
     val logsFile = folder.newFile()
-    sendEvent(SetLogsState(AttachState.Attach(logsFile)))
+    sendEvent(UpdateInput.logs(AttachState.Attach(logsFile)))
     expectItem()
 
-    sendEvent(SubmitReport)
+    sendEvent(SubmitReport(addCommentModel.input.withLogs(AttachState.Attach(logsFile))))
     expectItem()
     expectItem()
 
@@ -128,15 +123,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
   )
 
   private fun testNewIssueReport(block: suspend PresenterAssert.() -> Unit) = testPresenter {
-    sendEvent(SetReportType(ReportType.UpdateIssue))
-    expectItem()
-    sendEvent(SetReporter(User("Reporter Name", "Reporter ID")))
-    expectItem()
-    sendEvent(SetIssueKey(IssueKey("Issue ID")))
-    expectItem()
-    sendEvent(SetDescription(Description("Description")))
-    expectItem()
-    sendEvent(MentionUser(User("Mention Name", "Mention ID")))
+    sendEvent(UpdateInput { addCommentModel.input })
     expectItem()
     block()
   }

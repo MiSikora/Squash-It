@@ -18,9 +18,7 @@ import io.mehow.squashit.extensions.clicks
 import io.mehow.squashit.extensions.focuses
 import io.mehow.squashit.extensions.textChanges
 import io.mehow.squashit.extensions.viewScope
-import io.mehow.squashit.presentation.Event.DismissError
-import io.mehow.squashit.presentation.Event.SetIssueType
-import io.mehow.squashit.presentation.Event.SetSummary
+import io.mehow.squashit.presentation.Event.UpdateInput
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
 import kotlinx.coroutines.flow.debounce
@@ -63,7 +61,7 @@ internal class NewIssueView(
   private fun emitIssueTypeChanges() {
     issueTypeInput.textChanges
         .mapNotNull { text -> adapter.issueTypes.find { it.name == text } }
-        .onEach { presenter.sendEvent(SetIssueType(it)) }
+        .onEach { presenter.sendEvent(UpdateInput.issueType(it)) }
         .launchIn(viewScope)
   }
 
@@ -71,19 +69,19 @@ internal class NewIssueView(
     summaryInput.textChanges
         .debounce(200)
         .map { it.trim() }
-        .onEach { presenter.sendEvent(SetSummary(Summary(it))) }
+        .onEach { presenter.sendEvent(UpdateInput.summary(Summary(it))) }
         .launchIn(viewScope)
   }
 
   private fun hideIssueTypeErrors() {
     issueTypeInput.clicks
-        .onEach { presenter.sendEvent(DismissError(NoIssueType)) }
+        .onEach { presenter.sendEvent(UpdateInput.hideError(NoIssueType)) }
         .launchIn(viewScope)
   }
 
   private fun hideSummaryErrors() {
     summaryInput.focuses
-        .onEach { presenter.sendEvent(DismissError(ShortSummary)) }
+        .onEach { presenter.sendEvent(UpdateInput.hideError(ShortSummary)) }
         .launchIn(viewScope)
   }
 
