@@ -42,7 +42,7 @@ sealed class Event {
 
   data class RemoveAttachment(val attachment: Attachment) : Event()
 
-  data class HideError(val error: InputError) : Event()
+  data class DismissError(val error: InputError) : Event()
 
   object SubmitReport : Event()
 

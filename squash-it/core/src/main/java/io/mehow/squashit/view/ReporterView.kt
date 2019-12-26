@@ -14,7 +14,7 @@ import io.mehow.squashit.User
 import io.mehow.squashit.extensions.clicks
 import io.mehow.squashit.extensions.textChanges
 import io.mehow.squashit.extensions.viewScope
-import io.mehow.squashit.presentation.Event.HideError
+import io.mehow.squashit.presentation.Event.DismissError
 import io.mehow.squashit.presentation.Event.SetReporter
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
@@ -45,7 +45,7 @@ internal class ReporterView(
         .onEach { presenter.sendEvent(SetReporter(it)) }
         .launchIn(viewScope)
     reporterInput.clicks
-        .onEach { presenter.sendEvent(HideError(NoReporter)) }
+        .onEach { presenter.sendEvent(DismissError(NoReporter)) }
         .launchIn(viewScope)
     presenter.uiModels
         .onEach { renderUiModel(it) }

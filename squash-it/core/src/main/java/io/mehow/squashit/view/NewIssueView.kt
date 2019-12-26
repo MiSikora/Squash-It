@@ -18,7 +18,7 @@ import io.mehow.squashit.extensions.clicks
 import io.mehow.squashit.extensions.focuses
 import io.mehow.squashit.extensions.textChanges
 import io.mehow.squashit.extensions.viewScope
-import io.mehow.squashit.presentation.Event.HideError
+import io.mehow.squashit.presentation.Event.DismissError
 import io.mehow.squashit.presentation.Event.SetIssueType
 import io.mehow.squashit.presentation.Event.SetSummary
 import io.mehow.squashit.presentation.ReportPresenter
@@ -77,13 +77,13 @@ internal class NewIssueView(
 
   private fun hideIssueTypeErrors() {
     issueTypeInput.clicks
-        .onEach { presenter.sendEvent(HideError(NoIssueType)) }
+        .onEach { presenter.sendEvent(DismissError(NoIssueType)) }
         .launchIn(viewScope)
   }
 
   private fun hideSummaryErrors() {
     summaryInput.focuses
-        .onEach { presenter.sendEvent(HideError(ShortSummary)) }
+        .onEach { presenter.sendEvent(DismissError(ShortSummary)) }
         .launchIn(viewScope)
   }
 

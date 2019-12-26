@@ -12,7 +12,7 @@ import io.mehow.squashit.ReportType
 import io.mehow.squashit.SubmitState
 import io.mehow.squashit.Summary
 import io.mehow.squashit.User
-import io.mehow.squashit.presentation.Event.HideError
+import io.mehow.squashit.presentation.Event.DismissError
 import io.mehow.squashit.presentation.Event.SetIssueKey
 import io.mehow.squashit.presentation.Event.SetIssueType
 import io.mehow.squashit.presentation.Event.SetReportType
@@ -35,7 +35,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     expectItem()
     expectItem()
 
-    sendEvent(HideError(NoReporter))
+    sendEvent(DismissError(NoReporter))
     var expected = syncedModel.copy(errors = setOf(NoIssueType, ShortSummary))
     expectItem() shouldBe expected
 
@@ -53,7 +53,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     expectItem()
     expectItem()
 
-    sendEvent(HideError(NoIssueType))
+    sendEvent(DismissError(NoIssueType))
     var expected = syncedModel.copy(errors = setOf(NoReporter, ShortSummary))
     expectItem() shouldBe expected
 
@@ -71,7 +71,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     expectItem()
     expectItem()
 
-    sendEvent(HideError(ShortSummary))
+    sendEvent(DismissError(ShortSummary))
     var expected = syncedModel.copy(errors = setOf(NoReporter, NoIssueType))
     expectItem() shouldBe expected
 
@@ -112,7 +112,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
     expectItem()
     expectItem()
 
-    sendEvent(HideError(NoReporter))
+    sendEvent(DismissError(NoReporter))
     var expected = syncedModel.copy(
         reportType = ReportType.UpdateIssue,
         errors = setOf(NoIssueId)
@@ -141,7 +141,7 @@ class ReportPresenterValidationTest : BaseReportPresenterTest() {
         errors = setOf(NoReporter, NoIssueId)
     )
 
-    sendEvent(HideError(NoIssueId))
+    sendEvent(DismissError(NoIssueId))
     expected = expected.copy(errors = setOf(NoReporter))
     expectItem() shouldBe expected
 

@@ -14,7 +14,7 @@ import io.mehow.squashit.R
 import io.mehow.squashit.extensions.focuses
 import io.mehow.squashit.extensions.textChanges
 import io.mehow.squashit.extensions.viewScope
-import io.mehow.squashit.presentation.Event.HideError
+import io.mehow.squashit.presentation.Event.DismissError
 import io.mehow.squashit.presentation.Event.SetIssueKey
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
@@ -50,7 +50,7 @@ internal class UpdateIssueView(
         .onEach { presenter.sendEvent(SetIssueKey(it)) }
         .launchIn(viewScope)
     issueIdInput.focuses
-        .onEach { presenter.sendEvent(HideError(NoIssueId)) }
+        .onEach { presenter.sendEvent(DismissError(NoIssueId)) }
         .launchIn(viewScope)
     presenter.uiModels
         .onEach { renderUiModel(it) }

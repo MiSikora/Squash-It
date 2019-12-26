@@ -1,11 +1,11 @@
 package io.mehow.squashit.presentation
 
-import io.mehow.squashit.presentation.Event.HideError
+import io.mehow.squashit.presentation.Event.DismissError
 
 internal class HideErrorConsumer(
   sender: ModelSender
-) : EventConsumer<HideError>(sender, HideError::class) {
-  override suspend fun consume(event: HideError) {
+) : EventConsumer<DismissError>(sender, DismissError::class) {
+  override suspend fun consume(event: DismissError) {
     send { copy(errors = errors - event.error) }
   }
 }
