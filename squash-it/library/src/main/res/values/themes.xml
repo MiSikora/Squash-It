@@ -2,8 +2,8 @@
 <resources>
 
   <style name="Base.Theme.SquashIt.DayNight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-    <item name="android:statusBarColor">@color/status_bar</item>
-    <item name="android:navigationBarColor">@color/nav_bar</item>
+    <item name="android:statusBarColor">@color/squash_it_status_bar</item>
+    <item name="android:navigationBarColor">@color/squash_it_nav_bar</item>
 
     <item name="emphasisHighAlpha">0.87</item>
     <item name="emphasisMediumAlpha">0.60</item>

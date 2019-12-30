@@ -93,13 +93,13 @@ internal val View.focuses
 
 internal val View.viewScope: CoroutineScope
   get() {
-    val storedScope = getTag(R.string.view_coroutine_scope) as? CoroutineScope
+    val storedScope = getTag(R.string.squash_it_view_coroutine_scope) as? CoroutineScope
     if (storedScope != null) return storedScope
 
     val newScope = ViewCoroutineScope()
     if (isAttachedToWindow) {
       addOnAttachStateChangeListener(newScope)
-      setTag(R.string.view_coroutine_scope, newScope)
+      setTag(R.string.squash_it_view_coroutine_scope, newScope)
     } else newScope.cancel()
 
     return newScope
@@ -112,6 +112,6 @@ private class ViewCoroutineScope : CoroutineScope, View.OnAttachStateChangeListe
 
   override fun onViewDetachedFromWindow(view: View) {
     coroutineContext.cancel()
-    view.setTag(R.string.view_coroutine_scope, null)
+    view.setTag(R.string.squash_it_view_coroutine_scope, null)
   }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="view_coroutine_scope">View scope ID.</string>
+  <string name="squash_it_view_coroutine_scope">View scope ID.</string>
   <string name="squash_it_issue_tab_title">Issue</string>
   <string name="squash_it_add_ons_tab_title">Add-ons</string>
   <string name="squash_it_reported">Successfully created report for issue %s.</string>

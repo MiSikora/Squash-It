@@ -9,5 +9,5 @@
   <string-array name="squash_it_jira_user_filter" />
   <string-array name="squash_it_jira_issue_types_filter" />
   <integer name="squash_it_report_pointer_count">2</integer>
-  <color name="squash_it_report_progress_color">@color/royal_blue700</color>
+  <color name="squash_it_report_progress_color">@color/squash_it_royal_blue700</color>
 </resources>
