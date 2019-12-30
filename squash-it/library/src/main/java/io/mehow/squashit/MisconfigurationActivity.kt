@@ -5,14 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import io.mehow.BaseActivity
 import io.mehow.squashit.extensions.enableEdgeToEdgeAndNightMode
 import kotlinx.android.parcel.Parcelize
 
-internal class MisconfigurationActivity : AppCompatActivity() {
+internal class MisconfigurationActivity : BaseActivity() {
   override fun onCreate(inState: Bundle?) {
     super.onCreate(inState)
     window.decorView.enableEdgeToEdgeAndNightMode()

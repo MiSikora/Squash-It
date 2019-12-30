@@ -13,11 +13,11 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.core.view.isNotEmpty
 import androidx.transition.Fade
 import androidx.transition.TransitionManager
+import io.mehow.BaseActivity
 import io.mehow.squashit.SubmitState.AddedAttachments
 import io.mehow.squashit.SubmitState.Failed
 import io.mehow.squashit.SubmitState.FailedToAttach
@@ -45,7 +45,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 
-internal class ReportActivity : AppCompatActivity() {
+internal class ReportActivity : BaseActivity() {
   private val mainScope = MainScope()
   private lateinit var presenter: ReportPresenter
   private lateinit var inflaterFactory: LayoutInflater.Factory2

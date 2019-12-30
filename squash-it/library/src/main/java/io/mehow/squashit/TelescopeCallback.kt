@@ -9,10 +9,11 @@ import android.view.ViewGroup.LayoutParams
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.core.content.ContextCompat
 import com.mattprecious.telescope.TelescopeLayout
+import io.mehow.BaseActivity
 
 internal object TelescopeCallback : ActivityLifecycleCallbacks {
   override fun onActivityCreated(activity: Activity, inState: Bundle?) {
-    if (activity is ReportActivity) return
+    if (activity is BaseActivity) return
     val content = activity.findViewById<View>(android.R.id.content)
     content.replug(createTelescopeLayout(activity))
   }
