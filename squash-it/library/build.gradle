@@ -23,6 +23,7 @@ dependencies {
   implementation deps.android.x.appCompat
   implementation deps.android.x.constraintLayout
   implementation deps.android.x.coreKtx
+  implementation deps.android.x.paletteKtx
   implementation deps.android.material
   implementation deps.telescope
   implementation deps.byteunits

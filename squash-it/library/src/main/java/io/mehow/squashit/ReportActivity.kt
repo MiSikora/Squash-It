@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -18,6 +17,7 @@ import androidx.core.view.isNotEmpty
 import androidx.transition.Fade
 import androidx.transition.TransitionManager
 import io.mehow.BaseActivity
+import io.mehow.FileParceler
 import io.mehow.squashit.SubmitState.AddedAttachments
 import io.mehow.squashit.SubmitState.Failed
 import io.mehow.squashit.SubmitState.FailedToAttach
@@ -31,7 +31,6 @@ import io.mehow.squashit.presentation.Event.GoIdle
 import io.mehow.squashit.presentation.Event.UpdateInput
 import io.mehow.squashit.presentation.ReportPresenter
 import io.mehow.squashit.presentation.UiModel
-import kotlinx.android.parcel.Parceler
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.TypeParceler
 import kotlinx.coroutines.Dispatchers
@@ -161,9 +160,4 @@ internal class ReportActivity : BaseActivity() {
     val config: SquashItConfig.Valid,
     val screenshotFile: File?
   ) : Parcelable
-
-  object FileParceler : Parceler<File?> {
-    override fun create(parcel: Parcel) = parcel.readString()?.let { File(it) }
-    override fun File?.write(parcel: Parcel, flags: Int) = parcel.writeString(this?.path)
-  }
 }
