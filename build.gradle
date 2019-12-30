@@ -134,9 +134,13 @@ allprojects {
 
         checkReleaseBuilds false
       }
+    }
+  }
 
+  plugins.withType(com.android.build.gradle.LibraryPlugin).configureEach {
+    android {
       variantFilter { variant ->
-        if (variant.name == "debug") setIgnore(true)
+        if (variant.name != "release") setIgnore(true)
       }
     }
   }

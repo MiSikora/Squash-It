@@ -18,6 +18,16 @@ android {
 
     signingConfig signingConfigs.config
   }
+
+  buildTypes {
+    debug {
+      matchingFallbacks = "release"
+    }
+  }
+
+  variantFilter { variant ->
+    if (variant.name != "debug") setIgnore(true)
+  }
 }
 
 dependencies {
