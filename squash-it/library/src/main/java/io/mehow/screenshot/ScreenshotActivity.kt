@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
@@ -15,9 +14,11 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updateMargins
+import androidx.core.view.updatePadding
 import androidx.palette.graphics.Palette
 import io.mehow.BaseActivity
 import io.mehow.FileParceler
+import io.mehow.screenshot.PaintboxView.Callback
 import io.mehow.squashit.R
 import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.extensions.enableEdgeToEdgeAndNightMode
@@ -38,11 +39,7 @@ internal class ScreenshotActivity : BaseActivity() {
     contrastBackground()
     setContentView(R.layout.edit_screenshot)
     setUpScreenshot()
-
-    findViewById<View>(R.id.goToReport).setOnClickListener {
-      SquashItConfig.create(this).startActivity(this, screenshotFile)
-      finish()
-    }
+    setUpPaintbox()
   }
 
   private fun contrastBackground() {
@@ -57,10 +54,29 @@ internal class ScreenshotActivity : BaseActivity() {
     screenshot.setImageBitmap(screenshotBitmap)
     ViewCompat.setOnApplyWindowInsetsListener(screenshot) { _, insets ->
       screenshot.updateLayoutParams<MarginLayoutParams> {
-        updateMargins(top = (insets.systemWindowInsetTop * 1.5).toInt())
+        updateMargins(top = insets.systemWindowInsetTop)
       }
       return@setOnApplyWindowInsetsListener insets
     }
+  }
+
+  private fun setUpPaintbox() {
+    val paintbox = findViewById<PaintboxView>(R.id.paintbox)
+    ViewCompat.setOnApplyWindowInsetsListener(paintbox) { _, insets ->
+      paintbox.updatePadding(bottom = insets.systemWindowInsetBottom)
+      return@setOnApplyWindowInsetsListener insets
+    }
+    paintbox.setCallback(object : Callback {
+      override fun onClearCanvas() = Unit
+      override fun onChangeBrush(brush: Brush) = Unit
+      override fun onUndo() = Unit
+      override fun onRedo() = Unit
+      override fun onSave() {
+        val activity = this@ScreenshotActivity
+        SquashItConfig.create(activity).startActivity(activity, screenshotFile)
+        finish()
+      }
+    })
   }
 
   companion object {

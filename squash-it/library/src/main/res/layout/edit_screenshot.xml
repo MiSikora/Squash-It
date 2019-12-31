@@ -11,20 +11,20 @@
       android:layout_width="0dp"
       android:layout_height="0dp"
       android:importantForAccessibility="no"
+      app:layout_constraintBottom_toTopOf="@+id/paintbox"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHeight_percent="0.8"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintWidth_percent="0.8" />
 
-  <Button
-      android:id="@+id/goToReport"
+  <include
+      android:id="@+id/paintbox"
+      layout="@layout/paintbox"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginHorizontal="16dp"
-      android:layout_marginTop="8dp"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/screenshot" />
+      app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

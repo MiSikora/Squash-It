@@ -36,5 +36,10 @@
   <string name="squash_it_submit">Submit</string>
   <string name="squash_it_submitting">Submitting…</string>
   <string name="squash_it_report_an_issue">[%s] Report an issue</string>
-
+  <string name="squash_it_clear_canvas">Clear canvas</string>
+  <string name="squash_it_change_brush_color">Change brush color</string>
+  <string name="squash_it_change_brush_width">Change brush width</string>
+  <string name="squash_it_undo">Undo</string>
+  <string name="squash_it_redo">Redo</string>
+  <string name="squash_it_save">Save</string>
 </resources>

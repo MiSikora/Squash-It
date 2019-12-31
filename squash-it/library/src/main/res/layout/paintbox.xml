@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.mehow.screenshot.PaintboxView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/paintbox"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary">
+
+  <Space
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_weight="1" />
+
+  <ImageView
+      android:id="@+id/clearCanvas"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="?android:attr/selectableItemBackgroundBorderless"
+      android:contentDescription="@string/squash_it_clear_canvas"
+      android:padding="8dp"
+      app:srcCompat="@drawable/ic_clear_canvas" />
+
+  <Space
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_weight="1" />
+
+  <ImageView
+      android:id="@+id/changeBrushColor"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="?android:attr/selectableItemBackgroundBorderless"
+      android:contentDescription="@string/squash_it_change_brush_color"
+      android:padding="8dp"
+      app:srcCompat="@drawable/ic_palette" />
+
+  <Space
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_weight="1" />
+
+  <ImageView
+      android:id="@+id/changeBrushWidth"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="?android:attr/selectableItemBackgroundBorderless"
+      android:contentDescription="@string/squash_it_change_brush_width"
+      android:padding="8dp"
+      app:srcCompat="@drawable/ic_brush" />
+
+  <Space
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_weight="1" />
+
+  <ImageView
+      android:id="@+id/undo"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="?android:attr/selectableItemBackgroundBorderless"
+      android:contentDescription="@string/squash_it_undo"
+      android:padding="8dp"
+      app:srcCompat="@drawable/ic_undo" />
+
+  <Space
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_weight="1" />
+
+  <ImageView
+      android:id="@+id/redo"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="?android:attr/selectableItemBackgroundBorderless"
+      android:contentDescription="@string/squash_it_redo"
+      android:padding="8dp"
+      app:srcCompat="@drawable/ic_redo" />
+
+  <Space
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_weight="1" />
+
+  <ImageView
+      android:id="@+id/save"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="?android:attr/selectableItemBackgroundBorderless"
+      android:contentDescription="@string/squash_it_save"
+      android:padding="8dp"
+      app:srcCompat="@drawable/ic_save" />
+
+  <Space
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_weight="1" />
+
+</io.mehow.screenshot.PaintboxView>
