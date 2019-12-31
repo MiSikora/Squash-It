@@ -2,7 +2,9 @@ package io.mehow.squashit.screenshot
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Paint.Cap
 import android.graphics.Paint.Join
@@ -71,7 +73,12 @@ internal class CanvasView @JvmOverloads constructor(
     invalidate()
   }
 
-  val bitmap get() = createBitmap(width, height).applyCanvas { drawHistory() }
+  fun createAdjustedBitmap(width: Int, height: Int): Bitmap {
+    val scale = height.toFloat() / this.height.toFloat()
+    return createBitmap(width, height).applyCanvas {
+      drawHistory(scale)
+    }
+  }
 
   override fun onDraw(canvas: Canvas) {
     super.onDraw(canvas)
@@ -120,8 +127,11 @@ internal class CanvasView @JvmOverloads constructor(
     return true
   }
 
-  private fun Canvas.drawHistory() {
-    for ((path, paint) in pathHistory.zip(paintHistory)) {
+  private fun Canvas.drawHistory(scale: Float = 1f) {
+    val scaleMatrix = Matrix().apply { setScale(scale, scale) }
+    val scaledPaths = if (scale == 1f) pathHistory
+    else pathHistory.map { Path().apply { addPath(it, scaleMatrix) } }
+    for ((path, paint) in scaledPaths.zip(paintHistory)) {
       drawPath(path, paint)
     }
   }

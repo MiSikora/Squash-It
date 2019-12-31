@@ -29,9 +29,12 @@ internal class PaintboxCanvasCallback(
   }
 
   override fun onSave() {
-    val bitmap = createBitmap(screenshotBitmap.width, screenshotBitmap.height).applyCanvas {
+    val width = screenshotBitmap.width
+    val height = screenshotBitmap.height
+    val canvasBitmap = canvasView.createAdjustedBitmap(width, height)
+    val bitmap = createBitmap(width, height).applyCanvas {
       drawBitmap(screenshotBitmap, Matrix(), null)
-      drawBitmap(canvasView.bitmap, Matrix(), null)
+      drawBitmap(canvasBitmap, Matrix(), null)
     }
     val screenshot = ScreenshotFactory.createScreenshotFile(activity, bitmap)
     SquashItConfig.create(activity).startActivity(activity, screenshot)
