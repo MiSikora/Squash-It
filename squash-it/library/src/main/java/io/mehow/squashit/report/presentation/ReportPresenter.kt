@@ -12,15 +12,17 @@ import io.mehow.squashit.report.api.JiraApi
 import io.mehow.squashit.report.api.NewIssueFieldsRequest
 import io.mehow.squashit.report.api.adapter.EpicFieldsResponseJsonAdapter
 import io.mehow.squashit.report.api.adapter.NewIssueFieldsRequestJsonAdapter
+import io.mehow.squashit.report.extensions.shareIn
 import io.mehow.squashit.report.presentation.Event.SyncProject
 import io.mehow.squashit.report.presentation.Event.UpdateInput
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.merge
@@ -37,7 +39,7 @@ internal class ReportPresenter internal constructor(
 ) {
   private val uiModelsChannel = ConflatedBroadcastChannel<UiModel>()
 
-  private val eventsChannel = BroadcastChannel<Event>(1)
+  private val eventsChannel = Channel<Event>()
   private val eventConsumers = setOf(
       SyncProjectConsumer(jiraService)::consume,
       UpdateInputConsumer::consume,
@@ -62,7 +64,8 @@ internal class ReportPresenter internal constructor(
 
   fun start(dispatcher: CoroutineDispatcher) {
     presenterScope.launch(dispatcher) {
-      eventConsumers.map { it.invoke(eventsChannel.asFlow()) }
+      val events = eventsChannel.consumeAsFlow().shareIn(this)
+      eventConsumers.map { it.invoke(events) }
           .merge()
           .scan(UiModel.Initial) { model, (update) -> model.update() }
           .distinctUntilChanged()
