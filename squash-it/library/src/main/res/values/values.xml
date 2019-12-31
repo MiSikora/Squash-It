@@ -10,4 +10,5 @@
   <string-array name="squash_it_jira_issue_types_filter" />
   <integer name="squash_it_report_pointer_count">2</integer>
   <color name="squash_it_report_progress_color">@color/squash_it_royal_blue700</color>
+  <integer name="squash_it_logs_capacity">2000</integer>
 </resources>

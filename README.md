@@ -115,6 +115,14 @@ JIRA uses custom fields for epics in its model. By default, they are configured 
 <string name="squash_it_jira_epic_write_field_name">value_b</string>
 ```
 
+### Logs capacity
+
+By default last 2000 logs are kept in a journal. To change this behaviour you need to override `integer` resource.
+
+```xml
+<integer name="squash_it_logs_capacity">5000</integer>
+```
+
 ## Sample
 
 You can check the integration with your JIRA by running [the sample](sample/) project. You'll need however to overwrite the [configuration file](sample/src/main/res/values/strings.xml).

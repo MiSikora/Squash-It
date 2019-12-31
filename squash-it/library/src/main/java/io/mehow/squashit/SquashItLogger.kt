@@ -17,8 +17,8 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 object SquashItLogger {
-  private const val Capacity = 2_000
-  private val logEntries = ArrayDeque<LogEntry>(Capacity)
+  private var capacity = 2_000
+  private var logEntries = ArrayDeque<LogEntry>(capacity)
   private val fileNameFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.'log'", Locale.US)
   private val mainThreadHandler = Handler(Looper.getMainLooper())
 
@@ -27,8 +27,15 @@ object SquashItLogger {
   }
 
   private fun addLogEntry(entry: LogEntry) = synchronized(this) {
-    if (logEntries.size == Capacity) logEntries.remove()
+    if (logEntries.size == capacity) logEntries.remove()
     logEntries.add(entry)
+  }
+
+  internal fun setLogsCapacity(capacity: Int) = synchronized(this) {
+    this.capacity = capacity
+    val newQueue = ArrayDeque<LogEntry>(capacity)
+    newQueue.addAll(logEntries.take(capacity))
+    logEntries = newQueue
   }
 
   internal suspend fun createLogFile(context: Context): File? {

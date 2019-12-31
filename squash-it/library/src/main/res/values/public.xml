@@ -10,4 +10,5 @@
   <public name="squash_it_jira_issue_types_filter" type="string-array" />
   <public name="squash_it_report_pointer_count" type="integer" />
   <public name="squash_it_report_progress_color" type="integer" />
+  <public name="squash_it_logs_capacity" type="integer" />
 </resources>

@@ -6,6 +6,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
 import com.mattprecious.telescope.TelescopeLayout
+import io.mehow.squashit.R
 import io.mehow.squashit.SquashItLogger
 import io.mehow.squashit.TelescopeCallback
 import io.mehow.squashit.screenshot.ScreenshotFactory
@@ -15,6 +16,8 @@ internal class SquashItInitializer : ContentProvider() {
     val application = context?.applicationContext as? Application ?: return false
     TelescopeLayout.cleanUp(application)
     SquashItLogger.cleanUp(application)
+    val logsCapacity = application.resources.getInteger(R.integer.squash_it_logs_capacity)
+    SquashItLogger.setLogsCapacity(logsCapacity)
     ScreenshotFactory.cleanUp(application)
     application.registerActivityLifecycleCallbacks(TelescopeCallback)
     return true
