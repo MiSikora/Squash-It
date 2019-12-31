@@ -27,6 +27,10 @@ internal class CanvasView @JvmOverloads constructor(
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+  init {
+    isEnabled = true
+  }
+
   private var paint = newPaint()
   private var brush: Brush? = null
 
@@ -46,7 +50,7 @@ internal class CanvasView @JvmOverloads constructor(
   }
 
   fun undo() {
-    if (pathHistory.isNotEmpty()) {
+    if (pathHistory.isNotEmpty() && isEnabled) {
       pathRedoHistory.add(pathHistory.removeLast())
       paintRedoHistory.add(paintHistory.removeLast())
       strokeRedoHistory.add(strokeHistory.removeLast())
@@ -55,7 +59,7 @@ internal class CanvasView @JvmOverloads constructor(
   }
 
   fun redo() {
-    if (pathRedoHistory.isNotEmpty()) {
+    if (pathRedoHistory.isNotEmpty() && isEnabled) {
       pathHistory.add(pathRedoHistory.removeLast())
       paintHistory.add(paintRedoHistory.removeLast())
       strokeHistory.add(strokeRedoHistory.removeLast())
@@ -64,6 +68,8 @@ internal class CanvasView @JvmOverloads constructor(
   }
 
   fun clearCanvas() {
+    if (!isEnabled) return
+
     pathRedoHistory.clear()
     paintRedoHistory.clear()
     strokeRedoHistory.clear()
@@ -73,7 +79,9 @@ internal class CanvasView @JvmOverloads constructor(
     invalidate()
   }
 
-  fun createAdjustedBitmap(width: Int, height: Int): Bitmap {
+  fun createAdjustedBitmap(width: Int, height: Int): Bitmap? {
+    if (!isEnabled) return null
+
     val scale = height.toFloat() / this.height.toFloat()
     return createBitmap(width, height).applyCanvas {
       drawHistory(scale)
@@ -88,6 +96,7 @@ internal class CanvasView @JvmOverloads constructor(
 
   @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
+    if (!isEnabled) return false
     val brush = brush ?: return false
 
     val x = event.x

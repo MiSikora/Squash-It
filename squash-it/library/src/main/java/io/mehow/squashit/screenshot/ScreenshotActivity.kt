@@ -22,15 +22,19 @@ import io.mehow.squashit.R
 import io.mehow.squashit.report.extensions.enableEdgeToEdgeAndNightMode
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.TypeParceler
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import java.io.File
 
 internal class ScreenshotActivity : BaseActivity() {
   private lateinit var screenshotFile: File
+  lateinit var screenshotBitmap: Bitmap
+  val scope = MainScope()
 
   override fun onCreate(inState: Bundle?) {
     super.onCreate(inState)
     screenshotFile = intent.getParcelableExtra<Args>(ArgsKey)!!.screenshotFile
-    val screenshotBitmap = BitmapFactory.decodeFile(screenshotFile.path)
+    screenshotBitmap = BitmapFactory.decodeFile(screenshotFile.path)
 
     window.decorView.enableEdgeToEdgeAndNightMode()
     contrastBackground(screenshotBitmap)
@@ -38,8 +42,13 @@ internal class ScreenshotActivity : BaseActivity() {
     setUpScreenshot(screenshotBitmap)
     val paintbox = setUpPaintbox()
     val canvas = setUpScreenshotCanvas(paintbox)
-    val callback = PaintboxCanvasCallback(canvas, this, screenshotBitmap)
+    val callback = PaintboxCanvasCallback(canvas, this)
     paintbox.setCallback(callback)
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    scope.cancel()
   }
 
   private fun contrastBackground(bitmap: Bitmap) {
