@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.mehow.squashit.view.AddOnsView
+<io.mehow.squashit.report.view.AddOnsView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/addOnsPage"
     android:layout_width="match_parent"

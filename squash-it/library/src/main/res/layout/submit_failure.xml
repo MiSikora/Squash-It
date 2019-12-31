@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.mehow.squashit.view.FailedToSubmitView
+<io.mehow.squashit.report.view.FailedToSubmitView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/submitFailureRoot"
@@ -53,4 +53,4 @@
       app:layout_constraintStart_toEndOf="@+id/goBackButton"
       app:layout_constraintTop_toTopOf="@+id/goBackButton" />
 
-</io.mehow.squashit.view.FailedToSubmitView>
+</io.mehow.squashit.report.view.FailedToSubmitView>

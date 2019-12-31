@@ -4,14 +4,14 @@
 
   <application>
     <activity
-        android:name="io.mehow.squashit.ReportActivity"
+        android:name="io.mehow.squashit.report.ReportActivity"
         android:exported="false"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.SquashIt"
         android:windowSoftInputMode="adjustPan" />
 
     <activity
-        android:name="io.mehow.squashit.MisconfigurationActivity"
+        android:name="io.mehow.squashit.report.MisconfigurationActivity"
         android:exported="false"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.SquashIt" />
@@ -23,7 +23,7 @@
         android:theme="@style/Theme.SquashIt" />
 
     <provider
-        android:name="io.mehow.squashit.SquashItInitializer"
+        android:name="io.mehow.squashit.report.SquashItInitializer"
         android:authorities="${applicationId}.SquashItInitializer"
         android:exported="false" />
     <provider

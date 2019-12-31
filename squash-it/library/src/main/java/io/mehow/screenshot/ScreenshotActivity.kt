@@ -16,8 +16,8 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updateMargins
 import androidx.core.view.updatePadding
 import androidx.palette.graphics.Palette
-import io.mehow.BaseActivity
-import io.mehow.FileParceler
+import io.mehow.squashit.BaseActivity
+import io.mehow.squashit.FileParceler
 import io.mehow.screenshot.PaintboxView.Callback
 import io.mehow.squashit.R
 import io.mehow.squashit.SquashItConfig

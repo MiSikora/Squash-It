@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.mehow.squashit.view.ReportView
+<io.mehow.squashit.report.view.ReportView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/reportRoot"
     android:layout_width="match_parent"
@@ -28,4 +28,4 @@
       android:layout_height="0dp"
       android:layout_weight="1" />
 
-</io.mehow.squashit.view.ReportView>
+</io.mehow.squashit.report.view.ReportView>

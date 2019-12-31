@@ -9,7 +9,7 @@ import android.view.ViewGroup.LayoutParams
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.core.content.ContextCompat
 import com.mattprecious.telescope.TelescopeLayout
-import io.mehow.BaseActivity
+import io.mehow.squashit.report.ReportLens
 
 internal object TelescopeCallback : ActivityLifecycleCallbacks {
   override fun onActivityCreated(activity: Activity, inState: Bundle?) {
