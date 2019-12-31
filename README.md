@@ -7,9 +7,10 @@
 
 ## How it works?
 
-Squash It allows you to report JIRA issues or add comments to existing ones. You can open the report tool by holding two fingers on your screen. This will capture a screenshot of the app's current window and let you provide the issue details.
+Squash It allows you to report JIRA issues or add comments to existing ones. You can open the report tool by holding two fingers on your screen. This will capture an editable screenshot of the app's current window and let you provide the issue details.
 
-![](images/sample.gif)
+![](images/sample-screenshot.gif)
+![](images/sample-report.gif)
 
 The final report will contain all the details you provided as well as some metadata about the device.
 
@@ -39,7 +40,7 @@ android {
 To integrate the tool with your app you need to add the dependency to your project.
 
 ```groovy
-debugImplementation "io.mehow.squashit:squashit:0.2.0"
+debugImplementation "io.mehow.squashit:squashit:0.3.0"
 ```
 
 You should also delegate logs to `SquashItLogger` so they can be attached to the reports.
@@ -52,7 +53,7 @@ myLogger.log { priority, tag, message -> SquashItLogger.log(priority, tag, messa
 If you use [Timber](https://github.com/JakeWharton/timber) all you need to do is to depend on a Timber artifact instead.
 
 ```groovy
-debugImplementation "io.mehow.squashit:timber:0.2.0"
+debugImplementation "io.mehow.squashit:timber:0.3.0"
 ```
 
 Also, you need to configure the tool with your JIRA project. For that, you have to override some `string` resources.

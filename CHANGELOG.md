@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+Version 0.3.0 *(2019-12-31)*
+----------------------------
+
+* Add a feature for screenshot preview and editing.
+* Fix a bug with screenshots not being properly detected.
+* Fix a bug with Telescope attaching to other activities.
+* Bring back centered content.
+* Restructure internal API packages.
+
 Version 0.2.0 *(2019-12-26)*
 ----------------------------
 
