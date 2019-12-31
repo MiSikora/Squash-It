@@ -2,10 +2,12 @@
 <io.mehow.screenshot.PaintboxView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/paintbox"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary">
+    android:background="?attr/colorPrimary"
+    tools:ignore="Overdraw">
 
   <Space
       android:layout_width="0dp"
@@ -41,11 +43,11 @@
       android:layout_weight="1" />
 
   <ImageView
-      android:id="@+id/changeBrushWidth"
+      android:id="@+id/changeBrushSize"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:background="?android:attr/selectableItemBackgroundBorderless"
-      android:contentDescription="@string/squash_it_change_brush_width"
+      android:contentDescription="@string/squash_it_change_brush_size"
       android:padding="8dp"
       app:srcCompat="@drawable/ic_brush" />
 

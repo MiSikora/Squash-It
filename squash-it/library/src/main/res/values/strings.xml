@@ -38,8 +38,12 @@
   <string name="squash_it_report_an_issue">[%s] Report an issue</string>
   <string name="squash_it_clear_canvas">Clear canvas</string>
   <string name="squash_it_change_brush_color">Change brush color</string>
-  <string name="squash_it_change_brush_width">Change brush width</string>
+  <string name="squash_it_change_brush_size">Change brush size</string>
   <string name="squash_it_undo">Undo</string>
   <string name="squash_it_redo">Redo</string>
   <string name="squash_it_save">Save</string>
+  <string name="squash_it_select_brush_color">Select brush color</string>
+  <string name="squash_it_select_brush_size">Select brush size</string>
+  <string name="squash_it_cancel">Cancel</string>
+  <string name="squash_it_select">Select</string>
 </resources>

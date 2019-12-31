@@ -50,6 +50,13 @@ internal class PaintboxView @JvmOverloads constructor(
   override fun onFinishInflate() {
     super.onFinishInflate()
     findViewById<View>(R.id.clearCanvas).setOnClickListener { callback?.onClearCanvas() }
+    val factory = BrushPartsFactory(context, brushColors, brushSizes)
+    findViewById<View>(R.id.changeBrushColor).setOnClickListener {
+      factory.showColorSelection(brush.color) { brush = brush.copy(color = it) }
+    }
+    findViewById<View>(R.id.changeBrushSize).setOnClickListener {
+      factory.showWidthSelection(brush.size) { brush = brush.copy(size = it) }
+    }
     findViewById<View>(R.id.undo).setOnClickListener { callback?.onUndo() }
     findViewById<View>(R.id.redo).setOnClickListener { callback?.onRedo() }
     findViewById<View>(R.id.save).setOnClickListener { callback?.onSave() }

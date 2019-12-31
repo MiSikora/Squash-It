@@ -7,6 +7,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 internal data class Brush(
-  @Px val width: Int,
+  @Px val size: Int,
   @ColorInt val color: Int
 ) : Parcelable
