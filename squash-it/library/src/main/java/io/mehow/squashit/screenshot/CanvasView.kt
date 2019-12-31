@@ -130,7 +130,7 @@ internal class CanvasView @JvmOverloads constructor(
   private fun Canvas.drawHistory(scale: Float = 1f) {
     val scaleMatrix = Matrix().apply { setScale(scale, scale) }
     val scaledPaths = if (scale == 1f) pathHistory
-    else pathHistory.map { Path().apply { addPath(it, scaleMatrix) } }
+    else pathHistory.map(::Path).onEach { it.transform(scaleMatrix) }
     for ((path, paint) in scaledPaths.zip(paintHistory)) {
       drawPath(path, paint)
     }

@@ -20,9 +20,7 @@ internal class MisconfigurationActivity : BaseActivity() {
   override fun onCreate(inState: Bundle?) {
     super.onCreate(inState)
     window.decorView.enableEdgeToEdgeAndNightMode()
-    val config = intent.getParcelableExtra<Args>(
-        ArgsKey
-    )!!.config
+    val config = intent.getParcelableExtra<Args>(ArgsKey)!!.config
     setContentView(layout.squash_it_misconfiguration)
 
     findViewById<View>(id.projectKeyLabel).isVisible = !config.hasProjectKey
@@ -38,23 +36,16 @@ internal class MisconfigurationActivity : BaseActivity() {
 
   override fun onBackPressed() {
     super.onBackPressed()
-    overridePendingTransition(
-        anim.no_op,
-        anim.slide_down
-    )
+    overridePendingTransition(anim.no_op, anim.slide_down)
   }
 
   companion object {
     private const val ArgsKey = "MisconfigurationActivity.Args"
 
     fun start(activity: Activity, args: Args) {
-      val start = Intent(activity, MisconfigurationActivity::class.java).putExtra(
-          ArgsKey, args)
+      val start = Intent(activity, MisconfigurationActivity::class.java).putExtra(ArgsKey, args)
       activity.startActivity(start)
-      activity.overridePendingTransition(
-          anim.slide_up,
-          anim.no_op
-      )
+      activity.overridePendingTransition(anim.slide_up, anim.no_op)
     }
   }
 

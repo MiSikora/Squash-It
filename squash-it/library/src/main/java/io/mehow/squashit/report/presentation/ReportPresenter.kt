@@ -96,11 +96,9 @@ internal class ReportPresenter internal constructor(
           .add(EpicJsonFactory(config))
           .add(KotlinJsonAdapterFactory())
           .build()
-      val projectInfoStore =
-        ProjectInfoStore(projectInfoDir, moshi)
+      val projectInfoStore = ProjectInfoStore(projectInfoDir, moshi)
       val jiraApi = JiraApi.create(moshi, config)
-      val jiraService =
-        JiraService(config, projectInfoStore, jiraApi)
+      val jiraService = JiraService(config, projectInfoStore, jiraApi)
       return ReportPresenter(jiraService, screenshotFileProvider, logFileProvider)
     }
   }

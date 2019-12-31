@@ -43,8 +43,6 @@ internal object AttachmentFactory {
       putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
       putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
     }
-    activity.startActivityForResult(intent,
-        RequestCode
-    )
+    activity.startActivityForResult(intent, RequestCode)
   }
 }

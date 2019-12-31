@@ -83,12 +83,7 @@ internal sealed class SquashItConfig : Parcelable {
 
       val isInvalid = listOf(hasProjectKey, hasJiraUrl, hasUserEmail, hasUserToken).any { !it }
 
-      return if (isInvalid) Invalid(
-          hasProjectKey,
-          hasJiraUrl,
-          hasUserEmail,
-          hasUserToken
-      )
+      return if (isInvalid) Invalid(hasProjectKey, hasJiraUrl, hasUserEmail, hasUserToken)
       else Valid(
           projectKey,
           jiraUrl!!,

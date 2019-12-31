@@ -59,14 +59,9 @@ internal class ReportActivity : BaseActivity() {
 
   override fun onCreate(inState: Bundle?) {
     super.onCreate(inState)
-    val (config, screenshot) = intent.getParcelableExtra<Args>(
-        ArgsKey
-    )!!
+    val (config, screenshot) = intent.getParcelableExtra<Args>(ArgsKey)!!
     presenter = startPresenter(config.toServiceConfig(), screenshot)
-    inflaterFactory = SquashItInflaterFactory(
-        layoutInflater.factory2,
-        presenter
-    )
+    inflaterFactory = SquashItInflaterFactory(layoutInflater.factory2, presenter)
     window.decorView.enableEdgeToEdgeAndNightMode()
     setContentView(layout.squash_it)
     content = findViewById(id.activityContent)
@@ -112,20 +107,13 @@ internal class ReportActivity : BaseActivity() {
       mainScope.launch { presenter.sendEvent(GoIdle) }
     } else {
       super.onBackPressed()
-      overridePendingTransition(
-          anim.no_op,
-          anim.slide_down
-      )
+      overridePendingTransition(anim.no_op, anim.slide_down)
     }
   }
 
   private val View.isEntryScreen: Boolean
     get() {
-      return id in listOf(
-          R.id.initFailureRoot,
-          R.id.initProgressRoot,
-          R.id.reportRoot
-      )
+      return id in listOf(R.id.initFailureRoot, R.id.initProgressRoot, R.id.reportRoot)
     }
 
   override fun onCreateView(name: String, ctx: Context, attrs: AttributeSet): View? {
@@ -145,11 +133,7 @@ internal class ReportActivity : BaseActivity() {
         config,
         filesDir,
         { screenshot },
-        { withContext(Dispatchers.IO) {
-          SquashItLogger.createLogFile(
-              this@ReportActivity
-          )
-        } }
+        { withContext(Dispatchers.IO) { SquashItLogger.createLogFile(this@ReportActivity) } }
     )
     presenter.start(Dispatchers.Unconfined)
     return presenter
@@ -163,8 +147,7 @@ internal class ReportActivity : BaseActivity() {
       val uri = data?.data ?: return
       val item = AttachmentFactory.create(contentResolver, uri)
       if (item != null) mainScope.launch { presenter.sendEvent(UpdateInput.attach(item)) }
-      else Toast.makeText(this,
-          string.squash_it_error, LENGTH_LONG).show()
+      else Toast.makeText(this, string.squash_it_error, LENGTH_LONG).show()
     }
   }
 
@@ -172,13 +155,9 @@ internal class ReportActivity : BaseActivity() {
     private const val ArgsKey = "ReportActivity.Args"
 
     fun start(activity: Activity, args: Args) {
-      val start = Intent(activity, ReportActivity::class.java).putExtra(
-          ArgsKey, args)
+      val start = Intent(activity, ReportActivity::class.java).putExtra(ArgsKey, args)
       activity.startActivity(start)
-      activity.overridePendingTransition(
-          anim.slide_up,
-          anim.no_op
-      )
+      activity.overridePendingTransition(anim.slide_up, anim.no_op)
     }
   }
 

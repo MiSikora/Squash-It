@@ -10,10 +10,6 @@ internal data class ParcelableAppInfo(
   val packageName: String
 ) : Parcelable {
   fun toAppInfo(): AppInfo {
-    return AppInfo(
-        versionName,
-        versionCode,
-        packageName
-    )
+    return AppInfo(versionName, versionCode, packageName)
   }
 }

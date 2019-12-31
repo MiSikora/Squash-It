@@ -13,18 +13,12 @@ import java.util.Date
 import java.util.Locale
 
 internal object ScreenshotFactory {
-  private val fileNameFormatter = SimpleDateFormat(
-      "yyyy-MM-dd'T'HH:mm:ss.'jpeg'",
-      Locale.US
-  )
+  private val fileNameFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.'jpeg'", Locale.US)
 
   fun createScreenshotFile(context: Context, bitmap: Bitmap): File? {
     val dir = context.screenshotDirectory ?: return null
     return try {
-      val output = File(
-          dir,
-          fileNameFormatter.format(Date())
-      )
+      val output = File(dir, fileNameFormatter.format(Date()))
       output.sink().buffer().use { sink ->
         val bitmapStream = ByteArrayOutputStream()
         bitmap.compress(JPEG, 100, bitmapStream)

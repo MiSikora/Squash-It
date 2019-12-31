@@ -16,11 +16,7 @@ internal data class ParcelableLocale(
 
   companion object {
     fun fromLocale(locale: Locale): ParcelableLocale {
-      return ParcelableLocale(
-          locale.language,
-          locale.country,
-          locale.variant
-      )
+      return ParcelableLocale(locale.language, locale.country, locale.variant)
     }
   }
 }

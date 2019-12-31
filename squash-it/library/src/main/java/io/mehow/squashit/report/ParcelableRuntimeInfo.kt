@@ -25,22 +25,14 @@ internal data class ParcelableRuntimeInfo(
   val os: ParcelableOsInfo
 ) : Parcelable {
   fun toRuntimeInfo(): RuntimeInfo {
-    return RuntimeInfo(
-        app.toAppInfo(),
-        device.toDeviceInfo(),
-        os.toOsInfo()
-    )
+    return RuntimeInfo(app.toAppInfo(), device.toDeviceInfo(), os.toOsInfo())
   }
 
   companion object {
     fun create(context: Context): ParcelableRuntimeInfo {
       return ParcelableRuntimeInfo(
-          createAppInfo(
-              context
-          ),
-          createDeviceInfo(
-              context
-          ),
+          createAppInfo(context),
+          createDeviceInfo(context),
           createOsInfo()
       )
     }
@@ -51,11 +43,7 @@ internal data class ParcelableRuntimeInfo(
       val versionName = packageInfo?.versionName ?: "UNKNOWN"
       val versionCode = if (packageInfo == null) "UNKNOWN"
       else "${PackageInfoCompat.getLongVersionCode(packageInfo)}"
-      return ParcelableAppInfo(
-          versionName,
-          versionCode,
-          packageName
-      )
+      return ParcelableAppInfo(versionName, versionCode, packageName)
     }
 
     private fun createDeviceInfo(context: Context): ParcelableDeviceInfo {

@@ -11,12 +11,8 @@ import io.mehow.squashit.report.presentation.UserInput
 
 internal object ReportFactory {
   fun create(input: UserInput) = when (input.reportType) {
-    CreateNewIssue -> createNewReport(
-        input
-    )
-    UpdateIssue -> createUpdateReport(
-        input
-    )
+    CreateNewIssue -> createNewReport(input)
+    UpdateIssue -> createUpdateReport(input)
   }
 
   private fun createNewReport(userInput: UserInput): ReportAttempt {
