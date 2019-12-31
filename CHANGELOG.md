@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 0.3.1 *(2019-12-31)*
+----------------------------
+
+* Improve threading for file generation.
+* Use Snackbars instead of Toasts for error prompts.
+* Allow to override log file entry count.
+
 Version 0.3.0 *(2019-12-31)*
 ----------------------------
 

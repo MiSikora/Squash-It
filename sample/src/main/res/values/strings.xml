@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
   <string name="app_name">Squash It Sample</string>
 
-  <string name="squash_it_jira_server_url">YOUR_JIRA_URL</string>
+  <string name="squash_it_jira_server_url">JIRA_SERVER_URL</string>
   <string name="squash_it_jira_user_email">JIRA_USER_EMAIL</string>
   <string name="squash_it_jira_user_token">JIRA_USER_TOKEN</string>
   <string name="squash_it_jira_project_key">JIRA_PROJECT_KEY</string>
