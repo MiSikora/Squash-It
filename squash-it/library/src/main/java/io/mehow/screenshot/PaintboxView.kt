@@ -69,7 +69,7 @@ internal class PaintboxView @JvmOverloads constructor(
     } else super.onRestoreInstanceState(state)
   }
 
-  override fun onSaveInstanceState(): Parcelable? {
+  override fun onSaveInstanceState(): Bundle {
     return bundleOf(
         "instance" to super.onSaveInstanceState(),
         "brush" to brush

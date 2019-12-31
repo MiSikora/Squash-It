@@ -18,40 +18,40 @@ import androidx.core.view.updatePadding
 import androidx.palette.graphics.Palette
 import io.mehow.squashit.BaseActivity
 import io.mehow.squashit.FileParceler
-import io.mehow.screenshot.PaintboxView.Callback
 import io.mehow.squashit.R
-import io.mehow.squashit.SquashItConfig
-import io.mehow.squashit.extensions.enableEdgeToEdgeAndNightMode
+import io.mehow.squashit.report.extensions.enableEdgeToEdgeAndNightMode
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.TypeParceler
 import java.io.File
 
 internal class ScreenshotActivity : BaseActivity() {
   private lateinit var screenshotFile: File
-  private lateinit var screenshotBitmap: Bitmap
 
   override fun onCreate(inState: Bundle?) {
     super.onCreate(inState)
     screenshotFile = intent.getParcelableExtra<Args>(ArgsKey)!!.screenshotFile
-    screenshotBitmap = BitmapFactory.decodeFile(screenshotFile.path)
+    val screenshotBitmap = BitmapFactory.decodeFile(screenshotFile.path)
 
     window.decorView.enableEdgeToEdgeAndNightMode()
-    contrastBackground()
+    contrastBackground(screenshotBitmap)
     setContentView(R.layout.edit_screenshot)
-    setUpScreenshot()
-    setUpPaintbox()
+    setUpScreenshot(screenshotBitmap)
+    val paintbox = setUpPaintbox()
+    val canvas = setUpScreenshotCanvas(paintbox)
+    val callback = PaintboxCanvasCallback(canvas, this, screenshotBitmap)
+    paintbox.setCallback(callback)
   }
 
-  private fun contrastBackground() {
-    val palette = Palette.from(screenshotBitmap).clearFilters().generate()
+  private fun contrastBackground(bitmap: Bitmap) {
+    val palette = Palette.from(bitmap).clearFilters().generate()
     val isDark = palette.dominantSwatch
         ?.let { ColorUtils.calculateLuminance(it.rgb) < 0.25 } == true
     delegate.localNightMode = if (isDark) MODE_NIGHT_NO else MODE_NIGHT_YES
   }
 
-  private fun setUpScreenshot() {
+  private fun setUpScreenshot(bitmap: Bitmap) {
     val screenshot = findViewById<ImageView>(R.id.screenshot)
-    screenshot.setImageBitmap(screenshotBitmap)
+    screenshot.setImageBitmap(bitmap)
     ViewCompat.setOnApplyWindowInsetsListener(screenshot) { _, insets ->
       screenshot.updateLayoutParams<MarginLayoutParams> {
         updateMargins(top = insets.systemWindowInsetTop)
@@ -60,23 +60,19 @@ internal class ScreenshotActivity : BaseActivity() {
     }
   }
 
-  private fun setUpPaintbox() {
+  private fun setUpPaintbox(): PaintboxView {
     val paintbox = findViewById<PaintboxView>(R.id.paintbox)
     ViewCompat.setOnApplyWindowInsetsListener(paintbox) { _, insets ->
       paintbox.updatePadding(bottom = insets.systemWindowInsetBottom)
       return@setOnApplyWindowInsetsListener insets
     }
-    paintbox.setCallback(object : Callback {
-      override fun onClearCanvas() = Unit
-      override fun onChangeBrush(brush: Brush) = Unit
-      override fun onUndo() = Unit
-      override fun onRedo() = Unit
-      override fun onSave() {
-        val activity = this@ScreenshotActivity
-        SquashItConfig.create(activity).startActivity(activity, screenshotFile)
-        finish()
-      }
-    })
+    return paintbox
+  }
+
+  private fun setUpScreenshotCanvas(paintboxView: PaintboxView): CanvasView {
+    val canvas = findViewById<CanvasView>(R.id.screenshotCanvas)
+    canvas.setBrush(paintboxView.brush)
+    return canvas
   }
 
   companion object {

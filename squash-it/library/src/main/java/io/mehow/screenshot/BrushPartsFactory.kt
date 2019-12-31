@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.mehow.squashit.R
-import io.mehow.squashit.extensions.layoutInflater
+import io.mehow.squashit.report.extensions.layoutInflater
 
 internal class BrushPartsFactory(
   private val context: Context,

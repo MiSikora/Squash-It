@@ -18,6 +18,15 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintWidth_percent="0.8" />
 
+  <io.mehow.screenshot.CanvasView
+      android:id="@+id/screenshotCanvas"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      app:layout_constraintBottom_toBottomOf="@+id/screenshot"
+      app:layout_constraintEnd_toEndOf="@+id/screenshot"
+      app:layout_constraintStart_toStartOf="@+id/screenshot"
+      app:layout_constraintTop_toTopOf="@+id/screenshot" />
+
   <include
       android:id="@+id/paintbox"
       layout="@layout/paintbox"
