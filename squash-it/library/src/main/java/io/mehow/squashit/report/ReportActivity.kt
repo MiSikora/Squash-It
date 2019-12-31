@@ -8,21 +8,16 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.LayoutRes
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.get
 import androidx.core.view.isNotEmpty
 import androidx.transition.Fade
 import androidx.transition.TransitionManager
+import com.google.android.material.snackbar.Snackbar
 import io.mehow.squashit.BaseActivity
 import io.mehow.squashit.FileParceler
 import io.mehow.squashit.R
-import io.mehow.squashit.R.anim
-import io.mehow.squashit.R.id
-import io.mehow.squashit.R.layout
-import io.mehow.squashit.R.string
 import io.mehow.squashit.SquashItLogger
 import io.mehow.squashit.report.SquashItConfig.Valid
 import io.mehow.squashit.report.SubmitState.AddedAttachments
@@ -55,7 +50,8 @@ internal class ReportActivity : BaseActivity() {
   private val mainScope = MainScope()
   private lateinit var presenter: ReportPresenter
   private lateinit var inflaterFactory: LayoutInflater.Factory2
-  private lateinit var content: FrameLayout
+  private lateinit var content: CoordinatorLayout
+  private var snackbar: Snackbar? = null
 
   override fun onCreate(inState: Bundle?) {
     super.onCreate(inState)
@@ -63,8 +59,8 @@ internal class ReportActivity : BaseActivity() {
     presenter = startPresenter(config.toServiceConfig(), screenshot)
     inflaterFactory = SquashItInflaterFactory(layoutInflater.factory2, presenter)
     window.decorView.enableEdgeToEdgeAndNightMode()
-    setContentView(layout.squash_it)
-    content = findViewById(id.activityContent)
+    setContentView(R.layout.squash_it)
+    content = findViewById(R.id.activityContent)
     presenter.uiModels
         .map { getLayoutId(it) }
         .distinctUntilChanged()
@@ -74,14 +70,14 @@ internal class ReportActivity : BaseActivity() {
 
   @Suppress("MaxLineLength")
   @LayoutRes private fun getLayoutId(uiModel: UiModel) = when (uiModel.initState) {
-    InitState.Initializing -> layout.init_progress
-    InitState.Failure -> layout.init_failure
+    InitState.Initializing -> R.layout.init_progress
+    InitState.Failure -> R.layout.init_failure
     else -> when (uiModel.submitState) {
-      is Idle, is Submitting -> layout.report
-      is Submitted -> layout.created_report
-      is FailedToAttach, is Reattaching -> layout.failed_to_attach
-      is Failed, is Resubmitting -> layout.submit_failure
-      is AddedAttachments -> layout.attachments_added
+      is Idle, is Submitting -> R.layout.report
+      is Submitted -> R.layout.created_report
+      is FailedToAttach, is Reattaching -> R.layout.failed_to_attach
+      is Failed, is Resubmitting -> R.layout.submit_failure
+      is AddedAttachments -> R.layout.attachments_added
     }
   }
 
@@ -107,7 +103,7 @@ internal class ReportActivity : BaseActivity() {
       mainScope.launch { presenter.sendEvent(GoIdle) }
     } else {
       super.onBackPressed()
-      overridePendingTransition(anim.no_op, anim.slide_down)
+      overridePendingTransition(R.anim.no_op, R.anim.slide_down)
     }
   }
 
@@ -147,8 +143,14 @@ internal class ReportActivity : BaseActivity() {
       val uri = data?.data ?: return
       val item = AttachmentFactory.create(contentResolver, uri)
       if (item != null) mainScope.launch { presenter.sendEvent(UpdateInput.attach(item)) }
-      else Toast.makeText(this, string.squash_it_error, LENGTH_LONG).show()
+      else showSnackbar(getString(R.string.squash_it_error))
     }
+  }
+
+  fun showSnackbar(text: String) {
+    snackbar?.dismiss()
+    snackbar = Snackbar.make(content, text, Snackbar.LENGTH_LONG)
+    snackbar?.show()
   }
 
   companion object {
@@ -157,7 +159,7 @@ internal class ReportActivity : BaseActivity() {
     fun start(activity: Activity, args: Args) {
       val start = Intent(activity, ReportActivity::class.java).putExtra(ArgsKey, args)
       activity.startActivity(start)
-      activity.overridePendingTransition(anim.slide_up, anim.no_op)
+      activity.overridePendingTransition(R.anim.slide_up, R.anim.no_op)
     }
   }
 

@@ -5,10 +5,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import io.mehow.squashit.R
 import io.mehow.squashit.report.IssueKey
+import io.mehow.squashit.report.ReportActivity
 import io.mehow.squashit.report.SubmitState
 import io.mehow.squashit.report.SubmitState.FailedToAttach
 import io.mehow.squashit.report.SubmitState.Reattaching
@@ -63,7 +63,7 @@ internal class FailedToAttachView(
       reportedIssueInfo.text = resources.getString(R.string.squash_it_reported, state.key.value)
       retryInput = RetryInput(state.key, state.attachments)
       if (initFailure) initFailure = false
-      else Toast.makeText(context, R.string.squash_it_error, Toast.LENGTH_LONG).show()
+      else (activity as ReportActivity).showSnackbar(resources.getString(R.string.squash_it_error))
     }
     val isRetrying = state is Reattaching
     retryButton.isActivated = !isRetrying

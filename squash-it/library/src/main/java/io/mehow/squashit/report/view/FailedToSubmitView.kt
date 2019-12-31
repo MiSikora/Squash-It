@@ -4,11 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.Button
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import androidx.constraintlayout.widget.ConstraintLayout
 import io.mehow.squashit.R
 import io.mehow.squashit.report.Report
+import io.mehow.squashit.report.ReportActivity
 import io.mehow.squashit.report.SubmitState
 import io.mehow.squashit.report.SubmitState.Failed
 import io.mehow.squashit.report.SubmitState.Resubmitting
@@ -60,7 +59,7 @@ internal class FailedToSubmitView(
     if (state is Failed) {
       report = state.report
       if (initFailure) initFailure = false
-      else Toast.makeText(context, R.string.squash_it_error, LENGTH_LONG).show()
+      else (activity as ReportActivity).showSnackbar(resources.getString(R.string.squash_it_error))
     }
     val isRetrying = state is Resubmitting
     retryButton.isActivated = !isRetrying
