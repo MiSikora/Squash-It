@@ -20,7 +20,7 @@ import io.mehow.squashit.report.view.ReporterView
 import io.mehow.squashit.report.view.UpdateIssueView
 import kotlin.reflect.KClass
 
-internal class SquashItInflaterFactory(
+internal class ReportInflaterFactory(
   private val chain: LayoutInflater.Factory2,
   private val presenter: ReportPresenter
 ) : LayoutInflater.Factory2 {

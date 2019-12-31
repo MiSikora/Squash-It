@@ -13,7 +13,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import java.io.File
 
-internal sealed class SquashItConfig : Parcelable {
+internal sealed class ReportConfig : Parcelable {
   abstract fun startActivity(activity: Activity, screenshotFile: File?)
 
   @Parcelize
@@ -22,7 +22,7 @@ internal sealed class SquashItConfig : Parcelable {
     val hasJiraUrl: Boolean,
     val hasUserEmail: Boolean,
     val hasUserToken: Boolean
-  ) : SquashItConfig() {
+  ) : ReportConfig() {
     override fun startActivity(activity: Activity, screenshotFile: File?) {
       MisconfigurationActivity.start(activity, MisconfigurationActivity.Args(this))
     }
@@ -40,7 +40,7 @@ internal sealed class SquashItConfig : Parcelable {
     val runtimeInfo: ParcelableRuntimeInfo,
     val epicReadFieldName: String,
     val epicWriteFieldName: String
-  ) : SquashItConfig() {
+  ) : ReportConfig() {
     override fun startActivity(activity: Activity, screenshotFile: File?) {
       ReportActivity.start(activity, ReportActivity.Args(this, screenshotFile))
     }
@@ -62,7 +62,7 @@ internal sealed class SquashItConfig : Parcelable {
 
   companion object {
     @Suppress("LongMethod")
-    fun create(activity: Activity): SquashItConfig {
+    fun create(activity: Activity): ReportConfig {
       val projectKey = activity.getString(string.squash_it_jira_project_key).trim()
       val jiraUrl = activity.getString(string.squash_it_jira_server_url).trim().toHttpUrlOrNull()
       val userEmail = activity.getString(string.squash_it_jira_user_email).trim()

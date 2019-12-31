@@ -10,7 +10,7 @@ internal class ReportLens(
   private val activity: Activity
 ) : Lens() {
   override fun onCapture(screenshot: File?) {
-    if (screenshot == null) SquashItConfig.create(activity).startActivity(activity, screenshot)
+    if (screenshot == null) ReportConfig.create(activity).startActivity(activity, screenshot)
     else ScreenshotActivity.start(activity, Args(screenshot))
   }
 }

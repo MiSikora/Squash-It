@@ -19,7 +19,7 @@ import io.mehow.squashit.BaseActivity
 import io.mehow.squashit.FileParceler
 import io.mehow.squashit.R
 import io.mehow.squashit.SquashItLogger
-import io.mehow.squashit.report.SquashItConfig.Valid
+import io.mehow.squashit.report.ReportConfig.Valid
 import io.mehow.squashit.report.SubmitState.AddedAttachments
 import io.mehow.squashit.report.SubmitState.Failed
 import io.mehow.squashit.report.SubmitState.FailedToAttach
@@ -57,7 +57,7 @@ internal class ReportActivity : BaseActivity() {
     super.onCreate(inState)
     val (config, screenshot) = intent.getParcelableExtra<Args>(ArgsKey)!!
     presenter = startPresenter(config.toServiceConfig(), screenshot)
-    inflaterFactory = SquashItInflaterFactory(layoutInflater.factory2, presenter)
+    inflaterFactory = ReportInflaterFactory(layoutInflater.factory2, presenter)
     window.decorView.enableEdgeToEdgeAndNightMode()
     setContentView(R.layout.squash_it)
     content = findViewById(R.id.activityContent)

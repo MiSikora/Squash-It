@@ -1,4 +1,4 @@
-package io.mehow.squashit.report
+package io.mehow.squashit
 
 import android.app.Application
 import android.content.ContentProvider
@@ -6,9 +6,6 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
 import com.mattprecious.telescope.TelescopeLayout
-import io.mehow.squashit.R
-import io.mehow.squashit.SquashItLogger
-import io.mehow.squashit.TelescopeCallback
 import io.mehow.squashit.screenshot.ScreenshotFactory
 
 internal class SquashItInitializer : ContentProvider() {

@@ -12,7 +12,7 @@ import io.mehow.squashit.BaseActivity
 import io.mehow.squashit.R.anim
 import io.mehow.squashit.R.id
 import io.mehow.squashit.R.layout
-import io.mehow.squashit.report.SquashItConfig.Invalid
+import io.mehow.squashit.report.ReportConfig.Invalid
 import io.mehow.squashit.report.extensions.enableEdgeToEdgeAndNightMode
 import kotlinx.android.parcel.Parcelize
 
