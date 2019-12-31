@@ -1,4 +1,4 @@
-package io.mehow.screenshot
+package io.mehow.squashit.screenshot
 
 import android.os.Parcelable
 import androidx.annotation.ColorInt

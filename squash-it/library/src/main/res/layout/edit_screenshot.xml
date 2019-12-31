@@ -18,7 +18,7 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintWidth_percent="0.8" />
 
-  <io.mehow.screenshot.CanvasView
+  <io.mehow.squashit.screenshot.CanvasView
       android:id="@+id/screenshotCanvas"
       android:layout_width="0dp"
       android:layout_height="0dp"

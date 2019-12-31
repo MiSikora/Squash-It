@@ -1,4 +1,4 @@
-package io.mehow.screenshot
+package io.mehow.squashit.screenshot
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -2,8 +2,8 @@ package io.mehow.squashit.report
 
 import android.app.Activity
 import com.mattprecious.telescope.Lens
-import io.mehow.screenshot.ScreenshotActivity
-import io.mehow.screenshot.ScreenshotActivity.Args
+import io.mehow.squashit.screenshot.ScreenshotActivity
+import io.mehow.squashit.screenshot.ScreenshotActivity.Args
 import java.io.File
 
 internal class ReportLens(

@@ -1,4 +1,4 @@
-package io.mehow.screenshot
+package io.mehow.squashit.screenshot
 
 import android.view.View
 import android.widget.FrameLayout.LayoutParams

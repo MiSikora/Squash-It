@@ -6,9 +6,9 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
 import com.mattprecious.telescope.TelescopeLayout
-import io.mehow.screenshot.ScreenshotFactory
 import io.mehow.squashit.SquashItLogger
 import io.mehow.squashit.TelescopeCallback
+import io.mehow.squashit.screenshot.ScreenshotFactory
 
 internal class SquashItInitializer : ContentProvider() {
   override fun onCreate(): Boolean {

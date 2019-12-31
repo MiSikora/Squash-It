@@ -17,7 +17,7 @@
         android:theme="@style/Theme.SquashIt" />
 
     <activity
-        android:name="io.mehow.screenshot.ScreenshotActivity"
+        android:name="io.mehow.squashit.screenshot.ScreenshotActivity"
         android:exported="false"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.SquashIt" />
