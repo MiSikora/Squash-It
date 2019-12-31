@@ -6,6 +6,7 @@
     <activity
         android:name="io.mehow.squashit.report.ReportActivity"
         android:exported="false"
+        android:launchMode="singleTop"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.SquashIt"
         android:windowSoftInputMode="adjustPan" />
@@ -13,12 +14,14 @@
     <activity
         android:name="io.mehow.squashit.report.MisconfigurationActivity"
         android:exported="false"
+        android:launchMode="singleTop"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.SquashIt" />
 
     <activity
         android:name="io.mehow.squashit.screenshot.ScreenshotActivity"
         android:exported="false"
+        android:launchMode="singleTop"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.SquashIt" />
 
