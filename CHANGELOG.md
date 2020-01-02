@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.3.2 *(2020-01-02)*
+----------------------------
+
+* Enable users and issue types whitelisting.
+
 Version 0.3.1 *(2019-12-31)*
 ----------------------------
 
