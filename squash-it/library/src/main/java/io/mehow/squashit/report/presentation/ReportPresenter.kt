@@ -6,7 +6,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.mehow.squashit.report.AttachState.Attach
 import io.mehow.squashit.report.JiraService
 import io.mehow.squashit.report.ProjectInfoStore
-import io.mehow.squashit.report.ServiceConfig
+import io.mehow.squashit.report.ReportConfig
 import io.mehow.squashit.report.api.EpicFieldsResponse
 import io.mehow.squashit.report.api.JiraApi
 import io.mehow.squashit.report.api.NewIssueFieldsRequest
@@ -87,7 +87,7 @@ internal class ReportPresenter internal constructor(
 
   companion object {
     fun create(
-      config: ServiceConfig,
+      config: ReportConfig.Valid,
       projectInfoDir: File,
       screenshotFileProvider: suspend () -> File?,
       logFileProvider: suspend () -> File?
@@ -103,7 +103,7 @@ internal class ReportPresenter internal constructor(
     }
   }
 
-  private class EpicJsonFactory(config: ServiceConfig) : JsonAdapter.Factory {
+  private class EpicJsonFactory(config: ReportConfig.Valid) : JsonAdapter.Factory {
     private val readName = config.epicReadFieldName
     private val writeName = config.epicWriteFieldName
     override fun create(

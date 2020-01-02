@@ -11,8 +11,8 @@ import io.mehow.squashit.report.JiraService
 import io.mehow.squashit.report.OsInfo
 import io.mehow.squashit.report.ProjectInfo
 import io.mehow.squashit.report.ProjectInfoStore
+import io.mehow.squashit.report.ReportConfig
 import io.mehow.squashit.report.RuntimeInfo
-import io.mehow.squashit.report.ServiceConfig
 import io.mehow.squashit.report.User
 import io.mehow.squashit.report.api.FakeJiraApi
 import io.mehow.squashit.report.presentation.extensions.PresenterAssert
@@ -44,24 +44,9 @@ internal open class BaseReportPresenterTest {
       .withInitState(InitState.Idle)
       .withProjectInfo(
           ProjectInfo(
-              epics = setOf(
-                  Epic(
-                      "Epic ID",
-                      "Epic Name"
-                  )
-              ),
-              users = setOf(
-                  User(
-                      "User Name",
-                      "User ID"
-                  )
-              ),
-              issueTypes = setOf(
-                  IssueType(
-                      "Issue ID",
-                      "Issue Name"
-                  )
-              )
+              epics = setOf(Epic("Epic ID", "Epic Name")),
+              users = setOf(User("User Name", "User ID")),
+              issueTypes = setOf(IssueType("Issue ID", "Issue Name"))
           )
       )
 
@@ -80,7 +65,7 @@ internal open class BaseReportPresenterTest {
 
   data class ReportPresenterFactory(
     val storageDir: File,
-    val config: ServiceConfig = ServiceConfig(
+    val config: ReportConfig.Valid = ReportConfig.Valid(
         "SQ",
         "https://www.squash.it".toHttpUrl(),
         "email",
@@ -88,11 +73,7 @@ internal open class BaseReportPresenterTest {
         emptyList(),
         emptyList(),
         RuntimeInfo(
-            AppInfo(
-                "version name",
-                "version code",
-                "package name"
-            ),
+            AppInfo("version name", "version code", "package name"),
             DeviceInfo(
                 "manufacturer",
                 "model",

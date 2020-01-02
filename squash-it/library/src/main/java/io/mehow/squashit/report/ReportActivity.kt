@@ -19,7 +19,6 @@ import io.mehow.squashit.BaseActivity
 import io.mehow.squashit.FileParceler
 import io.mehow.squashit.R
 import io.mehow.squashit.SquashItLogger
-import io.mehow.squashit.report.ReportConfig.Valid
 import io.mehow.squashit.report.SubmitState.AddedAttachments
 import io.mehow.squashit.report.SubmitState.Failed
 import io.mehow.squashit.report.SubmitState.FailedToAttach
@@ -56,7 +55,7 @@ internal class ReportActivity : BaseActivity() {
   override fun onCreate(inState: Bundle?) {
     super.onCreate(inState)
     val (config, screenshot) = intent.getParcelableExtra<Args>(ArgsKey)!!
-    presenter = startPresenter(config.toServiceConfig(), screenshot)
+    presenter = startPresenter(config, screenshot)
     inflaterFactory = ReportInflaterFactory(layoutInflater.factory2, presenter)
     window.decorView.enableEdgeToEdgeAndNightMode()
     setContentView(R.layout.squash_it)
@@ -120,7 +119,7 @@ internal class ReportActivity : BaseActivity() {
     return inflaterFactory.onCreateView(parent, name, ctx, attrs)
   }
 
-  private fun startPresenter(config: ServiceConfig, screenshot: File?): ReportPresenter {
+  private fun startPresenter(config: ReportConfig.Valid, screenshot: File?): ReportPresenter {
     @Suppress("DEPRECATION")
     val cachedPresenter = lastCustomNonConfigurationInstance as? ReportPresenter
     if (cachedPresenter != null) return cachedPresenter
@@ -166,7 +165,7 @@ internal class ReportActivity : BaseActivity() {
   @Parcelize
   @TypeParceler<File?, FileParceler>
   internal data class Args(
-    val config: Valid,
+    val config: ReportConfig.Valid,
     val screenshotFile: File?
   ) : Parcelable
 }

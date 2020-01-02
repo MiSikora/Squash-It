@@ -37,26 +37,12 @@ internal sealed class ReportConfig : Parcelable {
     val userToken: String,
     val filteredUsers: List<String>,
     val filteredIssueTypes: List<String>,
-    val runtimeInfo: ParcelableRuntimeInfo,
+    val runtimeInfo: RuntimeInfo,
     val epicReadFieldName: String,
     val epicWriteFieldName: String
   ) : ReportConfig() {
     override fun startActivity(activity: Activity, screenshotFile: File?) {
       ReportActivity.start(activity, ReportActivity.Args(this, screenshotFile))
-    }
-
-    fun toServiceConfig(): ServiceConfig {
-      return ServiceConfig(
-          projectKey,
-          jiraUrl,
-          userEmail,
-          userToken,
-          filteredUsers,
-          filteredIssueTypes,
-          runtimeInfo.toRuntimeInfo(),
-          epicReadFieldName,
-          epicWriteFieldName
-      )
     }
   }
 
@@ -85,15 +71,15 @@ internal sealed class ReportConfig : Parcelable {
 
       return if (isInvalid) Invalid(hasProjectKey, hasJiraUrl, hasUserEmail, hasUserToken)
       else Valid(
-          projectKey,
-          jiraUrl!!,
-          userEmail,
-          userToken,
-          filteredUsers,
-          filteredIssueTypes,
-          ParcelableRuntimeInfo.create(activity),
-          epicReadFieldName,
-          epicWriteFieldName
+          projectKey = projectKey,
+          jiraUrl = jiraUrl!!,
+          userEmail = userEmail,
+          userToken = userToken,
+          filteredUsers = filteredUsers,
+          filteredIssueTypes = filteredIssueTypes,
+          runtimeInfo = RuntimeInfo.create(activity),
+          epicReadFieldName = epicReadFieldName,
+          epicWriteFieldName = epicWriteFieldName
       )
     }
   }

@@ -20,7 +20,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
 internal class JiraService(
-  private val config: ServiceConfig,
+  private val config: ReportConfig.Valid,
   private val projectInfoStore: ProjectInfoStore,
   private val jiraApi: JiraApi
 ) {
