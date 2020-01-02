@@ -9,9 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import io.mehow.squashit.BaseActivity
-import io.mehow.squashit.R.anim
-import io.mehow.squashit.R.id
-import io.mehow.squashit.R.layout
+import io.mehow.squashit.R
 import io.mehow.squashit.report.ReportConfig.Invalid
 import io.mehow.squashit.report.extensions.enableEdgeToEdgeAndNightMode
 import kotlinx.android.parcel.Parcelize
@@ -21,14 +19,14 @@ internal class MisconfigurationActivity : BaseActivity() {
     super.onCreate(inState)
     window.decorView.enableEdgeToEdgeAndNightMode()
     val config = intent.getParcelableExtra<Args>(ArgsKey)!!.config
-    setContentView(layout.squash_it_misconfiguration)
+    setContentView(R.layout.squash_it_misconfiguration)
 
-    findViewById<View>(id.projectKeyLabel).isVisible = !config.hasProjectKey
-    findViewById<View>(id.serverUrlLabel).isVisible = !config.hasJiraUrl
-    findViewById<View>(id.userEmailLabel).isVisible = !config.hasUserEmail
-    findViewById<View>(id.userTokenLabel).isVisible = !config.hasUserToken
-    findViewById<View>(id.goBackButton).setOnClickListener { onBackPressed() }
-    ViewCompat.setOnApplyWindowInsetsListener(findViewById(id.warningLabel)) { view, insets ->
+    findViewById<View>(R.id.projectKeyLabel).isVisible = !config.hasProjectKey
+    findViewById<View>(R.id.serverUrlLabel).isVisible = !config.hasJiraUrl
+    findViewById<View>(R.id.userEmailLabel).isVisible = !config.hasUserEmail
+    findViewById<View>(R.id.userTokenLabel).isVisible = !config.hasUserToken
+    findViewById<View>(R.id.goBackButton).setOnClickListener { onBackPressed() }
+    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.warningLabel)) { view, insets ->
       view.updatePadding(top = insets.systemWindowInsetTop)
       return@setOnApplyWindowInsetsListener insets
     }
@@ -36,7 +34,7 @@ internal class MisconfigurationActivity : BaseActivity() {
 
   override fun onBackPressed() {
     super.onBackPressed()
-    overridePendingTransition(anim.no_op, anim.slide_down)
+    overridePendingTransition(R.anim.no_op, R.anim.slide_down)
   }
 
   companion object {
@@ -45,7 +43,7 @@ internal class MisconfigurationActivity : BaseActivity() {
     fun start(activity: Activity, args: Args) {
       val start = Intent(activity, MisconfigurationActivity::class.java).putExtra(ArgsKey, args)
       activity.startActivity(start)
-      activity.overridePendingTransition(anim.slide_up, anim.no_op)
+      activity.overridePendingTransition(R.anim.slide_up, R.anim.no_op)
     }
   }
 

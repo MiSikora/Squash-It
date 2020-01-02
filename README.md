@@ -86,6 +86,12 @@ If your JIRA has a lot of tools and users assigned to them have access to your p
 </string-array>
 ```
 
+By default users provided in the resource are blacklisted. If you want to whitelist them instead you need to override a `bool` resource.
+
+```xml
+<string name="squash_it_whitelist_jira_user">true</string>
+```
+
 ### Issue types
 
 The same thing applies to issue types. You might want to restrict which types of issues reporters should be allowed to create. For example, it might not make sense to let users create epics or graphical tasks. To do this you need to provide their IDs in a `string-array` resource.
@@ -96,6 +102,12 @@ The same thing applies to issue types. You might want to restrict which types of
   <item>10400</item>
   <item>10646</item>
 </string-array>
+```
+
+By default issue types provided in the resource are blacklisted. If you want to whitelist them instead you need to override a `bool` resource.
+
+```xml
+<string name="squash_it_whitelist_issue_types">true</string>
 ```
 
 ### Finger trigger

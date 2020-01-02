@@ -66,13 +66,15 @@ internal open class BaseReportPresenterTest {
   data class ReportPresenterFactory(
     val storageDir: File,
     val config: ReportConfig.Valid = ReportConfig.Valid(
-        "SQ",
-        "https://www.squash.it".toHttpUrl(),
-        "email",
-        "token",
-        emptyList(),
-        emptyList(),
-        RuntimeInfo(
+        projectKey = "SQ",
+        jiraUrl = "https://www.squash.it".toHttpUrl(),
+        userEmail = "email",
+        userToken = "token",
+        whitelistUsers = false,
+        filteredUsers = emptyList(),
+        whitelistIssueTypes = false,
+        filteredIssueTypes = emptyList(),
+        runtimeInfo = RuntimeInfo(
             AppInfo("version name", "version code", "package name"),
             DeviceInfo(
                 "manufacturer",

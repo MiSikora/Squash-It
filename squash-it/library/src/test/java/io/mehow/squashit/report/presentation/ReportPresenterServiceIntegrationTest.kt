@@ -18,7 +18,7 @@ import io.mehow.squashit.test
 import org.junit.Test
 
 internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest() {
-  @Test fun `unwanted users are filtered from project`() {
+  @Test fun `blacklisted users are unavailable`() {
     val factory = presenterFactory.copy(
         config = presenterFactory.config.copy(filteredUsers = listOf("ID 1", "ID 4", "ID 5"))
     )
@@ -33,15 +33,35 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
     testPresenter(skipInitialization = false) {
       expectItem()
       expectItem() shouldBe syncedModel.withProjectInfo {
-        copy(users = setOf(
-            User("User 2", "ID 2"),
-            User("User 3", "ID 3")
-        ))
+        copy(users = setOf(User("User 2", "ID 2"), User("User 3", "ID 3")))
       }
     }
   }
 
-  @Test fun `unwanted issue types are filtered from project`() {
+  @Test fun `whitelisted users are available`() {
+    val factory = presenterFactory.copy(
+        config = presenterFactory.config.copy(
+            whitelistUsers = true,
+            filteredUsers = listOf("ID 1", "ID 4", "ID 5")
+        )
+    )
+    factory.jiraApi.roleFactory.enqueue(
+        Record("User 1", "ID 1"),
+        Record("User 2", "ID 2"),
+        Record("User 3", "ID 3"),
+        Record("User 4", "ID 4")
+    )
+    presenterFactory = factory
+
+    testPresenter(skipInitialization = false) {
+      expectItem()
+      expectItem() shouldBe syncedModel.withProjectInfo {
+        copy(users = setOf(User("User 1", "ID 1"), User("User 4", "ID 4")))
+      }
+    }
+  }
+
+  @Test fun `blacklisted issue types are unavailable`() {
     val factory = presenterFactory.copy(
         config = presenterFactory.config.copy(filteredIssueTypes = listOf("ID 2", "ID 5"))
     )
@@ -62,11 +82,36 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
       expectItem()
       expectItem() shouldBe syncedModel.withProjectInfo {
         copy(issueTypes = setOf(
-            IssueType(
-                "ID 1",
-                "Name 1"
-            ), IssueType("ID 4", "Name 4")
+            IssueType("ID 1", "Name 1"), IssueType("ID 4", "Name 4")
         ))
+      }
+    }
+  }
+
+  @Test fun `whitelisted issue types are available`() {
+    val factory = presenterFactory.copy(
+        config = presenterFactory.config.copy(
+            whitelistIssueTypes = true,
+            filteredIssueTypes = listOf("ID 2", "ID 5")
+        )
+    )
+    factory.jiraApi.projectFactory.enqueue(
+        ProjectResponse(
+            listOf(
+                IssueTypeResponse("ID 1", "Name 1", false),
+                IssueTypeResponse("ID 2", "Name 2", false),
+                IssueTypeResponse("ID 3", "Name 3", true),
+                IssueTypeResponse("ID 4", "Name 4", false)
+            ),
+            mapOf("Role Name" to "Role ID")
+        )
+    )
+    presenterFactory = factory
+
+    testPresenter(skipInitialization = false) {
+      expectItem()
+      expectItem() shouldBe syncedModel.withProjectInfo {
+        copy(issueTypes = setOf(IssueType("ID 2", "Name 2")))
       }
     }
   }
@@ -152,18 +197,8 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
   }
 
   private val newIssueInput = syncedModel.input
-      .withReporter(
-          User(
-              "Reporter Name",
-              "Reporter ID"
-          )
-      )
-      .withNewIssueType(
-          IssueType(
-              "Issue ID",
-              "Issue Name"
-          )
-      )
+      .withReporter(User("Reporter Name", "Reporter ID"))
+      .withNewIssueType(IssueType("Issue ID", "Issue Name"))
       .withNewIssueSummary(Summary("Valid Summary"))
       .withNewIssueEpic(Epic("Epic ID", "Epic Name"))
       .withDescription(Description("Description"))
@@ -177,12 +212,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
 
   private val addCommentInput = syncedModel.input
       .withReportType(UpdateIssue)
-      .withReporter(
-          User(
-              "Reporter Name",
-              "Reporter ID"
-          )
-      )
+      .withReporter(User("Reporter Name", "Reporter ID"))
       .withIssueKey(IssueKey("Issue ID"))
       .withDescription(Description("Description"))
       .withMentions(User("Mention Name", "Mention ID"))

@@ -118,7 +118,7 @@ internal class JiraService(
     return issueTypes
         .filterNot { it.isSubTask }
         .map { IssueType(it.id, it.name) }
-        .filter { it.id !in config.filteredIssueTypes } to roleIds
+        .filter(config::filterIssuesTypes) to roleIds
   }
 
   private suspend fun getUsers(roleIds: List<String>): List<User> = coroutineScope {
@@ -129,6 +129,6 @@ internal class JiraService(
         .flatMap { it.value.actors }
         .mapNotNull { actor -> actor.actorUser?.let { User(actor.displayName, it.accountId) } }
         .distinct()
-        .filter { it.accountId !in config.filteredUsers }
+        .filter(config::filterUser)
   }
 }
