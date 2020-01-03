@@ -3,29 +3,26 @@ package io.mehow.squashit.report
 import okio.Source
 
 internal class Attachment(
-  val type: AttachmentType,
+  val id: AttachmentId,
   val name: String,
-  val size: String,
   val source: () -> Source?
 ) {
   override fun equals(other: Any?): Boolean {
     if (other !is Attachment) return false
 
-    if (type != other.type) return false
+    if (id != other.id) return false
     if (name != other.name) return false
-    if (size != other.size) return false
 
     return true
   }
 
   override fun hashCode(): Int {
-    var result = type.hashCode()
+    var result = id.hashCode()
     result = 31 * result + name.hashCode()
-    result = 31 * result + size.hashCode()
     return result
   }
 
   override fun toString(): String {
-    return "AttachmentItem(type=$type, name='$name', size='$size')"
+    return "AttachmentItem(id=$id, name='$name')"
   }
 }

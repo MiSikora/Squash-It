@@ -2,6 +2,7 @@ package io.mehow.squashit.report.presentation
 
 import io.mehow.squashit.report.AttachState
 import io.mehow.squashit.report.Attachment
+import io.mehow.squashit.report.AttachmentId
 import io.mehow.squashit.report.Description
 import io.mehow.squashit.report.Epic
 import io.mehow.squashit.report.InputError
@@ -50,7 +51,7 @@ internal sealed class Event {
 
       fun attach(attachment: Attachment) = UpdateInput { withAttachments(attachment) }
 
-      fun detach(attachment: Attachment) = UpdateInput { withoutAttachments(attachment) }
+      fun detach(id: AttachmentId) = UpdateInput { withoutAttachments(id) }
 
       fun hideError(error: InputError) = UpdateInput { withoutError(error) }
     }

@@ -5,4 +5,5 @@
   <dimen name="squash_it_brush_regular">4dp</dimen>
   <dimen name="squash_it_brush_large">8dp</dimen>
   <dimen name="squash_it_brush_huge">16dp</dimen>
+  <dimen name="squash_it_thumbnail_size">48dp</dimen>
 </resources>

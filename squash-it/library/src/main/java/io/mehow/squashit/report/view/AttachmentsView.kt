@@ -16,17 +16,21 @@ import io.mehow.squashit.report.AttachState
 import io.mehow.squashit.report.AttachState.Attach
 import io.mehow.squashit.report.AttachState.DoNotAttach
 import io.mehow.squashit.report.AttachState.Unavailable
+import io.mehow.squashit.report.Attachment
 import io.mehow.squashit.report.AttachmentFactory
+import io.mehow.squashit.report.AttachmentKey
 import io.mehow.squashit.report.extensions.activity
 import io.mehow.squashit.report.extensions.checkChanges
 import io.mehow.squashit.report.extensions.viewScope
 import io.mehow.squashit.report.presentation.Event.UpdateInput
 import io.mehow.squashit.report.presentation.ReportPresenter
 import io.mehow.squashit.report.presentation.UiModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 @SuppressLint("ViewConstructor") // Created with a custom factory.
@@ -39,6 +43,7 @@ internal class AttachmentsView(
   private val logsCheckBox: CheckBox
   private var screenshot: File? = null
   private var logs: File? = null
+  private val thumbnailSize = resources.getDimensionPixelSize(R.dimen.squash_it_thumbnail_size)
 
   private val attachmentsAdapter = AttachmentAdapter(LayoutInflater.from(context)) {
     viewScope.launch { presenter.sendEvent(UpdateInput.detach(it)) }
@@ -85,17 +90,30 @@ internal class AttachmentsView(
 
   private fun observeUiModels() {
     presenter.uiModels
-        .onEach { renderUiModel(it) }
+        .onEach(::renderUiModel)
         .launchIn(viewScope)
   }
 
-  private fun renderUiModel(uiModel: UiModel) {
+  private suspend fun renderUiModel(uiModel: UiModel) {
     val input = uiModel.input
     screenshot = input.screenshotState.file
     logs = input.logsState.file
-    attachmentsAdapter.submitList(input.attachments.toList())
     screenshotCheckBox.setState(input.screenshotState)
     logsCheckBox.setState(input.logsState)
+    renderAttachments(input.attachments)
+  }
+
+  private suspend fun renderAttachments(attachments: Set<Attachment>) {
+    val items = withContext(Dispatchers.IO) {
+      return@withContext attachments
+          .map { AttachmentKey(it.id, thumbnailSize) }
+          .map { key ->
+            return@map withContext(Dispatchers.IO) {
+              AttachmentFactory.create(context.contentResolver, key)
+            }
+          }.filterNotNull()
+    }
+    attachmentsAdapter.submitList(items)
   }
 
   private fun CheckBox.setState(state: AttachState) {

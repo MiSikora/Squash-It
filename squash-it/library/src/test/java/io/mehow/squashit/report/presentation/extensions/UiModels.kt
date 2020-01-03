@@ -2,6 +2,7 @@ package io.mehow.squashit.report.presentation.extensions
 
 import io.mehow.squashit.report.AttachState
 import io.mehow.squashit.report.Attachment
+import io.mehow.squashit.report.AttachmentId
 import io.mehow.squashit.report.Description
 import io.mehow.squashit.report.Epic
 import io.mehow.squashit.report.InitState
@@ -84,8 +85,8 @@ internal fun UiModel.withAttachments(vararg attachments: Attachment): UiModel {
   return withUserInput { withAttachments(*attachments) }
 }
 
-internal fun UiModel.withoutAttachments(vararg attachments: Attachment): UiModel {
-  return withUserInput { withoutAttachments(*attachments) }
+internal fun UiModel.withoutAttachments(vararg ids: AttachmentId): UiModel {
+  return withUserInput { withoutAttachments(*ids) }
 }
 
 internal fun UiModel.withErrors(vararg errors: InputError): UiModel {

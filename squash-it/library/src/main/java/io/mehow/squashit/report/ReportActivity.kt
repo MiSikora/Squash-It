@@ -140,9 +140,13 @@ internal class ReportActivity : BaseActivity() {
 
     if (requestCode == AttachmentFactory.RequestCode) {
       val uri = data?.data ?: return
-      val item = AttachmentFactory.create(contentResolver, uri)
-      if (item != null) mainScope.launch { presenter.sendEvent(UpdateInput.attach(item)) }
-      else showSnackbar(getString(R.string.squash_it_error))
+      mainScope.launch {
+        val item = withContext(Dispatchers.IO) {
+          AttachmentFactory.create(contentResolver, AttachmentId("$uri"))
+        }
+        if (item != null) mainScope.launch { presenter.sendEvent(UpdateInput.attach(item)) }
+        else showSnackbar(getString(R.string.squash_it_error))
+      }
     }
   }
 

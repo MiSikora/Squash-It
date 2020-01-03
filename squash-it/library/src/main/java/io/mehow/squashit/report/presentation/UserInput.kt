@@ -2,6 +2,7 @@ package io.mehow.squashit.report.presentation
 
 import io.mehow.squashit.report.AttachState
 import io.mehow.squashit.report.Attachment
+import io.mehow.squashit.report.AttachmentId
 import io.mehow.squashit.report.Description
 import io.mehow.squashit.report.Epic
 import io.mehow.squashit.report.InputError
@@ -77,8 +78,8 @@ internal data class UserInput(
     return copy(attachments = this.attachments + attachments)
   }
 
-  fun withoutAttachments(vararg attachments: Attachment): UserInput {
-    return copy(attachments = this.attachments - attachments)
+  fun withoutAttachments(vararg ids: AttachmentId): UserInput {
+    return copy(attachments = attachments - attachments.filter { it.id in ids })
   }
 
   fun withoutError(error: InputError): UserInput {

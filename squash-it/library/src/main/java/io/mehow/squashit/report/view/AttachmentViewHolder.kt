@@ -8,31 +8,36 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import io.mehow.squashit.R
-import io.mehow.squashit.report.Attachment
+import io.mehow.squashit.report.AttachmentId
+import io.mehow.squashit.report.AttachmentItem
 import io.mehow.squashit.report.AttachmentType
 import io.mehow.squashit.report.AttachmentType.Image
 import io.mehow.squashit.report.AttachmentType.Video
 
 internal class AttachmentViewHolder(
   view: View,
-  private val onRemoveAttachment: (Attachment) -> Unit
+  private val onRemoveAttachment: (AttachmentId) -> Unit
 ) : ViewHolder(view) {
   private val thumbnail = itemView.findViewById<ImageView>(R.id.thumbnail)
   private val fileName = itemView.findViewById<TextView>(R.id.fileName)
   private val fileSize = itemView.findViewById<TextView>(R.id.fileSize)
   private val delete = itemView.findViewById<ImageView>(R.id.delete)
 
-  private var item: Attachment? = null
+  private var item: AttachmentItem? = null
 
   init {
-    delete.setOnClickListener { onRemoveAttachment(item!!) }
+    delete.setOnClickListener {
+      onRemoveAttachment(item!!.id)
+    }
   }
 
-  fun bindTo(item: Attachment) {
+  fun bindTo(item: AttachmentItem) {
     this.item = item
-    thumbnail.setImageDrawable(item.type.getDrawable(itemView.context))
     fileName.text = item.name
     fileSize.text = item.size
+    val bitmap = item.thumbnail
+    if (bitmap != null) thumbnail.setImageBitmap(bitmap)
+    else thumbnail.setImageDrawable(item.type.getDrawable(itemView.context))
   }
 
   private fun AttachmentType.getDrawable(context: Context): Drawable {

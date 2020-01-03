@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import io.mehow.squashit.R
-import io.mehow.squashit.report.Attachment
+import io.mehow.squashit.report.AttachmentId
+import io.mehow.squashit.report.AttachmentItem
 
 internal class AttachmentAdapter(
   private val inflater: LayoutInflater,
-  private val onRemoveAttachment: (Attachment) -> Unit
-) : ListAdapter<Attachment, AttachmentViewHolder>(AttachmentsItemCallback) {
+  private val onRemoveAttachment: (AttachmentId) -> Unit
+) : ListAdapter<AttachmentItem, AttachmentViewHolder>(AttachmentsItemCallback) {
   override fun getItemViewType(position: Int) = R.layout.attachment_file_item
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttachmentViewHolder {
@@ -22,12 +23,12 @@ internal class AttachmentAdapter(
     holder.bindTo(currentList[position])
   }
 
-  private object AttachmentsItemCallback : ItemCallback<Attachment>() {
-    override fun areItemsTheSame(old: Attachment, new: Attachment): Boolean {
-      return old.name == new.name
+  private object AttachmentsItemCallback : ItemCallback<AttachmentItem>() {
+    override fun areItemsTheSame(old: AttachmentItem, new: AttachmentItem): Boolean {
+      return old.id == new.id
     }
 
-    override fun areContentsTheSame(old: Attachment, new: Attachment): Boolean {
+    override fun areContentsTheSame(old: AttachmentItem, new: AttachmentItem): Boolean {
       return old == new
     }
   }

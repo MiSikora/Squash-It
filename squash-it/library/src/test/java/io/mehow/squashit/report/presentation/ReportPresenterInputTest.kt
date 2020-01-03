@@ -3,8 +3,7 @@ package io.mehow.squashit.report.presentation
 import io.kotlintest.shouldBe
 import io.mehow.squashit.report.AttachState
 import io.mehow.squashit.report.Attachment
-import io.mehow.squashit.report.AttachmentType.Image
-import io.mehow.squashit.report.AttachmentType.Video
+import io.mehow.squashit.report.AttachmentId
 import io.mehow.squashit.report.Description
 import io.mehow.squashit.report.Epic
 import io.mehow.squashit.report.IssueKey
@@ -106,29 +105,29 @@ internal class ReportPresenterInputTest : BaseReportPresenterTest() {
   }
 
   @Test fun `custom attachments can be added`() = testPresenter {
-    val attachment1 = Attachment(Image, "Name 1", "Size 1") { null }
+    val attachment1 = Attachment(AttachmentId("ID 1"), "Name 1") { null }
     presenter.sendEvent(UpdateInput.attach(attachment1))
     expectItem() shouldBe syncedModel.withAttachments(attachment1)
 
-    val attachment2 = Attachment(Video, "Name 2", "Size 2") { null }
+    val attachment2 = Attachment(AttachmentId("ID 1"), "Name 2") { null }
     presenter.sendEvent(UpdateInput.attach(attachment2))
     expectItem() shouldBe syncedModel.withAttachments(attachment1, attachment2)
   }
 
   @Test fun `custom attachments can be removed`() = testPresenter {
-    val attachment1 = Attachment(Image, "Name 1", "Size 1") { null }
-    val attachment2 = Attachment(Video, "Name 2", "Size 2") { null }
-    val attachment3 = Attachment(Video, "Name 3", "Size 3") { null }
+    val attachment1 = Attachment(AttachmentId("ID 1"), "Name 1") { null }
+    val attachment2 = Attachment(AttachmentId("ID 2"), "Name 2") { null }
+    val attachment3 = Attachment(AttachmentId("ID 3"), "Name 3") { null }
     presenter.sendEvent(UpdateInput.attach(attachment1))
     expectItem()
 
     presenter.sendEvent(UpdateInput.attach(attachment2))
     expectItem()
 
-    presenter.sendEvent(UpdateInput.detach(attachment3))
+    presenter.sendEvent(UpdateInput.detach(attachment3.id))
     expectNoEvents()
 
-    presenter.sendEvent(UpdateInput.detach(attachment1))
+    presenter.sendEvent(UpdateInput.detach(attachment1.id))
     expectItem() shouldBe syncedModel.withAttachments(attachment2)
   }
 }
