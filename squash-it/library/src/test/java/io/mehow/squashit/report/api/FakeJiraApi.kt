@@ -44,5 +44,6 @@ internal class FakeJiraApi : JiraApi {
   }
 
   data class NewIssueRecord(val request: NewIssueRequest)
+
   data class AddCommentRecord(val issueKey: IssueKey, val request: AddCommentRequest)
 }

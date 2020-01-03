@@ -48,7 +48,5 @@ internal class MisconfigurationActivity : BaseActivity() {
   }
 
   @Parcelize
-  internal data class Args(
-    val config: Invalid
-  ) : Parcelable
+  data class Args(val config: Invalid) : Parcelable
 }

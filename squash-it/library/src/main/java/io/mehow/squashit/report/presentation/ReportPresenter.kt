@@ -1,17 +1,8 @@
 package io.mehow.squashit.report.presentation
 
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import androidx.lifecycle.ViewModel
 import io.mehow.squashit.report.AttachState.Attach
 import io.mehow.squashit.report.JiraService
-import io.mehow.squashit.report.ProjectInfoStore
-import io.mehow.squashit.report.ReportConfig
-import io.mehow.squashit.report.api.EpicFieldsResponse
-import io.mehow.squashit.report.api.JiraApi
-import io.mehow.squashit.report.api.NewIssueFieldsRequest
-import io.mehow.squashit.report.api.adapter.EpicFieldsResponseJsonAdapter
-import io.mehow.squashit.report.api.adapter.NewIssueFieldsRequestJsonAdapter
 import io.mehow.squashit.report.extensions.shareIn
 import io.mehow.squashit.report.presentation.Event.SyncProject
 import io.mehow.squashit.report.presentation.Event.UpdateInput
@@ -30,13 +21,12 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.launch
 import java.io.File
-import java.lang.reflect.Type
 
 internal class ReportPresenter internal constructor(
   jiraService: JiraService,
   private val createScreenshotFile: suspend () -> File?,
   private val createLogFile: suspend () -> File?
-) {
+) : ViewModel() {
   private val uiModelsChannel = ConflatedBroadcastChannel<UiModel>()
 
   private val eventsChannel = Channel<Event>()
@@ -85,37 +75,7 @@ internal class ReportPresenter internal constructor(
     presenterScope.cancel()
   }
 
-  companion object {
-    fun create(
-      config: ReportConfig.Valid,
-      projectInfoDir: File,
-      screenshotFileProvider: suspend () -> File?,
-      logFileProvider: suspend () -> File?
-    ): ReportPresenter {
-      val moshi = Moshi.Builder()
-          .add(EpicJsonFactory(config))
-          .add(KotlinJsonAdapterFactory())
-          .build()
-      val projectInfoStore = ProjectInfoStore(projectInfoDir, moshi)
-      val jiraApi = JiraApi.create(moshi, config)
-      val jiraService = JiraService(config, projectInfoStore, jiraApi)
-      return ReportPresenter(jiraService, screenshotFileProvider, logFileProvider)
-    }
-  }
-
-  private class EpicJsonFactory(config: ReportConfig.Valid) : JsonAdapter.Factory {
-    private val readName = config.epicReadFieldName
-    private val writeName = config.epicWriteFieldName
-    override fun create(
-      type: Type,
-      annotations: MutableSet<out Annotation>,
-      moshi: Moshi
-    ): JsonAdapter<*>? {
-      return when (type) {
-        EpicFieldsResponse::class.java -> EpicFieldsResponseJsonAdapter(readName, moshi)
-        NewIssueFieldsRequest::class.java -> NewIssueFieldsRequestJsonAdapter(writeName, moshi)
-        else -> null
-      }
-    }
+  override fun onCleared() {
+    stop()
   }
 }

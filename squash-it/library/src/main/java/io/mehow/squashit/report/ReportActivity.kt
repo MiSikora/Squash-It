@@ -12,6 +12,8 @@ import androidx.annotation.LayoutRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.get
 import androidx.core.view.isNotEmpty
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.transition.Fade
 import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
@@ -31,6 +33,7 @@ import io.mehow.squashit.report.extensions.enableEdgeToEdgeAndNightMode
 import io.mehow.squashit.report.presentation.Event.GoIdle
 import io.mehow.squashit.report.presentation.Event.UpdateInput
 import io.mehow.squashit.report.presentation.ReportPresenter
+import io.mehow.squashit.report.presentation.ReportPresenterFactory
 import io.mehow.squashit.report.presentation.UiModel
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.TypeParceler
@@ -55,7 +58,7 @@ internal class ReportActivity : BaseActivity() {
   override fun onCreate(inState: Bundle?) {
     super.onCreate(inState)
     val (config, screenshot) = intent.getParcelableExtra<Args>(ArgsKey)!!
-    presenter = startPresenter(config, screenshot)
+    presenter = ViewModelProvider(this, createFactory(config, screenshot)).get()
     inflaterFactory = ReportInflaterFactory(layoutInflater.factory2, presenter)
     window.decorView.enableEdgeToEdgeAndNightMode()
     setContentView(R.layout.squash_it)
@@ -91,10 +94,7 @@ internal class ReportActivity : BaseActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mainScope.cancel()
-    if (!isChangingConfigurations) presenter.stop()
   }
-
-  override fun onRetainCustomNonConfigurationInstance() = presenter
 
   override fun onBackPressed() {
     val override = content.isNotEmpty() && !content[0].isEntryScreen
@@ -119,19 +119,14 @@ internal class ReportActivity : BaseActivity() {
     return inflaterFactory.onCreateView(parent, name, ctx, attrs)
   }
 
-  private fun startPresenter(config: ReportConfig.Valid, screenshot: File?): ReportPresenter {
-    @Suppress("DEPRECATION")
-    val cachedPresenter = lastCustomNonConfigurationInstance as? ReportPresenter
-    if (cachedPresenter != null) return cachedPresenter
-
-    val presenter = ReportPresenter.create(
+  private fun createFactory(config: ReportConfig.Valid, screenshot: File?): ReportPresenterFactory {
+    return ReportPresenterFactory(
         config,
         filesDir,
         { screenshot },
-        { withContext(Dispatchers.IO) { SquashItLogger.createLogFile(this@ReportActivity) } }
+        { withContext(Dispatchers.IO) { SquashItLogger.createLogFile(this@ReportActivity) } },
+        Dispatchers.Unconfined
     )
-    presenter.start(Dispatchers.Unconfined)
-    return presenter
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -168,8 +163,5 @@ internal class ReportActivity : BaseActivity() {
 
   @Parcelize
   @TypeParceler<File?, FileParceler>
-  internal data class Args(
-    val config: ReportConfig.Valid,
-    val screenshotFile: File?
-  ) : Parcelable
+  data class Args(val config: ReportConfig.Valid, val screenshotFile: File?) : Parcelable
 }

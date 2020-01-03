@@ -96,5 +96,5 @@ internal class ScreenshotActivity : BaseActivity() {
 
   @Parcelize
   @TypeParceler<File, FileParceler>
-  internal data class Args(val screenshotFile: File) : Parcelable
+  data class Args(val screenshotFile: File) : Parcelable
 }
