@@ -217,11 +217,13 @@ private static def isCi() {
 }
 
 dependencyUpdates {
-  rejectVersionIf { isNotAtLeastAlpha(version) }
+  rejectVersionIf {
+    isNotStable(it.candidate.version) && !isNotStable(it.currentVersion)
+  }
 }
 
-private static def isNotAtLeastAlpha(String version) {
-  def stableKeyword = ["rc", "cr", "beta", "alpha"].any { version.toLowerCase().contains(it) }
+private static def isNotStable(String version) {
+  def stableKeyword = ["rc", "cr", "beta"].any { version.toLowerCase().contains(it) }
   def regex = /^[0-9,.v-]+(-r)?$/
   return !stableKeyword && !(version ==~ regex)
 }
