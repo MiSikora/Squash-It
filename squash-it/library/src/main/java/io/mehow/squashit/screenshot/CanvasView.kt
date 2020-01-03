@@ -64,13 +64,15 @@ internal class CanvasView @JvmOverloads constructor(
   }
 
   fun clearCanvas() {
-    pathRedoHistory.addAll(pathHistory.reversed())
-    paintRedoHistory.addAll(paintHistory.reversed())
-    strokeRedoHistory.addAll(strokeHistory.reversed())
-    pathHistory.clear()
-    paintHistory.clear()
-    strokeHistory.clear()
-    invalidate()
+    if (pathRedoHistory.isNotEmpty()) {
+      pathRedoHistory.addAll(pathHistory.reversed())
+      paintRedoHistory.addAll(paintHistory.reversed())
+      strokeRedoHistory.addAll(strokeHistory.reversed())
+      pathHistory.clear()
+      paintHistory.clear()
+      strokeHistory.clear()
+      invalidate()
+    }
   }
 
   fun createAdjustedBitmap(width: Int, height: Int): Bitmap? {
