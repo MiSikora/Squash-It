@@ -1,6 +1,7 @@
 package io.mehow.squashit.report.presentation
 
 import io.kotlintest.shouldBe
+import io.mehow.squashit.FlowAssert
 import io.mehow.squashit.report.AttachState
 import io.mehow.squashit.report.Description
 import io.mehow.squashit.report.Epic
@@ -16,7 +17,6 @@ import io.mehow.squashit.report.presentation.Event.Reattach
 import io.mehow.squashit.report.presentation.Event.RetrySubmission
 import io.mehow.squashit.report.presentation.Event.SubmitReport
 import io.mehow.squashit.report.presentation.Event.UpdateInput
-import io.mehow.squashit.report.presentation.extensions.PresenterAssert
 import io.mehow.squashit.report.presentation.extensions.withDescription
 import io.mehow.squashit.report.presentation.extensions.withLogs
 import io.mehow.squashit.report.presentation.extensions.withMentions
@@ -29,7 +29,7 @@ import org.junit.Test
 
 internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
   @Test fun `new issue can be created from UI model`() = testNewIssueReport {
-    sendEvent(SubmitReport(newIssueModel.input))
+    presenter.sendEvent(SubmitReport(newIssueModel.input))
     expectItem() shouldBe newIssueModel.withSubmitState(SubmitState.Submitting)
     expectItem() shouldBe newIssueModel.withSubmitState(
         SubmitState.Submitted(IssueKey("Issue ID"))
@@ -39,7 +39,7 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
   @Test fun `issue creation failure is handled gracefully`() = testNewIssueReport {
     presenterFactory.jiraApi.newIssueFactory.enableErrors()
 
-    sendEvent(SubmitReport(newIssueModel.input))
+    presenter.sendEvent(SubmitReport(newIssueModel.input))
     expectItem()
     expectItem() shouldBe newIssueModel.withSubmitState(SubmitState.Failed(newIssueReport))
   }
@@ -47,13 +47,13 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
   @Test fun `issue creation can be retried`() = testNewIssueReport {
     presenterFactory.jiraApi.newIssueFactory.enableErrors()
 
-    sendEvent(SubmitReport(newIssueModel.input))
+    presenter.sendEvent(SubmitReport(newIssueModel.input))
     expectItem()
     expectItem()
 
     presenterFactory.jiraApi.newIssueFactory.disableErrors()
 
-    sendEvent(RetrySubmission(newIssueReport))
+    presenter.sendEvent(RetrySubmission(newIssueReport))
     expectItem() shouldBe newIssueModel.withSubmitState(SubmitState.Resubmitting)
     expectItem() shouldBe newIssueModel.withSubmitState(
         SubmitState.Submitted(IssueKey("Issue ID"))
@@ -64,7 +64,7 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
     testNewIssueReport {
       presenterFactory.jiraApi.attachmentsFactory.enableErrors()
 
-      sendEvent(SubmitReport(newIssueModel.input))
+      presenter.sendEvent(SubmitReport(newIssueModel.input))
       expectItem()
       expectItem() shouldBe newIssueModel.withSubmitState(
           SubmitState.Submitted(IssueKey("Issue ID"))
@@ -77,10 +77,10 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
     val logsFile = folder.newFile()
     val model = newIssueModel.withLogs(AttachState.Attach(logsFile))
     val attachments = setOf(AttachmentBody.fromFile(logsFile))
-    sendEvent(UpdateInput.logs(AttachState.Attach(logsFile)))
+    presenter.sendEvent(UpdateInput.logs(AttachState.Attach(logsFile)))
     expectItem()
 
-    sendEvent(SubmitReport(newIssueModel.input.withLogs(AttachState.Attach(logsFile))))
+    presenter.sendEvent(SubmitReport(newIssueModel.input.withLogs(AttachState.Attach(logsFile))))
     expectItem()
     expectItem() shouldBe model.withSubmitState(
         SubmitState.FailedToAttach(IssueKey("Issue ID"), attachments)
@@ -91,10 +91,10 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
     presenterFactory.jiraApi.attachmentsFactory.enableErrors()
 
     val logsFile = folder.newFile()
-    sendEvent(UpdateInput.logs(AttachState.Attach(logsFile)))
+    presenter.sendEvent(UpdateInput.logs(AttachState.Attach(logsFile)))
     expectItem()
 
-    sendEvent(SubmitReport(newIssueModel.input.withLogs(AttachState.Attach(logsFile))))
+    presenter.sendEvent(SubmitReport(newIssueModel.input.withLogs(AttachState.Attach(logsFile))))
     expectItem()
     expectItem()
 
@@ -104,7 +104,7 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
     presenterFactory.jiraApi.attachmentsFactory.disableErrors()
     presenterFactory.jiraApi.newIssueFactory.enableErrors()
 
-    sendEvent(Reattach(IssueKey("Issue ID"), attachments))
+    presenter.sendEvent(Reattach(IssueKey("Issue ID"), attachments))
     expectItem() shouldBe model.withSubmitState(SubmitState.Reattaching)
     expectItem() shouldBe model.withSubmitState(
         SubmitState.AddedAttachments(IssueKey("Issue ID"))
@@ -112,18 +112,8 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
   }
 
   private val newIssueModel = syncedModel
-      .withReporter(
-          User(
-              "Reporter Name",
-              "Reporter ID"
-          )
-      )
-      .withNewIssueType(
-          IssueType(
-              "Issue ID",
-              "Issue Name"
-          )
-      )
+      .withReporter(User("Reporter Name", "Reporter ID"))
+      .withNewIssueType(IssueType("Issue ID", "Issue Name"))
       .withNewIssueSummary(Summary("Valid Summary"))
       .withNewIssueEpic(Epic("Epic ID", "Epic Name"))
       .withDescription(Description("Description"))
@@ -131,14 +121,7 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
 
   private val newIssueReport = Report.NewIssue(
       description = Description("Description"),
-      mentions = Mentions(
-          setOf(
-              User(
-                  "Mention Name",
-                  "Mention ID"
-              )
-          )
-      ),
+      mentions = Mentions(setOf(User("Mention Name", "Mention ID"))),
       attachments = emptySet(),
       reporter = User("Reporter Name", "Reporter ID"),
       issueType = IssueType("Issue ID", "Issue Name"),
@@ -146,8 +129,8 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
       epic = Epic("Epic ID", "Epic Name")
   )
 
-  private fun testNewIssueReport(block: suspend PresenterAssert.() -> Unit) = testPresenter {
-    sendEvent(UpdateInput { newIssueModel.input })
+  private fun testNewIssueReport(block: suspend FlowAssert<UiModel>.() -> Unit) = testPresenter {
+    presenter.sendEvent(UpdateInput { newIssueModel.input })
     expectItem()
     block()
   }

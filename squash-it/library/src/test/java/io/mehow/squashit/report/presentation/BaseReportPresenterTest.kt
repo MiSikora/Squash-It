@@ -2,6 +2,7 @@ package io.mehow.squashit.report.presentation
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import io.mehow.squashit.FlowAssert
 import io.mehow.squashit.report.AppInfo
 import io.mehow.squashit.report.DeviceInfo
 import io.mehow.squashit.report.Epic
@@ -15,7 +16,6 @@ import io.mehow.squashit.report.ReportConfig
 import io.mehow.squashit.report.RuntimeInfo
 import io.mehow.squashit.report.User
 import io.mehow.squashit.report.api.FakeJiraApi
-import io.mehow.squashit.report.presentation.extensions.PresenterAssert
 import io.mehow.squashit.report.presentation.extensions.test
 import io.mehow.squashit.report.presentation.extensions.withInitState
 import io.mehow.squashit.report.presentation.extensions.withProjectInfo
@@ -34,9 +34,11 @@ internal open class BaseReportPresenterTest {
 
   private val testDispatcher = TestCoroutineDispatcher()
   lateinit var presenterFactory: ReportPresenterFactory
+  lateinit var presenter: ReportPresenter private set
 
   @Before fun setUp() {
     presenterFactory = ReportPresenterFactory(folder.newFolder())
+    presenter = presenterFactory.create()
   }
 
   val idleModel = UiModel.Initial
@@ -52,9 +54,10 @@ internal open class BaseReportPresenterTest {
 
   internal fun testPresenter(
     skipInitialization: Boolean = true,
-    block: suspend PresenterAssert.() -> Unit
+    block: suspend FlowAssert<UiModel>.() -> Unit
   ) = runBlockingTest {
-    presenterFactory.create().test(testDispatcher) {
+    presenter = presenterFactory.create()
+    presenter.test(testDispatcher) {
       if (skipInitialization) {
         expectItem()
         expectItem()

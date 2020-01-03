@@ -5,10 +5,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-internal data class Stroke(
-  val dots: MutableList<Dot>,
-  val brush: Brush
-) : Parcelable {
+internal data class Stroke(val dots: MutableList<Dot>, val brush: Brush) : Parcelable {
   val path: Path
     get() {
       val path = Path()

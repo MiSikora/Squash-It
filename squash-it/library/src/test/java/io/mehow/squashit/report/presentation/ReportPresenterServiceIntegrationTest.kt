@@ -205,7 +205,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
       .withMentions(User("Mention Name", "Mention ID"))
 
   private fun recordWithNewIssue(block: suspend ReportPresenter.() -> Unit) = testPresenter {
-    sendEvent(UpdateInput { newIssueInput })
+    presenter.sendEvent(UpdateInput { newIssueInput })
     presenter.block()
     cancelAndIgnoreRemainingEvents()
   }
@@ -218,7 +218,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
       .withMentions(User("Mention Name", "Mention ID"))
 
   private fun recordWithAddComment(block: suspend ReportPresenter.() -> Unit) = testPresenter {
-    sendEvent(UpdateInput { addCommentInput })
+    presenter.sendEvent(UpdateInput { addCommentInput })
     presenter.block()
     cancelAndIgnoreRemainingEvents()
   }

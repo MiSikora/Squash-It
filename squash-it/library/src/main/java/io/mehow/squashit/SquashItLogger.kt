@@ -94,11 +94,7 @@ object SquashItLogger {
 
   private fun BufferedSink.writeNewLine() = writeByte(10)
 
-  private class LogEntry(
-    val priority: Int,
-    val tag: String,
-    val message: String
-  ) {
+  private class LogEntry(val priority: Int, val tag: String, val message: String) {
     fun print(tagPaddedLength: Int): String {
       val formattedPriority = priority.toLogLevel()
       val formattedMessage = message.replace("\\n", "\n${" ".repeat(tagPaddedLength)}")

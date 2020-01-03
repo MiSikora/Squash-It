@@ -3,6 +3,4 @@ package io.mehow.squashit.report.api
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class ProjectRequest(
-  val key: String
-)
+internal data class ProjectRequest(val key: String)

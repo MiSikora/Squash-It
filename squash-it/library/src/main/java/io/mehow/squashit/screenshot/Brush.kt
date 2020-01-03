@@ -6,7 +6,4 @@ import androidx.annotation.Px
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-internal data class Brush(
-  @Px val size: Int,
-  @ColorInt val color: Int
-) : Parcelable
+internal data class Brush(@Px val size: Int, @ColorInt val color: Int) : Parcelable

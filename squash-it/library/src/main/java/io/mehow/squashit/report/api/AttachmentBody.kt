@@ -8,10 +8,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okio.BufferedSink
 import java.io.File
 
-internal class AttachmentBody(
-  val id: String,
-  val part: MultipartBody.Part
-) {
+internal class AttachmentBody(val id: String, val part: MultipartBody.Part) {
   override fun equals(other: Any?): Boolean {
     if (other !is AttachmentBody) return false
     if (id != other.id) return false

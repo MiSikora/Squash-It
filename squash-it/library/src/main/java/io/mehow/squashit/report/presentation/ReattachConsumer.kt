@@ -11,9 +11,7 @@ import io.mehow.squashit.report.presentation.Event.Reattach
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transformLatest
 
-internal class ReattachConsumer(
-  private val jiraService: JiraService
-) : EventConsumer<Reattach> {
+internal class ReattachConsumer(private val jiraService: JiraService) : EventConsumer<Reattach> {
   override fun transform(events: Flow<Reattach>): Flow<Accumulator> {
     return events.transformLatest { event ->
       emit(Accumulator { copy(submitState = Reattaching) })

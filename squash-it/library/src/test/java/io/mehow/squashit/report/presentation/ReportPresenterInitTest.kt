@@ -67,7 +67,7 @@ internal class ReportPresenterInitTest : BaseReportPresenterTest() {
       epicsFactory.enableErrors()
     }
 
-    sendEvent(SyncProject)
+    presenter.sendEvent(SyncProject)
     expectItem() shouldBe syncedModel.withInitState(InitState.Initializing)
     expectItem() shouldBe syncedModel
   }

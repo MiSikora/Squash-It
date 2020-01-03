@@ -28,204 +28,107 @@ import org.junit.Test
 
 internal class ReportPresenterInputTest : BaseReportPresenterTest() {
   @Test fun `reporter can be changed`() = testPresenter {
-    sendEvent(UpdateInput.reporter(User("Name", "ID")))
-    expectItem() shouldBe syncedModel.withReporter(
-        User(
-            "Name",
-            "ID"
-        )
-    )
+    presenter.sendEvent(UpdateInput.reporter(User("Name", "ID")))
+    expectItem() shouldBe syncedModel.withReporter(User("Name", "ID"))
   }
 
   @Test fun `report type can be changed`() = testPresenter {
-    sendEvent(UpdateInput.reportType(ReportType.UpdateIssue))
+    presenter.sendEvent(UpdateInput.reportType(ReportType.UpdateIssue))
     expectItem() shouldBe syncedModel.withReportType(ReportType.UpdateIssue)
 
-    sendEvent(UpdateInput.reportType(ReportType.CreateNewIssue))
+    presenter.sendEvent(UpdateInput.reportType(ReportType.CreateNewIssue))
     expectItem() shouldBe syncedModel
   }
 
   @Test fun `issue type can be changed`() = testPresenter {
-    sendEvent(UpdateInput.issueType(
-        IssueType(
-            "ID",
-            "Name"
-        )
-    ))
-    expectItem() shouldBe syncedModel.withNewIssueType(
-        IssueType(
-            "ID",
-            "Name"
-        )
-    )
+    presenter.sendEvent(UpdateInput.issueType(IssueType("ID", "Name")))
+    expectItem() shouldBe syncedModel.withNewIssueType(IssueType("ID", "Name"))
   }
 
   @Test fun `new issue summary can be changed`() = testPresenter {
-    sendEvent(UpdateInput.summary(Summary("Summary")))
-    expectItem() shouldBe syncedModel.withNewIssueSummary(
-        Summary(
-            "Summary"
-        )
-    )
+    presenter.sendEvent(UpdateInput.summary(Summary("Summary")))
+    expectItem() shouldBe syncedModel.withNewIssueSummary(Summary("Summary"))
   }
 
   @Test fun `new issue epic can be changed`() = testPresenter {
-    sendEvent(UpdateInput.epic(Epic("ID", "Name")))
-    expectItem() shouldBe syncedModel.withNewIssueEpic(
-        Epic(
-            "ID",
-            "Name"
-        )
-    )
+    presenter.sendEvent(UpdateInput.epic(Epic("ID", "Name")))
+    expectItem() shouldBe syncedModel.withNewIssueEpic(Epic("ID", "Name"))
   }
 
   @Test fun `issue key can be changed`() = testPresenter {
-    sendEvent(UpdateInput.issueKey(IssueKey("Key")))
-    expectItem() shouldBe syncedModel.withIssueKey(
-        IssueKey(
-            "Key"
-        )
-    )
+    presenter.sendEvent(UpdateInput.issueKey(IssueKey("Key")))
+    expectItem() shouldBe syncedModel.withIssueKey(IssueKey("Key"))
   }
 
   @Test fun `issue description can bed changed`() = testPresenter {
-    sendEvent(UpdateInput.description(Description("Description")))
-    expectItem() shouldBe syncedModel.withDescription(
-        Description(
-            "Description"
-        )
-    )
+    presenter.sendEvent(UpdateInput.description(Description("Description")))
+    expectItem() shouldBe syncedModel.withDescription(Description("Description"))
   }
 
   @Test fun `users can be mentioned`() = testPresenter {
-    sendEvent(UpdateInput.mention(
-        User(
-            "Name 1",
-            "ID 1"
-        )
-    ))
-    expectItem() shouldBe syncedModel.withMentions(
-        User(
-            "Name 1",
-            "ID 1"
-        )
-    )
+    presenter.sendEvent(UpdateInput.mention(User("Name 1", "ID 1")))
+    expectItem() shouldBe syncedModel.withMentions(User("Name 1", "ID 1"))
 
-    sendEvent(UpdateInput.mention(
-        User(
-            "Name 2",
-            "ID 2"
-        )
-    ))
-    expectItem() shouldBe syncedModel.withMentions(
-        User(
-            "Name 1",
-            "ID 1"
-        ), User("Name 2", "ID 2")
-    )
+    presenter.sendEvent(UpdateInput.mention(User("Name 2", "ID 2")))
+    expectItem() shouldBe syncedModel.withMentions(User("Name 1", "ID 1"), User("Name 2", "ID 2"))
   }
 
   @Test fun `users can be unmentioned`() = testPresenter {
-    sendEvent(UpdateInput.mention(
-        User(
-            "Name 1",
-            "ID 1"
-        )
-    ))
+    presenter.sendEvent(UpdateInput.mention(User("Name 1", "ID 1")))
     expectItem()
 
-    sendEvent(UpdateInput.mention(
-        User(
-            "Name 2",
-            "ID 2"
-        )
-    ))
+    presenter.sendEvent(UpdateInput.mention(User("Name 2", "ID 2")))
     expectItem()
 
-    sendEvent(UpdateInput.unmention(
-        User(
-            "Name 3",
-            "ID 3"
-        )
-    ))
+    presenter.sendEvent(UpdateInput.unmention(User("Name 3", "ID 3")))
     expectNoEvents()
 
-    sendEvent(UpdateInput.unmention(
-        User(
-            "Name 1",
-            "ID 1"
-        )
-    ))
-    expectItem() shouldBe syncedModel.withMentions(
-        User(
-            "Name 2",
-            "ID 2"
-        )
-    )
+    presenter.sendEvent(UpdateInput.unmention(User("Name 1", "ID 1")))
+    expectItem() shouldBe syncedModel.withMentions(User("Name 2", "ID 2"))
   }
 
   @Test fun `screenshot state can be changed`() = testPresenter {
     val screenshot = folder.newFile()
-    sendEvent(UpdateInput.screenshot(AttachState.Attach(screenshot)))
+    presenter.sendEvent(UpdateInput.screenshot(AttachState.Attach(screenshot)))
     expectItem() shouldBe syncedModel.withScreenshot(AttachState.Attach(screenshot))
 
-    sendEvent(UpdateInput.screenshot(AttachState.DoNotAttach(screenshot)))
+    presenter.sendEvent(UpdateInput.screenshot(AttachState.DoNotAttach(screenshot)))
     expectItem() shouldBe syncedModel.withScreenshot(AttachState.DoNotAttach(screenshot))
   }
 
   @Test fun `logs state can be changed`() = testPresenter {
     val logs = folder.newFile()
-    sendEvent(UpdateInput.logs(AttachState.Attach(logs)))
+    presenter.sendEvent(UpdateInput.logs(AttachState.Attach(logs)))
     expectItem() shouldBe syncedModel.withLogs(AttachState.Attach(logs))
 
-    sendEvent(UpdateInput.logs(AttachState.DoNotAttach(logs)))
+    presenter.sendEvent(UpdateInput.logs(AttachState.DoNotAttach(logs)))
     expectItem() shouldBe syncedModel.withLogs(AttachState.DoNotAttach(logs))
   }
 
   @Test fun `custom attachments can be added`() = testPresenter {
-    val attachment1 = Attachment(
-        Image,
-        "Name 1",
-        "Size 1"
-    ) { null }
-    sendEvent(UpdateInput.attach(attachment1))
+    val attachment1 = Attachment(Image, "Name 1", "Size 1") { null }
+    presenter.sendEvent(UpdateInput.attach(attachment1))
     expectItem() shouldBe syncedModel.withAttachments(attachment1)
 
-    val attachment2 = Attachment(
-        Video,
-        "Name 2",
-        "Size 2"
-    ) { null }
-    sendEvent(UpdateInput.attach(attachment2))
+    val attachment2 = Attachment(Video, "Name 2", "Size 2") { null }
+    presenter.sendEvent(UpdateInput.attach(attachment2))
     expectItem() shouldBe syncedModel.withAttachments(attachment1, attachment2)
   }
 
   @Test fun `custom attachments can be removed`() = testPresenter {
-    val attachment1 = Attachment(
-        Image,
-        "Name 1",
-        "Size 1"
-    ) { null }
-    val attachment2 = Attachment(
-        Video,
-        "Name 2",
-        "Size 2"
-    ) { null }
-    val attachment3 = Attachment(
-        Video,
-        "Name 3",
-        "Size 3"
-    ) { null }
-    sendEvent(UpdateInput.attach(attachment1))
+    val attachment1 = Attachment(Image, "Name 1", "Size 1") { null }
+    val attachment2 = Attachment(Video, "Name 2", "Size 2") { null }
+    val attachment3 = Attachment(Video, "Name 3", "Size 3") { null }
+    presenter.sendEvent(UpdateInput.attach(attachment1))
     expectItem()
 
-    sendEvent(UpdateInput.attach(attachment2))
+    presenter.sendEvent(UpdateInput.attach(attachment2))
     expectItem()
 
-    sendEvent(UpdateInput.detach(attachment3))
+    presenter.sendEvent(UpdateInput.detach(attachment3))
     expectNoEvents()
 
-    sendEvent(UpdateInput.detach(attachment1))
+    presenter.sendEvent(UpdateInput.detach(attachment1))
     expectItem() shouldBe syncedModel.withAttachments(attachment2)
   }
 }

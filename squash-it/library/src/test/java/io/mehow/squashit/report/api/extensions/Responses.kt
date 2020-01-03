@@ -5,8 +5,5 @@ import io.mehow.squashit.report.api.Response.Failure.Network
 import io.mehow.squashit.report.api.Response.Success
 
 internal fun <T : Any> T.asResponse(fail: Boolean): Response<T> {
-  return if (fail) Network(
-      RuntimeException("Expected failure.")
-  )
-  else Success(this)
+  return if (fail) Network(RuntimeException("Expected failure.")) else Success(this)
 }
