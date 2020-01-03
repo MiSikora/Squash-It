@@ -23,7 +23,7 @@ internal class AddedAttachmentsView(
   private val presenter: ReportPresenter
 ) : LinearLayout(context, attrs) {
   private lateinit var addedAttachmentsInfo: TextView
-  private lateinit var goBackButton: Button
+  private lateinit var goBack: Button
 
   init {
     orientation = VERTICAL
@@ -32,7 +32,7 @@ internal class AddedAttachmentsView(
   override fun onFinishInflate() {
     super.onFinishInflate()
     addedAttachmentsInfo = findViewById(R.id.addedAttachmentsInfo)
-    goBackButton = findViewById(R.id.goBackButton)
+    goBack = findViewById(R.id.goBack)
   }
 
   override fun onAttachedToWindow() {
@@ -45,6 +45,6 @@ internal class AddedAttachmentsView(
           addedAttachmentsInfo.text = text
         }
         .launchIn(viewScope)
-    goBackButton.setOnClickListener { activity.onBackPressed() }
+    goBack.setOnClickListener { activity.onBackPressed() }
   }
 }

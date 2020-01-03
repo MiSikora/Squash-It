@@ -49,12 +49,8 @@ internal class IssueView(
   private val presenter: ReportPresenter
 ) : NestedScrollView(context, attrs) {
   private val content: ConstraintLayout
-  private val reporterView: ReporterView
   private val newIssueCheckBox: CheckBox
-  private val updateIssueView: UpdateIssueView
-  private val newIssueView: NewIssueView
-  private val descriptionView: IssueDescriptionView
-  private val submitButton: Button
+  private val submit: Button
 
   private var userInput: UserInput? = null
 
@@ -64,12 +60,8 @@ internal class IssueView(
 
     LayoutInflater.from(context).inflate(R.layout.issue, this, true)
     content = findViewById(R.id.issueContent)
-    reporterView = findViewById(R.id.reporter)
     newIssueCheckBox = findViewById(R.id.newIssueCheckBox)
-    updateIssueView = findViewById(R.id.issueId)
-    newIssueView = findViewById(R.id.newIssue)
-    descriptionView = findViewById(R.id.description)
-    submitButton = findViewById(R.id.submitButton)
+    submit = findViewById(R.id.submit)
 
     setUpInsets()
   }
@@ -82,8 +74,8 @@ internal class IssueView(
         .map { isChecked -> if (isChecked) CreateNewIssue else UpdateIssue }
         .onEach { presenter.sendEvent(UpdateInput.reportType(it)) }
         .launchIn(viewScope)
-    submitButton.clicks
-        .filter { submitButton.isActivated }
+    submit.clicks
+        .filter { submit.isActivated }
         .mapNotNull { userInput }
         .onEach { presenter.sendEvent(SubmitReport(it)) }
         .launchIn(viewScope)
@@ -98,11 +90,11 @@ internal class IssueView(
     selectIssueType(input.reportType)
     val isInitialized = uiModel.projectInfo != null
     val isSubmitting = uiModel.submitState == Submitting
-    submitButton.isActivated = isInitialized && !isSubmitting
+    submit.isActivated = isInitialized && !isSubmitting
     when {
-      !isInitialized -> submitButton.showProgress(R.string.squash_it_initializing)
-      isSubmitting -> submitButton.showProgress(R.string.squash_it_submitting)
-      else -> submitButton.hideProgress(R.string.squash_it_submit)
+      !isInitialized -> submit.showProgress(R.string.squash_it_initializing)
+      isSubmitting -> submit.showProgress(R.string.squash_it_submitting)
+      else -> submit.hideProgress(R.string.squash_it_submit)
     }
   }
 
@@ -119,7 +111,7 @@ internal class IssueView(
       totalDy += dy.absoluteValue
       if (totalDy >= touchSlop) {
         totalDy = 0
-        val windowToken = descriptionView.descriptionInput.windowToken
+        val windowToken = content.windowToken
         val inputMethodManager = context.getSystemService<InputMethodManager>()!!
         inputMethodManager.hideSoftInputFromWindow(windowToken, HIDE_NOT_ALWAYS)
       }

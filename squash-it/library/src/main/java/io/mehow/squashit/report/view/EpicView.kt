@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
-import com.google.android.material.textfield.TextInputLayout
 import io.mehow.squashit.R
 import io.mehow.squashit.report.Epic
 import io.mehow.squashit.report.ReportType
@@ -28,13 +27,11 @@ internal class EpicView(
   attrs: AttributeSet?,
   private val presenter: ReportPresenter
 ) : FrameLayout(context, attrs) {
-  private val epicLayout: TextInputLayout
   private val epicInput: AutoCompleteTextView
   private var adapter = EpicAdapter(context, emptyList())
 
   init {
     LayoutInflater.from(context).inflate(R.layout.epic, this, true)
-    epicLayout = findViewById(R.id.epicLayout)
     epicInput = findViewById(R.id.epicInput)
   }
 

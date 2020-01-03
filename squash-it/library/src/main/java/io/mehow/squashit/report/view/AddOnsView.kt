@@ -3,7 +3,7 @@ package io.mehow.squashit.report.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.core.widget.NestedScrollView
@@ -14,21 +14,10 @@ internal class AddOnsView @JvmOverloads constructor(
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
 ) : NestedScrollView(context, attrs, defStyleAttr) {
-  private val content: ConstraintLayout
-  private val epicView: EpicView
-  private val mentionsView: MentionsView
-  private val attachmentsView: AttachmentsView
-
   init {
     overScrollMode = OVER_SCROLL_NEVER
-
     LayoutInflater.from(context).inflate(R.layout.add_ons, this, true)
-    content = findViewById(R.id.addOnsContent)
-    epicView = findViewById(R.id.epic)
-    mentionsView = findViewById(R.id.mentions)
-    attachmentsView = findViewById(R.id.attachments)
-
-    setUpInsets()
+    setUpInsets(findViewById(R.id.addOnsContent))
   }
 
   override fun onAttachedToWindow() {
@@ -36,7 +25,7 @@ internal class AddOnsView @JvmOverloads constructor(
     requestApplyInsets()
   }
 
-  private fun setUpInsets() {
+  private fun setUpInsets(content: View) {
     val bottomRootPadding = content.paddingBottom
     ViewCompat.setOnApplyWindowInsetsListener(content) { view, insets ->
       view.updatePadding(bottom = bottomRootPadding + insets.systemWindowInsetBottom)

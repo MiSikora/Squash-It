@@ -23,7 +23,7 @@ internal class ReportCreatedView(
   private val presenter: ReportPresenter
 ) : LinearLayout(context, attrs) {
   private lateinit var reportedIssueInfo: TextView
-  private lateinit var goBackButton: Button
+  private lateinit var goBack: Button
 
   init {
     orientation = VERTICAL
@@ -32,7 +32,7 @@ internal class ReportCreatedView(
   override fun onFinishInflate() {
     super.onFinishInflate()
     reportedIssueInfo = findViewById(R.id.createdReportInfo)
-    goBackButton = findViewById(R.id.goBackButton)
+    goBack = findViewById(R.id.goBack)
   }
 
   override fun onAttachedToWindow() {
@@ -45,6 +45,6 @@ internal class ReportCreatedView(
           reportedIssueInfo.text = text
         }
         .launchIn(viewScope)
-    goBackButton.setOnClickListener { activity.onBackPressed() }
+    goBack.setOnClickListener { activity.onBackPressed() }
   }
 }

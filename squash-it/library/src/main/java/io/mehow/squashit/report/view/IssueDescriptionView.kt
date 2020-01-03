@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import io.mehow.squashit.R
 import io.mehow.squashit.report.Description
 import io.mehow.squashit.report.extensions.textChanges
@@ -25,12 +24,10 @@ internal class IssueDescriptionView(
   attrs: AttributeSet?,
   private val presenter: ReportPresenter
 ) : FrameLayout(context, attrs) {
-  private val descriptionLayout: TextInputLayout
   val descriptionInput: TextInputEditText
 
   init {
     LayoutInflater.from(context).inflate(R.layout.issue_description, this, true)
-    descriptionLayout = findViewById(R.id.descriptionLayout)
     descriptionInput = findViewById(R.id.descriptionInput)
   }
 
@@ -39,11 +36,7 @@ internal class IssueDescriptionView(
     descriptionInput.textChanges
         .debounce(200)
         .map { it.trim() }
-        .onEach { presenter.sendEvent(UpdateInput.description(
-            Description(
-                it
-            )
-        )) }
+        .onEach { presenter.sendEvent(UpdateInput.description(Description(it))) }
         .launchIn(viewScope)
     presenter.uiModels
         .onEach { renderUiModel(it) }

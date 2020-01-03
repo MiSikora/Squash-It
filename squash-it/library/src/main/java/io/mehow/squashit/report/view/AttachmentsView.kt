@@ -37,8 +37,6 @@ internal class AttachmentsView(
 ) : ConstraintLayout(context, attrs) {
   private val screenshotCheckBox: CheckBox
   private val logsCheckBox: CheckBox
-  private val addAttachmentButton: Button
-  private val additionalAttachments: RecyclerView
   private var screenshot: File? = null
   private var logs: File? = null
 
@@ -50,8 +48,8 @@ internal class AttachmentsView(
     LayoutInflater.from(context).inflate(R.layout.attachments, this, true)
     screenshotCheckBox = findViewById(R.id.screenshotCheckBox)
     logsCheckBox = findViewById(R.id.logsCheckBox)
-    addAttachmentButton = findViewById(R.id.addAttachmentButton)
-    additionalAttachments = findViewById(R.id.additionalAttachments)
+    val addAttachmentButton = findViewById<Button>(R.id.addAttachmentButton)
+    val additionalAttachments = findViewById<RecyclerView>(R.id.additionalAttachments)
 
     addAttachmentButton.setOnClickListener { AttachmentFactory.requestAttachment(activity) }
     additionalAttachments.adapter = attachmentsAdapter

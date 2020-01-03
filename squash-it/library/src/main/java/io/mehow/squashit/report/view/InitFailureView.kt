@@ -27,7 +27,7 @@ internal class InitFailureView(
 
   override fun onFinishInflate() {
     super.onFinishInflate()
-    reInitButton = findViewById(R.id.retryInitializationButton)
+    reInitButton = findViewById(R.id.retryInitialization)
   }
 
   override fun onAttachedToWindow() {

@@ -25,7 +25,7 @@ internal class MisconfigurationActivity : BaseActivity() {
     findViewById<View>(R.id.serverUrlLabel).isVisible = !config.hasJiraUrl
     findViewById<View>(R.id.userEmailLabel).isVisible = !config.hasUserEmail
     findViewById<View>(R.id.userTokenLabel).isVisible = !config.hasUserToken
-    findViewById<View>(R.id.goBackButton).setOnClickListener { onBackPressed() }
+    findViewById<View>(R.id.goBack).setOnClickListener { onBackPressed() }
     ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.warningLabel)) { view, insets ->
       view.updatePadding(top = insets.systemWindowInsetTop)
       return@setOnApplyWindowInsetsListener insets

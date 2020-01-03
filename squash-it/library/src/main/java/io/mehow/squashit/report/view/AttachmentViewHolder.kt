@@ -17,20 +17,20 @@ internal class AttachmentViewHolder(
   view: View,
   private val onRemoveAttachment: (Attachment) -> Unit
 ) : ViewHolder(view) {
-  private val typeIcon = itemView.findViewById<ImageView>(R.id.typeIcon)
+  private val thumbnail = itemView.findViewById<ImageView>(R.id.thumbnail)
   private val fileName = itemView.findViewById<TextView>(R.id.fileName)
   private val fileSize = itemView.findViewById<TextView>(R.id.fileSize)
-  private val removeIcon = itemView.findViewById<ImageView>(R.id.removeIcon)
+  private val delete = itemView.findViewById<ImageView>(R.id.delete)
 
   private var item: Attachment? = null
 
   init {
-    removeIcon.setOnClickListener { onRemoveAttachment(item!!) }
+    delete.setOnClickListener { onRemoveAttachment(item!!) }
   }
 
   fun bindTo(item: Attachment) {
     this.item = item
-    typeIcon.setImageDrawable(item.type.getDrawable(itemView.context))
+    thumbnail.setImageDrawable(item.type.getDrawable(itemView.context))
     fileName.text = item.name
     fileSize.text = item.size
   }

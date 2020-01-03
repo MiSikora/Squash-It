@@ -8,7 +8,7 @@
     android:padding="8dp">
 
   <ImageView
-      android:id="@+id/typeIcon"
+      android:id="@+id/thumbnail"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:importantForAccessibility="no"
@@ -26,9 +26,9 @@
       android:ellipsize="end"
       android:maxLines="1"
       android:textAppearance="?attr/textAppearanceSubtitle1"
-      app:layout_constraintEnd_toStartOf="@+id/removeIcon"
-      app:layout_constraintStart_toEndOf="@+id/typeIcon"
-      app:layout_constraintTop_toTopOf="@id/typeIcon"
+      app:layout_constraintEnd_toStartOf="@+id/delete"
+      app:layout_constraintStart_toEndOf="@+id/thumbnail"
+      app:layout_constraintTop_toTopOf="@id/thumbnail"
       tools:text="my_video_file.mp4" />
 
   <TextView
@@ -44,7 +44,7 @@
       tools:text="15.5 MB" />
 
   <ImageView
-      android:id="@+id/removeIcon"
+      android:id="@+id/delete"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:background="?attr/selectableItemBackgroundBorderless"

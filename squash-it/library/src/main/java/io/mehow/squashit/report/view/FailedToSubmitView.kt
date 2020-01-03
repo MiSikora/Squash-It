@@ -30,15 +30,15 @@ internal class FailedToSubmitView(
   attrs: AttributeSet?,
   private val presenter: ReportPresenter
 ) : ConstraintLayout(context, attrs) {
-  private lateinit var goBackButton: Button
-  private lateinit var retryButton: Button
+  private lateinit var goBack: Button
+  private lateinit var retry: Button
   private var report: Report? = null
   private var initFailure = true
 
   override fun onFinishInflate() {
     super.onFinishInflate()
-    goBackButton = findViewById(R.id.goBackButton)
-    retryButton = findViewById(R.id.retryButton)
+    goBack = findViewById(R.id.goBack)
+    retry = findViewById(R.id.retry)
   }
 
   override fun onAttachedToWindow() {
@@ -47,12 +47,12 @@ internal class FailedToSubmitView(
         .map { it.submitState }
         .onEach { renderSubmitState(it) }
         .launchIn(viewScope)
-    retryButton.clicks
-        .filter { retryButton.isActivated }
+    retry.clicks
+        .filter { retry.isActivated }
         .mapNotNull { report }
         .onEach { presenter.sendEvent(RetrySubmission(it)) }
         .launchIn(viewScope)
-    goBackButton.setOnClickListener { activity.onBackPressed() }
+    goBack.setOnClickListener { activity.onBackPressed() }
   }
 
   private fun renderSubmitState(state: SubmitState) {
@@ -62,8 +62,8 @@ internal class FailedToSubmitView(
       else (activity as ReportActivity).showSnackbar(resources.getString(R.string.squash_it_error))
     }
     val isRetrying = state is Resubmitting
-    retryButton.isActivated = !isRetrying
-    if (isRetrying) retryButton.showProgress(R.string.squash_it_retrying)
-    else retryButton.hideProgress(R.string.squash_it_retry)
+    retry.isActivated = !isRetrying
+    if (isRetrying) retry.showProgress(R.string.squash_it_retrying)
+    else retry.hideProgress(R.string.squash_it_retry)
   }
 }

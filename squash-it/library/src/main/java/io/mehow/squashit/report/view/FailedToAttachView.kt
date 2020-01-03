@@ -32,16 +32,16 @@ internal class FailedToAttachView(
   private val presenter: ReportPresenter
 ) : ConstraintLayout(context, attrs) {
   private lateinit var reportedIssueInfo: TextView
-  private lateinit var goBackButton: Button
-  private lateinit var retryButton: Button
+  private lateinit var goBack: Button
+  private lateinit var retry: Button
   private var retryInput: RetryInput? = null
   private var initFailure = true
 
   override fun onFinishInflate() {
     super.onFinishInflate()
     reportedIssueInfo = findViewById(R.id.createdReportInfo)
-    goBackButton = findViewById(R.id.goBackButton)
-    retryButton = findViewById(R.id.retryButton)
+    goBack = findViewById(R.id.goBack)
+    retry = findViewById(R.id.retry)
   }
 
   override fun onAttachedToWindow() {
@@ -50,12 +50,12 @@ internal class FailedToAttachView(
         .map { it.submitState }
         .onEach { renderSubmitState(it) }
         .launchIn(viewScope)
-    retryButton.clicks
-        .filter { retryButton.isActivated }
+    retry.clicks
+        .filter { retry.isActivated }
         .mapNotNull { retryInput }
         .onEach { (key, files) -> presenter.sendEvent(Reattach(key, files)) }
         .launchIn(viewScope)
-    goBackButton.setOnClickListener { activity.onBackPressed() }
+    goBack.setOnClickListener { activity.onBackPressed() }
   }
 
   private fun renderSubmitState(state: SubmitState) {
@@ -66,9 +66,9 @@ internal class FailedToAttachView(
       else (activity as ReportActivity).showSnackbar(resources.getString(R.string.squash_it_error))
     }
     val isRetrying = state is Reattaching
-    retryButton.isActivated = !isRetrying
-    if (isRetrying) retryButton.hideProgress(R.string.squash_it_retrying)
-    else retryButton.hideProgress(R.string.squash_it_retry)
+    retry.isActivated = !isRetrying
+    if (isRetrying) retry.hideProgress(R.string.squash_it_retrying)
+    else retry.hideProgress(R.string.squash_it_retry)
   }
 
   private data class RetryInput(val issueKey: IssueKey, val attachments: Set<AttachmentBody>)
