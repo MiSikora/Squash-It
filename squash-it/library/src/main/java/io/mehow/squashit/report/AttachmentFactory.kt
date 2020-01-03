@@ -13,7 +13,7 @@ import androidx.collection.LruCache
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import androidx.core.net.toUri
-import com.jakewharton.byteunits.DecimalByteUnit
+import com.jakewharton.byteunits.DecimalByteUnit.BYTES
 import com.jakewharton.byteunits.DecimalByteUnit.MEGABYTES
 import io.mehow.squashit.report.AttachmentType.Companion.fromMimeType
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -64,12 +64,13 @@ internal object AttachmentFactory {
       val name = cursor.getString(nameIndex)
 
       val sizeIndex = cursor.getColumnIndex(SIZE)
-      val size = cursor.getLongOrNull(sizeIndex)?.let(DecimalByteUnit::format) ?: return@use null
+      val size = cursor.getLongOrNull(sizeIndex) ?: return@use null
+      val diskSize = DiskSize(size, BYTES)
 
       val mimeIndex = cursor.getColumnIndex(MIME_TYPE)
       val type = cursor.getStringOrNull(mimeIndex)?.let { fromMimeType(it) } ?: return@use null
 
-      return@use AttachmentBuilder(id, type, name, size)
+      return@use AttachmentBuilder(id, type, name, diskSize)
     }
   }
 
@@ -106,7 +107,7 @@ internal object AttachmentFactory {
     val id: AttachmentId,
     val type: AttachmentType,
     val name: String,
-    val size: String
+    val size: DiskSize
   ) {
     fun toAttachment(resolver: ContentResolver): Attachment {
       return Attachment(id, name) {
