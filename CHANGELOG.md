@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 0.3.4 *(2020-01-03)*
+----------------------------
+
+* Show thumbnails for custom attachments whenever possible.
+* Highlight attachments that are larger then 10 MB.
+* Migrate to presentation to the 'ViewModel' library to ensure compatibility with newer versions of the 'AppCompat' library.
+
 Version 0.3.3 *(2020-01-03)*
 ----------------------------
 
