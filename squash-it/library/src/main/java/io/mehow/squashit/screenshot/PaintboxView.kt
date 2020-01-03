@@ -32,10 +32,7 @@ internal class PaintboxView @JvmOverloads constructor(
       R.color.squash_it_flirt
   ).map { ContextCompat.getColor(context, it) }
 
-  init {
-    orientation = HORIZONTAL
-  }
-
+  var enableSave = true
   var brush = Brush(brushSizes[2], brushColors[0])
     private set(value) {
       field = value
@@ -45,6 +42,10 @@ internal class PaintboxView @JvmOverloads constructor(
 
   fun setCallback(callback: Callback) {
     this.callback = callback
+  }
+
+  init {
+    orientation = HORIZONTAL
   }
 
   override fun onFinishInflate() {
@@ -59,7 +60,10 @@ internal class PaintboxView @JvmOverloads constructor(
     }
     findViewById<View>(R.id.undo).setOnClickListener { callback?.onUndo() }
     findViewById<View>(R.id.redo).setOnClickListener { callback?.onRedo() }
-    findViewById<View>(R.id.save).setOnClickListener { callback?.onSave() }
+    findViewById<View>(R.id.save).setOnClickListener {
+      if (!enableSave) return@setOnClickListener
+      callback?.onSave()
+    }
   }
 
   override fun onRestoreInstanceState(state: Parcelable) {

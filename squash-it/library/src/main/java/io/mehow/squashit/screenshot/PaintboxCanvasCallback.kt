@@ -11,6 +11,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 internal class PaintboxCanvasCallback(
+  private val paintboxView: PaintboxView,
   private val canvasView: CanvasView,
   private val activity: ScreenshotActivity
 ) : PaintboxView.Callback {
@@ -31,19 +32,19 @@ internal class PaintboxCanvasCallback(
   }
 
   override fun onSave() {
+    paintboxView.enableSave = false
     val screenshotBitmap = activity.screenshotBitmap
     val width = screenshotBitmap.width
     val height = screenshotBitmap.height
     activity.scope.launch {
       val canvasBitmap = canvasView.createAdjustedBitmap(width, height) ?: return@launch
-      canvasView.isEnabled = false
       val screenshot = withContext(Dispatchers.IO) {
         createScreenshot(width, height, screenshotBitmap, canvasBitmap)
       }
       ReportConfig.create(activity).startActivity(activity, screenshot)
       activity.finish()
-      canvasView.isEnabled = true
     }
+    paintboxView.enableSave = true
   }
 
   private suspend fun createScreenshot(

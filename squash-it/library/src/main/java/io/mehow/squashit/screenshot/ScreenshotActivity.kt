@@ -42,7 +42,7 @@ internal class ScreenshotActivity : BaseActivity() {
     setUpScreenshot(screenshotBitmap)
     val paintbox = setUpPaintbox()
     val canvas = setUpScreenshotCanvas(paintbox)
-    val callback = PaintboxCanvasCallback(canvas, this)
+    val callback = PaintboxCanvasCallback(paintbox, canvas, this)
     paintbox.setCallback(callback)
   }
 

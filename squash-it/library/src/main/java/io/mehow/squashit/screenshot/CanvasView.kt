@@ -27,10 +27,6 @@ internal class CanvasView @JvmOverloads constructor(
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-  init {
-    isEnabled = true
-  }
-
   private var paint = newPaint()
   private var brush: Brush? = null
 
@@ -50,7 +46,7 @@ internal class CanvasView @JvmOverloads constructor(
   }
 
   fun undo() {
-    if (pathHistory.isNotEmpty() && isEnabled) {
+    if (pathHistory.isNotEmpty()) {
       pathRedoHistory.add(pathHistory.removeLast())
       paintRedoHistory.add(paintHistory.removeLast())
       strokeRedoHistory.add(strokeHistory.removeLast())
@@ -59,7 +55,7 @@ internal class CanvasView @JvmOverloads constructor(
   }
 
   fun redo() {
-    if (pathRedoHistory.isNotEmpty() && isEnabled) {
+    if (pathRedoHistory.isNotEmpty()) {
       pathHistory.add(pathRedoHistory.removeLast())
       paintHistory.add(paintRedoHistory.removeLast())
       strokeHistory.add(strokeRedoHistory.removeLast())
@@ -68,8 +64,6 @@ internal class CanvasView @JvmOverloads constructor(
   }
 
   fun clearCanvas() {
-    if (!isEnabled) return
-
     pathRedoHistory.clear()
     paintRedoHistory.clear()
     strokeRedoHistory.clear()
@@ -80,23 +74,21 @@ internal class CanvasView @JvmOverloads constructor(
   }
 
   fun createAdjustedBitmap(width: Int, height: Int): Bitmap? {
-    if (!isEnabled) return null
-
+    val strokes = strokeHistory.toList()
     val scale = height.toFloat() / this.height.toFloat()
     return createBitmap(width, height).applyCanvas {
-      drawHistory(scale)
+      drawHistory(strokes, scale)
     }
   }
 
   override fun onDraw(canvas: Canvas) {
     super.onDraw(canvas)
-    canvas.drawHistory()
+    canvas.drawHistory(strokeHistory)
     canvas.drawPath(path, paint)
   }
 
   @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
-    if (!isEnabled) return false
     val brush = brush ?: return false
 
     val x = event.x
@@ -136,12 +128,12 @@ internal class CanvasView @JvmOverloads constructor(
     return true
   }
 
-  private fun Canvas.drawHistory(scale: Float = 1f) {
+  private fun Canvas.drawHistory(strokes: List<Stroke>, scale: Float = 1f) {
     val scaleMatrix = Matrix().apply { setScale(scale, scale) }
-    val scaledPaths = if (scale == 1f) pathHistory
-    else pathHistory.map(::Path).onEach { it.transform(scaleMatrix) }
-    for ((path, paint) in scaledPaths.zip(paintHistory)) {
-      drawPath(path, paint)
+    for (stroke in strokes) {
+      val path = stroke.path
+      if (scale != 1f) path.transform(scaleMatrix)
+      drawPath(path, stroke.paint)
     }
   }
 
@@ -166,10 +158,10 @@ internal class CanvasView @JvmOverloads constructor(
       brush = state.getParcelable("brush")!!
       strokeHistory = state.getParcelableArrayList("strokeHistory")!!
       pathHistory = strokeHistory.map(Stroke::path).toMutableList()
-      paintHistory = strokeHistory.map { newPaint(it.brush) }.toMutableList()
+      paintHistory = strokeHistory.map(Stroke::paint).toMutableList()
       strokeRedoHistory = state.getParcelableArrayList("strokeRedoHistory")!!
       pathRedoHistory = strokeRedoHistory.map(Stroke::path).toMutableList()
-      paintRedoHistory = strokeRedoHistory.map { newPaint(it.brush) }.toMutableList()
+      paintRedoHistory = strokeRedoHistory.map(Stroke::paint).toMutableList()
     } else super.onRestoreInstanceState(state)
   }
 
