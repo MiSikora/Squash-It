@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 0.3.3 *(2020-01-03)*
+----------------------------
+
+* Allow to redo drawing actions after clearing the whole canvas.
+* Minor improvements to the screenshot creation.
+
 Version 0.3.2 *(2020-01-02)*
 ----------------------------
 
