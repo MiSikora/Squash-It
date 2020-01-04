@@ -26,6 +26,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import java.io.File
+import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
@@ -80,12 +81,13 @@ internal open class BaseReportPresenterTest {
         runtimeInfo = RuntimeInfo(
             AppInfo("version name", "version code", "package name"),
             DeviceInfo(
-                "manufacturer",
-                "model",
-                "resolution",
-                "density",
-                listOf(Locale.US),
-                TimeZone.getTimeZone("CEST")
+                manufacturer = "manufacturer",
+                model = "model",
+                resolution = "resolution",
+                density = "density",
+                locales = listOf(Locale.US),
+                createdAt = Date(0),
+                timeZone = TimeZone.getTimeZone("CEST")
             ),
             OsInfo("release", 100)
         ),

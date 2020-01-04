@@ -8,6 +8,7 @@ import android.util.DisplayMetrics
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.os.ConfigurationCompat
 import kotlinx.android.parcel.Parcelize
+import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
@@ -41,6 +42,7 @@ internal data class RuntimeInfo(
       return AppInfo(versionName, versionCode, packageName)
     }
 
+    @Suppress("LongMethod")
     private fun createDeviceInfo(context: Context): DeviceInfo {
       val metrics = context.resources.displayMetrics
       val densityBucket = metrics.densityBucket
@@ -53,12 +55,13 @@ internal data class RuntimeInfo(
         localeList.add(locales[i])
       }
       return DeviceInfo(
-          Build.MANUFACTURER,
-          Build.MODEL,
-          resolution,
-          density,
-          localeList,
-          TimeZone.getDefault()
+          manufacturer = Build.MANUFACTURER,
+          model = Build.MODEL,
+          resolution = resolution,
+          density = density,
+          locales = localeList,
+          createdAt = Date(),
+          timeZone = TimeZone.getDefault()
       )
     }
 

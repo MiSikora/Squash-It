@@ -137,6 +137,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
         |Resolution: resolution
         |Density: density
         |Locales: [en_US]
+        |Local date: 1970-01-01T00:00:00.000Z
         |Time zone: Greenwich Mean Time, GMT
         |{panel}
         |
@@ -179,6 +180,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
         |Resolution: resolution
         |Density: density
         |Locales: [en_US]
+        |Local date: 1970-01-01T00:00:00.000Z
         |Time zone: Greenwich Mean Time, GMT
         |{panel}
         |
