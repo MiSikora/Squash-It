@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.3.5 *(2020-01-04)*
+----------------------------
+
+* Fix missing public resource declaration.
+
 Version 0.3.4 *(2020-01-03)*
 ----------------------------
 
