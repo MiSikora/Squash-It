@@ -1,6 +1,8 @@
 package io.mehow.squashit.report.presentation
 
+import io.kotlintest.matchers.collections.shouldHaveSize
 import io.kotlintest.shouldBe
+import io.mehow.squashit.report.AttachState
 import io.mehow.squashit.report.Description
 import io.mehow.squashit.report.Epic
 import io.mehow.squashit.report.IssueKey
@@ -194,6 +196,86 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
         |{panel}
       """.trimMargin()
 
+      expectComplete()
+    }
+  }
+
+  @Test fun `attach logs are present for new issue`() = recordWithNewIssue {
+    val file = folder.newFile()
+    sendEvent(SubmitReport(newIssueInput.withLogs(AttachState.Attach(file))))
+
+    presenterFactory.jiraApi.attachmentRecords.test {
+      expectItem().files.shouldHaveSize(1)
+      expectComplete()
+    }
+  }
+
+  @Test fun `do-not-attach logs are not present for new issue`() = recordWithNewIssue {
+    val file = folder.newFile()
+    sendEvent(SubmitReport(newIssueInput.withLogs(AttachState.DoNotAttach(file))))
+
+    presenterFactory.jiraApi.attachmentRecords.test {
+      // No attachment request should be present.
+      expectComplete()
+    }
+  }
+
+  @Test fun `attach screenshot is present for new issue`() = recordWithNewIssue {
+    val file = folder.newFile()
+    sendEvent(SubmitReport(newIssueInput.withScreenshot(AttachState.Attach(file))))
+
+    presenterFactory.jiraApi.attachmentRecords.test {
+      expectItem().files.shouldHaveSize(1)
+      expectComplete()
+    }
+  }
+
+  @Test fun `do-not-attach screenshot is not present for new issue`() = recordWithNewIssue {
+    val file = folder.newFile()
+    sendEvent(SubmitReport(newIssueInput.withScreenshot(AttachState.DoNotAttach(file))))
+
+    presenterFactory.jiraApi.attachmentRecords.test {
+      // No attachment request should be present.
+      expectComplete()
+    }
+  }
+
+  @Test fun `attach logs are present for comment`() = recordWithAddComment {
+    val file = folder.newFile()
+    sendEvent(SubmitReport(addCommentInput.withLogs(AttachState.Attach(file))))
+
+    presenterFactory.jiraApi.attachmentRecords.test {
+      expectItem().files.shouldHaveSize(1)
+      expectComplete()
+    }
+  }
+
+  @Test fun `do-not-attach logs are not present for comment`() = recordWithAddComment {
+    val file = folder.newFile()
+    sendEvent(SubmitReport(addCommentInput.withLogs(AttachState.DoNotAttach(file))))
+
+    presenterFactory.jiraApi.attachmentRecords.test {
+      // No attachment request should be present.
+      expectComplete()
+    }
+  }
+
+  @Test fun `attach screenshot is present for comment`() = recordWithAddComment {
+    val file = folder.newFile()
+    sendEvent(SubmitReport(addCommentInput.withScreenshot(AttachState.Attach(file))))
+
+    presenterFactory.jiraApi.attachmentRecords.test {
+      expectItem().files.shouldHaveSize(1)
+      expectComplete()
+    }
+  }
+
+  @Test fun `do-not-attach screenshot is not present for comment`() = recordWithAddComment {
+    val file = folder.newFile()
+    sendEvent(SubmitReport(addCommentInput.withScreenshot(AttachState.DoNotAttach(file))))
+
+    presenterFactory.jiraApi.attachmentRecords.test {
+      // No attachment request should be present.
       expectComplete()
     }
   }

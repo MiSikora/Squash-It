@@ -16,6 +16,8 @@ internal class FakeJiraApi : JiraApi {
   val newIssueRecords get() = _newIssueRecords.asFlow()
   private val _addCommentRecords = mutableListOf<AddCommentRecord>()
   val addCommentRecords = _addCommentRecords.asFlow()
+  private val _attachmentRecords = mutableListOf<AttachmentRecord>()
+  val attachmentRecords = _attachmentRecords.asFlow()
 
   override suspend fun getEpics(epicJql: EpicJql): Response<EpicsResponse> {
     return epicsFactory.create()
@@ -40,10 +42,13 @@ internal class FakeJiraApi : JiraApi {
   }
 
   override suspend fun attachFiles(issueKey: IssueKey, files: List<Part>): Response<Unit> {
+    _attachmentRecords.add(AttachmentRecord(issueKey, files))
     return attachmentsFactory.create()
   }
 
   data class NewIssueRecord(val request: NewIssueRequest)
 
   data class AddCommentRecord(val issueKey: IssueKey, val request: AddCommentRequest)
+
+  data class AttachmentRecord(val issueKey: IssueKey, val files: List<Part>)
 }
