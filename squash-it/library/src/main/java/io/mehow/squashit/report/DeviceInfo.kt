@@ -8,6 +8,7 @@ import java.util.TimeZone
 internal data class DeviceInfo(
   val manufacturer: String,
   val model: String,
+  val supportedAbis: List<String>,
   val resolution: String,
   val density: String,
   val locales: List<Locale>,
@@ -23,6 +24,7 @@ internal data class DeviceInfo(
       |{panel:title=Device info}
       |Manufacturer: $manufacturer
       |Model: $model
+      |Supported ABIs: ${supportedAbis.joinToString(prefix = "[", postfix = "]")}
       |Resolution: $resolution
       |Density: $density
       |Locales: ${locales.joinToString(prefix = "[", postfix = "]")}

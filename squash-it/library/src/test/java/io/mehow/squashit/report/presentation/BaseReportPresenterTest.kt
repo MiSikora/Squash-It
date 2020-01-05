@@ -82,6 +82,7 @@ internal open class BaseReportPresenterTest {
             DeviceInfo(
                 manufacturer = "manufacturer",
                 model = "model",
+                supportedAbis = listOf("ABI"),
                 resolution = "resolution",
                 density = "density",
                 locales = listOf(Locale.US),

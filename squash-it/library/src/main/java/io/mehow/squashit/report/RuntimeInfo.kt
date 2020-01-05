@@ -27,9 +27,25 @@ internal data class RuntimeInfo(
 
   companion object {
     val Null = RuntimeInfo(
-        app = AppInfo("", "", ""),
-        device = DeviceInfo("", "", "", "", emptyList(), Date(), TimeZone.getDefault()),
-        osInfo = OsInfo("", 0)
+        app = AppInfo(
+            versionName = "",
+            versionCode = "",
+            packageName = ""
+        ),
+        device = DeviceInfo(
+            manufacturer = "",
+            model = "",
+            supportedAbis = emptyList(),
+            resolution = "",
+            density = "",
+            locales = emptyList(),
+            createdAt = Date(),
+            timeZone = TimeZone.getDefault()
+        ),
+        osInfo = OsInfo(
+            release = "",
+            sdk = 0
+        )
     )
 
     fun create(context: Context): RuntimeInfo {
@@ -60,6 +76,7 @@ internal data class RuntimeInfo(
       return DeviceInfo(
           manufacturer = Build.MANUFACTURER,
           model = Build.MODEL,
+          supportedAbis = Build.SUPPORTED_ABIS.toList(),
           resolution = resolution,
           density = density,
           locales = localeList,

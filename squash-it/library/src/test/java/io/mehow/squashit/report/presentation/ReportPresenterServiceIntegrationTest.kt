@@ -136,6 +136,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
         |{panel:title=Device info}
         |Manufacturer: manufacturer
         |Model: model
+        |Supported ABIs: [ABI]
         |Resolution: resolution
         |Density: density
         |Locales: [en_US]
@@ -179,6 +180,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
         |{panel:title=Device info}
         |Manufacturer: manufacturer
         |Model: model
+        |Supported ABIs: [ABI]
         |Resolution: resolution
         |Density: density
         |Locales: [en_US]
