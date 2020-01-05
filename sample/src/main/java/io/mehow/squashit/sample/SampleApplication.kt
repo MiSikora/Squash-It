@@ -7,7 +7,7 @@ class SampleApplication : Application() {
   override fun onCreate() {
     super.onCreate()
     SquashItConfigurator
-        .jiraUrl("JiraURl")
+        .jiraUrl("JiraUrl")
         .userEmail("UserEmail")
         .userToken("UserToken")
         .projectKey("ProjectKey")
