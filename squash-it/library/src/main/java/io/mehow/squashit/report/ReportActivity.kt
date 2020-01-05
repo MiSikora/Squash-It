@@ -121,11 +121,12 @@ internal class ReportActivity : BaseActivity() {
   }
 
   private fun createFactory(screenshot: File?): ReportPresenterFactory {
+    val appContext = applicationContext
     return ReportPresenterFactory(
         SquashItConfig.Instance,
         filesDir,
         { screenshot },
-        { withContext(Dispatchers.IO) { SquashItLogger.createLogFile(this@ReportActivity) } },
+        { withContext(Dispatchers.IO) { SquashItLogger.createLogFile(appContext) } },
         Dispatchers.Unconfined
     )
   }
@@ -138,7 +139,7 @@ internal class ReportActivity : BaseActivity() {
       val uri = data?.data ?: return
       mainScope.launch {
         val item = withContext(Dispatchers.IO) {
-          AttachmentFactory.create(contentResolver, AttachmentId("$uri"))
+          AttachmentFactory.create(applicationContext.contentResolver, AttachmentId("$uri"))
         }
         if (item != null) mainScope.launch { presenter.sendEvent(UpdateInput.attach(item)) }
         else showSnackbar(getString(R.string.squash_it_error))
