@@ -1,6 +1,5 @@
 package io.mehow.squashit.report
 
-import io.mehow.squashit.report.AttachState.DoNotAttach
 import io.mehow.squashit.report.InputError.NoIssueId
 import io.mehow.squashit.report.InputError.NoIssueType
 import io.mehow.squashit.report.InputError.NoReporter
@@ -71,9 +70,9 @@ internal object ReportFactory {
   private val UserInput.allAttachments: Set<AttachmentBody>
     get() {
       val list = listOfNotNull(
-          screenshotState.takeIf { it !is DoNotAttach }?.file?.let { AttachmentBody.fromFile(it) },
-          logsState.takeIf { it !is DoNotAttach }?.file?.let { AttachmentBody.fromFile(it) }
-      ) + attachments.map { AttachmentBody.fromAttachment(it) }
+          screenshotState.body,
+          logsState.body
+      ) + attachments.map(Attachment::body)
       return list.toSet()
     }
 }
