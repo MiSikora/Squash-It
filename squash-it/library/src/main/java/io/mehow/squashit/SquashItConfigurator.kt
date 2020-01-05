@@ -74,7 +74,7 @@ object SquashItConfigurator {
   }
 
   @JvmStatic fun configure(context: Context) {
-    RuntimeInfo = Info.create(context)
+    RuntimeInfo = Info.create(context.applicationContext)
     SquashItConfig.configure()
   }
 }
