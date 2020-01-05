@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 0.4.2 *(2020-01-05)*
+----------------------------
+
+* Remove 'ReportActivity' memory leaks on configuration changes.
+* Add supported ABIs to the device info section.
+
 Version 0.4.1 *(2020-01-05)*
 ----------------------------
 
