@@ -23,17 +23,17 @@ internal data class SquashItConfig(
   val epicWriteFieldName: String,
   val runtimeInfo: RuntimeInfo
 ) {
-  constructor(initializer: SquashItConfigurator) : this(
-      projectKey = initializer.ProjectKey,
-      jiraUrl = initializer.JiraUrl,
-      userEmail = initializer.UserEmail,
-      userToken = initializer.UserToken,
-      userFilter = initializer.UserFilter,
-      issueTypeFilter = initializer.IssueTypeFilter,
-      fingerTriggerCount = initializer.FingerTriggerCount,
-      epicWriteFieldName = initializer.EpicWriteFieldName,
-      epicReadFieldName = initializer.EpicReadFieldName,
-      runtimeInfo = initializer.RuntimeInfo
+  constructor(configurator: SquashItConfigurator) : this(
+      projectKey = configurator.ProjectKey,
+      jiraUrl = configurator.JiraUrl,
+      userEmail = configurator.UserEmail,
+      userToken = configurator.UserToken,
+      userFilter = configurator.UserFilter,
+      issueTypeFilter = configurator.IssueTypeFilter,
+      fingerTriggerCount = configurator.FingerTriggerCount,
+      epicWriteFieldName = configurator.EpicWriteFieldName,
+      epicReadFieldName = configurator.EpicReadFieldName,
+      runtimeInfo = configurator.RuntimeInfo
   )
 
   val hasProjectKey = projectKey.isNotEmpty()
@@ -52,12 +52,12 @@ internal data class SquashItConfig(
   }
 
   companion object {
-    private val initialized = AtomicBoolean()
+    private val configured = AtomicBoolean()
 
     fun configure() {
       @SuppressLint("SyntheticAccessor") // Lint is wrong.
-      if (initialized.getAndSet(true)) {
-        error("Plugin can be initialized only once.")
+      if (configured.getAndSet(true)) {
+        error("Plugin can be configured only once.")
       }
       SquashItLogger.setLogsCapacity(SquashItConfigurator.LogsCapacity)
       Instance = SquashItConfig(SquashItConfigurator)

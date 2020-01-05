@@ -36,7 +36,7 @@ android {
 }
 ```
 
-To integrate the tool with your app you need to add the dependency to your project and initialize it. Plugin should be initialized before it attaches itself to any Activity. The best place for it is the Application object. Check [the sample](sample/) for more information.
+To integrate the tool with your app you need to add the dependency to your project and configure it. Plugin should be configured before it attaches itself to any Activity. The best place for it is the Application object. Check [the sample](sample/) for more information.
 
 ```groovy
 debugImplementation "io.mehow.squashit:squashit:0.4.2"
@@ -104,7 +104,7 @@ SquashItConfigurator
 
 ### Finger trigger
 
-By default, the tool is initiated by holding two fingers on a screen. However, it might not be the best idea for some applications where using two fingers is part of the app's flow (like map applications).
+By default, the tool is triggered by holding two fingers on a screen. However, it might not be the best idea for some applications where using two fingers is part of the app's flow (like map applications).
 
 ```kotlin
 SquashItConfigurator
