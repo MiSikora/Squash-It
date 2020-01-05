@@ -1,8 +1,8 @@
 package io.mehow.squashit.report.api
 
 import com.squareup.moshi.Moshi
+import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.report.IssueKey
-import io.mehow.squashit.report.ReportConfig
 import okhttp3.Call
 import okhttp3.Credentials
 import okhttp3.MultipartBody
@@ -51,10 +51,10 @@ internal interface JiraApi {
   ): Response<Unit>
 
   companion object {
-    fun create(moshi: Moshi, config: ReportConfig.Valid): JiraApi {
+    fun create(moshi: Moshi, config: SquashItConfig): JiraApi {
       val credentials = Credentials.basic(config.userEmail, config.userToken)
       return Retrofit.Builder()
-          .baseUrl(config.jiraUrl)
+          .baseUrl(config.jiraUrl!!)
           .withAuthClient(credentials)
           .addConverterFactory(MoshiConverterFactory.create(moshi))
           .addCallAdapterFactory(ResponseAdapter.Factory)

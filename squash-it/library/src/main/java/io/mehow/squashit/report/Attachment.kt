@@ -2,11 +2,7 @@ package io.mehow.squashit.report
 
 import okio.Source
 
-internal class Attachment(
-  val id: AttachmentId,
-  val name: String,
-  val source: () -> Source?
-) {
+internal class Attachment(val id: AttachmentId, val name: String, val source: () -> Source?) {
   override fun equals(other: Any?): Boolean {
     if (other !is Attachment) return false
 

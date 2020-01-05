@@ -31,8 +31,8 @@ internal object TelescopeCallback : ActivityLifecycleCallbacks {
     return TelescopeLayout(activity).apply {
       layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
       setLens(ReportLens(activity))
-      setPointerCount(activity.resources.getInteger(R.integer.squash_it_report_pointer_count))
-      setProgressColor(ContextCompat.getColor(activity, R.color.squash_it_report_progress_color))
+      setPointerCount(SquashItConfig.Instance.fingerTriggerCount)
+      setProgressColor(ContextCompat.getColor(activity, R.color.squash_it_telescope_border))
     }
   }
 

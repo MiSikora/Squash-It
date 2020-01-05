@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import io.mehow.squashit.R
+import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.report.InputError.NoIssueId
 import io.mehow.squashit.report.IssueId
 import io.mehow.squashit.report.IssueKey
@@ -29,8 +30,6 @@ internal class UpdateIssueView(
   attrs: AttributeSet?,
   private val presenter: ReportPresenter
 ) : FrameLayout(context, attrs) {
-  private val projectKey = resources.getString(R.string.squash_it_jira_project_key)
-
   private val issueIdLayout: TextInputLayout
   private val issueIdInput: TextInputEditText
 
@@ -45,7 +44,7 @@ internal class UpdateIssueView(
     issueIdInput.textChanges
         .debounce(200)
         .mapNotNull { it.trim().toLongOrNull() }
-        .map { IssueKey("$projectKey-$it") }
+        .map { IssueKey("${SquashItConfig.Instance.projectKey}-$it") }
         .onEach { presenter.sendEvent(UpdateInput.issueKey(it)) }
         .launchIn(viewScope)
     issueIdInput.focuses

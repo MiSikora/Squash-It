@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
-import io.mehow.squashit.report.ReportConfig
+import io.mehow.squashit.SquashItConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -41,7 +41,7 @@ internal class PaintboxCanvasCallback(
       val screenshot = withContext(Dispatchers.IO) {
         createScreenshot(width, height, screenshotBitmap, canvasBitmap)
       }
-      ReportConfig.create(activity).startActivity(activity, screenshot)
+      SquashItConfig.Instance.start(activity, screenshot)
       activity.finish()
     }
     paintboxView.enableSave = true

@@ -20,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import io.mehow.squashit.BaseActivity
 import io.mehow.squashit.FileParceler
 import io.mehow.squashit.R
+import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.SquashItLogger
 import io.mehow.squashit.report.SubmitState.AddedAttachments
 import io.mehow.squashit.report.SubmitState.Failed
@@ -57,8 +58,8 @@ internal class ReportActivity : BaseActivity() {
 
   override fun onCreate(inState: Bundle?) {
     super.onCreate(inState)
-    val (config, screenshot) = intent.getParcelableExtra<Args>(ArgsKey)!!
-    presenter = ViewModelProvider(this, createFactory(config, screenshot)).get()
+    val (screenshot) = intent.getParcelableExtra<Args>(ArgsKey)!!
+    presenter = ViewModelProvider(this, createFactory(screenshot)).get()
     inflaterFactory = ReportInflaterFactory(layoutInflater.factory2, presenter)
     window.decorView.enableEdgeToEdgeAndNightMode()
     setContentView(R.layout.squash_it)
@@ -119,9 +120,9 @@ internal class ReportActivity : BaseActivity() {
     return inflaterFactory.onCreateView(parent, name, ctx, attrs)
   }
 
-  private fun createFactory(config: ReportConfig.Valid, screenshot: File?): ReportPresenterFactory {
+  private fun createFactory(screenshot: File?): ReportPresenterFactory {
     return ReportPresenterFactory(
-        config,
+        SquashItConfig.Instance,
         filesDir,
         { screenshot },
         { withContext(Dispatchers.IO) { SquashItLogger.createLogFile(this@ReportActivity) } },
@@ -163,5 +164,5 @@ internal class ReportActivity : BaseActivity() {
 
   @Parcelize
   @TypeParceler<File?, FileParceler>
-  data class Args(val config: ReportConfig.Valid, val screenshotFile: File?) : Parcelable
+  data class Args(val screenshotFile: File?) : Parcelable
 }

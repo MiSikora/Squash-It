@@ -11,6 +11,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import io.mehow.squashit.R
+import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.report.ReportAdapter
 import io.mehow.squashit.report.extensions.layoutInflater
 
@@ -19,7 +20,6 @@ internal class ReportView @JvmOverloads constructor(
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
-  private val projectKey = resources.getString(R.string.squash_it_jira_project_key)
   private lateinit var toolbar: Toolbar
   private lateinit var viewPager: ViewPager2
   private lateinit var tabLayout: TabLayout
@@ -43,7 +43,10 @@ internal class ReportView @JvmOverloads constructor(
   }
 
   private fun setUpTabs() {
-    toolbar.title = resources.getString(R.string.squash_it_report_an_issue, projectKey)
+    toolbar.title = resources.getString(
+        R.string.squash_it_report_an_issue,
+        SquashItConfig.Instance.projectKey
+    )
     val reportAdapter = ReportAdapter(context.layoutInflater)
     viewPager.apply {
       adapter = reportAdapter

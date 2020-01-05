@@ -20,7 +20,9 @@ import org.junit.Test
 internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest() {
   @Test fun `blacklisted users are unavailable`() {
     val factory = presenterFactory.copy(
-        config = presenterFactory.config.copy(filteredUsers = listOf("ID 1", "ID 4", "ID 5"))
+        config = presenterFactory.config.copy(userFilter = {
+          it.accountId !in listOf("ID 1", "ID 4", "ID 5")
+        })
     )
     factory.jiraApi.roleFactory.enqueue(
         Record("User 1", "ID 1"),
@@ -40,10 +42,9 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
 
   @Test fun `whitelisted users are available`() {
     val factory = presenterFactory.copy(
-        config = presenterFactory.config.copy(
-            whitelistUsers = true,
-            filteredUsers = listOf("ID 1", "ID 4", "ID 5")
-        )
+        config = presenterFactory.config.copy(userFilter = {
+          it.accountId in listOf("ID 1", "ID 4", "ID 5")
+        })
     )
     factory.jiraApi.roleFactory.enqueue(
         Record("User 1", "ID 1"),
@@ -63,7 +64,9 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
 
   @Test fun `blacklisted issue types are unavailable`() {
     val factory = presenterFactory.copy(
-        config = presenterFactory.config.copy(filteredIssueTypes = listOf("ID 2", "ID 5"))
+        config = presenterFactory.config.copy(issueTypeFilter = {
+          it.id !in listOf("ID 2", "ID 5")
+        })
     )
     factory.jiraApi.projectFactory.enqueue(
         ProjectResponse(
@@ -81,19 +84,16 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
     testPresenter(skipInitialization = false) {
       expectItem()
       expectItem() shouldBe syncedModel.withProjectInfo {
-        copy(issueTypes = setOf(
-            IssueType("ID 1", "Name 1"), IssueType("ID 4", "Name 4")
-        ))
+        copy(issueTypes = setOf(IssueType("ID 1", "Name 1"), IssueType("ID 4", "Name 4")))
       }
     }
   }
 
   @Test fun `whitelisted issue types are available`() {
     val factory = presenterFactory.copy(
-        config = presenterFactory.config.copy(
-            whitelistIssueTypes = true,
-            filteredIssueTypes = listOf("ID 2", "ID 5")
-        )
+        config = presenterFactory.config.copy(issueTypeFilter = {
+          it.id in listOf("ID 2", "ID 5")
+        })
     )
     factory.jiraApi.projectFactory.enqueue(
         ProjectResponse(

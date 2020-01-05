@@ -24,4 +24,6 @@
   <color name="squash_it_spiro_disco_ball">#23e6fc</color>
   <color name="squash_it_dandelion">#f5e61f</color>
   <color name="squash_it_flirt">#99006b</color>
+
+  <color name="squash_it_telescope_border">@color/squash_it_royal_blue700</color>
 </resources>

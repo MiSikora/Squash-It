@@ -3,21 +3,18 @@ package io.mehow.squashit.report
 import android.content.Context
 import android.os.Build
 import android.os.Build.VERSION
-import android.os.Parcelable
 import android.util.DisplayMetrics
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.os.ConfigurationCompat
-import kotlinx.android.parcel.Parcelize
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-@Parcelize
 internal data class RuntimeInfo(
   val app: AppInfo,
   val device: DeviceInfo,
   val osInfo: OsInfo
-) : Describable, Parcelable {
+) : Describable {
   override fun describe(): String {
     return """
       |${app.describe()}
@@ -29,6 +26,12 @@ internal data class RuntimeInfo(
   }
 
   companion object {
+    val Null = RuntimeInfo(
+        app = AppInfo("", "", ""),
+        device = DeviceInfo("", "", "", "", emptyList(), Date(), TimeZone.getDefault()),
+        osInfo = OsInfo("", 0)
+    )
+
     fun create(context: Context): RuntimeInfo {
       return RuntimeInfo(createAppInfo(context), createDeviceInfo(context), createOsInfo())
     }

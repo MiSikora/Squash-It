@@ -6,10 +6,7 @@ import okio.sink
 import okio.source
 import java.io.File
 
-internal class ProjectInfoStore(
-  private val storageDir: File,
-  moshi: Moshi
-) {
+internal class ProjectInfoStore(private val storageDir: File, moshi: Moshi) {
   private val adapter = moshi.adapter(ProjectInfo::class.java)
   private var cachedInfo: ProjectInfo? = null
 

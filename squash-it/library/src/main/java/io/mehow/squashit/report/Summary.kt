@@ -1,5 +1,3 @@
 package io.mehow.squashit.report
 
-internal data class Summary(
-  val value: String
-)
+internal data class Summary(val value: String)

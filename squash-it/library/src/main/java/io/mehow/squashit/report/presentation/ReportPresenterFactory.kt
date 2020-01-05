@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModelProvider.Factory
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.report.JiraService
 import io.mehow.squashit.report.ProjectInfoStore
-import io.mehow.squashit.report.ReportConfig
 import io.mehow.squashit.report.api.EpicFieldsResponse
 import io.mehow.squashit.report.api.JiraApi
 import io.mehow.squashit.report.api.NewIssueFieldsRequest
@@ -18,7 +18,7 @@ import java.io.File
 import java.lang.reflect.Type
 
 internal class ReportPresenterFactory(
-  private val config: ReportConfig.Valid,
+  private val config: SquashItConfig,
   private val projectInfoDir: File,
   private val screenshotFileProvider: suspend () -> File?,
   private val logFileProvider: suspend () -> File?,
@@ -38,7 +38,7 @@ internal class ReportPresenterFactory(
     return presenter as T
   }
 
-  private class EpicJsonFactory(config: ReportConfig.Valid) : JsonAdapter.Factory {
+  private class EpicJsonFactory(config: SquashItConfig) : JsonAdapter.Factory {
     private val readName = config.epicReadFieldName
     private val writeName = config.epicWriteFieldName
     override fun create(

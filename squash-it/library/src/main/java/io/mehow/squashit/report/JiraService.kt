@@ -1,5 +1,6 @@
 package io.mehow.squashit.report
 
+import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.report.Report.AddComment
 import io.mehow.squashit.report.Report.NewIssue
 import io.mehow.squashit.report.api.AddCommentRequest
@@ -20,7 +21,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
 internal class JiraService(
-  private val config: ReportConfig.Valid,
+  private val config: SquashItConfig,
   private val projectInfoStore: ProjectInfoStore,
   private val jiraApi: JiraApi
 ) {
@@ -118,7 +119,7 @@ internal class JiraService(
     return issueTypes
         .filterNot { it.isSubTask }
         .map { IssueType(it.id, it.name) }
-        .filter(config::filterIssuesTypes) to roleIds
+        .filter(config.issueTypeFilter) to roleIds
   }
 
   private suspend fun getUsers(roleIds: List<String>): List<User> = coroutineScope {
@@ -129,6 +130,6 @@ internal class JiraService(
         .flatMap { it.value.actors }
         .mapNotNull { actor -> actor.actorUser?.let { User(actor.displayName, it.accountId) } }
         .distinct()
-        .filter(config::filterUser)
+        .filter(config.userFilter)
   }
 }

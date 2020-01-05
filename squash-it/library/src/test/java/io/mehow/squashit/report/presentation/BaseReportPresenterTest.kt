@@ -3,6 +3,7 @@ package io.mehow.squashit.report.presentation
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.mehow.squashit.FlowAssert
+import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.report.AppInfo
 import io.mehow.squashit.report.DeviceInfo
 import io.mehow.squashit.report.Epic
@@ -12,7 +13,6 @@ import io.mehow.squashit.report.JiraService
 import io.mehow.squashit.report.OsInfo
 import io.mehow.squashit.report.ProjectInfo
 import io.mehow.squashit.report.ProjectInfoStore
-import io.mehow.squashit.report.ReportConfig
 import io.mehow.squashit.report.RuntimeInfo
 import io.mehow.squashit.report.User
 import io.mehow.squashit.report.api.FakeJiraApi
@@ -69,15 +69,14 @@ internal open class BaseReportPresenterTest {
 
   data class ReportPresenterFactory(
     val storageDir: File,
-    val config: ReportConfig.Valid = ReportConfig.Valid(
+    val config: SquashItConfig = SquashItConfig(
         projectKey = "SQ",
         jiraUrl = "https://www.squash.it".toHttpUrl(),
         userEmail = "email",
         userToken = "token",
-        whitelistUsers = false,
-        filteredUsers = emptyList(),
-        whitelistIssueTypes = false,
-        filteredIssueTypes = emptyList(),
+        fingerTriggerCount = 2,
+        userFilter = { true },
+        issueTypeFilter = { true },
         runtimeInfo = RuntimeInfo(
             AppInfo("version name", "version code", "package name"),
             DeviceInfo(
