@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.4.1 *(2020-01-05)*
+----------------------------
+
+* Add implicit Internet permission to the library manifest file.
+
 Version 0.4.0 *(2020-01-05)*
 ----------------------------
 
