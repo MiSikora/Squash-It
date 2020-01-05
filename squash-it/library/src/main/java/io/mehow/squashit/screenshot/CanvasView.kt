@@ -75,7 +75,7 @@ internal class CanvasView @JvmOverloads constructor(
     }
   }
 
-  fun createAdjustedBitmap(width: Int, height: Int): Bitmap? {
+  fun createAdjustedBitmap(width: Int, height: Int): Bitmap {
     val strokes = strokeHistory.toList()
     val scale = height.toFloat() / this.height.toFloat()
     return createBitmap(width, height).applyCanvas {

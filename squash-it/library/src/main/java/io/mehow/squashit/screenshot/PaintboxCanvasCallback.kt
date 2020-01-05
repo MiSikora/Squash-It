@@ -37,7 +37,7 @@ internal class PaintboxCanvasCallback(
     val width = screenshotBitmap.width
     val height = screenshotBitmap.height
     activity.scope.launch {
-      val canvasBitmap = canvasView.createAdjustedBitmap(width, height) ?: return@launch
+      val canvasBitmap = canvasView.createAdjustedBitmap(width, height)
       val screenshot = withContext(Dispatchers.IO) {
         createScreenshot(width, height, screenshotBitmap, canvasBitmap)
       }
