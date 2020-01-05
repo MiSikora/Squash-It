@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 0.4.0 *(2020-01-05)*
+----------------------------
+
+* Configure the plugin from the source code and not from the resource files.
+* Add a local date time to the report info.
+* Fix an issue when screenshot and logs attachments would be added when their respective checkboxes were not checked.
+
 Version 0.3.5 *(2020-01-04)*
 ----------------------------
 

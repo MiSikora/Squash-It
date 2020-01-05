@@ -39,7 +39,7 @@ android {
 To integrate the tool with your app you need to add the dependency to your project and initialize it. Plugin should be initialized before it attaches itself to any Activity. The best place for it is the Application object. Check [the sample](sample/) for more information.
 
 ```groovy
-debugImplementation "io.mehow.squashit:squashit:0.3.5"
+debugImplementation "io.mehow.squashit:squashit:0.4.0"
 ```
 
 ```kotlin
@@ -69,7 +69,7 @@ myLogger.log { priority, tag, message -> SquashItLogger.log(priority, tag, messa
 If you use [Timber](https://github.com/JakeWharton/timber) you can skip this step and just depend on the Timber artifact instead.
 
 ```groovy
-debugImplementation "io.mehow.squashit:timber:0.3.5"
+debugImplementation "io.mehow.squashit:timber:0.4.0"
 ```
 
 By default last 2000 logs are kept in a journal. You can configure the capacity of the log file. Keep in mind, however, that logs are kept in memory prior to writing them to a file, so you should be mindful of the capacity.
