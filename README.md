@@ -120,6 +120,7 @@ JIRA uses custom fields for epics in its model. By default, they are configured 
 SquashItConfigurator
     .epicReadFieldName("value_a")
     .epicWriteFieldName("value_b")
+    .configure(context)
 ```
 
 ## Sample
