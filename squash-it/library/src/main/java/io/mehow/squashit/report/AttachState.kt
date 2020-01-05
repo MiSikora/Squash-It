@@ -1,14 +1,19 @@
 package io.mehow.squashit.report
 
 import io.mehow.squashit.report.api.AttachmentBody
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-internal sealed class AttachState {
+internal sealed class AttachState : Attachable {
   abstract val file: File?
-  abstract val body: AttachmentBody?
 
   data class Attach(override val file: File) : AttachState() {
-    override val body: AttachmentBody? get() = AttachmentBody.fromFile(file)
+    override val body: AttachmentBody?
+      get() {
+        val part = MultipartBody.Part.createFormData("file", file.name, file.asRequestBody())
+        return AttachmentBody(file.name, part)
+      }
   }
 
   data class DoNotAttach(override val file: File) : AttachState() {

@@ -11,7 +11,6 @@ import io.mehow.squashit.report.ReportType
 import io.mehow.squashit.report.Reporter
 import io.mehow.squashit.report.SubmitState
 import io.mehow.squashit.report.User
-import io.mehow.squashit.report.api.AttachmentBody
 import io.mehow.squashit.report.presentation.Event.Reattach
 import io.mehow.squashit.report.presentation.Event.RetrySubmission
 import io.mehow.squashit.report.presentation.Event.SubmitReport
@@ -74,7 +73,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
 
     val logsFile = folder.newFile()
     val model = addCommentModel.withLogs(AttachState.Attach(logsFile))
-    val attachments = setOf(AttachmentBody.fromFile(logsFile))
+    val attachments = setOf(model.input.logsState.body!!)
     presenter.sendEvent(UpdateInput.logs(AttachState.Attach(logsFile)))
     expectItem()
 
@@ -97,7 +96,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     expectItem()
 
     val model = addCommentModel.withLogs(AttachState.Attach(logsFile))
-    val attachments = setOf(AttachmentBody.fromFile(logsFile))
+    val attachments = setOf(model.input.logsState.body!!)
 
     presenterFactory.jiraApi.attachmentsFactory.disableErrors()
     presenterFactory.jiraApi.commentFactory.enableErrors()

@@ -69,10 +69,8 @@ internal object ReportFactory {
 
   private val UserInput.allAttachments: Set<AttachmentBody>
     get() {
-      val list = listOfNotNull(
-          screenshotState.body,
-          logsState.body
-      ) + attachments.map(Attachment::body)
-      return list.toSet()
+      return (attachments + screenshotState + logsState)
+          .mapNotNull(Attachable::body)
+          .toSet()
     }
 }
