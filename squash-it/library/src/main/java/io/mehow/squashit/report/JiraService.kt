@@ -77,15 +77,19 @@ internal class JiraService(
   }
 
   private fun createNewIssueRequest(report: NewIssue): NewIssueRequest {
-    val description = listOfNotNull(report.description, config.runtimeInfo, report.mentions)
-        .joinToString("\n\n", transform = Describable::describe)
+    val description = listOfNotNull(
+        if (config.allowReporterOverride) null else Reporter(report.reporter),
+        report.description,
+        config.runtimeInfo,
+        report.mentions
+    ).joinToString("\n\n", transform = Describable::describe)
 
     return NewIssueRequest(
         NewIssueFieldsRequest(
             ProjectRequest(config.projectKey),
             IssueTypeRequest(report.issueType.id),
             report.summary.value,
-            ReporterRequest(report.reporter.accountId),
+            if (config.allowReporterOverride) ReporterRequest(report.reporter.accountId) else null,
             description,
             report.epic?.id
         )
@@ -94,7 +98,7 @@ internal class JiraService(
 
   private fun createAddCommentRequest(report: AddComment): AddCommentRequest {
     val body = listOfNotNull(
-        report.reporter,
+        Reporter(report.reporter),
         report.description,
         config.runtimeInfo,
         report.mentions

@@ -13,6 +13,7 @@ object SquashItConfigurator {
   internal var JiraUrl: HttpUrl? = null
   internal var UserEmail: String = ""
   internal var UserToken: String = ""
+  internal var AllowReporterOverride = true
   internal var UserFilter: (User) -> Boolean = { true }
   internal var IssueTypeFilter: (IssueType) -> Boolean = { true }
   internal var FingerTriggerCount: Int = 2
@@ -38,6 +39,11 @@ object SquashItConfigurator {
 
   @JvmStatic fun userToken(token: String): SquashItConfigurator {
     UserToken = token.trim()
+    return this
+  }
+
+  @JvmStatic fun allowReporterOverride(allow: Boolean): SquashItConfigurator {
+    AllowReporterOverride = allow
     return this
   }
 

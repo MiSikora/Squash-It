@@ -12,12 +12,12 @@ import kotlin.String
 
 @Suppress("LongMethod", "ComplexMethod", "StringLiteralDuplication")
 internal class NewIssueFieldsRequestJsonAdapter(
-  private val fieldName: String,
+  private val epicFieldName: String,
   moshi: Moshi
 ) : JsonAdapter<NewIssueFieldsRequest>() {
   private val options: JsonReader.Options = JsonReader.Options.of(
       "project", "issuetype", "summary",
-      "reporter", "description", fieldName
+      "reporter", "description", epicFieldName
   )
 
   private val projectRequestAdapter: JsonAdapter<ProjectRequest> =
@@ -29,7 +29,7 @@ internal class NewIssueFieldsRequestJsonAdapter(
   private val stringAdapter: JsonAdapter<String> =
     moshi.adapter(String::class.java, emptySet(), "summary")
 
-  private val reporterRequestAdapter: JsonAdapter<ReporterRequest> =
+  private val nullableReporterRequestAdapter: JsonAdapter<ReporterRequest?> =
     moshi.adapter(ReporterRequest::class.java, emptySet(), "reporter")
 
   private val nullableStringAdapter: JsonAdapter<String?> =
@@ -59,10 +59,7 @@ internal class NewIssueFieldsRequestJsonAdapter(
             "summary",
             "summary"
         )
-        3 -> reporter = reporterRequestAdapter.fromJson(reader) ?: reader.unexpectedNull(
-            "reporter",
-            "reporter"
-        )
+        3 -> reporter = nullableReporterRequestAdapter.fromJson(reader)
         4 -> description = stringAdapter.fromJson(reader) ?: reader.unexpectedNull(
             "description",
             "description"
@@ -80,7 +77,7 @@ internal class NewIssueFieldsRequestJsonAdapter(
         project = project ?: reader.missingProperty("project", "project"),
         issueType = issueType ?: reader.missingProperty("issueType", "issuetype"),
         summary = summary ?: reader.missingProperty("summary", "summary"),
-        reporter = reporter ?: reader.missingProperty("reporter", "reporter"),
+        reporter = reporter,
         description = description ?: reader.missingProperty("description", "description"),
         epic = epic
     )
@@ -98,10 +95,10 @@ internal class NewIssueFieldsRequestJsonAdapter(
     writer.name("summary")
     stringAdapter.toJson(writer, value.summary)
     writer.name("reporter")
-    reporterRequestAdapter.toJson(writer, value.reporter)
+    nullableReporterRequestAdapter.toJson(writer, value.reporter)
     writer.name("description")
     stringAdapter.toJson(writer, value.description)
-    writer.name(fieldName)
+    writer.name(epicFieldName)
     nullableStringAdapter.toJson(writer, value.epic)
     writer.endObject()
   }

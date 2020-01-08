@@ -123,6 +123,18 @@ SquashItConfigurator
     .configure(context)
 ```
 
+### Overwrite issue reporter
+
+If you want or need to disable overwriting of the issue reporter you can configure it this way.
+
+```kotlin
+SquashItConfigurator
+    .allowReporterOverride(false)
+    .configure(context)
+```
+
+If you do this the the reporter will be added to the description like for comments.
+
 ## Sample
 
 You can check the integration with your JIRA by running [the sample](sample/) project. You'll need however to overwrite the [configuration file](sample/src/main/java/io/mehow/squashit/sample/SampleApplication.kt).

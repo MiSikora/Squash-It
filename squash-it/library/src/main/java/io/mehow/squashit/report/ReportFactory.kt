@@ -63,7 +63,7 @@ internal object ReportFactory {
       description = description,
       mentions = mentions,
       attachments = allAttachments,
-      reporter = Reporter(reporter!!),
+      reporter = reporter!!,
       issueKey = issueKey!!
   )
 

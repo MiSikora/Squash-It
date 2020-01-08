@@ -74,6 +74,7 @@ internal open class BaseReportPresenterTest {
         jiraUrl = "https://www.squash.it".toHttpUrl(),
         userEmail = "email",
         userToken = "token",
+        allowReporterOverride = true,
         fingerTriggerCount = 2,
         userFilter = { true },
         issueTypeFilter = { true },

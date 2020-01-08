@@ -8,7 +8,6 @@ import io.mehow.squashit.report.IssueKey
 import io.mehow.squashit.report.Mentions
 import io.mehow.squashit.report.Report
 import io.mehow.squashit.report.ReportType
-import io.mehow.squashit.report.Reporter
 import io.mehow.squashit.report.SubmitState
 import io.mehow.squashit.report.User
 import io.mehow.squashit.report.presentation.Event.Reattach
@@ -114,7 +113,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
       .withMentions(User("Mention Name", "Mention ID"))
 
   private val addCommentReport = Report.AddComment(
-      reporter = Reporter(User("Reporter Name", "Reporter ID")),
+      reporter = User("Reporter Name", "Reporter ID"),
       issueKey = IssueKey("Issue ID"),
       description = Description("Description"),
       mentions = Mentions(setOf(User("Mention Name", "Mention ID"))),

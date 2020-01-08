@@ -1,6 +1,7 @@
 package io.mehow.squashit.report.presentation
 
 import io.kotlintest.matchers.collections.shouldHaveSize
+import io.kotlintest.matchers.types.shouldBeNull
 import io.kotlintest.shouldBe
 import io.mehow.squashit.report.AttachState
 import io.mehow.squashit.report.Description
@@ -12,6 +13,7 @@ import io.mehow.squashit.report.Summary
 import io.mehow.squashit.report.User
 import io.mehow.squashit.report.api.IssueTypeResponse
 import io.mehow.squashit.report.api.ProjectResponse
+import io.mehow.squashit.report.api.ReporterRequest
 import io.mehow.squashit.report.api.RoleFactory.Record
 import io.mehow.squashit.report.presentation.Event.SubmitReport
 import io.mehow.squashit.report.presentation.Event.UpdateInput
@@ -154,6 +156,82 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
         |{panel}
       """.trimMargin()
 
+      expectComplete()
+    }
+  }
+
+  @Test fun `description contains reporter for non-overriding config`() {
+    presenterFactory = presenterFactory.copy(
+        config = presenterFactory.config.copy(allowReporterOverride = false)
+    )
+
+    recordWithNewIssue {
+      sendEvent(SubmitReport(newIssueInput))
+
+      presenterFactory.jiraApi.newIssueRecords.test {
+        expectItem().request.fields.description shouldBe """
+          |{panel:title=Reported by}
+          |[Reporter Name|~accountid:Reporter ID]
+          |{panel}
+          |
+          |{panel:title=Reporter notes}
+          |Description
+          |{panel}
+          |
+          |{panel:title=Application info}
+          |Version name: version name
+          |Version code: version code
+          |Package name: package name
+          |{panel}
+          |
+          |{panel:title=Device info}
+          |Manufacturer: manufacturer
+          |Model: model
+          |Supported ABIs: [ABI]
+          |Resolution: resolution
+          |Density: density
+          |Locales: [en_US]
+          |Local date: 1970-01-01T00:00:00.000Z
+          |Time zone: Greenwich Mean Time, GMT
+          |{panel}
+          |
+          |{panel:title=OS info}
+          |Release: release
+          |SDK: 100
+          |{panel}
+          |
+          |{panel:title=Mentions}
+          |[Mention Name|~accountid:Mention ID]
+          |{panel}
+      """.trimMargin()
+
+        expectComplete()
+      }
+    }
+  }
+
+  @Test fun `reporter is not set for non-overriding config`() {
+    presenterFactory = presenterFactory.copy(
+        config = presenterFactory.config.copy(allowReporterOverride = false)
+    )
+
+    recordWithNewIssue {
+      sendEvent(SubmitReport(newIssueInput))
+
+      presenterFactory.jiraApi.newIssueRecords.test {
+        expectItem().request.fields.reporter.shouldBeNull()
+        expectComplete()
+      }
+    }
+  }
+
+  @Test fun `reporter is set for overriding config`() = recordWithNewIssue {
+    sendEvent(SubmitReport(newIssueInput))
+
+    presenterFactory.jiraApi.newIssueRecords.test {
+      expectItem().request.fields.reporter shouldBe ReporterRequest(
+          newIssueInput.reporter!!.accountId
+      )
       expectComplete()
     }
   }

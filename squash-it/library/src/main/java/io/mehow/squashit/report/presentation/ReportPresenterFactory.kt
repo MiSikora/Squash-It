@@ -26,7 +26,7 @@ internal class ReportPresenterFactory(
 ) : Factory {
   override fun <T : ViewModel?> create(modelClass: Class<T>): T {
     val moshi = Moshi.Builder()
-        .add(EpicJsonFactory(config))
+        .add(EpicJsonFactory())
         .add(KotlinJsonAdapterFactory())
         .build()
     val projectInfoStore = ProjectInfoStore(projectInfoDir, moshi)
@@ -38,17 +38,21 @@ internal class ReportPresenterFactory(
     return presenter as T
   }
 
-  private class EpicJsonFactory(config: SquashItConfig) : JsonAdapter.Factory {
-    private val readName = config.epicReadFieldName
-    private val writeName = config.epicWriteFieldName
+  private inner class EpicJsonFactory : JsonAdapter.Factory {
     override fun create(
       type: Type,
       annotations: MutableSet<out Annotation>,
       moshi: Moshi
     ): JsonAdapter<*>? {
       return when (type) {
-        EpicFieldsResponse::class.java -> EpicFieldsResponseJsonAdapter(readName, moshi)
-        NewIssueFieldsRequest::class.java -> NewIssueFieldsRequestJsonAdapter(writeName, moshi)
+        EpicFieldsResponse::class.java -> EpicFieldsResponseJsonAdapter(
+            epicFieldName = config.epicReadFieldName,
+            moshi = moshi
+        )
+        NewIssueFieldsRequest::class.java -> NewIssueFieldsRequestJsonAdapter(
+            epicFieldName = config.epicWriteFieldName,
+            moshi = moshi
+        )
         else -> null
       }
     }
