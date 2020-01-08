@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.4.3 *(2020-01-08)*
+----------------------------
+
+* Add an option to disable reporter overrides for issues creation.
+
 Version 0.4.2 *(2020-01-05)*
 ----------------------------
 
