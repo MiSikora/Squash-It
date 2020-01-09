@@ -1,29 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="squash_it_white">#ffffff</color>
-  <color name="squash_it_black">#000000</color>
-  <color name="squash_it_timberwolf">#fafaf9</color>
-  <color name="squash_it_eerie_black">#1b1b1e</color>
-
-  <color name="squash_it_royal_blue200">#818db5</color>
-  <color name="squash_it_royal_blue300">#4f5f97</color>
-  <color name="squash_it_royal_blue700">#021358</color>
-  <color name="squash_it_royal_blue800">#020f4e</color>
-
-  <color name="squash_it_myrtle_green_200">#94b3b7</color>
-  <color name="squash_it_myrtle_green_300">#69949a</color>
-  <color name="squash_it_myrtle_green_400">#487d84</color>
-  <color name="squash_it_myrtle_green_500">#28666e</color>
-
-  <color name="squash_it_jelly_bean_300">#e68580</color>
-  <color name="squash_it_jelly_bean_500">#db504a</color>
-
-  <color name="squash_it_fire_engine_red">#cc2310</color>
-  <color name="squash_it_harlequin_green">#69c920</color>
-  <color name="squash_it_french_blue">#0267c1</color>
-  <color name="squash_it_spiro_disco_ball">#23e6fc</color>
-  <color name="squash_it_dandelion">#f5e61f</color>
-  <color name="squash_it_flirt">#99006b</color>
-
   <color name="squash_it_telescope_border">@color/squash_it_royal_blue200</color>
 </resources>
