@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <array name="preloaded_fonts" translatable="false">
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <array name="preloaded_fonts" translatable="false" tools:ignore="UnusedResources">
     <item>@font/fira_mono</item>
     <item>@font/fira_sans</item>
     <item>@font/fira_sans_bold</item>

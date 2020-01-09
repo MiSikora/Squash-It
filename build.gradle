@@ -132,6 +132,7 @@ allprojects {
         explainIssues false
 
         checkDependencies false
+        checkGeneratedSources true
         checkTestSources false
 
         checkReleaseBuilds false
