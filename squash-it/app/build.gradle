@@ -9,7 +9,7 @@ android {
     applicationId "io.mehow.squashit"
 
     versionCode headCommitCount()
-    versionName "1.0.0"
+    versionName "0.1.0"
     versionNameSuffix "-$gitSha"
 
     proguardFiles "shrink-rules.pro"
