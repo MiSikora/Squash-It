@@ -7,9 +7,9 @@ import io.mehow.squashit.Event.UpsertCredentials
 import io.mehow.squashit.UiModel.Accumulator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import kotlin.time.Duration
 
 class UpsertCredentialsConsumer(
@@ -17,21 +17,23 @@ class UpsertCredentialsConsumer(
   private val promptDuration: Duration
 ) : EventConsumer<UpsertCredentials> {
   override fun transform(events: Flow<UpsertCredentials>): Flow<Accumulator> {
-    return events
-        .map { it.credentials }
-        .flatMapMerge { credentials ->
-          val alreadyExists = store.get(credentials.id) != null
-          store.upsert(credentials)
-          flow {
-            val updateState = if (alreadyExists) Updated(credentials) else Added(credentials)
-            emit(Accumulator { currentModel -> currentModel.copy(state = updateState) })
+    return events.flatMapMerge { event ->
+      val credentials = event.credentials
+      val alreadyExists = store.get(credentials.id) != null
+      store.upsert(credentials)
 
-            delay(promptDuration.toLongMilliseconds())
-            emit(Accumulator { currentModel ->
-              val state = if (currentModel.state == updateState) Idle else currentModel.state
-              currentModel.copy(state = state)
-            })
-          }
-        }
+      if (!event.showPrompt) return@flatMapMerge emptyFlow()
+
+      flow {
+        val updateState = if (alreadyExists) Updated(credentials) else Added(credentials)
+        emit(Accumulator { currentModel -> currentModel.copy(state = updateState) })
+
+        delay(promptDuration.toLongMilliseconds())
+        emit(Accumulator { currentModel ->
+          val state = if (currentModel.state == updateState) Idle else currentModel.state
+          currentModel.copy(state = state)
+        })
+      }
+    }
   }
 }

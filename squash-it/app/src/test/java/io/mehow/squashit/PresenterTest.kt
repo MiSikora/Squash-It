@@ -172,6 +172,18 @@ class PresenterTest {
     }
   }
 
+  @Test fun `prompt is not shown if not requested`() = test {
+    presenter.uiModels.test {
+      expectItem()
+
+      val credentials = Credentials("ID", "Token")
+      presenter.sendEvent(UpsertCredentials(credentials, showPrompt = false))
+      expectItem() shouldBe UiModel(listOf(credentials), Idle)
+
+      cancel()
+    }
+  }
+
   private fun test(block: suspend TestCoroutineScope.() -> Unit) {
     dispatcher.runBlockingTest {
       presenter.start()
@@ -184,5 +196,4 @@ class PresenterTest {
   private fun Credentials(id: String, token: String): Credentials {
     return Credentials.Impl(CredentialsId(id), Token(token))
   }
-
 }
