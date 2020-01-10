@@ -42,7 +42,10 @@
               android:id="@+id/userId"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:maxLines="1" />
+              android:imeOptions="actionNext"
+              android:inputType="text"
+              android:maxLines="1"
+              android:nextFocusForward="@+id/secret" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,12 +54,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="@string/secret">
+            android:hint="@string/secret"
+            app:passwordToggleEnabled="true">
 
           <com.google.android.material.textfield.TextInputEditText
               android:id="@+id/secret"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:imeOptions="actionDone"
+              android:inputType="textPassword"
               android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
