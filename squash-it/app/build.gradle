@@ -90,6 +90,7 @@ sqldelight {
 dependencies {
   implementation deps.kotlin.stdLib.jdk7
   implementation deps.android.x.appCompat
+  implementation deps.android.x.coreKtx
   implementation deps.android.material
   implementation deps.dagger.runtime
   kapt deps.dagger.compiler

@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">Squash It</string>
+  <string name="insert_or_update_credentials">Insert or update credentials</string>
+  <string name="user_id">User ID or update credentials</string>
+  <string name="secret">Secret</string>
+  <string name="confirm">Confirm</string>
+  <string name="delete_credentials">Delete credentials</string>
+  <string name="credentials_added">Added %s</string>
+  <string name="credentials_updated">Updated %s</string>
+  <string name="credentials_deleted">Deleted %s</string>
+  <string name="undo">Undo</string>
 </resources>
