@@ -2,7 +2,7 @@
 <resources>
   <string name="app_name">Squash It</string>
   <string name="insert_or_update_credentials">Insert or update credentials</string>
-  <string name="user_id">User ID or update credentials</string>
+  <string name="user_id">User ID</string>
   <string name="secret">Secret</string>
   <string name="confirm">Confirm</string>
   <string name="delete_credentials">Delete credentials</string>
