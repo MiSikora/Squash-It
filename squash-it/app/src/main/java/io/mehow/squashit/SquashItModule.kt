@@ -10,10 +10,12 @@ import kotlin.coroutines.CoroutineContext
 
 @Module
 object SquashItModule {
-  @Provides @Singleton fun provideDatabase(context: Context): Database {
+  @Provides @Singleton fun database(context: Context): Database {
     val driver = AndroidSqliteDriver(Database.Schema, context, "squash-it.db")
     return DatabaseFactory.create(driver)
   }
 
-  @Provides @Io fun provideIoContext(): CoroutineContext = Dispatchers.IO
+  @Provides @Io fun ioContext(): CoroutineContext = Dispatchers.IO
+
+  @Provides @Presentation fun presentationContext(): CoroutineContext = Dispatchers.Unconfined
 }
