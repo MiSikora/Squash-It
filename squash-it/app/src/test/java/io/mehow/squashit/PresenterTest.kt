@@ -2,8 +2,10 @@ package io.mehow.squashit
 
 import io.kotlintest.shouldBe
 import io.mehow.squashit.ActionState.Added
+import io.mehow.squashit.ActionState.Deleted
 import io.mehow.squashit.ActionState.Idle
 import io.mehow.squashit.ActionState.Updated
+import io.mehow.squashit.Event.DeleteCredentials
 import io.mehow.squashit.Event.UpsertCredentials
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
@@ -179,6 +181,68 @@ class PresenterTest {
       val credentials = Credentials("ID", "Token")
       presenter.sendEvent(UpsertCredentials(credentials, showPrompt = false))
       expectItem() shouldBe UiModel(listOf(credentials), Idle)
+
+      cancel()
+    }
+  }
+
+  @Test fun `credentials can be deleted`() = test {
+    val credentials = Credentials("ID", "Token")
+    store.upsert(credentials)
+
+    presenter.uiModels.test {
+      expectItem()
+
+      presenter.sendEvent(DeleteCredentials(credentials.id))
+      expectItem() shouldBe UiModel(emptyList(), Idle)
+      expectItem() shouldBe UiModel(emptyList(), Deleted(credentials))
+
+      cancel()
+    }
+  }
+
+  @Test fun `new delete prompt is not dismissed due to previous insert action`() = test {
+    presenter.uiModels.test {
+      expectItem()
+
+      val credentials = Credentials("ID", "Token")
+      presenter.sendEvent(UpsertCredentials(credentials))
+      expectItem() shouldBe UiModel(listOf(credentials), Idle)
+      expectItem() shouldBe UiModel(listOf(credentials), Added(credentials))
+
+      dispatcher.advanceTimeBy(50)
+
+      presenter.sendEvent(DeleteCredentials(credentials.id))
+      expectItem() shouldBe UiModel(emptyList(), Added(credentials))
+      expectItem() shouldBe UiModel(emptyList(), Deleted(credentials))
+
+      dispatcher.advanceTimeBy(50)
+      expectNoEvents()
+
+      cancel()
+    }
+  }
+
+  @Test fun `new delete prompt is not dismissed due to previous update action`() = test {
+    val credentials1 = Credentials("ID", "Token 1")
+    store.upsert(credentials1)
+
+    presenter.uiModels.test {
+      expectItem()
+
+      val credentials2 = Credentials("ID", "Token 2")
+      presenter.sendEvent(UpsertCredentials(credentials2))
+      expectItem() shouldBe UiModel(listOf(credentials2), Idle)
+      expectItem() shouldBe UiModel(listOf(credentials2), Updated(credentials2))
+
+      dispatcher.advanceTimeBy(50)
+
+      presenter.sendEvent(DeleteCredentials(credentials1.id))
+      expectItem() shouldBe UiModel(emptyList(), Updated(credentials2))
+      expectItem() shouldBe UiModel(emptyList(), Deleted(credentials2))
+
+      dispatcher.advanceTimeBy(50)
+      expectNoEvents()
 
       cancel()
     }
