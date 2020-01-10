@@ -2,8 +2,8 @@
 <resources>
 
   <style name="Base.Theme.SquashIt.Night" parent="Base.Theme.SquashIt.DayNight">
-    <item name="colorPrimary">@color/squash_it_royal_blue200</item>
-    <item name="colorPrimaryVariant">@color/squash_it_royal_blue300</item>
+    <item name="colorPrimary">@color/squash_it_royal_blue_200</item>
+    <item name="colorPrimaryVariant">@color/squash_it_royal_blue_300</item>
     <item name="colorSecondary">@color/squash_it_myrtle_green_300</item>
     <item name="colorSecondaryVariant">@color/squash_it_myrtle_green_200</item>
 
