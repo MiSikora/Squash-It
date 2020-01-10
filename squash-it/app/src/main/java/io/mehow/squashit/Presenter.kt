@@ -33,7 +33,8 @@ class Presenter @Inject constructor(
 
   private val eventConsumers = setOf(
       UpsertCredentialsConsumer(store, promptDuration.value)::consume,
-      DeleteCredentialsConsumer(store)::consume
+      DeleteCredentialsConsumer(store)::consume,
+      DismissPromptConsumer::consume
   )
 
   private val presenterScope = CoroutineScope(SupervisorJob().apply {

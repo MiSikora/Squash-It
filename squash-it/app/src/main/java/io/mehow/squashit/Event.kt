@@ -7,4 +7,6 @@ sealed class Event {
   ) : Event()
 
   data class DeleteCredentials(val id: CredentialsId) : Event()
+
+  object DismissPrompt : Event()
 }
