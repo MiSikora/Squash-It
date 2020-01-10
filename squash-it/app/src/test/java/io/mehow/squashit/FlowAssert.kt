@@ -17,9 +17,9 @@ package io.mehow.squashit
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import io.mehow.squashit.Event.Complete
-import io.mehow.squashit.Event.Error
-import io.mehow.squashit.Event.Item
+import io.mehow.squashit.AssertEvent.Complete
+import io.mehow.squashit.AssertEvent.Error
+import io.mehow.squashit.AssertEvent.Item
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -33,7 +33,7 @@ import kotlinx.coroutines.withTimeout
 
 suspend fun <T> Flow<T>.test(timeoutMs: Long = 1_000L, validate: suspend FlowAssert<T>.() -> Unit) {
   coroutineScope {
-    val events = Channel<Event<T>>(UNLIMITED)
+    val events = Channel<AssertEvent<T>>(UNLIMITED)
     val collectJob = launch {
       val terminalEvent = try {
         collect { item ->
@@ -69,14 +69,14 @@ suspend fun <T> Flow<T>.test(timeoutMs: Long = 1_000L, validate: suspend FlowAss
 
 internal val ignoreRemainingEventsException = CancellationException("Ignore remaining events")
 
-internal sealed class Event<out T> {
-  object Complete : Event<Nothing>()
-  data class Error(val throwable: Throwable) : Event<Nothing>()
-  data class Item<T>(val item: T) : Event<T>()
+internal sealed class AssertEvent<out T> {
+  object Complete : AssertEvent<Nothing>()
+  data class Error(val throwable: Throwable) : AssertEvent<Nothing>()
+  data class Item<T>(val item: T) : AssertEvent<T>()
 }
 
 class FlowAssert<T> internal constructor(
-  private val events: Channel<Event<T>>,
+  private val events: Channel<AssertEvent<T>>,
   private val collectJob: Job,
   private val timeoutMs: Long
 ) {

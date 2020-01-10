@@ -6,11 +6,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
@@ -19,7 +19,9 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class Presenter @Inject constructor(
-  @Presentation private val context: CoroutineContext
+  @Presentation private val context: CoroutineContext,
+  private val store: CredentialsStore,
+  promptDuration: Duration
 ) {
   private val uiModelsChannel = ConflatedBroadcastChannel<UiModel>()
   val uiModels get() = uiModelsChannel.asFlow()
@@ -29,7 +31,9 @@ class Presenter @Inject constructor(
     if (!eventsChannel.isClosedForSend) eventsChannel.send(event)
   }
 
-  private val eventConsumers = emptySet<(Flow<Event>) -> Flow<Accumulator>>()
+  private val eventConsumers = setOf(
+      UpsertCredentialsConsumer(store, promptDuration.value)::consume
+  )
 
   private val presenterScope = CoroutineScope(SupervisorJob().apply {
     invokeOnCompletion {
@@ -41,14 +45,19 @@ class Presenter @Inject constructor(
   fun start() {
     presenterScope.launch(context) {
       val events = eventsChannel.consumeAsFlow().shareIn(this)
-      eventConsumers.map { it.invoke(events) }
+      (eventConsumers.map { it.invoke(events) } + credentialsAccumulator)
           .merge()
-          .scan(UiModel(emptyList(), ActionState.Idle)) { model, (update) -> model.update() }
+          .scan(UiModel(emptyList(), ActionState.Idle)) { model, (update) -> update(model) }
           .distinctUntilChanged()
           .onEach(uiModelsChannel::send)
           .launchIn(this)
     }
   }
+
+  private val credentialsAccumulator
+    get() = store
+        .credentials
+        .map { credentials -> Accumulator { it.copy(credentials = credentials) } }
 
   fun stop() {
     presenterScope.cancel()
