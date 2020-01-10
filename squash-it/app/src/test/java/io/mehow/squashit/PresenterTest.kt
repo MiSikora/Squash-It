@@ -44,6 +44,34 @@ class PresenterTest {
     }
   }
 
+  @Test fun `blank credentials ID is ignored`() = test {
+    presenter.uiModels.test {
+      expectItem()
+
+      val credentials = Credentials(" ", "Token")
+      presenter.sendEvent(UpsertCredentials(credentials))
+      expectNoEvents()
+
+      cancel()
+    }
+  }
+
+  @Test fun `blank token is not ignored`() = test {
+    presenter.uiModels.test {
+      expectItem()
+
+      val credentials = Credentials("ID", " ")
+      presenter.sendEvent(UpsertCredentials(credentials))
+      expectItem() shouldBe UiModel(listOf(credentials), Idle)
+      expectItem() shouldBe UiModel(listOf(credentials), Added(credentials))
+
+      dispatcher.advanceTimeBy(100)
+      expectItem() shouldBe UiModel(listOf(credentials), Idle)
+
+      cancel()
+    }
+  }
+
   @Test fun `updating credentials displays it and prompts the user`() = test {
     store.upsert(Credentials("ID", "Token"))
 

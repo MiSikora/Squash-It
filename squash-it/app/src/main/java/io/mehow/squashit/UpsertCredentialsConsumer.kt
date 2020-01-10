@@ -8,6 +8,7 @@ import io.mehow.squashit.UiModel.Accumulator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
 import kotlin.time.Duration
@@ -17,23 +18,27 @@ class UpsertCredentialsConsumer(
   private val promptDuration: Duration
 ) : EventConsumer<UpsertCredentials> {
   override fun transform(events: Flow<UpsertCredentials>): Flow<Accumulator> {
-    return events.flatMapMerge { event ->
-      val credentials = event.credentials
-      val alreadyExists = store.get(credentials.id) != null
-      store.upsert(credentials)
+    return events
+        .filter { (credentials, _) -> credentials.areValid() }
+        .flatMapMerge { event ->
+          val credentials = event.credentials
+          val alreadyExists = store.get(credentials.id) != null
+          store.upsert(credentials)
 
-      if (!event.showPrompt) return@flatMapMerge emptyFlow()
+          if (!event.showPrompt) return@flatMapMerge emptyFlow()
 
-      flow {
-        val updateState = if (alreadyExists) Updated(credentials) else Added(credentials)
-        emit(Accumulator { currentModel -> currentModel.copy(state = updateState) })
+          flow {
+            val updateState = if (alreadyExists) Updated(credentials) else Added(credentials)
+            emit(Accumulator { currentModel -> currentModel.copy(state = updateState) })
 
-        delay(promptDuration.toLongMilliseconds())
-        emit(Accumulator { currentModel ->
-          val state = if (currentModel.state == updateState) Idle else currentModel.state
-          currentModel.copy(state = state)
-        })
-      }
-    }
+            delay(promptDuration.toLongMilliseconds())
+            emit(Accumulator { currentModel ->
+              val state = if (currentModel.state == updateState) Idle else currentModel.state
+              currentModel.copy(state = state)
+            })
+          }
+        }
   }
+
+  private fun Credentials.areValid() = id.value.isNotBlank()
 }
