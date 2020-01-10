@@ -13,13 +13,13 @@ object DatabaseFactory {
     override fun encode(value: CredentialsId): String = value.value
   }
 
-  private val tokenAdapter = object : ColumnAdapter<Token, String> {
-    override fun decode(databaseValue: String) = Token(databaseValue)
-    override fun encode(value: Token): String = value.value
+  private val secretAdapter = object : ColumnAdapter<Secret, String> {
+    override fun decode(databaseValue: String) = Secret(databaseValue)
+    override fun encode(value: Secret): String = value.value
   }
 
   private val credentialsAdapter = Credentials.Adapter(
       idAdapter = credentialsIdAdapter,
-      tokenAdapter = tokenAdapter
+      secretAdapter = secretAdapter
   )
 }

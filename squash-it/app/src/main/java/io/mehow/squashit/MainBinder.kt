@@ -45,7 +45,7 @@ class MainBinder(activity: Activity, callback: Callback) {
     binding.confirm.setOnClickListener {
       val userId = binding.userId.text?.toString() ?: return@setOnClickListener
       val secret = binding.secret.text?.toString() ?: return@setOnClickListener
-      val credentials = Credentials.Impl(CredentialsId(userId), Token(secret))
+      val credentials = Credentials.Impl(CredentialsId(userId), Secret(secret))
       onSaveClick(credentials)
     }
   }

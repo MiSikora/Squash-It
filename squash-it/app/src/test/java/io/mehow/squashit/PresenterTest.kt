@@ -32,7 +32,7 @@ class PresenterTest {
     presenter.uiModels.test {
       expectItem()
 
-      val credentials = Credentials("ID", "Token")
+      val credentials = Credentials("ID", "Secret")
       presenter.sendEvent(UpsertCredentials(credentials))
       expectItem() shouldBe UiModel(listOf(credentials), Idle)
       expectItem() shouldBe UiModel(listOf(credentials), Added(credentials))
@@ -48,7 +48,7 @@ class PresenterTest {
     presenter.uiModels.test {
       expectItem()
 
-      val credentials = Credentials(" ", "Token")
+      val credentials = Credentials(" ", "Secret")
       presenter.sendEvent(UpsertCredentials(credentials))
       expectNoEvents()
 
@@ -56,7 +56,7 @@ class PresenterTest {
     }
   }
 
-  @Test fun `blank token is not ignored`() = test {
+  @Test fun `blank secret is not ignored`() = test {
     presenter.uiModels.test {
       expectItem()
 
@@ -73,12 +73,12 @@ class PresenterTest {
   }
 
   @Test fun `updating credentials displays it and prompts the user`() = test {
-    store.upsert(Credentials("ID", "Token"))
+    store.upsert(Credentials("ID", "Secret"))
 
     presenter.uiModels.test {
       expectItem()
 
-      val credentials = Credentials("ID", "Token2")
+      val credentials = Credentials("ID", "Secret2")
       presenter.sendEvent(UpsertCredentials(credentials))
       expectItem() shouldBe UiModel(listOf(credentials), Idle)
       expectItem() shouldBe UiModel(listOf(credentials), Updated(credentials))
@@ -94,14 +94,14 @@ class PresenterTest {
     presenter.uiModels.test {
       expectItem()
 
-      val credentials1 = Credentials("ID 1", "Token")
+      val credentials1 = Credentials("ID 1", "Secret")
       presenter.sendEvent(UpsertCredentials(credentials1))
       expectItem() shouldBe UiModel(listOf(credentials1), Idle)
       expectItem() shouldBe UiModel(listOf(credentials1), Added(credentials1))
 
       dispatcher.advanceTimeBy(50)
 
-      val credentials2 = Credentials("ID 2", "Token")
+      val credentials2 = Credentials("ID 2", "Secret")
       presenter.sendEvent(UpsertCredentials(credentials2))
       expectItem() shouldBe UiModel(listOf(credentials1, credentials2), Added(credentials1))
       expectItem() shouldBe UiModel(listOf(credentials1, credentials2), Added(credentials2))
@@ -117,20 +117,20 @@ class PresenterTest {
   }
 
   @Test fun `new insert prompt is not dismissed due to previous update action`() = test {
-    val credentials1 = Credentials("ID 1", "Token 1")
+    val credentials1 = Credentials("ID 1", "Secret 1")
     store.upsert(credentials1)
 
     presenter.uiModels.test {
       expectItem()
 
-      val credentials2 = Credentials("ID 1", "Token 2")
+      val credentials2 = Credentials("ID 1", "Secret 2")
       presenter.sendEvent(UpsertCredentials(credentials2))
       expectItem() shouldBe UiModel(listOf(credentials2), Idle)
       expectItem() shouldBe UiModel(listOf(credentials2), Updated(credentials2))
 
       dispatcher.advanceTimeBy(50)
 
-      val credentials3 = Credentials("ID 2", "Token")
+      val credentials3 = Credentials("ID 2", "Secret")
       presenter.sendEvent(UpsertCredentials(credentials3))
       expectItem() shouldBe UiModel(listOf(credentials2, credentials3), Updated(credentials2))
       expectItem() shouldBe UiModel(listOf(credentials2, credentials3), Added(credentials3))
@@ -149,14 +149,14 @@ class PresenterTest {
     presenter.uiModels.test {
       expectItem()
 
-      val credentials1 = Credentials("ID", "Token 1")
+      val credentials1 = Credentials("ID", "Secret 1")
       presenter.sendEvent(UpsertCredentials(credentials1))
       expectItem() shouldBe UiModel(listOf(credentials1), Idle)
       expectItem() shouldBe UiModel(listOf(credentials1), Added(credentials1))
 
       dispatcher.advanceTimeBy(50)
 
-      val credentials2 = Credentials("ID", "Token 2")
+      val credentials2 = Credentials("ID", "Secret 2")
       presenter.sendEvent(UpsertCredentials(credentials2))
       expectItem() shouldBe UiModel(listOf(credentials2), Added(credentials1))
       expectItem() shouldBe UiModel(listOf(credentials2), Updated(credentials2))
@@ -172,22 +172,22 @@ class PresenterTest {
   }
 
   @Test fun `new update prompt is not dismissed due to previous update action`() = test {
-    val credentials1 = Credentials("ID 1", "Token 1")
+    val credentials1 = Credentials("ID 1", "Secret 1")
     store.upsert(credentials1)
-    val credentials2 = Credentials("ID 2", "Token 1")
+    val credentials2 = Credentials("ID 2", "Secret 1")
     store.upsert(credentials2)
 
     presenter.uiModels.test {
       expectItem()
 
-      val credentials3 = Credentials("ID 1", "Token 2")
+      val credentials3 = Credentials("ID 1", "Secret 2")
       presenter.sendEvent(UpsertCredentials(credentials3))
       expectItem() shouldBe UiModel(listOf(credentials3, credentials2), Idle)
       expectItem() shouldBe UiModel(listOf(credentials3, credentials2), Updated(credentials3))
 
       dispatcher.advanceTimeBy(50)
 
-      val credentials4 = Credentials("ID 2", "Token 2")
+      val credentials4 = Credentials("ID 2", "Secret 2")
       presenter.sendEvent(UpsertCredentials(credentials4))
       expectItem() shouldBe UiModel(listOf(credentials3, credentials4), Updated(credentials3))
       expectItem() shouldBe UiModel(listOf(credentials3, credentials4), Updated(credentials4))
@@ -206,7 +206,7 @@ class PresenterTest {
     presenter.uiModels.test {
       expectItem()
 
-      val credentials = Credentials("ID", "Token")
+      val credentials = Credentials("ID", "Secret")
       presenter.sendEvent(UpsertCredentials(credentials, showPrompt = false))
       expectItem() shouldBe UiModel(listOf(credentials), Idle)
 
@@ -215,7 +215,7 @@ class PresenterTest {
   }
 
   @Test fun `credentials can be deleted`() = test {
-    val credentials = Credentials("ID", "Token")
+    val credentials = Credentials("ID", "Secret")
     store.upsert(credentials)
 
     presenter.uiModels.test {
@@ -236,7 +236,7 @@ class PresenterTest {
     presenter.uiModels.test {
       expectItem()
 
-      val credentials = Credentials("ID", "Token")
+      val credentials = Credentials("ID", "Secret")
       presenter.sendEvent(UpsertCredentials(credentials))
       expectItem() shouldBe UiModel(listOf(credentials), Idle)
       expectItem() shouldBe UiModel(listOf(credentials), Added(credentials))
@@ -258,13 +258,13 @@ class PresenterTest {
   }
 
   @Test fun `new delete prompt is not dismissed due to previous update action`() = test {
-    val credentials1 = Credentials("ID", "Token 1")
+    val credentials1 = Credentials("ID", "Secret 1")
     store.upsert(credentials1)
 
     presenter.uiModels.test {
       expectItem()
 
-      val credentials2 = Credentials("ID", "Token 2")
+      val credentials2 = Credentials("ID", "Secret 2")
       presenter.sendEvent(UpsertCredentials(credentials2))
       expectItem() shouldBe UiModel(listOf(credentials2), Idle)
       expectItem() shouldBe UiModel(listOf(credentials2), Updated(credentials2))
@@ -294,7 +294,7 @@ class PresenterTest {
   }
 
   @Suppress("TestFunctionName")
-  private fun Credentials(id: String, token: String): Credentials {
-    return Credentials.Impl(CredentialsId(id), Token(token))
+  private fun Credentials(id: String, secret: String): Credentials {
+    return Credentials.Impl(CredentialsId(id), Secret(secret))
   }
 }

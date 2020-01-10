@@ -35,7 +35,7 @@ class CredentialsStore @Inject constructor(
         .distinctUntilChanged()
 
   private fun CredentialsQueries.upsert(credentials: Credentials) = transaction {
-    update(credentials.id, credentials.token)
+    update(credentials.id, credentials.secret)
     if (changes().executeAsOne() == 0L) insertOrFail(credentials)
   }
 }
