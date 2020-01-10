@@ -11,6 +11,8 @@ import kotlin.time.seconds
 
 @Module
 object SquashItModule {
+  @Provides fun context(app: SquashItApp): Context = app
+
   @Provides @Singleton fun database(context: Context): Database {
     val driver = AndroidSqliteDriver(Database.Schema, context, "squash-it.db")
     return DatabaseFactory.create(driver)

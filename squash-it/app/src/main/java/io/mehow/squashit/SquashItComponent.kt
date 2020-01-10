@@ -1,10 +1,8 @@
 package io.mehow.squashit
 
-import android.content.Context
-import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
-import dagger.android.DispatchingAndroidInjector
+import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 @Singleton
@@ -15,11 +13,7 @@ import javax.inject.Singleton
       SquashItModule::class
     ]
 )
-internal interface SquashItComponent {
-  val androidInjector: DispatchingAndroidInjector<Any>
-
+internal interface SquashItComponent : AndroidInjector<SquashItApp> {
   @Component.Factory
-  interface Factory {
-    fun create(@BindsInstance context: Context): SquashItComponent
-  }
+  interface Factory : AndroidInjector.Factory<SquashItApp>
 }
