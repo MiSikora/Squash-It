@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
+apply plugin: "kotlin-kapt"
 
 def gitSha = gitSha()
 archivesBaseName = "squash-it-$gitSha"
@@ -83,6 +84,10 @@ dependencies {
   implementation deps.kotlin.stdLib.jdk7
   implementation deps.android.x.appCompat
   implementation deps.android.material
+  implementation deps.dagger.runtime
+  kapt deps.dagger.compiler
+  implementation deps.dagger.androidRuntime
+  kapt deps.dagger.androidCompiler
 }
 
 private def gitSha() {
