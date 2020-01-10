@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt"
+apply plugin: "com.squareup.sqldelight"
 
 def gitSha = gitSha()
 archivesBaseName = "squash-it-$gitSha"
@@ -80,6 +81,12 @@ android {
   }
 }
 
+sqldelight {
+  Database {
+    packageName = "io.mehow.squashit"
+  }
+}
+
 dependencies {
   implementation deps.kotlin.stdLib.jdk7
   implementation deps.android.x.appCompat
@@ -88,6 +95,14 @@ dependencies {
   kapt deps.dagger.compiler
   implementation deps.dagger.androidRuntime
   kapt deps.dagger.androidCompiler
+  implementation deps.kotlin.coroutines.android
+  implementation deps.sqlDelight.driver.android
+  implementation deps.sqlDelight.coroutinesExtensions
+
+  testImplementation deps.junit
+  testImplementation deps.kotlinTestAssertions
+  testImplementation deps.kotlin.coroutines.test
+  testImplementation deps.sqlDelight.driver.jvm
 }
 
 private def gitSha() {

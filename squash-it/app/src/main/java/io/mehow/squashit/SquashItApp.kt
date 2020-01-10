@@ -9,7 +9,7 @@ class SquashItApp : Application(), HasAndroidInjector {
 
   override fun onCreate() {
     super.onCreate()
-    component = DaggerSquashItComponent.factory().create()
+    component = DaggerSquashItComponent.factory().create(this)
   }
 
   override fun androidInjector(): AndroidInjector<Any> {
