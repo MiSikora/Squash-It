@@ -20,5 +20,5 @@ object SquashItModule {
 
   @Provides @Presentation fun presentationContext(): CoroutineContext = Dispatchers.Unconfined
 
-  @Provides fun promptDuration(): Duration = Duration(2.seconds)
+  @Provides fun promptDuration(): Duration = Duration(3.5.seconds)
 }

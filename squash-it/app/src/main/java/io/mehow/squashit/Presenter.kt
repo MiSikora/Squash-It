@@ -33,7 +33,7 @@ class Presenter @Inject constructor(
 
   private val eventConsumers = setOf(
       UpsertCredentialsConsumer(store, promptDuration.value)::consume,
-      DeleteCredentialsConsumer(store)::consume,
+      DeleteCredentialsConsumer(store, promptDuration.value)::consume,
       DismissPromptConsumer::consume
   )
 

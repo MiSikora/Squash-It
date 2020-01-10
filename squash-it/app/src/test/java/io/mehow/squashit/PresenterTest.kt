@@ -197,6 +197,9 @@ class PresenterTest {
       expectItem() shouldBe UiModel(emptyList(), Idle)
       expectItem() shouldBe UiModel(emptyList(), Deleted(credentials))
 
+      dispatcher.advanceTimeBy(100)
+      expectItem() shouldBe UiModel(emptyList(), Idle)
+
       cancel()
     }
   }
@@ -218,6 +221,9 @@ class PresenterTest {
 
       dispatcher.advanceTimeBy(50)
       expectNoEvents()
+
+      dispatcher.advanceTimeBy(50)
+      expectItem() shouldBe UiModel(emptyList(), Idle)
 
       cancel()
     }
@@ -243,6 +249,9 @@ class PresenterTest {
 
       dispatcher.advanceTimeBy(50)
       expectNoEvents()
+
+      dispatcher.advanceTimeBy(50)
+      expectItem() shouldBe UiModel(emptyList(), Idle)
 
       cancel()
     }
