@@ -1,7 +1,15 @@
 package io.mehow.squashit
 
+import android.content.res.Configuration.UI_MODE_NIGHT_MASK
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+import android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.BaseTransientBottomBar.Duration
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
@@ -27,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(inState)
     presenter = lastNonConfigurationInstance as? Presenter
         ?: presenterFactory.get().also { it.start() }
+    window.decorView.enableEdgeToEdgeAndNightMode()
     binding = MainBinding.inflate(layoutInflater)
     setContentView(binding.root)
     presenter.uiModels
@@ -59,4 +68,13 @@ class MainActivity : AppCompatActivity() {
   }
 
   fun hidePrompt() = currentSnackbar?.dismiss()
+
+  private fun View.enableEdgeToEdgeAndNightMode() {
+    val isDarkMode = resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
+    val flags = SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+        SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+        SYSTEM_UI_FLAG_LAYOUT_STABLE or
+        if (Build.VERSION.SDK_INT == 26 && isDarkMode) SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR else 0
+    systemUiVisibility = systemUiVisibility or flags
+  }
 }
