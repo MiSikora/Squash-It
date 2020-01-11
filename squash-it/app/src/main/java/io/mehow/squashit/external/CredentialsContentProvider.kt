@@ -6,6 +6,7 @@ import android.content.UriMatcher.NO_MATCH
 import android.database.Cursor
 import android.net.Uri
 import dagger.android.AndroidInjection
+import io.mehow.squashit.BuildConfig
 import javax.inject.Inject
 import android.content.UriMatcher as AndroidUriMatcher
 
@@ -54,7 +55,7 @@ class CredentialsContentProvider : ContentProvider() {
   }
 
   private companion object {
-    const val Authority = "io.mehow.squashit.provider"
+    const val Authority = "${BuildConfig.APPLICATION_ID}.provider"
     const val SingleCredentialsCode = 1
     val UriMatcher = AndroidUriMatcher(NO_MATCH).apply {
       addURI(Authority, "credentials/*", SingleCredentialsCode)

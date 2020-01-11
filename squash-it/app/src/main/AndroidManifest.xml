@@ -29,7 +29,7 @@
 
     <provider
         android:name=".external.CredentialsContentProvider"
-        android:authorities="io.mehow.squashit.provider"
+        android:authorities="${applicationId}.provider"
         android:exported="true"
         android:permission="io.mehow.squashit.provider.READ" />
 
