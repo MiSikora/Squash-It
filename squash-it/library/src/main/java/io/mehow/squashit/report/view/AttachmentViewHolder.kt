@@ -27,10 +27,11 @@ internal class AttachmentViewHolder(
   private val fileSize = itemView.findViewById<TextView>(R.id.fileSize)
   private val delete = itemView.findViewById<ImageView>(R.id.delete)
 
-  private val textColor = ContextCompat.getColorStateList(
-      itemView.context,
-      R.color.color_on_surface_emphasis_high
-  )!!
+  private val textColor = itemView.context.run {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(R.attr.colorOnSurface, typedValue, false)
+    return@run ContextCompat.getColor(this, typedValue.data)
+  }
   private val errorColor = itemView.context.run {
     val typedValue = TypedValue()
     theme.resolveAttribute(R.attr.colorError, typedValue, false)
