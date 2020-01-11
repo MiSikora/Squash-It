@@ -46,5 +46,8 @@ object SquashItModule {
 
     @ContributesAndroidInjector
     abstract fun exportService(): ExportService
+
+    @ContributesAndroidInjector
+    abstract fun importService(): ImportService
   }
 }

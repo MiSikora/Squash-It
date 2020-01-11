@@ -50,6 +50,10 @@ class MainActivity : Activity() {
     override fun onExportCredentials() {
       ExportService.start(this@MainActivity)
     }
+
+    override fun onImportCredentials() {
+      ImportActivity.start(this@MainActivity)
+    }
   }
 
   override fun onCreate(inState: Bundle?) {

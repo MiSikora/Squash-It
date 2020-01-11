@@ -33,9 +33,4 @@ class CredentialsStore @Inject constructor(
         .asFlow()
         .mapToList(context)
         .distinctUntilChanged()
-
-  private fun CredentialsQueries.upsert(credentials: Credentials) = transaction {
-    update(credentials.id, credentials.secret)
-    if (changes().executeAsOne() == 0L) insertOrFail(credentials)
-  }
 }

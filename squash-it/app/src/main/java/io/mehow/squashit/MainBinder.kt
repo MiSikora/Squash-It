@@ -23,7 +23,7 @@ class MainBinder(activity: Activity, callback: Callback) {
     setUpContainer()
     setUpCredentials(activity)
     setUpSaveCard(callback::onUpsert)
-    setUpImportExport(callback::onExportCredentials)
+    setUpImportExport(callback::onExportCredentials, callback::onImportCredentials)
     activity.setContentView(binding.root)
   }
 
@@ -79,12 +79,15 @@ class MainBinder(activity: Activity, callback: Callback) {
   }
 
   @SuppressLint("ClickableViewAccessibility") // Deliberate
-  private fun setUpImportExport(onExport: () -> Unit) {
+  private fun setUpImportExport(onExport: () -> Unit, onImport: () -> Unit) {
     val popup = createPopupMenu()
     popup.menuInflater.inflate(R.menu.import_export, popup.menu)
     popup.setOnMenuItemClickListener { menuItem ->
-      if (menuItem.itemId == R.id.export) onExport()
-      else error("Unknown menu item: $menuItem")
+      when (menuItem.itemId) {
+        R.id.import_id -> onImport()
+        R.id.export_id -> onExport()
+        else -> error("Unknown menu item: $menuItem")
+      }
       return@setOnMenuItemClickListener true
     }
     binding.actions.setOnTouchListener(popup.dragToOpenListener)
@@ -106,5 +109,6 @@ class MainBinder(activity: Activity, callback: Callback) {
     fun onDelete(credentials: Credentials)
     fun onUndoDelete(credentials: Credentials)
     fun onExportCredentials()
+    fun onImportCredentials()
   }
 }
