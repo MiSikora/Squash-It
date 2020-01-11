@@ -2,7 +2,7 @@
 <resources>
 
   <style name="Base.V27.Theme.SquashIt" parent="Base.V23.Theme.SquashIt">
-    <item name="android:windowLightNavigationBar">@bool/squash_it_use_light_system_ui</item>
+    <item name="android:windowLightNavigationBar">@bool/use_light_system_ui</item>
   </style>
 
   <style name="Theme.SquashIt" parent="Base.V27.Theme.SquashIt" />

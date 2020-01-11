@@ -113,6 +113,7 @@ class ExportService : Service() {
         .setSmallIcon(R.drawable.ic_export)
         .setContentTitle(getString(title))
         .setContentText(getString(text))
+        .setColor(ContextCompat.getColor(this, R.color.royal_blue_300))
         .build()
   }
 
