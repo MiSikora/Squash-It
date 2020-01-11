@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="io.mehow.squashit">
 
+  <permission android:name="io.mehow.squashit.provider.READ" />
+
   <application
       android:name=".SquashItApp"
       android:allowBackup="true"
@@ -13,6 +15,7 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="false"
       android:theme="@style/Theme.SquashIt">
+
     <activity
         android:name=".MainActivity"
         android:launchMode="singleTop"
@@ -23,6 +26,13 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <provider
+        android:name=".external.CredentialsContentProvider"
+        android:authorities="io.mehow.squashit.provider"
+        android:exported="true"
+        android:permission="io.mehow.squashit.provider.READ" />
+
   </application>
 
 </manifest>

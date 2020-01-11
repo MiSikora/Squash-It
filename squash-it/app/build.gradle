@@ -99,6 +99,8 @@ dependencies {
   implementation deps.kotlin.coroutines.android
   implementation deps.sqlDelight.driver.android
   implementation deps.sqlDelight.coroutinesExtensions
+  implementation deps.android.x.room.ktx
+  kapt deps.android.x.room.compiler
 
   testImplementation deps.junit
   testImplementation deps.kotlinTestAssertions
