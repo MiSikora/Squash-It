@@ -10,4 +10,13 @@
   <string name="credentials_updated">Updated %s</string>
   <string name="credentials_deleted">Deleted %s</string>
   <string name="undo">Undo</string>
+  <string name="export">Export</string>
+  <string name="export_credentials">Export credentials</string>
+
+  <string name="credentials_export">Credentials Export</string>
+  <string name="export_service_title_creating">Exporting credentials…</string>
+  <string name="export_service_text_creating">Creating export file</string>
+  <string name="export_service_title_failed">Credentials export failed!</string>
+  <string name="export_service_text_no_credentials_failure">No stored credentials found</string>
+  <string name="export_service_text_write_file_failure">Failed to create export file</string>
 </resources>

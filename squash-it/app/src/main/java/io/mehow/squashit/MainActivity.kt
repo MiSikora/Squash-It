@@ -46,6 +46,10 @@ class MainActivity : Activity() {
         presenter.sendEvent(UpsertCredentials(credentials, showPrompt = false))
       }
     }
+
+    override fun onExportCredentials() {
+      ExportService.start(this@MainActivity)
+    }
   }
 
   override fun onCreate(inState: Bundle?) {

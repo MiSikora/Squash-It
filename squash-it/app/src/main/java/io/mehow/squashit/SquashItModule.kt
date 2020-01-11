@@ -1,6 +1,8 @@
 package io.mehow.squashit
 
 import android.content.Context
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import dagger.Module
 import dagger.Provides
@@ -28,6 +30,12 @@ object SquashItModule {
 
   @Provides fun promptDuration(): Duration = Duration(3.5.seconds)
 
+  @Provides fun moshi(): Moshi {
+    return Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+  }
+
   @Module
   abstract class Contributors {
     @ContributesAndroidInjector
@@ -35,5 +43,8 @@ object SquashItModule {
 
     @ContributesAndroidInjector
     abstract fun credentialsContentProvider(): CredentialsContentProvider
+
+    @ContributesAndroidInjector
+    abstract fun exportService(): ExportService
   }
 }

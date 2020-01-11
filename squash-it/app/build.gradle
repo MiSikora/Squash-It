@@ -46,7 +46,6 @@ android {
 
   buildTypes {
     debug {
-      applicationIdSuffix ".debug"
       signingConfig signingConfigs.debug
     }
 
@@ -91,6 +90,7 @@ dependencies {
   implementation deps.kotlin.stdLib.jdk7
   implementation deps.android.x.appCompat
   implementation deps.android.x.coreKtx
+  implementation deps.android.x.constraintLayout
   implementation deps.android.material
   implementation deps.dagger.runtime
   kapt deps.dagger.compiler
@@ -99,6 +99,9 @@ dependencies {
   implementation deps.kotlin.coroutines.android
   implementation deps.sqlDelight.driver.android
   implementation deps.sqlDelight.coroutinesExtensions
+  implementation deps.okio
+  implementation deps.moshi.runtime
+  kapt deps.moshi.compiler
 
   testImplementation deps.junit
   testImplementation deps.kotlinTestAssertions

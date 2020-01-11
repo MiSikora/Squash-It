@@ -20,6 +20,7 @@ class MainBinder(activity: Activity, callback: Callback) {
     setUpContainer()
     setUpCredentials(activity)
     setUpSaveCard(callback::onUpsert)
+    binding.export.setOnClickListener { callback.onExportCredentials() }
     activity.setContentView(binding.root)
   }
 
@@ -78,5 +79,6 @@ class MainBinder(activity: Activity, callback: Callback) {
     fun onUpsert(credentials: Credentials)
     fun onDelete(credentials: Credentials)
     fun onUndoDelete(credentials: Credentials)
+    fun onExportCredentials()
   }
 }

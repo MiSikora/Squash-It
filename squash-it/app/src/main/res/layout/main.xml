@@ -19,24 +19,44 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp">
 
-      <LinearLayout
+      <androidx.constraintlayout.widget.ConstraintLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="vertical"
           android:padding="8dp">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/export"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/export_credentials"
+            android:padding="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_export" />
+
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
+            android:id="@+id/actionInfo"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/insert_or_update_credentials"
-            android:textAppearance="?attr/textAppearanceSubtitle1" />
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            app:layout_constraintBottom_toBottomOf="@+id/export"
+            app:layout_constraintEnd_toStartOf="@+id/export"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/export" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userIdLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="@string/user_id">
+            android:hint="@string/user_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/export">
 
           <com.google.android.material.textfield.TextInputEditText
               android:id="@+id/userId"
@@ -50,11 +70,15 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/secretLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="@string/secret"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userIdLayout"
             app:passwordToggleEnabled="true">
 
           <com.google.android.material.textfield.TextInputEditText
@@ -69,12 +93,15 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/confirm"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/confirm" />
+            android:text="@string/confirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/secretLayout" />
 
-      </LinearLayout>
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 

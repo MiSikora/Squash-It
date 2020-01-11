@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="io.mehow.squashit">
 
-  <permission android:name="io.mehow.squashit.provider.READ" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <permission android:name="io.mehow.squashit.READ" />
 
   <application
       android:name=".SquashItApp"
@@ -18,21 +19,43 @@
 
     <activity
         android:name=".MainActivity"
-        android:launchMode="singleTop"
+        android:launchMode="singleInstance"
         android:screenOrientation="portrait"
         tools:ignore="LockedOrientationActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
+      <meta-data
+          android:name="android.app.shortcuts"
+          android:resource="@xml/shortcuts" />
     </activity>
+
+    <activity
+        android:name=".ExportActivity"
+        android:excludeFromRecents="true"
+        android:taskAffinity=""
+        android:theme="@android:style/Theme.NoDisplay" />
+
+    <service
+        android:name=".ExportService"
+        android:exported="false" />
 
     <provider
         android:name=".CredentialsContentProvider"
-        android:authorities="${applicationId}.provider"
+        android:authorities="io.mehow.squashit.contentprovider"
         android:exported="true"
-        android:permission="io.mehow.squashit.provider.READ" />
+        android:permission="io.mehow.squashit.READ" />
 
+    <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="io.mehow.squashit.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/file_paths" />
+    </provider>
   </application>
 
 </manifest>

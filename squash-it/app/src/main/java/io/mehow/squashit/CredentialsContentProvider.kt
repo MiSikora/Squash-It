@@ -10,7 +10,7 @@ import javax.inject.Inject
 import android.content.UriMatcher as AndroidUriMatcher
 
 class CredentialsContentProvider : ContentProvider() {
-  @Inject lateinit var db: Database
+  @Inject lateinit var database: Database
 
   override fun onCreate(): Boolean {
     AndroidInjection.inject(this)
@@ -27,7 +27,7 @@ class CredentialsContentProvider : ContentProvider() {
     require(UriMatcher.match(uri) == SingleCredentialsCode) { "Unknown URI: $uri" }
     val context = context ?: return null
     val id = requireNotNull(uri.lastPathSegment) { "Missing ID in URI: $uri" }
-    return db.credentialsQueries.get(CredentialsId(id)).asCursor("id", "secret") {
+    return database.credentialsQueries.get(CredentialsId(id)).asCursor("id", "secret") {
       listOf(ColumnPrimitive(it.id.value), ColumnPrimitive(it.secret.value))
     }.apply { setNotificationUri(context.contentResolver, uri) }
   }
@@ -54,13 +54,10 @@ class CredentialsContentProvider : ContentProvider() {
   }
 
   private companion object {
-    const val Authority = "${BuildConfig.APPLICATION_ID}.provider"
+    const val Authority = "io.mehow.squashit.contentprovider"
     const val SingleCredentialsCode = 1
     val UriMatcher = AndroidUriMatcher(NO_MATCH).apply {
-      addURI(
-          Authority, "credentials/*",
-          SingleCredentialsCode
-      )
+      addURI(Authority, "credentials/*", SingleCredentialsCode)
     }
   }
 }
