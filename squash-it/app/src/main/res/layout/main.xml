@@ -25,7 +25,7 @@
           android:orientation="vertical"
           android:padding="8dp">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/insert_or_update_credentials"
@@ -67,7 +67,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

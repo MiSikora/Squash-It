@@ -1,5 +1,6 @@
 package io.mehow.squashit
 
+import android.app.Activity
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
@@ -9,7 +10,6 @@ import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-import androidx.appcompat.app.AppCompatActivity
 import dagger.android.AndroidInjection
 import io.mehow.squashit.Event.DeleteCredentials
 import io.mehow.squashit.Event.DismissPrompt
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
   @Inject lateinit var presenterFactory: Provider<Presenter>
   lateinit var presenter: Presenter
   val mainScope = MainScope()
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(inState: Bundle?) {
     AndroidInjection.inject(this)
     super.onCreate(inState)
-    presenter = lastCustomNonConfigurationInstance
+    presenter = lastNonConfigurationInstance
     window.decorView.enableEdgeToEdgeAndNightMode()
     val binder = MainBinder(this, binderCallback)
     presenter.uiModels
@@ -59,13 +59,12 @@ class MainActivity : AppCompatActivity() {
         .launchIn(mainScope)
   }
 
-  override fun getLastCustomNonConfigurationInstance(): Presenter {
-    @Suppress("DEPRECATION")
-    return super.getLastCustomNonConfigurationInstance() as? Presenter
+  override fun getLastNonConfigurationInstance(): Presenter {
+    return super.getLastNonConfigurationInstance() as? Presenter
         ?: presenterFactory.get().also { it.start() }
   }
 
-  override fun onRetainCustomNonConfigurationInstance(): Presenter = presenter
+  override fun onRetainNonConfigurationInstance(): Presenter = presenter
 
   override fun onDestroy() {
     super.onDestroy()
