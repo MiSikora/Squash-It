@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -28,7 +29,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:fontFamily="@font/fira_mono"
-      android:text="@string/squash_it_jira_project_key_res_name"
+      android:text="@string/squash_it_jira_project_key_config"
       android:textAppearance="?attr/textAppearanceBody2" />
 
   <TextView
@@ -36,30 +37,39 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:fontFamily="@font/fira_mono"
-      android:text="@string/squash_it_jira_server_url_res_name"
+      android:text="@string/squash_it_jira_server_url_config"
       android:textAppearance="?attr/textAppearanceBody2" />
 
   <TextView
-      android:id="@+id/userEmailLabel"
+      android:id="@+id/credentialsLabel"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:fontFamily="@font/fira_mono"
-      android:text="@string/squash_it_jira_user_email_res_name"
+      android:text="@string/squash_it_jira_credentials_config"
       android:textAppearance="?attr/textAppearanceBody2" />
 
-  <TextView
-      android:id="@+id/userTokenLabel"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/fira_mono"
-      android:text="@string/squash_it_jira_user_token_res_name"
-      android:textAppearance="?attr/textAppearanceBody2" />
-
-  <Button
-      android:id="@+id/goBack"
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="16dp"
-      android:text="@string/squash_it_go_back" />
+      android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/goBack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/squash_it_go_back"
+        tools:ignore="ButtonStyle" />
+
+    <Button
+        android:id="@+id/handleCredentials"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        tools:ignore="ButtonStyle" />
+
+  </LinearLayout>
 
 </LinearLayout>

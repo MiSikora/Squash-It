@@ -11,6 +11,8 @@
   <string name="squash_it_logs">Logs</string>
   <string name="squash_it_attach_custom_file">Attach custom file</string>
   <string name="squash_it_go_back">Go back</string>
+  <string name="squash_it_get_squash_it">Get Squash It</string>
+  <string name="squash_it_open_squash_it">Open Squash It</string>
   <string name="squash_it_attach_error_info">Unfortunately a problem occurred while attaching files. You can try again by tapping retry button.</string>
   <string name="squash_it_retry">Retry</string>
   <string name="squash_it_retrying">Retrying…</string>
@@ -24,11 +26,10 @@
   <string name="squash_it_summary">Summary</string>
   <string name="squash_it_reporter">Reporter</string>
   <string name="squash_it_misconfiguration">Misconfiguration!</string>
-  <string name="squash_it_misconfiguration_info">It appears that Squash It plugin is not configured properly.\n\nPlease configure following resources:</string>
-  <string name="squash_it_jira_project_key_res_name"> • R.string.squash_it_jira_project_key</string>
-  <string name="squash_it_jira_server_url_res_name"> • R.string.squash_it_jira_server_url</string>
-  <string name="squash_it_jira_user_email_res_name"> • R.string.squash_it_jira_user_email</string>
-  <string name="squash_it_jira_user_token_res_name"> • R.string.squash_it_jira_user_token</string>
+  <string name="squash_it_misconfiguration_info">It appears that Squash It plugin is not configured properly. Please make sure that the configuration for these fields is correct.\n</string>
+  <string name="squash_it_jira_project_key_config">projectKey</string>
+  <string name="squash_it_jira_server_url_config">jiraUrl</string>
+  <string name="squash_it_jira_credentials_config">credentialsProvider</string>
   <string name="squash_it_submit_failure">Something went terribly wrong!</string>
   <string name="squash_it_submit_failure_info">Tap retry to try again.</string>
   <string name="squash_it_issue_id">Issue ID</string>

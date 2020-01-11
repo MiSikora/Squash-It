@@ -14,8 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 internal data class SquashItConfig(
   val projectKey: String,
   val jiraUrl: HttpUrl?,
-  val userEmail: String,
-  val userToken: String,
+  val credentials: Credentials,
   val allowReporterOverride: Boolean,
   val userFilter: (User) -> Boolean,
   val issueTypeFilter: (IssueType) -> Boolean,
@@ -27,8 +26,7 @@ internal data class SquashItConfig(
   constructor(configurator: SquashItConfigurator) : this(
       projectKey = configurator.ProjectKey,
       jiraUrl = configurator.JiraUrl,
-      userEmail = configurator.UserEmail,
-      userToken = configurator.UserToken,
+      credentials = configurator.Credentials ?: Credentials("", ""),
       allowReporterOverride = configurator.AllowReporterOverride,
       userFilter = configurator.UserFilter,
       issueTypeFilter = configurator.IssueTypeFilter,
@@ -40,12 +38,12 @@ internal data class SquashItConfig(
 
   val hasProjectKey = projectKey.isNotEmpty()
   val hasJiraUrl = jiraUrl != null
-  val hasUserEmail = userEmail.isNotEmpty()
-  val hasUserToken = userToken.isNotEmpty()
+  val hasUserId = credentials.id.isNotBlank()
+  val hasUserSecret = credentials.secret.isNotEmpty()
 
   private val isInvalid: Boolean
     get() {
-      return listOf(hasProjectKey, hasJiraUrl, hasUserEmail, hasUserToken).any { !it }
+      return listOf(hasProjectKey, hasJiraUrl, hasUserId, hasUserSecret).any { !it }
     }
 
   fun start(activity: Activity, screenshotFile: File?) {

@@ -2,6 +2,7 @@ package io.mehow.squashit.report.presentation
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import io.mehow.squashit.Credentials
 import io.mehow.squashit.FlowAssert
 import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.report.AppInfo
@@ -72,8 +73,7 @@ internal open class BaseReportPresenterTest {
     val config: SquashItConfig = SquashItConfig(
         projectKey = "SQ",
         jiraUrl = "https://www.squash.it".toHttpUrl(),
-        userEmail = "email",
-        userToken = "token",
+        credentials = Credentials("email", "token"),
         allowReporterOverride = true,
         fingerTriggerCount = 2,
         userFilter = { true },
