@@ -1,9 +1,12 @@
 package io.mehow.squashit
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.view.Gravity.NO_GRAVITY
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
@@ -20,7 +23,7 @@ class MainBinder(activity: Activity, callback: Callback) {
     setUpContainer()
     setUpCredentials(activity)
     setUpSaveCard(callback::onUpsert)
-    binding.export.setOnClickListener { callback.onExportCredentials() }
+    setUpImportExport(callback::onExportCredentials)
     activity.setContentView(binding.root)
   }
 
@@ -73,6 +76,29 @@ class MainBinder(activity: Activity, callback: Callback) {
     val windowToken = binding.root.windowToken
     val inputMethodManager = context.getSystemService<InputMethodManager>()!!
     inputMethodManager.hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+  }
+
+  @SuppressLint("ClickableViewAccessibility") // Deliberate
+  private fun setUpImportExport(onExport: () -> Unit) {
+    val popup = createPopupMenu()
+    popup.menuInflater.inflate(R.menu.import_export, popup.menu)
+    popup.setOnMenuItemClickListener { menuItem ->
+      if (menuItem.itemId == R.id.export) onExport()
+      else error("Unknown menu item: $menuItem")
+      return@setOnMenuItemClickListener true
+    }
+    binding.actions.setOnTouchListener(popup.dragToOpenListener)
+    binding.actions.setOnClickListener { popup.show() }
+  }
+
+  private fun createPopupMenu(): PopupMenu {
+    return PopupMenu(
+        binding.root.context,
+        binding.actions,
+        NO_GRAVITY,
+        0,
+        android.R.style.Widget_Material_PopupMenu_Overflow
+    )
   }
 
   interface Callback {

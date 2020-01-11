@@ -10,6 +10,7 @@
   <string name="credentials_updated">Updated %s</string>
   <string name="credentials_deleted">Deleted %s</string>
   <string name="undo">Undo</string>
+  <string name="import_export">Import / Export</string>
   <string name="export">Export</string>
   <string name="export_credentials">Export credentials</string>
 

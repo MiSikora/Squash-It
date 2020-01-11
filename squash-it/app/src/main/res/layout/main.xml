@@ -26,15 +26,15 @@
           android:padding="8dp">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/export"
+            android:id="@+id/actions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/export_credentials"
+            android:contentDescription="@string/import_export"
             android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_export" />
+            app:srcCompat="@drawable/ic_more" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/actionInfo"
@@ -42,10 +42,10 @@
             android:layout_height="wrap_content"
             android:text="@string/insert_or_update_credentials"
             android:textAppearance="?attr/textAppearanceSubtitle1"
-            app:layout_constraintBottom_toBottomOf="@+id/export"
-            app:layout_constraintEnd_toStartOf="@+id/export"
+            app:layout_constraintBottom_toBottomOf="@+id/actions"
+            app:layout_constraintEnd_toStartOf="@+id/actions"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/export" />
+            app:layout_constraintTop_toTopOf="@+id/actions" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/userIdLayout"
@@ -56,7 +56,7 @@
             android:hint="@string/user_id"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/export">
+            app:layout_constraintTop_toBottomOf="@+id/actions">
 
           <com.google.android.material.textfield.TextInputEditText
               android:id="@+id/userId"
