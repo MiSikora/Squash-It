@@ -1,17 +1,17 @@
 package io.mehow.squashit
 
 import android.content.Context
-import androidx.room.Room
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import dagger.Module
 import dagger.Provides
+import dagger.android.ContributesAndroidInjector
+import io.mehow.squashit.SquashItModule.Contributors
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.seconds
-import io.mehow.squashit.external.Database as RoomDatabase
 
-@Module
+@Module(includes = [Contributors::class])
 object SquashItModule {
   private const val DbName = "squash-it.db"
 
@@ -28,9 +28,12 @@ object SquashItModule {
 
   @Provides fun promptDuration(): Duration = Duration(3.5.seconds)
 
-  @Provides @Singleton fun roomDatabase(context: Context): RoomDatabase {
-    return Room.databaseBuilder(context, RoomDatabase::class.java, DbName).build()
-  }
+  @Module
+  abstract class Contributors {
+    @ContributesAndroidInjector
+    abstract fun mainActivity(): MainActivity
 
-  @Provides fun credentialsDao(database: RoomDatabase) = database.credentialsDao()
+    @ContributesAndroidInjector
+    abstract fun credentialsContentProvider(): CredentialsContentProvider
+  }
 }

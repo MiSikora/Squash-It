@@ -27,10 +27,6 @@ buildscript {
               "coreKtx": "androidx.core:core-ktx:1.2.0-rc01",
               "paletteKtx": "androidx.palette:palette-ktx:1.0.0",
               "viewModel": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03",
-              "room": [
-                  "ktx": "androidx.room:room-ktx:2.2.3",
-                  "compiler": "androidx.room:room-compiler:2.2.3",
-              ],
           ],
           "material": "com.google.android.material:material:1.2.0-alpha03",
           "gradlePlugin": "com.android.tools.build:gradle:3.6.0-rc01",

@@ -1,4 +1,4 @@
-package io.mehow.squashit.external
+package io.mehow.squashit
 
 import android.content.ContentProvider
 import android.content.ContentValues
@@ -6,12 +6,11 @@ import android.content.UriMatcher.NO_MATCH
 import android.database.Cursor
 import android.net.Uri
 import dagger.android.AndroidInjection
-import io.mehow.squashit.BuildConfig
 import javax.inject.Inject
 import android.content.UriMatcher as AndroidUriMatcher
 
 class CredentialsContentProvider : ContentProvider() {
-  @Inject lateinit var dao: CredentialsDao
+  @Inject lateinit var db: Database
 
   override fun onCreate(): Boolean {
     AndroidInjection.inject(this)
@@ -28,9 +27,9 @@ class CredentialsContentProvider : ContentProvider() {
     require(UriMatcher.match(uri) == SingleCredentialsCode) { "Unknown URI: $uri" }
     val context = context ?: return null
     val id = requireNotNull(uri.lastPathSegment) { "Missing ID in URI: $uri" }
-    return dao.select(id).apply {
-      setNotificationUri(context.contentResolver, uri)
-    }
+    return db.credentialsQueries.get(CredentialsId(id)).asCursor("id", "secret") {
+      listOf(ColumnPrimitive(it.id.value), ColumnPrimitive(it.secret.value))
+    }.apply { setNotificationUri(context.contentResolver, uri) }
   }
 
   override fun insert(uri: Uri, values: ContentValues?): Uri? {
@@ -58,7 +57,10 @@ class CredentialsContentProvider : ContentProvider() {
     const val Authority = "${BuildConfig.APPLICATION_ID}.provider"
     const val SingleCredentialsCode = 1
     val UriMatcher = AndroidUriMatcher(NO_MATCH).apply {
-      addURI(Authority, "credentials/*", SingleCredentialsCode)
+      addURI(
+          Authority, "credentials/*",
+          SingleCredentialsCode
+      )
     }
   }
 }
