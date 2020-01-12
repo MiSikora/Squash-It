@@ -1,6 +1,5 @@
 package io.mehow.squashit.report.presentation
 
-import androidx.lifecycle.ViewModel
 import io.mehow.squashit.report.AttachState.Attach
 import io.mehow.squashit.report.JiraService
 import io.mehow.squashit.report.extensions.shareIn
@@ -26,7 +25,7 @@ internal class ReportPresenter internal constructor(
   jiraService: JiraService,
   private val createScreenshotFile: suspend () -> File?,
   private val createLogFile: suspend () -> File?
-) : ViewModel() {
+) {
   private val uiModelsChannel = ConflatedBroadcastChannel<UiModel>()
 
   private val eventsChannel = Channel<Event>()
@@ -73,9 +72,5 @@ internal class ReportPresenter internal constructor(
 
   fun stop() {
     presenterScope.cancel()
-  }
-
-  override fun onCleared() {
-    stop()
   }
 }

@@ -14,7 +14,7 @@
       android:layout_height="0dp"
       android:layout_weight="1" />
 
-  <ImageView
+  <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/clearCanvas"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
       android:layout_height="0dp"
       android:layout_weight="1" />
 
-  <ImageView
+  <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/changeBrushColor"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
       android:layout_height="0dp"
       android:layout_weight="1" />
 
-  <ImageView
+  <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/changeBrushSize"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
       android:layout_height="0dp"
       android:layout_weight="1" />
 
-  <ImageView
+  <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/undo"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
       android:layout_height="0dp"
       android:layout_weight="1" />
 
-  <ImageView
+  <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/redo"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
       android:layout_height="0dp"
       android:layout_weight="1" />
 
-  <ImageView
+  <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/save"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

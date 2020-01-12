@@ -7,12 +7,12 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
-import io.mehow.squashit.BaseActivity
+import io.mehow.squashit.NoTelescope
 import io.mehow.squashit.R
 import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.report.extensions.enableEdgeToEdgeAndNightMode
 
-internal class MisconfigurationActivity : BaseActivity() {
+internal class MisconfigurationActivity : Activity(), NoTelescope {
   override fun onCreate(inState: Bundle?) {
     super.onCreate(inState)
     window.decorView.enableEdgeToEdgeAndNightMode()

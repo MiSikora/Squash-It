@@ -1,24 +1,19 @@
 package io.mehow.squashit.report
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.AttributeSet
-import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.get
 import androidx.core.view.isNotEmpty
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.transition.Fade
 import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
-import io.mehow.squashit.BaseActivity
 import io.mehow.squashit.FileParceler
+import io.mehow.squashit.NoTelescope
 import io.mehow.squashit.R
 import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.SquashItLogger
@@ -49,18 +44,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 
-internal class ReportActivity : BaseActivity() {
+internal class ReportActivity : Activity(), NoTelescope {
   private val mainScope = MainScope()
   private lateinit var presenter: ReportPresenter
-  private lateinit var inflaterFactory: LayoutInflater.Factory2
   private lateinit var content: CoordinatorLayout
   private var snackbar: Snackbar? = null
 
   override fun onCreate(inState: Bundle?) {
     super.onCreate(inState)
-    val (screenshot) = intent.getParcelableExtra<Args>(ArgsKey)!!
-    presenter = ViewModelProvider(this, createFactory(screenshot)).get()
-    inflaterFactory = ReportInflaterFactory(layoutInflater.factory2, presenter)
+    presenter = lastNonConfigurationInstance
+    layoutInflater.factory2 = ReportInflaterFactory(presenter)
     window.decorView.enableEdgeToEdgeAndNightMode()
     setContentView(R.layout.squash_it)
     content = findViewById(R.id.activityContent)
@@ -70,6 +63,14 @@ internal class ReportActivity : BaseActivity() {
         .onEach { switchDisplayedLayout(it) }
         .launchIn(mainScope)
   }
+
+  override fun getLastNonConfigurationInstance(): ReportPresenter {
+    val screenshot = intent.getParcelableExtra<Args>(ArgsKey)!!.screenshotFile
+    return super.getLastNonConfigurationInstance() as? ReportPresenter
+        ?: createFactory(screenshot).create().also { it.start(Dispatchers.Unconfined) }
+  }
+
+  override fun onRetainNonConfigurationInstance(): ReportPresenter = presenter
 
   @Suppress("MaxLineLength")
   @LayoutRes private fun getLayoutId(uiModel: UiModel) = when (uiModel.initState) {
@@ -94,7 +95,8 @@ internal class ReportActivity : BaseActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
-    mainScope.cancel()
+    mainScope.cancel("Report Activity destroyed.")
+    if (!isChangingConfigurations) presenter.stop()
   }
 
   override fun onBackPressed() {
@@ -112,22 +114,13 @@ internal class ReportActivity : BaseActivity() {
       return id in listOf(R.id.initFailureRoot, R.id.initProgressRoot, R.id.reportRoot)
     }
 
-  override fun onCreateView(name: String, ctx: Context, attrs: AttributeSet): View? {
-    return inflaterFactory.onCreateView(name, ctx, attrs)
-  }
-
-  override fun onCreateView(parent: View?, name: String, ctx: Context, attrs: AttributeSet): View? {
-    return inflaterFactory.onCreateView(parent, name, ctx, attrs)
-  }
-
   private fun createFactory(screenshot: File?): ReportPresenterFactory {
     val appContext = applicationContext
     return ReportPresenterFactory(
         SquashItConfig.Instance,
         filesDir,
         { screenshot },
-        { withContext(Dispatchers.IO) { SquashItLogger.createLogFile(appContext) } },
-        Dispatchers.Unconfined
+        { withContext(Dispatchers.IO) { SquashItLogger.createLogFile(appContext) } }
     )
   }
 

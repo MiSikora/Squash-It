@@ -19,7 +19,7 @@
       android:layout_weight="1"
       tool:background="@color/squash_it_french_blue" />
 
-  <RadioButton
+  <com.google.android.material.radiobutton.MaterialRadioButton
       android:id="@+id/select"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
