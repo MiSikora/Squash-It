@@ -21,7 +21,6 @@ import io.mehow.squashit.report.view.UpdateIssueView
 import kotlin.reflect.KClass
 
 internal class ReportInflaterFactory(
-  private val chain: LayoutInflater.Factory2,
   private val presenter: ReportPresenter
 ) : LayoutInflater.Factory2 {
   private val providers = mapOf<KClass<out View>, (Context, AttributeSet, ReportPresenter) -> View>(
@@ -48,11 +47,9 @@ internal class ReportInflaterFactory(
     attrs: AttributeSet
   ): View? {
     return providers[name]?.invoke(context, attrs, presenter)
-        ?: chain.onCreateView(parent, name, context, attrs)
   }
 
   override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
     return providers[name]?.invoke(context, attrs, presenter)
-        ?: chain.onCreateView(name, context, attrs)
   }
 }

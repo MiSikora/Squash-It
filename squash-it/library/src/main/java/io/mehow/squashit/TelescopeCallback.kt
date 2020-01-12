@@ -13,7 +13,7 @@ import io.mehow.squashit.report.ReportLens
 
 internal object TelescopeCallback : ActivityLifecycleCallbacks {
   override fun onActivityCreated(activity: Activity, inState: Bundle?) {
-    if (activity is BaseActivity) return
+    if (activity is NoTelescope) return
     val content = activity.findViewById<View>(android.R.id.content)
     content.replug(createTelescopeLayout(activity))
   }

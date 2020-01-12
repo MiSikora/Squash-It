@@ -7,13 +7,13 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-  <TextView
+  <com.google.android.material.textview.MaterialTextView
       android:id="@+id/addedAttachmentsInfo"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textAppearance="?attr/textAppearanceHeadline4" />
 
-  <Button
+  <com.google.android.material.button.MaterialButton
       android:id="@+id/goBack"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

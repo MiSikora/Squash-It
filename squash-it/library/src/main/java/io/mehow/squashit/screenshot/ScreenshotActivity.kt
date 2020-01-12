@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.core.graphics.ColorUtils
@@ -16,8 +17,8 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updateMargins
 import androidx.core.view.updatePadding
 import androidx.palette.graphics.Palette
-import io.mehow.squashit.BaseActivity
 import io.mehow.squashit.FileParceler
+import io.mehow.squashit.NoTelescope
 import io.mehow.squashit.R
 import io.mehow.squashit.report.extensions.enableEdgeToEdgeAndNightMode
 import kotlinx.android.parcel.Parcelize
@@ -26,7 +27,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import java.io.File
 
-internal class ScreenshotActivity : BaseActivity() {
+internal class ScreenshotActivity : AppCompatActivity(), NoTelescope {
   private lateinit var screenshotFile: File
   lateinit var screenshotBitmap: Bitmap
   val scope = MainScope()

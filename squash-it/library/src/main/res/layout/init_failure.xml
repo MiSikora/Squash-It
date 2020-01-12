@@ -8,13 +8,13 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-  <TextView
+  <com.google.android.material.textview.MaterialTextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/squash_it_init_failure"
       android:textAppearance="?attr/textAppearanceHeadline4" />
 
-  <Button
+  <com.google.android.material.button.MaterialButton
       android:id="@+id/retryInitialization"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

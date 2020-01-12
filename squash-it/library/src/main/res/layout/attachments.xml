@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="io.mehow.squashit.report.view.AttachmentsView">
 
-  <TextView
+  <com.google.android.material.textview.MaterialTextView
       android:id="@+id/attachmentsLabel"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
-  <CheckBox
+  <com.google.android.material.checkbox.MaterialCheckBox
       android:id="@+id/screenshotCheckBox"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/attachmentsLabel" />
 
-  <CheckBox
+  <com.google.android.material.checkbox.MaterialCheckBox
       android:id="@+id/logsCheckBox"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
       app:layout_constraintStart_toEndOf="@+id/screenshotCheckBox"
       app:layout_constraintTop_toTopOf="@+id/screenshotCheckBox" />
 
-  <Button
+  <com.google.android.material.button.MaterialButton
       android:id="@+id/addAttachmentButton"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
