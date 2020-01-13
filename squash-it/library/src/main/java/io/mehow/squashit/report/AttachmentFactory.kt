@@ -3,6 +3,9 @@ package io.mehow.squashit.report
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Intent
+import android.content.Intent.ACTION_GET_CONTENT
+import android.content.Intent.CATEGORY_OPENABLE
+import android.content.Intent.EXTRA_MIME_TYPES
 import android.graphics.Bitmap
 import android.os.CancellationSignal
 import android.provider.DocumentsContract
@@ -94,11 +97,10 @@ internal object AttachmentFactory {
   }
 
   fun requestAttachment(activity: Activity) {
-    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-      addCategory(Intent.CATEGORY_OPENABLE)
+    val intent = Intent(ACTION_GET_CONTENT).apply {
+      addCategory(CATEGORY_OPENABLE)
       type = "*/*"
-      putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
-      putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+      putExtra(EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
     }
     activity.startActivityForResult(intent, RequestCode)
   }
