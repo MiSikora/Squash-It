@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://github.com/material-components/material-components-android/issues/908 -->
+<com.google.android.material.snackbar.SnackbarContentLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    tools:ignore="PrivateResource,RtlHardcoded,UnusedResources,UnusedIds"
+    tools:viewBindingIgnore="true">
+
+  <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/snackbar_text"
+      style="?attr/snackbarTextViewStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical|left|start"
+      android:layout_weight="1" />
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/snackbar_action"
+      style="?attr/snackbarButtonStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical|right|end"
+      android:layout_marginStart="@dimen/design_snackbar_extra_spacing_horizontal"
+      android:layout_marginLeft="@dimen/design_snackbar_extra_spacing_horizontal"
+      android:minWidth="48dp"
+      android:visibility="gone" />
+
+</com.google.android.material.snackbar.SnackbarContentLayout>

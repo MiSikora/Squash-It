@@ -44,14 +44,13 @@ debugImplementation "io.mehow.squashit:squashit:0.4.3"
 
 ```kotlin
 SquashItConfigurator
-    .jiraUrl("YOUR_JIRA_URL")
-    .userEmail("YOUR_USER_EMAIL")
-    .userToken("YOUR_USER_TOKEN")
-    .projectKey("YOUR_PROJECT_KEY")
+    .projectKey("ProjectKey")
+    .jiraUrl("JiraUrl")
+    .credentialsProvider(CredentialsProvider("UserId"))
     .configure(context)
 ```
 
-The user needs to have read and write permissions to your project so you should make sure that the token is not accessible outside of your organization.
+The user needs to have read and write permissions to your project so you should make sure that the token is not accessible outside of your organization. One way to make it safe is to use an external app that can store credentials and expose it via `CredentialsProvider` interface during configuration. You can use your custom solution or leverage complementary [`Squash It`](squash-it/app) application and use `CredentialsProvider("UserId")` instead.
 
 ## Optional configuration
 
