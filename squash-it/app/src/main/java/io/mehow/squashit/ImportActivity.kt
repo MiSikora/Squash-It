@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_OPEN_DOCUMENT
 import android.content.Intent.CATEGORY_OPENABLE
-import android.content.Intent.EXTRA_ALLOW_MULTIPLE
-import android.content.Intent.EXTRA_MIME_TYPES
 import android.os.Bundle
 
 class ImportActivity : Activity() {
@@ -27,9 +25,7 @@ class ImportActivity : Activity() {
   private fun requestCredentials() {
     val intent = Intent(ACTION_OPEN_DOCUMENT).apply {
       addCategory(CATEGORY_OPENABLE)
-      type = "*/*"
-      putExtra(EXTRA_MIME_TYPES, arrayOf("application/json"))
-      putExtra(EXTRA_ALLOW_MULTIPLE, false)
+      type = "application/json"
     }
     startActivityForResult(intent, CredentialsRequestCode)
   }
