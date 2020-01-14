@@ -5,7 +5,7 @@ import androidx.core.net.toUri
 
 internal class AppCredentialsProvider(private val userId: String) : CredentialsProvider {
   override fun provide(context: Context): Credentials? {
-    val uri = "content://io.mehow.squashit.provider/credentials/$userId".toUri()
+    val uri = "content://io.mehow.squashit.contentprovider/credentials/$userId".toUri()
     return context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
       if (!cursor.moveToFirst()) return@use null
 
