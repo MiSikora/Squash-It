@@ -4,8 +4,7 @@ import android.content.Context
 
 interface CredentialsProvider {
   fun provide(context: Context): Credentials?
-
-  companion object {
-    operator fun invoke(userId: String): CredentialsProvider = AppCredentialsProvider(userId)
-  }
 }
+
+@Suppress("FunctionName") // Fake constructor.
+fun CredentialsProvider(userId: String): CredentialsProvider = AppCredentialsProvider(userId)
