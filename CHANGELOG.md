@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 0.5.0 *(2020-01-04)*
+----------------------------
+
+* Add support for custom credential providers.
+* Add support for the complementary Squash It app.
+* Fix layout inflation crashes on Android 21 and 22.
+
 Version 0.4.3 *(2020-01-08)*
 ----------------------------
 
