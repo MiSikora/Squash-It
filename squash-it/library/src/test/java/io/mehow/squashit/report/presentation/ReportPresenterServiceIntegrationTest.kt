@@ -8,7 +8,7 @@ import io.mehow.squashit.report.Description
 import io.mehow.squashit.report.Epic
 import io.mehow.squashit.report.IssueKey
 import io.mehow.squashit.report.IssueType
-import io.mehow.squashit.report.ReportType.UpdateIssue
+import io.mehow.squashit.report.ReportType.AddCommentToIssue
 import io.mehow.squashit.report.Summary
 import io.mehow.squashit.report.User
 import io.mehow.squashit.report.api.IssueTypeResponse
@@ -362,9 +362,9 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
 
   private val newIssueInput = syncedModel.input
       .withReporter(User("Reporter Name", "Reporter ID"))
-      .withNewIssueType(IssueType("Issue ID", "Issue Name"))
-      .withNewIssueSummary(Summary("Valid Summary"))
-      .withNewIssueEpic(Epic("Epic ID", "Epic Name"))
+      .withIssueType(IssueType("Issue ID", "Issue Name"))
+      .withSummary(Summary("Valid Summary"))
+      .withIssueEpic(Epic("Epic ID", "Epic Name"))
       .withDescription(Description("Description"))
       .withMentions(User("Mention Name", "Mention ID"))
 
@@ -375,7 +375,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
   }
 
   private val addCommentInput = syncedModel.input
-      .withReportType(UpdateIssue)
+      .withReportType(AddCommentToIssue)
       .withReporter(User("Reporter Name", "Reporter ID"))
       .withIssueKey(IssueKey("Issue ID"))
       .withDescription(Description("Description"))

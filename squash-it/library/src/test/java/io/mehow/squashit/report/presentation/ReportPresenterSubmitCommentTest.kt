@@ -106,7 +106,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
   }
 
   private val addCommentModel = syncedModel
-      .withReportType(ReportType.UpdateIssue)
+      .withReportType(ReportType.AddCommentToIssue)
       .withReporter(User("Reporter Name", "Reporter ID"))
       .withIssueKey(IssueKey("Issue ID"))
       .withDescription(Description("Description"))

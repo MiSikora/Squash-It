@@ -4,15 +4,17 @@ import io.mehow.squashit.report.InputError.NoIssueId
 import io.mehow.squashit.report.InputError.NoIssueType
 import io.mehow.squashit.report.InputError.NoReporter
 import io.mehow.squashit.report.InputError.ShortSummary
+import io.mehow.squashit.report.ReportType.AddCommentToIssue
+import io.mehow.squashit.report.ReportType.AddSubTaskToIssue
 import io.mehow.squashit.report.ReportType.CreateNewIssue
-import io.mehow.squashit.report.ReportType.UpdateIssue
 import io.mehow.squashit.report.api.AttachmentBody
 import io.mehow.squashit.report.presentation.UserInput
 
 internal object ReportFactory {
   fun create(input: UserInput) = when (input.reportType) {
     CreateNewIssue -> createNewReport(input)
-    UpdateIssue -> createUpdateReport(input)
+    AddCommentToIssue -> createCommentReport(input)
+    AddSubTaskToIssue -> createSubTaskReport(input)
   }
 
   private fun createNewReport(userInput: UserInput): ReportAttempt {
@@ -43,7 +45,7 @@ internal object ReportFactory {
       epic = epic
   )
 
-  private fun createUpdateReport(userInput: UserInput): ReportAttempt {
+  private fun createCommentReport(userInput: UserInput): ReportAttempt {
     val errors = userInput.addCommentErrors
     return if (errors.isEmpty()) ReportAttempt.Valid(userInput.asAddCommentReport())
     else ReportAttempt.Invalid(errors)
@@ -65,6 +67,33 @@ internal object ReportFactory {
       attachments = allAttachments,
       reporter = reporter!!,
       issueKey = issueKey!!
+  )
+
+  private fun createSubTaskReport(userInput: UserInput): ReportAttempt {
+    val errors = userInput.createSubTaskErrors
+    return if (errors.isEmpty()) ReportAttempt.Valid(userInput.asAddSubTaskReport())
+    else ReportAttempt.Invalid(errors)
+  }
+
+  private val UserInput.createSubTaskErrors: Set<InputError>
+    get() {
+      val hasReporter = reporter != null
+      val hasIssueId = issueKey != null
+      val hasSummary = summary?.value?.length ?: 0 >= 10
+      return listOfNotNull(
+          if (!hasReporter) NoReporter else null,
+          if (!hasIssueId) NoIssueId else null,
+          if (!hasSummary) ShortSummary else null
+      ).toSet()
+    }
+
+  private fun UserInput.asAddSubTaskReport() = Report.AddSubTask(
+      description = description,
+      mentions = mentions,
+      attachments = allAttachments,
+      reporter = reporter!!,
+      summary = summary!!,
+      parent = issueKey!!
   )
 
   private val UserInput.allAttachments: Set<AttachmentBody>

@@ -35,15 +35,15 @@ internal data class UserInput(
     return copy(reportType = type)
   }
 
-  fun withNewIssueType(type: IssueType): UserInput {
+  fun withIssueType(type: IssueType): UserInput {
     return copy(type = type)
   }
 
-  fun withNewIssueSummary(summary: Summary): UserInput {
+  fun withSummary(summary: Summary): UserInput {
     return copy(summary = summary)
   }
 
-  fun withNewIssueEpic(epic: Epic): UserInput {
+  fun withIssueEpic(epic: Epic): UserInput {
     return copy(epic = epic)
   }
 

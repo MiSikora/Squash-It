@@ -22,8 +22,8 @@ import androidx.transition.TransitionManager
 import androidx.transition.TransitionSet.ORDERING_TOGETHER
 import io.mehow.squashit.R
 import io.mehow.squashit.report.ReportType
+import io.mehow.squashit.report.ReportType.AddCommentToIssue
 import io.mehow.squashit.report.ReportType.CreateNewIssue
-import io.mehow.squashit.report.ReportType.UpdateIssue
 import io.mehow.squashit.report.SubmitState.Submitting
 import io.mehow.squashit.report.extensions.checkChanges
 import io.mehow.squashit.report.extensions.clicks
@@ -71,7 +71,7 @@ internal class IssueView(
     requestApplyInsets()
     displayIssueType(newIssueCheckBox.isChecked, false)
     newIssueCheckBox.checkChanges
-        .map { isChecked -> if (isChecked) CreateNewIssue else UpdateIssue }
+        .map { isChecked -> if (isChecked) CreateNewIssue else AddCommentToIssue }
         .onEach { presenter.sendEvent(UpdateInput.reportType(it)) }
         .launchIn(viewScope)
     submit.clicks

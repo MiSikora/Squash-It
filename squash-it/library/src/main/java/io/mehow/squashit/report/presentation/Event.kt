@@ -31,11 +31,11 @@ internal sealed class Event {
 
       fun reportType(type: ReportType) = UpdateInput { withReportType(type) }
 
-      fun issueType(type: IssueType) = UpdateInput { withNewIssueType(type) }
+      fun issueType(type: IssueType) = UpdateInput { withIssueType(type) }
 
-      fun summary(summary: Summary) = UpdateInput { withNewIssueSummary(summary) }
+      fun summary(summary: Summary) = UpdateInput { withSummary(summary) }
 
-      fun epic(epic: Epic) = UpdateInput { withNewIssueEpic(epic) }
+      fun epic(epic: Epic) = UpdateInput { withIssueEpic(epic) }
 
       fun issueKey(key: IssueKey) = UpdateInput { withIssueKey(key) }
 

@@ -45,16 +45,16 @@ internal fun UiModel.withReportType(type: ReportType): UiModel {
   return withUserInput { withReportType(type) }
 }
 
-internal fun UiModel.withNewIssueType(type: IssueType): UiModel {
-  return withUserInput { withNewIssueType(type) }
+internal fun UiModel.withIssueType(type: IssueType): UiModel {
+  return withUserInput { withIssueType(type) }
 }
 
-internal fun UiModel.withNewIssueSummary(summary: Summary): UiModel {
-  return withUserInput { withNewIssueSummary(summary) }
+internal fun UiModel.withSummary(summary: Summary): UiModel {
+  return withUserInput { withSummary(summary) }
 }
 
-internal fun UiModel.withNewIssueEpic(epic: Epic): UiModel {
-  return withUserInput { withNewIssueEpic(epic) }
+internal fun UiModel.withEpic(epic: Epic): UiModel {
+  return withUserInput { withIssueEpic(epic) }
 }
 
 internal fun UiModel.withIssueKey(key: IssueKey): UiModel {

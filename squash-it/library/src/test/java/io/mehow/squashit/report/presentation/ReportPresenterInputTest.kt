@@ -14,15 +14,15 @@ import io.mehow.squashit.report.User
 import io.mehow.squashit.report.presentation.Event.UpdateInput
 import io.mehow.squashit.report.presentation.extensions.withAttachments
 import io.mehow.squashit.report.presentation.extensions.withDescription
+import io.mehow.squashit.report.presentation.extensions.withEpic
 import io.mehow.squashit.report.presentation.extensions.withIssueKey
+import io.mehow.squashit.report.presentation.extensions.withIssueType
 import io.mehow.squashit.report.presentation.extensions.withLogs
 import io.mehow.squashit.report.presentation.extensions.withMentions
-import io.mehow.squashit.report.presentation.extensions.withNewIssueEpic
-import io.mehow.squashit.report.presentation.extensions.withNewIssueSummary
-import io.mehow.squashit.report.presentation.extensions.withNewIssueType
 import io.mehow.squashit.report.presentation.extensions.withReportType
 import io.mehow.squashit.report.presentation.extensions.withReporter
 import io.mehow.squashit.report.presentation.extensions.withScreenshot
+import io.mehow.squashit.report.presentation.extensions.withSummary
 import org.junit.Test
 
 internal class ReportPresenterInputTest : BaseReportPresenterTest() {
@@ -32,8 +32,8 @@ internal class ReportPresenterInputTest : BaseReportPresenterTest() {
   }
 
   @Test fun `report type can be changed`() = testPresenter {
-    presenter.sendEvent(UpdateInput.reportType(ReportType.UpdateIssue))
-    expectItem() shouldBe syncedModel.withReportType(ReportType.UpdateIssue)
+    presenter.sendEvent(UpdateInput.reportType(ReportType.AddCommentToIssue))
+    expectItem() shouldBe syncedModel.withReportType(ReportType.AddCommentToIssue)
 
     presenter.sendEvent(UpdateInput.reportType(ReportType.CreateNewIssue))
     expectItem() shouldBe syncedModel
@@ -41,17 +41,17 @@ internal class ReportPresenterInputTest : BaseReportPresenterTest() {
 
   @Test fun `issue type can be changed`() = testPresenter {
     presenter.sendEvent(UpdateInput.issueType(IssueType("ID", "Name")))
-    expectItem() shouldBe syncedModel.withNewIssueType(IssueType("ID", "Name"))
+    expectItem() shouldBe syncedModel.withIssueType(IssueType("ID", "Name"))
   }
 
   @Test fun `new issue summary can be changed`() = testPresenter {
     presenter.sendEvent(UpdateInput.summary(Summary("Summary")))
-    expectItem() shouldBe syncedModel.withNewIssueSummary(Summary("Summary"))
+    expectItem() shouldBe syncedModel.withSummary(Summary("Summary"))
   }
 
   @Test fun `new issue epic can be changed`() = testPresenter {
     presenter.sendEvent(UpdateInput.epic(Epic("ID", "Name")))
-    expectItem() shouldBe syncedModel.withNewIssueEpic(Epic("ID", "Name"))
+    expectItem() shouldBe syncedModel.withEpic(Epic("ID", "Name"))
   }
 
   @Test fun `issue key can be changed`() = testPresenter {
