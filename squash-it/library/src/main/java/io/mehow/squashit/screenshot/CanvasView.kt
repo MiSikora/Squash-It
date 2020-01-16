@@ -64,7 +64,7 @@ internal class CanvasView @JvmOverloads constructor(
   }
 
   fun clearCanvas() {
-    if (pathRedoHistory.isNotEmpty()) {
+    if (pathHistory.isNotEmpty()) {
       pathRedoHistory.addAll(pathHistory.reversed())
       paintRedoHistory.addAll(paintHistory.reversed())
       strokeRedoHistory.addAll(strokeHistory.reversed())
