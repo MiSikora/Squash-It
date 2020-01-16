@@ -11,6 +11,7 @@ import io.mehow.squashit.report.RuntimeInfo as Info
 object SquashItConfigurator {
   internal var ProjectKey: String = ""
   internal var JiraUrl: HttpUrl? = null
+  internal var SubTaskIssueId: String = "5"
   internal var Credentials: Credentials? = null
   internal var AllowReporterOverride = true
   internal var UserFilter: (User) -> Boolean = { true }
@@ -31,6 +32,11 @@ object SquashItConfigurator {
 
   @JvmStatic fun jiraUrl(url: String): SquashItConfigurator {
     JiraUrl = url.trim().toHttpUrlOrNull()
+    return this
+  }
+
+  @JvmStatic fun subTaskIssueId(id: String): SquashItConfigurator {
+    SubTaskIssueId = id
     return this
   }
 

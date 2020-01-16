@@ -6,8 +6,6 @@ import io.mehow.squashit.report.CreateReportAttempt.Success
 import io.mehow.squashit.report.InputError
 import io.mehow.squashit.report.JiraService
 import io.mehow.squashit.report.Report
-import io.mehow.squashit.report.Report.AddComment
-import io.mehow.squashit.report.Report.NewIssue
 import io.mehow.squashit.report.ReportAttempt
 import io.mehow.squashit.report.ReportFactory
 import io.mehow.squashit.report.SubmitState.Failed
@@ -34,11 +32,7 @@ internal class SubmitReportConsumer(
   }
 
   private suspend fun sendReport(report: Report): Accumulator {
-    val attempt = when (report) {
-      is NewIssue -> jiraService.createNewIssue(report)
-      is AddComment -> jiraService.addComment(report)
-    }
-    val state = when (attempt) {
+    val state = when (val attempt = jiraService.report(report)) {
       is Success -> Submitted(attempt.key)
       is NoAttachments -> FailedToAttach(attempt.key, report.attachments)
       is Failure -> Failed(report)

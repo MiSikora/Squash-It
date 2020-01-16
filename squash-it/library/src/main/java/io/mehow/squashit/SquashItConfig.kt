@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 internal data class SquashItConfig(
   val projectKey: String,
   val jiraUrl: HttpUrl?,
+  val subTaskIssueId: String,
   val credentials: Credentials,
   val allowReporterOverride: Boolean,
   val userFilter: (User) -> Boolean,
@@ -26,6 +27,7 @@ internal data class SquashItConfig(
   constructor(configurator: SquashItConfigurator) : this(
       projectKey = configurator.ProjectKey,
       jiraUrl = configurator.JiraUrl,
+      subTaskIssueId = configurator.SubTaskIssueId,
       credentials = configurator.Credentials ?: Credentials("", ""),
       allowReporterOverride = configurator.AllowReporterOverride,
       userFilter = configurator.UserFilter,

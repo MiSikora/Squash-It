@@ -6,6 +6,7 @@ import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.Moshi
 import io.mehow.squashit.report.api.IssueTypeRequest
 import io.mehow.squashit.report.api.NewIssueFieldsRequest
+import io.mehow.squashit.report.api.ParentKeyRequest
 import io.mehow.squashit.report.api.ProjectRequest
 import io.mehow.squashit.report.api.ReporterRequest
 import kotlin.String
@@ -16,12 +17,15 @@ internal class NewIssueFieldsRequestJsonAdapter(
   moshi: Moshi
 ) : JsonAdapter<NewIssueFieldsRequest>() {
   private val options: JsonReader.Options = JsonReader.Options.of(
-      "project", "issuetype", "summary",
+      "project", "parent", "issuetype", "summary",
       "reporter", "description", epicFieldName
   )
 
   private val projectRequestAdapter: JsonAdapter<ProjectRequest> =
     moshi.adapter(ProjectRequest::class.java, emptySet(), "project")
+
+  private val nullableParentKeyAdapter: JsonAdapter<ParentKeyRequest?> =
+    moshi.adapter(ParentKeyRequest::class.java, emptySet(), "parentKey")
 
   private val issueTypeRequestAdapter: JsonAdapter<IssueTypeRequest> =
     moshi.adapter(IssueTypeRequest::class.java, emptySet(), "issueType")
@@ -39,6 +43,7 @@ internal class NewIssueFieldsRequestJsonAdapter(
 
   override fun fromJson(reader: JsonReader): NewIssueFieldsRequest {
     var project: ProjectRequest? = null
+    var parentKey: ParentKeyRequest? = null
     var issueType: IssueTypeRequest? = null
     var summary: String? = null
     var reporter: ReporterRequest? = null
@@ -51,20 +56,21 @@ internal class NewIssueFieldsRequestJsonAdapter(
             "project",
             "project"
         )
-        1 -> issueType = issueTypeRequestAdapter.fromJson(reader) ?: reader.unexpectedNull(
+        1 -> parentKey = nullableParentKeyAdapter.fromJson(reader)
+        2 -> issueType = issueTypeRequestAdapter.fromJson(reader) ?: reader.unexpectedNull(
             "issueType",
             "issuetype"
         )
-        2 -> summary = stringAdapter.fromJson(reader) ?: reader.unexpectedNull(
+        3 -> summary = stringAdapter.fromJson(reader) ?: reader.unexpectedNull(
             "summary",
             "summary"
         )
-        3 -> reporter = nullableReporterRequestAdapter.fromJson(reader)
-        4 -> description = stringAdapter.fromJson(reader) ?: reader.unexpectedNull(
+        4 -> reporter = nullableReporterRequestAdapter.fromJson(reader)
+        5 -> description = stringAdapter.fromJson(reader) ?: reader.unexpectedNull(
             "description",
             "description"
         )
-        5 -> epic = nullableStringAdapter.fromJson(reader)
+        6 -> epic = nullableStringAdapter.fromJson(reader)
         -1 -> {
           // Unknown name, skip it.
           reader.skipName()
@@ -75,6 +81,7 @@ internal class NewIssueFieldsRequestJsonAdapter(
     reader.endObject()
     return NewIssueFieldsRequest(
         project = project ?: reader.missingProperty("project", "project"),
+        parent = parentKey,
         issueType = issueType ?: reader.missingProperty("issueType", "issuetype"),
         summary = summary ?: reader.missingProperty("summary", "summary"),
         reporter = reporter,
@@ -90,6 +97,8 @@ internal class NewIssueFieldsRequestJsonAdapter(
     writer.beginObject()
     writer.name("project")
     projectRequestAdapter.toJson(writer, value.project)
+    writer.name("parent")
+    nullableParentKeyAdapter.toJson(writer, value.parent)
     writer.name("issuetype")
     issueTypeRequestAdapter.toJson(writer, value.issueType)
     writer.name("summary")

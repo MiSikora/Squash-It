@@ -73,6 +73,7 @@ internal open class BaseReportPresenterTest {
     val config: SquashItConfig = SquashItConfig(
         projectKey = "SQ",
         jiraUrl = "https://www.squash.it".toHttpUrl(),
+        subTaskIssueId = "subtask ID",
         credentials = Credentials("email", "token"),
         allowReporterOverride = true,
         fingerTriggerCount = 2,

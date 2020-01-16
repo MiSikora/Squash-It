@@ -1,17 +1,9 @@
 package io.mehow.squashit.report
 
 import io.mehow.squashit.SquashItConfig
-import io.mehow.squashit.report.Report.AddComment
-import io.mehow.squashit.report.Report.NewIssue
-import io.mehow.squashit.report.api.AddCommentRequest
 import io.mehow.squashit.report.api.AttachmentBody
 import io.mehow.squashit.report.api.EpicJql
-import io.mehow.squashit.report.api.IssueTypeRequest
 import io.mehow.squashit.report.api.JiraApi
-import io.mehow.squashit.report.api.NewIssueFieldsRequest
-import io.mehow.squashit.report.api.NewIssueRequest
-import io.mehow.squashit.report.api.ProjectRequest
-import io.mehow.squashit.report.api.ReporterRequest
 import io.mehow.squashit.report.api.Response
 import io.mehow.squashit.report.api.Response.Failure
 import io.mehow.squashit.report.api.Response.Success
@@ -25,6 +17,15 @@ internal class JiraService(
   private val projectInfoStore: ProjectInfoStore,
   private val jiraApi: JiraApi
 ) {
+  suspend fun report(report: Report): CreateReportAttempt {
+    return report.toCall(config).execute(jiraApi)
+  }
+
+  suspend fun addAttachments(issueKey: IssueKey, attachments: Set<AttachmentBody>): Response<Unit> {
+    val bodies = attachments.map(AttachmentBody::part)
+    return jiraApi.attachFiles(issueKey, bodies)
+  }
+
   suspend fun getProjectInfo(): ProjectInfo? {
     val cachedInfo = projectInfoStore.read()
     if (cachedInfo != null) return cachedInfo
@@ -37,73 +38,6 @@ internal class JiraService(
     val epics = getEpics().toSet()
 
     return ProjectInfo(epics, users, issueTypes.toSet()).also { projectInfoStore.save(it) }
-  }
-
-  suspend fun createNewIssue(report: NewIssue): CreateReportAttempt {
-    val newIssueRequest = createNewIssueRequest(report)
-    when (val createResponse = jiraApi.createNewIssue(newIssueRequest)) {
-      is Success -> {
-        val key = IssueKey(createResponse.value.key)
-        if (report.attachments.isEmpty()) return CreateReportAttempt.Success(key)
-
-        return when (addAttachments(key, report.attachments)) {
-          is Success -> CreateReportAttempt.Success(key)
-          is Failure -> CreateReportAttempt.NoAttachments(key)
-        }
-      }
-      is Failure -> return CreateReportAttempt.Failure
-    }
-  }
-
-  suspend fun addComment(report: AddComment): CreateReportAttempt {
-    val key = report.issueKey
-    val addCommentRequest = createAddCommentRequest(report)
-    when (jiraApi.addComment(key, addCommentRequest)) {
-      is Success -> {
-        if (report.attachments.isEmpty()) return CreateReportAttempt.Success(key)
-
-        return when (addAttachments(key, report.attachments)) {
-          is Success -> CreateReportAttempt.Success(key)
-          is Failure -> CreateReportAttempt.NoAttachments(key)
-        }
-      }
-      is Failure -> return CreateReportAttempt.Failure
-    }
-  }
-
-  suspend fun addAttachments(issueKey: IssueKey, attachments: Set<AttachmentBody>): Response<Unit> {
-    val bodies = attachments.map(AttachmentBody::part)
-    return jiraApi.attachFiles(issueKey, bodies)
-  }
-
-  private fun createNewIssueRequest(report: NewIssue): NewIssueRequest {
-    val description = listOfNotNull(
-        if (config.allowReporterOverride) null else Reporter(report.reporter),
-        report.description,
-        config.runtimeInfo,
-        report.mentions
-    ).joinToString("\n\n", transform = Describable::describe)
-
-    return NewIssueRequest(
-        NewIssueFieldsRequest(
-            ProjectRequest(config.projectKey),
-            IssueTypeRequest(report.issueType.id),
-            report.summary.value,
-            if (config.allowReporterOverride) ReporterRequest(report.reporter.accountId) else null,
-            description,
-            report.epic?.id
-        )
-    )
-  }
-
-  private fun createAddCommentRequest(report: AddComment): AddCommentRequest {
-    val body = listOfNotNull(
-        Reporter(report.reporter),
-        report.description,
-        config.runtimeInfo,
-        report.mentions
-    ).joinToString("\n\n", transform = Describable::describe)
-    return AddCommentRequest(body)
   }
 
   private suspend fun getEpics(): List<Epic> {
