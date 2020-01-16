@@ -13,7 +13,8 @@ import android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
 import android.widget.Button
-import android.widget.CheckBox
+import android.widget.CompoundButton
+import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
@@ -73,7 +74,13 @@ internal val TextView.textChanges: Flow<String>
     awaitClose { removeTextChangedListener(listener) }
   }
 
-internal val CheckBox.checkChanges
+internal val CompoundButton.checkChanges
+  get() = callbackFlow {
+    setOnCheckedChangeListener { _, isChecked -> offer(isChecked) }
+    awaitClose { setOnCheckedChangeListener(null) }
+  }
+
+internal val RadioGroup.checkChanges
   get() = callbackFlow {
     setOnCheckedChangeListener { _, isChecked -> offer(isChecked) }
     awaitClose { setOnCheckedChangeListener(null) }

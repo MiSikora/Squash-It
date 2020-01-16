@@ -19,7 +19,9 @@
   <string name="squash_it_epic">Epic</string>
   <string name="squash_it_init_failure">Failed to initialize!</string>
   <string name="squash_it_initializing">Initializing…</string>
-  <string name="squash_it_new_issue_option">New issue?</string>
+  <string name="squash_it_new_issue_option">New issue</string>
+  <string name="squash_it_comment_option">Comment</string>
+  <string name="squash_it_sub_task_option">Sub task</string>
   <string name="squash_it_description">Description</string>
   <string name="squash_it_mentions">Mentions</string>
   <string name="squash_it_issue_type">Issue type</string>

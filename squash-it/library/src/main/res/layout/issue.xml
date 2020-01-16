@@ -21,14 +21,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/newIssueCheckBox"
-        android:layout_width="wrap_content"
+    <RadioGroup
+        android:id="@+id/updateGroup"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="@string/squash_it_new_issue_option"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reporter" />
+        app:layout_constraintTop_toBottomOf="@+id/reporter">
+
+      <com.google.android.material.radiobutton.MaterialRadioButton
+          android:id="@+id/newIssue"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:checked="true"
+          android:text="@string/squash_it_new_issue_option" />
+
+      <com.google.android.material.radiobutton.MaterialRadioButton
+          android:id="@+id/addComment"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/squash_it_comment_option" />
+
+      <com.google.android.material.radiobutton.MaterialRadioButton
+          android:id="@+id/addSubTask"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/squash_it_sub_task_option" />
+
+    </RadioGroup>
 
     <io.mehow.squashit.report.view.UpdateIssueView
         android:id="@+id/issueId"
@@ -38,16 +62,52 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newIssueCheckBox" />
+        app:layout_constraintTop_toBottomOf="@+id/updateGroup" />
 
-    <io.mehow.squashit.report.view.NewIssueView
-        android:id="@+id/newIssue"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/issueTypeLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:hint="@string/squash_it_issue_type"
+        android:labelFor="@+id/issueTypeInput"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newIssueCheckBox" />
+        app:layout_constraintTop_toBottomOf="@+id/issueId">
+
+      <com.google.android.material.textview.MaterialAutoCompleteTextView
+          android:id="@+id/issueTypeInput"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:cursorVisible="false"
+          android:focusable="false"
+          android:inputType="textPhonetic" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/summaryLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/squash_it_summary"
+        app:counterEnabled="true"
+        app:counterMaxLength="80"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/issueTypeLayout">
+
+      <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/summaryInput"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="textCapSentences|textMultiLine"
+          android:maxLength="80" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
@@ -55,8 +115,8 @@
         android:layout_height="0dp"
         app:barrierAllowsGoneWidgets="true"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="newIssue,issueId"
-        app:layout_constraintBottom_toBottomOf="@+id/newIssue"
+        app:constraint_referenced_ids="summaryLayout,issueId"
+        app:layout_constraintBottom_toBottomOf="@+id/summaryLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

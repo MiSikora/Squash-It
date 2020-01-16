@@ -14,7 +14,6 @@ import io.mehow.squashit.report.view.InitFailureView
 import io.mehow.squashit.report.view.IssueDescriptionView
 import io.mehow.squashit.report.view.IssueView
 import io.mehow.squashit.report.view.MentionsView
-import io.mehow.squashit.report.view.NewIssueView
 import io.mehow.squashit.report.view.ReportCreatedView
 import io.mehow.squashit.report.view.ReporterView
 import io.mehow.squashit.report.view.UpdateIssueView
@@ -27,7 +26,6 @@ internal class ReportInflaterFactory(
       AttachmentsView::class to ::AttachmentsView,
       MentionsView::class to ::MentionsView,
       EpicView::class to ::EpicView,
-      NewIssueView::class to ::NewIssueView,
       UpdateIssueView::class to ::UpdateIssueView,
       IssueView::class to ::IssueView,
       IssueDescriptionView::class to ::IssueDescriptionView,
