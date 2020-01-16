@@ -3,7 +3,6 @@ package io.mehow.squashit.report.presentation
 import io.mehow.squashit.report.AttachState.Unavailable
 import io.mehow.squashit.report.InitState
 import io.mehow.squashit.report.Mentions
-import io.mehow.squashit.report.NewIssue
 import io.mehow.squashit.report.ProjectInfo
 import io.mehow.squashit.report.ReportType.CreateNewIssue
 import io.mehow.squashit.report.SubmitState
@@ -21,11 +20,9 @@ internal data class UiModel(
         input = UserInput(
             reporter = null,
             reportType = CreateNewIssue,
-            newIssue = NewIssue(
-                type = null,
-                summary = null,
-                epic = null
-            ),
+            type = null,
+            summary = null,
+            epic = null,
             issueKey = null,
             description = null,
             mentions = Mentions(emptySet()),

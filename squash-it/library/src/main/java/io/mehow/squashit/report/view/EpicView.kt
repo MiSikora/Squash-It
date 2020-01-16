@@ -48,7 +48,7 @@ internal class EpicView(
 
   private fun renderUiModel(uiModel: UiModel) {
     val input = uiModel.input
-    createEpics(uiModel.projectInfo?.epics.orEmpty(), input.newIssue.epic, input.reportType)
+    createEpics(uiModel.projectInfo?.epics.orEmpty(), input.epic, input.reportType)
   }
 
   private fun createEpics(epics: Set<Epic>, epic: Epic?, reportType: ReportType) {

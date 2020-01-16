@@ -9,7 +9,6 @@ import io.mehow.squashit.report.InputError
 import io.mehow.squashit.report.IssueKey
 import io.mehow.squashit.report.IssueType
 import io.mehow.squashit.report.Mentions
-import io.mehow.squashit.report.NewIssue
 import io.mehow.squashit.report.ReportType
 import io.mehow.squashit.report.Summary
 import io.mehow.squashit.report.User
@@ -17,7 +16,9 @@ import io.mehow.squashit.report.User
 internal data class UserInput(
   val reporter: User?,
   val reportType: ReportType,
-  val newIssue: NewIssue,
+  val type: IssueType?,
+  val summary: Summary?,
+  val epic: Epic?,
   val issueKey: IssueKey?,
   val description: Description?,
   val mentions: Mentions,
@@ -34,20 +35,16 @@ internal data class UserInput(
     return copy(reportType = type)
   }
 
-  private fun withNewIssue(builder: NewIssue.() -> NewIssue): UserInput {
-    return copy(newIssue = newIssue.builder())
-  }
-
   fun withNewIssueType(type: IssueType): UserInput {
-    return withNewIssue { copy(type = type) }
+    return copy(type = type)
   }
 
   fun withNewIssueSummary(summary: Summary): UserInput {
-    return withNewIssue { copy(summary = summary) }
+    return copy(summary = summary)
   }
 
   fun withNewIssueEpic(epic: Epic): UserInput {
-    return withNewIssue { copy(epic = epic) }
+    return copy(epic = epic)
   }
 
   fun withIssueKey(key: IssueKey): UserInput {

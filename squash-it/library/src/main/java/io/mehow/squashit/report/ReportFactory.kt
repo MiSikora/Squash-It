@@ -24,8 +24,8 @@ internal object ReportFactory {
   private val UserInput.newReportErrors: Set<InputError>
     get() {
       val hasReporter = reporter != null
-      val hasIssueType = newIssue.type != null
-      val hasSummary = newIssue.summary?.value?.length ?: 0 >= 10
+      val hasIssueType = type != null
+      val hasSummary = summary?.value?.length ?: 0 >= 10
       return listOfNotNull(
           if (!hasReporter) NoReporter else null,
           if (!hasIssueType) NoIssueType else null,
@@ -38,9 +38,9 @@ internal object ReportFactory {
       mentions = mentions,
       attachments = allAttachments,
       reporter = reporter!!,
-      issueType = newIssue.type!!,
-      summary = newIssue.summary!!,
-      epic = newIssue.epic
+      issueType = type!!,
+      summary = summary!!,
+      epic = epic
   )
 
   private fun createUpdateReport(userInput: UserInput): ReportAttempt {
