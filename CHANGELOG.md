@@ -1,7 +1,13 @@
 Change Log
 ==========
 
-Version 0.5.0 *(2020-01-04)*
+Version 0.5.0 *(2020-01-17)*
+----------------------------
+
+* Add support for submitting sub tasks.
+* Fix a bug where canvas couldn't be cleared without redo history.
+
+Version 0.5.0 *(2020-01-14)*
 ----------------------------
 
 * Add support for custom credential providers.
