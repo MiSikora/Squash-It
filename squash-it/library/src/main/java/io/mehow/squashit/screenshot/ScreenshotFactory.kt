@@ -60,8 +60,8 @@ internal object ScreenshotFactory {
   private val Context.screenshotDirectory: File?
     get() {
       val externalDir = getExternalFilesDir(null) ?: return null
-      val logDir = File(externalDir, "/squash-it/screenshots")
-      logDir.mkdirs()
-      return logDir
+      val screenshotDir = File(externalDir, "/squash-it/screenshots")
+      screenshotDir.mkdirs()
+      return screenshotDir
     }
 }

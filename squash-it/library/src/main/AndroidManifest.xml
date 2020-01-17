@@ -7,7 +7,7 @@
 
   <application>
     <activity
-        android:name="io.mehow.squashit.report.ReportActivity"
+        android:name=".report.ReportActivity"
         android:exported="false"
         android:launchMode="singleTop"
         android:screenOrientation="portrait"
@@ -15,35 +15,26 @@
         android:windowSoftInputMode="adjustPan" />
 
     <activity
-        android:name="io.mehow.squashit.report.MisconfigurationActivity"
+        android:name=".report.MisconfigurationActivity"
         android:exported="false"
         android:launchMode="singleTop"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.SquashIt" />
 
     <activity
-        android:name="io.mehow.squashit.screenshot.ScreenshotActivity"
+        android:name=".screenshot.ScreenshotActivity"
         android:exported="false"
         android:launchMode="singleTop"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.SquashIt" />
 
     <provider
-        android:name="io.mehow.squashit.SquashItInitializer"
+        android:name=".SquashItInitializer"
         android:authorities="${applicationId}.SquashItInitializer"
         android:exported="false" />
-    <provider
-        android:name="androidx.core.content.FileProvider"
-        android:authorities="${applicationId}.squashIt"
-        android:exported="false"
-        android:grantUriPermissions="true">
-      <meta-data
-          android:name="android.support.FILE_PROVIDER_PATHS"
-          android:resource="@xml/file_paths" />
-    </provider>
 
     <meta-data
         android:name="preloaded_fonts"
-        android:resource="@array/preloaded_fonts" />
+        android:resource="@array/squash_it_preloaded_fonts" />
   </application>
 </manifest>
