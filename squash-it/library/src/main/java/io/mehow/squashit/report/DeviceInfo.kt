@@ -29,7 +29,7 @@ internal data class DeviceInfo(
       |Density: $density
       |Locales: ${locales.joinToString(prefix = "[", postfix = "]")}
       |Local date: ${timeFormatter.format(createdAt)}
-      |Time zone: ${timeZone.displayName}, ${timeZone.id}
+      |Time zone: ${timeZone.getDisplayName(Locale.US)}, ${timeZone.id}
       |{panel}
     """.trimMargin()
   }
