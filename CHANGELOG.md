@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.6.2 *(2020-01-17)*
+----------------------------
+
+* Remove runtime permission for external app access.
+
 Version 0.6.1 *(2020-01-17)*
 ----------------------------
 
