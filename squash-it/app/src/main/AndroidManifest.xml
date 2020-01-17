@@ -5,7 +5,6 @@
     package="io.mehow.squashit">
 
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-  <permission android:name="io.mehow.squashit.READ" />
 
   <application
       android:name=".SquashItApp"
@@ -55,7 +54,7 @@
         android:name=".CredentialsContentProvider"
         android:authorities="io.mehow.squashit.contentprovider"
         android:exported="true"
-        android:permission="io.mehow.squashit.READ" />
+        tools:ignore="ExportedContentProvider" />
 
     <provider
         android:name="androidx.core.content.FileProvider"
