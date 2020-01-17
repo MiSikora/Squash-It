@@ -1,7 +1,12 @@
 Change Log
 ==========
 
-Version 0.5.0 *(2020-01-17)*
+Version 0.6.1 *(2020-01-17)*
+----------------------------
+
+* Remove unused File Provider that could easily cause conflicts in manifest mergers.
+
+Version 0.6.0 *(2020-01-17)*
 ----------------------------
 
 * Add support for submitting sub tasks.
