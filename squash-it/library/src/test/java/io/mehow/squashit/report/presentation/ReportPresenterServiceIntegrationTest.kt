@@ -3,14 +3,8 @@ package io.mehow.squashit.report.presentation
 import io.kotlintest.matchers.collections.shouldHaveSize
 import io.kotlintest.matchers.types.shouldBeNull
 import io.kotlintest.shouldBe
-import io.mehow.squashit.report.AttachState
-import io.mehow.squashit.report.Description
-import io.mehow.squashit.report.Epic
-import io.mehow.squashit.report.IssueKey
-import io.mehow.squashit.report.IssueType
+import io.mehow.squashit.report.*
 import io.mehow.squashit.report.ReportType.AddCommentToIssue
-import io.mehow.squashit.report.Summary
-import io.mehow.squashit.report.User
 import io.mehow.squashit.report.api.IssueTypeResponse
 import io.mehow.squashit.report.api.ProjectResponse
 import io.mehow.squashit.report.api.ReporterRequest
@@ -142,7 +136,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
         |Resolution: resolution
         |Density: density
         |Locales: [en_US]
-        |Local date: 1970-01-01T00:00:00.000Z
+        |Local date: 1970-01-01T00:00:00.000+0000
         |Time zone: Greenwich Mean Time, GMT
         |{panel}
         |
@@ -191,7 +185,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
           |Resolution: resolution
           |Density: density
           |Locales: [en_US]
-          |Local date: 1970-01-01T00:00:00.000Z
+          |Local date: 1970-01-01T00:00:00.000+0000
           |Time zone: Greenwich Mean Time, GMT
           |{panel}
           |
@@ -262,7 +256,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
         |Resolution: resolution
         |Density: density
         |Locales: [en_US]
-        |Local date: 1970-01-01T00:00:00.000Z
+        |Local date: 1970-01-01T00:00:00.000+0000
         |Time zone: Greenwich Mean Time, GMT
         |{panel}
         |
