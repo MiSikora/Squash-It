@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.6.3 *(2020-01-23)*
+----------------------------
+
+* Use RFC 822 time zone format to fix crashes on API below 24.
+
 Version 0.6.2 *(2020-01-17)*
 ----------------------------
 
