@@ -103,7 +103,6 @@ internal class IssueView(
     emitReportTypeChanges()
     emitIssueTypeChanges()
     emitSummaryChanges()
-    hideIssueTypeErrors()
     hideSummaryErrors()
     emitSubmissions()
     observeUiModels()
@@ -120,6 +119,7 @@ internal class IssueView(
     issueTypeInput.textChanges
         .mapNotNull { text -> adapter.issueTypes.find { it.name == text } }
         .onEach { presenter.sendEvent(UpdateInput.issueType(it)) }
+        .onEach { presenter.sendEvent(UpdateInput.hideError(NoIssueType)) }
         .launchIn(viewScope)
   }
 
@@ -128,12 +128,6 @@ internal class IssueView(
         .debounce(200)
         .map { it.trim() }
         .onEach { presenter.sendEvent(UpdateInput.summary(Summary(it))) }
-        .launchIn(viewScope)
-  }
-
-  private fun hideIssueTypeErrors() {
-    issueTypeInput.clicks
-        .onEach { presenter.sendEvent(UpdateInput.hideError(NoIssueType)) }
         .launchIn(viewScope)
   }
 

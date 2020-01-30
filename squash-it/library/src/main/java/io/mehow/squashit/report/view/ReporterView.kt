@@ -11,7 +11,6 @@ import com.google.android.material.textfield.TextInputLayout
 import io.mehow.squashit.R
 import io.mehow.squashit.report.InputError.NoReporter
 import io.mehow.squashit.report.User
-import io.mehow.squashit.report.extensions.clicks
 import io.mehow.squashit.report.extensions.textChanges
 import io.mehow.squashit.report.extensions.viewScope
 import io.mehow.squashit.report.presentation.Event.UpdateInput
@@ -42,8 +41,6 @@ internal class ReporterView(
     reporterInput.textChanges
         .mapNotNull { text -> adapter.users.find { it.nameHandle == text } }
         .onEach { presenter.sendEvent(UpdateInput.reporter(it)) }
-        .launchIn(viewScope)
-    reporterInput.clicks
         .onEach { presenter.sendEvent(UpdateInput.hideError(NoReporter)) }
         .launchIn(viewScope)
     presenter.uiModels
