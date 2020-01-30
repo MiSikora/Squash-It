@@ -13,7 +13,7 @@ import androidx.transition.Fade
 import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
 import io.mehow.squashit.FileParceler
-import io.mehow.squashit.NoTelescope
+import io.mehow.squashit.NoScreenshots
 import io.mehow.squashit.R
 import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.SquashItLogger
@@ -44,7 +44,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 
-internal class ReportActivity : Activity(), NoTelescope {
+internal class ReportActivity : Activity(), NoScreenshots {
   private val mainScope = MainScope()
   private lateinit var presenter: ReportPresenter
   private lateinit var content: CoordinatorLayout

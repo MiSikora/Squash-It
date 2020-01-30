@@ -18,7 +18,7 @@ import androidx.core.view.updateMargins
 import androidx.core.view.updatePadding
 import androidx.palette.graphics.Palette
 import io.mehow.squashit.FileParceler
-import io.mehow.squashit.NoTelescope
+import io.mehow.squashit.NoScreenshots
 import io.mehow.squashit.R
 import io.mehow.squashit.report.extensions.enableEdgeToEdgeAndNightMode
 import kotlinx.android.parcel.Parcelize
@@ -27,7 +27,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import java.io.File
 
-internal class ScreenshotActivity : AppCompatActivity(), NoTelescope {
+internal class ScreenshotActivity : AppCompatActivity(), NoScreenshots {
   private lateinit var screenshotFile: File
   lateinit var screenshotBitmap: Bitmap
   val scope = MainScope()

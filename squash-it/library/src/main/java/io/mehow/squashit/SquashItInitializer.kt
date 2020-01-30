@@ -5,16 +5,21 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
-import com.mattprecious.telescope.TelescopeLayout
+import io.mehow.squashit.screenshot.ScreenshotActivity
+import io.mehow.squashit.screenshot.ScreenshotActivity.Args
 import io.mehow.squashit.screenshot.ScreenshotFactory
+import io.mehow.squashit.screenshot.capture.CaptureCallback
 
 internal class SquashItInitializer : ContentProvider() {
   override fun onCreate(): Boolean {
     val application = context?.applicationContext as? Application ?: return false
-    TelescopeLayout.cleanUp(application)
     SquashItLogger.cleanUp(application)
     ScreenshotFactory.cleanUp(application)
-    application.registerActivityLifecycleCallbacks(TelescopeCallback)
+    val screenshotCallback = CaptureCallback { activity, screenshot ->
+      if (screenshot == null) SquashItConfig.Instance.start(activity, screenshot)
+      else ScreenshotActivity.start(activity, Args(screenshot))
+    }
+    application.registerActivityLifecycleCallbacks(screenshotCallback)
     return true
   }
 

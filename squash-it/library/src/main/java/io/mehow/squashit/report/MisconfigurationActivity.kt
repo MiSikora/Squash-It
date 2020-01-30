@@ -10,12 +10,12 @@ import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
-import io.mehow.squashit.NoTelescope
+import io.mehow.squashit.NoScreenshots
 import io.mehow.squashit.R
 import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.report.extensions.enableEdgeToEdgeAndNightMode
 
-internal class MisconfigurationActivity : Activity(), NoTelescope {
+internal class MisconfigurationActivity : Activity(), NoScreenshots {
   @Suppress("LongMethod")
   override fun onCreate(inState: Bundle?) {
     super.onCreate(inState)

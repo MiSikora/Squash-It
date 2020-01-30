@@ -7,7 +7,7 @@
 
 ## How it works?
 
-Squash It allows you to report JIRA issues or add comments to existing ones. You can open the tool by holding two fingers on your screen. This will capture an editable screenshot of the app's current window and let you provide the issue details.
+Squash It allows you to report JIRA issues or add comments to existing ones. You can open the tool by holding a device and twisting a wrist. This will capture an editable screenshot of the app's current window and let you provide the issue details.
 
 ![](images/sample-report.gif)
 
@@ -101,16 +101,6 @@ SquashItConfigurator
     .configure(context)
 ```
 
-### Finger trigger
-
-By default, the tool is triggered by holding two fingers on a screen. However, it might not be the best idea for some applications where using two fingers is part of the app's flow (like map applications).
-
-```kotlin
-SquashItConfigurator
-    .fingerTriggerCount(3)
-    .configure(context)
-```
-
 ### Epic deserialization
 
 JIRA uses custom fields for epics in its model. By default, they are configured to `customfield_10009` for reading epics from a JQL query and `customfield_10008` for assigning an epic to an issue while creating it.
@@ -147,10 +137,6 @@ SquashItConfigurator
 ## Sample
 
 You can check the integration with your JIRA by running [the sample](sample/) project. You'll need however to overwrite the [configuration file](sample/src/main/java/io/mehow/squashit/sample/SampleApplication.kt).
-
-## Attribution
-
-* [Matthew Precious](https://github.com/mattprecious) and his awesome [Telescope library](https://github.com/mattprecious/telescope) which is used in this project.
 
 ## License
 

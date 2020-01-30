@@ -19,7 +19,6 @@ internal data class SquashItConfig(
   val allowReporterOverride: Boolean,
   val userFilter: (User) -> Boolean,
   val issueTypeFilter: (IssueType) -> Boolean,
-  val fingerTriggerCount: Int,
   val epicReadFieldName: String,
   val epicWriteFieldName: String,
   val runtimeInfo: RuntimeInfo
@@ -32,7 +31,6 @@ internal data class SquashItConfig(
       allowReporterOverride = configurator.AllowReporterOverride,
       userFilter = configurator.UserFilter,
       issueTypeFilter = configurator.IssueTypeFilter,
-      fingerTriggerCount = configurator.FingerTriggerCount,
       epicWriteFieldName = configurator.EpicWriteFieldName,
       epicReadFieldName = configurator.EpicReadFieldName,
       runtimeInfo = configurator.RuntimeInfo

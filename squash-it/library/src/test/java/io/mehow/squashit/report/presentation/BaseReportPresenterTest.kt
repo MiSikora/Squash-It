@@ -76,7 +76,6 @@ internal open class BaseReportPresenterTest {
         subTaskIssueId = "subtask ID",
         credentials = Credentials("email", "token"),
         allowReporterOverride = true,
-        fingerTriggerCount = 2,
         userFilter = { true },
         issueTypeFilter = { true },
         runtimeInfo = RuntimeInfo(

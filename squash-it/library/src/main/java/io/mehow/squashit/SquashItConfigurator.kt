@@ -16,7 +16,6 @@ object SquashItConfigurator {
   internal var AllowReporterOverride = true
   internal var UserFilter: (User) -> Boolean = { true }
   internal var IssueTypeFilter: (IssueType) -> Boolean = { true }
-  internal var FingerTriggerCount: Int = 2
   internal var LogsCapacity: Int = 2_000
   internal var EpicReadFieldName: String = "customfield_10009"
   internal var EpicWriteFieldName: String = "customfield_10008"
@@ -64,12 +63,6 @@ object SquashItConfigurator {
 
   @JvmStatic fun issueTypeFilter(filter: (IssueType) -> Boolean): SquashItConfigurator {
     IssueTypeFilter = filter
-    return this
-  }
-
-  @JvmStatic fun fingerTriggerCount(@IntRange(from = 1) count: Int): SquashItConfigurator {
-    require(count >= 1) { "Finger trigger count must be at least 1." }
-    FingerTriggerCount = count
     return this
   }
 
