@@ -1,32 +1,31 @@
 package io.mehow.squashit.screenshot.capture
 
 internal enum class TwistState(
-  private val az: ClosedFloatingPointRange<Float>
+  private val nextStepRange: ClosedFloatingPointRange<Double>
 ) {
-  Start(0.7f..1.3f) {
-    override val nextState: TwistState get() = Middle
-    override fun proceedIf(sample: TwistSample) = sample.isMiddle
+  Start(60.0..120.0) {
+    override val nextState get() = FaceDown
   },
-  Middle(-1.3f..-0.7f) {
-    override val nextState: TwistState get() = End
-    override fun proceedIf(sample: TwistSample) = sample.isEnd
+  FaceDown(150.0..180.0) {
+    override val nextState get() = FaceUp
   },
-  End(0.7f..1.3f) {
-    override val nextState: TwistState get() = Start
-    override fun proceedIf(sample: TwistSample) = true
+  FaceUp(0.0..30.0) {
+    override val nextState get() = Finish
+  },
+  Finish(Double.MIN_VALUE..Double.MAX_VALUE) {
+    override val nextState get() = Start
   };
 
   protected abstract val nextState: TwistState
-  protected abstract fun proceedIf(sample: TwistSample): Boolean
 
   fun proceed(startTimestamp: Long, sample: TwistSample): TwistState? {
-    return if (fitsTimeWindow(startTimestamp, sample) && sample.magnitude < AccelerationThreshold) {
-      if (proceedIf(sample)) nextState else this
+    return if (fitsTimeWindow(startTimestamp, sample)) {
+      if (sample in this) nextState else this
     } else null
   }
 
-  operator fun contains(sample: TwistSample): Boolean {
-    return sample.az in az
+  private operator fun contains(sample: TwistSample): Boolean {
+    return sample.planeOrientation in nextStepRange
   }
 
   private fun fitsTimeWindow(startTimestamp: Long, sample: TwistSample): Boolean {
@@ -34,8 +33,6 @@ internal enum class TwistState(
   }
 
   companion object {
-    val CachedValues = values()
-    private const val AccelerationThreshold = 1.44
-    private const val MeasureWindow = 1_000_000_000
+    private const val MeasureWindow = 2_000_000_000
   }
 }

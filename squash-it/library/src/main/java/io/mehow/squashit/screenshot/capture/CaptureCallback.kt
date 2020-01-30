@@ -9,12 +9,12 @@ import java.io.File
 internal class CaptureCallback(
   private val onScreenshot: (Activity, File?) -> Unit
 ) : ActivityLifecycleCallbacks {
-  private val detectors = mutableMapOf<Activity, Pair<TwistDetector, ScreenshotProvider>>()
+  private val detectors = mutableMapOf<Activity, Pair<CaptureDetector, ScreenshotProvider>>()
 
   override fun onActivityCreated(activity: Activity, inState: Bundle?) {
     if (activity is NoScreenshots) return
     val screenshotProvider = ScreenshotProvider(activity) { onScreenshot(activity, it) }
-    detectors[activity] = TwistDetector {
+    detectors[activity] = CaptureDetector {
       screenshotProvider.takeScreenshot()
     } to screenshotProvider
   }
