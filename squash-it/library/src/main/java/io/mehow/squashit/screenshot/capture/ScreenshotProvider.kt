@@ -27,7 +27,7 @@ internal class ScreenshotProvider(
   private val activity: Activity,
   private val onScreenshot: (File?) -> Unit
 ) {
-  private var isCapturing = false
+  @Volatile private var isCapturing = false
   private var useCanvasScreenshots = false
   private val screenshotTarget = activity.window.decorView
   private val windowManager = activity.getSystemService<WindowManager>()!!
