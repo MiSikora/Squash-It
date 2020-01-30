@@ -9,7 +9,7 @@ import android.media.projection.MediaProjectionManager
 import android.os.Handler
 import androidx.core.content.getSystemService
 
-internal class CaptureRequest private constructor(
+internal class CaptureReceiver private constructor(
   context: Context,
   private val takeScreenshot: (MediaProjection?) -> Unit,
   private val cancelScreenshot: () -> Unit
@@ -46,7 +46,7 @@ internal class CaptureRequest private constructor(
       captureScreenshot: (MediaProjection?) -> Unit,
       captureCancelled: () -> Unit
     ) {
-      val receiver = CaptureRequest(context, captureScreenshot, captureCancelled)
+      val receiver = CaptureReceiver(context, captureScreenshot, captureCancelled)
       context.applicationContext.registerReceiver(receiver, IntentFilter(BroadcastAction))
     }
 

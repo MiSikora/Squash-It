@@ -34,7 +34,7 @@ internal class CaptureService : Service() {
   }
 
   companion object {
-    private const val ChannelId = "screenshot=capture"
+    private const val ChannelId = "screenshot.capture"
     private const val NotificationId = 1
 
     fun start(context: Context) {

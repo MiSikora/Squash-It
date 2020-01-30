@@ -21,7 +21,7 @@ internal class CaptureActivity : Activity(), NoScreenshots {
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     val result = CaptureResult(resultCode, data, promptShown())
-    CaptureRequest.sendBroadcast(this, result)
+    CaptureReceiver.sendBroadcast(this, result)
     finish()
   }
 

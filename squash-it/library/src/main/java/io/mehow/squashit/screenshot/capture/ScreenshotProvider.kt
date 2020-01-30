@@ -31,7 +31,7 @@ internal class ScreenshotProvider(
   private var useCanvasScreenshots = false
   private val screenshotTarget = activity.window.decorView
   private val windowManager = activity.getSystemService<WindowManager>()!!
-  private val backgroundThread = HandlerThread("squashit", THREAD_PRIORITY_BACKGROUND).apply {
+  private val backgroundThread = HandlerThread("SquashIt", THREAD_PRIORITY_BACKGROUND).apply {
     start()
   }
   private val backgroundHandler = Handler(backgroundThread.looper)
@@ -54,7 +54,7 @@ internal class ScreenshotProvider(
   }
 
   private fun startCaptureReceiver() {
-    CaptureRequest.register(activity, ::takeScreenshot, ::cancelScreenshot)
+    CaptureReceiver.register(activity, ::takeScreenshot, ::cancelScreenshot)
   }
 
   private fun takeScreenshot(projection: MediaProjection?) {
@@ -85,7 +85,7 @@ internal class ScreenshotProvider(
     val reader = ImageReader.newInstance(width, height, RGBA_8888, 2)
     val surface = reader.surface
     val display = projection.createVirtualDisplay(
-        "squashit",
+        "SquashIt",
         width,
         height,
         displayMetrics.densityDpi,
