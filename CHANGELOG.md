@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.7.1 *(2020-01-30)*
+----------------------------
+
+* Make gesture detector more relaxed and so specific.
+
 Version 0.7.0 *(2020-01-30)*
 ----------------------------
 
