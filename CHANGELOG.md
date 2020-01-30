@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.7.2 *(2020-01-30)*
+----------------------------
+
+* Detect gesture based on gravity and magnetic field measurements. It makes detection more robust.
+
 Version 0.7.1 *(2020-01-30)*
 ----------------------------
 
