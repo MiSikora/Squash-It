@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 0.7.0 *(2020-01-30)*
+----------------------------
+
+* Remove Telescope dependency and use a twist motion for capturing screenshots.
+* Fix bug where errors on auto complete texts did not disappear sometimes.
+
 Version 0.6.3 *(2020-01-23)*
 ----------------------------
 
