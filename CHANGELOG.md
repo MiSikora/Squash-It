@@ -9,7 +9,7 @@ Version 0.7.2 *(2020-01-30)*
 Version 0.7.1 *(2020-01-30)*
 ----------------------------
 
-* Make gesture detector more relaxed and so specific.
+* Make gesture detector more relaxed and not so specific.
 
 Version 0.7.0 *(2020-01-30)*
 ----------------------------
