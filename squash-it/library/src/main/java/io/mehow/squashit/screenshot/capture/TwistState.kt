@@ -1,38 +1,33 @@
 package io.mehow.squashit.screenshot.capture
 
 internal enum class TwistState(
-  private val nextStepRange: ClosedFloatingPointRange<Double>
+  val rotationRange: ClosedFloatingPointRange<Double>,
+  val accelerationRange: ClosedFloatingPointRange<Float>
 ) {
-  Start(60.0..120.0) {
+  Start(
+      rotationRange = 60.0..120.0,
+      accelerationRange = 0.6f..0.8f
+  ) {
     override val nextState get() = FaceDown
   },
-  FaceDown(150.0..180.0) {
+  FaceDown(
+      rotationRange = 150.0..180.0,
+      accelerationRange = -1.1f..-0.9f
+  ) {
     override val nextState get() = FaceUp
   },
-  FaceUp(0.0..30.0) {
+  FaceUp(
+      rotationRange = 0.0..30.0,
+      accelerationRange = 0.9f..1.1f
+  ) {
     override val nextState get() = Finish
   },
-  Finish(Double.MIN_VALUE..Double.MAX_VALUE) {
+  Finish(
+      rotationRange = Double.MIN_VALUE..Double.MAX_VALUE,
+      accelerationRange = Float.MIN_VALUE..Float.MAX_VALUE
+  ) {
     override val nextState get() = Start
   };
 
-  protected abstract val nextState: TwistState
-
-  fun proceed(startTimestamp: Long, sample: TwistSample): TwistState? {
-    return if (fitsTimeWindow(startTimestamp, sample)) {
-      if (sample in this) nextState else this
-    } else null
-  }
-
-  private operator fun contains(sample: TwistSample): Boolean {
-    return sample.planeOrientation in nextStepRange
-  }
-
-  private fun fitsTimeWindow(startTimestamp: Long, sample: TwistSample): Boolean {
-    return sample.timestamp - startTimestamp < MeasureWindow
-  }
-
-  companion object {
-    private const val MeasureWindow = 2_000_000_000
-  }
+  abstract val nextState: TwistState
 }

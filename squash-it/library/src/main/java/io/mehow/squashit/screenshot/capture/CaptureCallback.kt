@@ -14,7 +14,7 @@ internal class CaptureCallback(
   override fun onActivityCreated(activity: Activity, inState: Bundle?) {
     if (activity is NoScreenshots) return
     val screenshotProvider = ScreenshotProvider(activity) { onScreenshot(activity, it) }
-    detectors[activity] = CaptureDetector {
+    detectors[activity] = CaptureDetector.create(activity) {
       screenshotProvider.takeScreenshot()
     } to screenshotProvider
   }
