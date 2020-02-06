@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.7.3 *(2020-02-06)*
+----------------------------
+
+* Add support for devices without a magnetometer.
+
 Version 0.7.2 *(2020-01-30)*
 ----------------------------
 
