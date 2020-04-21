@@ -6,4 +6,5 @@
     app:fontProviderCerts="@array/com_google_android_gms_fonts_certs"
     app:fontProviderPackage="com.google.android.gms"
     app:fontProviderQuery="name=Fira Mono&amp;weight=500"
-    tools:ignore="UnusedResources" />
+    tools:ignore="UnusedResources"
+    />

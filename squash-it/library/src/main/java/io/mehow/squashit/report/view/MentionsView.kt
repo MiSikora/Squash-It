@@ -40,8 +40,8 @@ internal class MentionsView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     presenter.uiModels
-        .onEach { renderUiModel(it) }
-        .launchIn(viewScope)
+      .onEach { renderUiModel(it) }
+      .launchIn(viewScope)
   }
 
   private fun renderUiModel(uiModel: UiModel) {
@@ -60,7 +60,8 @@ internal class MentionsView(
       chip.isChecked = user in mentions.users
       chip.setOnCheckedChangeListener { _, isChecked ->
         viewScope.launch {
-          val event = if (isChecked) UpdateInput.mention(user) else UpdateInput.unmention(user)
+          val event =
+            if (isChecked) UpdateInput.mention(user) else UpdateInput.unmention(user)
           presenter.sendEvent(event)
         }
       }

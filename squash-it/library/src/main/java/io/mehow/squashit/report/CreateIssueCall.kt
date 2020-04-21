@@ -16,16 +16,16 @@ internal class CreateIssueCall(
   config: SquashItConfig
 ) : ReportCall {
   private val request = NewIssueRequest(
-      NewIssueFieldsRequest(
-          project = ProjectRequest(config.projectKey),
-          parent = null,
-          issueType = IssueTypeRequest(report.issueType.id),
-          summary = report.summary.value,
-          reporter = if (config.allowReporterOverride) ReporterRequest(report.reporter.accountId)
-          else null,
-          description = report.description(config),
-          epic = report.epic?.id
-      )
+    NewIssueFieldsRequest(
+      project = ProjectRequest(config.projectKey),
+      parent = null,
+      issueType = IssueTypeRequest(report.issueType.id),
+      summary = report.summary.value,
+      reporter = if (config.allowReporterOverride) ReporterRequest(report.reporter.accountId)
+      else null,
+      description = report.description(config),
+      epic = report.epic?.id
+    )
   )
 
   override suspend fun execute(jiraApi: JiraApi): CreateReportAttempt {

@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="io.mehow.squashit.report.view.IssueView">
+    tools:parentTag="io.mehow.squashit.report.view.IssueView"
+    >
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/issueContent"
@@ -11,7 +12,8 @@
       android:layout_height="wrap_content"
       android:clipChildren="false"
       android:clipToPadding="false"
-      android:padding="16dp">
+      android:padding="16dp"
+      >
 
     <io.mehow.squashit.report.view.ReporterView
         android:id="@+id/reporter"
@@ -19,7 +21,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <RadioGroup
         android:id="@+id/updateGroup"
@@ -28,7 +31,8 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reporter">
+        app:layout_constraintTop_toBottomOf="@+id/reporter"
+        >
 
       <com.google.android.material.radiobutton.MaterialRadioButton
           android:id="@+id/newIssue"
@@ -36,21 +40,24 @@
           android:layout_height="wrap_content"
           android:layout_weight="1"
           android:checked="true"
-          android:text="@string/squash_it_new_issue_option" />
+          android:text="@string/squash_it_new_issue_option"
+          />
 
       <com.google.android.material.radiobutton.MaterialRadioButton
           android:id="@+id/addComment"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
-          android:text="@string/squash_it_comment_option" />
+          android:text="@string/squash_it_comment_option"
+          />
 
       <com.google.android.material.radiobutton.MaterialRadioButton
           android:id="@+id/addSubTask"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
-          android:text="@string/squash_it_sub_task_option" />
+          android:text="@string/squash_it_sub_task_option"
+          />
 
     </RadioGroup>
 
@@ -62,7 +69,8 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/updateGroup"
+        />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/issueTypeLayout"
@@ -75,15 +83,17 @@
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/issueId">
+        app:layout_constraintTop_toBottomOf="@+id/issueId"
+        >
 
-      <com.google.android.material.textview.MaterialAutoCompleteTextView
+      <com.google.android.material.textfield.MaterialAutoCompleteTextView
           android:id="@+id/issueTypeInput"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:cursorVisible="false"
           android:focusable="false"
-          android:inputType="textPhonetic" />
+          android:inputType="textPhonetic"
+          />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,14 +108,16 @@
         app:counterMaxLength="80"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/issueTypeLayout">
+        app:layout_constraintTop_toBottomOf="@+id/issueTypeLayout"
+        >
 
       <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/summaryInput"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:inputType="textCapSentences|textMultiLine"
-          android:maxLength="80" />
+          android:maxLength="80"
+          />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,7 +130,8 @@
         app:constraint_referenced_ids="summaryLayout,issueId"
         app:layout_constraintBottom_toBottomOf="@+id/summaryLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <io.mehow.squashit.report.view.IssueDescriptionView
         android:id="@+id/description"
@@ -128,7 +141,8 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrier" />
+        app:layout_constraintTop_toBottomOf="@+id/barrier"
+        />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/submit"
@@ -137,7 +151,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>

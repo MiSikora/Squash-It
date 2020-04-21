@@ -169,10 +169,10 @@ internal class CanvasView @JvmOverloads constructor(
 
   override fun onSaveInstanceState(): Bundle {
     return bundleOf(
-        "instance" to super.onSaveInstanceState(),
-        "brush" to brush,
-        "strokeHistory" to strokeHistory,
-        "strokeRedoHistory" to strokeRedoHistory
+      "instance" to super.onSaveInstanceState(),
+      "brush" to brush,
+      "strokeHistory" to strokeHistory,
+      "strokeRedoHistory" to strokeRedoHistory
     )
   }
 }

@@ -2,7 +2,8 @@
 <shortcuts
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:targetApi="n_mr1">
+    tools:targetApi="n_mr1"
+    >
 
   <shortcut
       android:enabled="true"
@@ -10,11 +11,13 @@
       android:shortcutDisabledMessage="@string/import_text"
       android:shortcutId="import"
       android:shortcutLongLabel="@string/import_credentials"
-      android:shortcutShortLabel="@string/import_text">
+      android:shortcutShortLabel="@string/import_text"
+      >
     <intent
         android:action="android.intent.action.MAIN"
         android:targetClass="io.mehow.squashit.ImportActivity"
-        android:targetPackage="io.mehow.squashit" />
+        android:targetPackage="io.mehow.squashit"
+        />
   </shortcut>
 
   <shortcut
@@ -23,11 +26,13 @@
       android:shortcutDisabledMessage="@string/export_text"
       android:shortcutId="export"
       android:shortcutLongLabel="@string/export_credentials"
-      android:shortcutShortLabel="@string/export_text">
+      android:shortcutShortLabel="@string/export_text"
+      >
     <intent
         android:action="android.intent.action.MAIN"
         android:targetClass="io.mehow.squashit.ExportActivity"
-        android:targetPackage="io.mehow.squashit" />
+        android:targetPackage="io.mehow.squashit"
+        />
   </shortcut>
 
 </shortcuts>

@@ -13,7 +13,8 @@ internal sealed class SubmitState {
 
   object Resubmitting : SubmitState()
 
-  data class FailedToAttach(val key: IssueKey, val attachments: Set<AttachmentBody>) : SubmitState()
+  data class FailedToAttach(val key: IssueKey, val attachments: Set<AttachmentBody>) :
+    SubmitState()
 
   object Reattaching : SubmitState()
 

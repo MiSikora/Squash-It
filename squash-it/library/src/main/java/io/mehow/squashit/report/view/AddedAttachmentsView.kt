@@ -38,13 +38,14 @@ internal class AddedAttachmentsView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     presenter.uiModels
-        .map { it.submitState }
-        .filterIsInstance<AddedAttachments>()
-        .onEach { state ->
-          val text = resources.getString(R.string.squash_it_added_attachments, state.key.value)
-          addedAttachmentsInfo.text = text
-        }
-        .launchIn(viewScope)
+      .map { it.submitState }
+      .filterIsInstance<AddedAttachments>()
+      .onEach { state ->
+        val text =
+          resources.getString(R.string.squash_it_added_attachments, state.key.value)
+        addedAttachmentsInfo.text = text
+      }
+      .launchIn(viewScope)
     goBack.setOnClickListener { activity.onBackPressed() }
   }
 }

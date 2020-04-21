@@ -1,22 +1,26 @@
 <animated-vector
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aapt="http://schemas.android.com/aapt">
+    xmlns:aapt="http://schemas.android.com/aapt"
+    >
   <aapt:attr name="android:drawable">
     <vector
         android:name="vector"
         android:width="16dp"
         android:height="16dp"
         android:viewportWidth="24"
-        android:viewportHeight="24">
+        android:viewportHeight="24"
+        >
       <group
           android:name="group"
           android:pivotX="12"
-          android:pivotY="12">
+          android:pivotY="12"
+          >
         <path
             android:name="path_1"
             android:pathData="M 11.704 3 C 6.734 3 2.704 7.029 2.704 12.001 C 2.704 16.968 6.737 20.999 11.704 20.999 C 16.671 20.999 20.705 16.968 20.705 12.001 C 20.705 10.749 20.444 9.512 19.938 8.367"
             android:strokeWidth="3"
-            android:strokeColor="?attr/colorOnPrimary" />
+            android:strokeColor="?attr/colorOnPrimary"
+            />
       </group>
     </vector>
   </aapt:attr>
@@ -30,7 +34,8 @@
           android:repeatMode="restart"
           android:valueFrom="0"
           android:valueTo="360"
-          android:valueType="floatType" />
+          android:valueType="floatType"
+          />
     </aapt:attr>
   </target>
 </animated-vector>

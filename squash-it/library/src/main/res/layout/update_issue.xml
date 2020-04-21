@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="android.widget.FrameLayout">
+    tools:parentTag="android.widget.FrameLayout"
+    >
 
   <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/issueIdLayout"
@@ -12,13 +13,15 @@
       android:layout_height="wrap_content"
       android:hint="@string/squash_it_issue_id"
       android:labelFor="@+id/issueIdInput"
-      app:errorEnabled="true">
+      app:errorEnabled="true"
+      >
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/issueIdInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number" />
+        android:inputType="number"
+        />
 
   </com.google.android.material.textfield.TextInputLayout>
 

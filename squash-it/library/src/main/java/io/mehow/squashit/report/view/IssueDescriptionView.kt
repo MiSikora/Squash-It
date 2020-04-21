@@ -34,13 +34,13 @@ internal class IssueDescriptionView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     descriptionInput.textChanges
-        .debounce(200)
-        .map { it.trim() }
-        .onEach { presenter.sendEvent(UpdateInput.description(Description(it))) }
-        .launchIn(viewScope)
+      .debounce(200)
+      .map { it.trim() }
+      .onEach { presenter.sendEvent(UpdateInput.description(Description(it))) }
+      .launchIn(viewScope)
     presenter.uiModels
-        .onEach { renderUiModel(it) }
-        .launchIn(viewScope)
+      .onEach { renderUiModel(it) }
+      .launchIn(viewScope)
   }
 
   private fun renderUiModel(uiModel: UiModel) {

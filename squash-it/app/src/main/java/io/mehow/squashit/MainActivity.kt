@@ -63,13 +63,13 @@ class MainActivity : Activity() {
     window.decorView.enableEdgeToEdgeAndNightMode()
     val binder = MainBinder(this, binderCallback)
     presenter.uiModels
-        .onEach { binder.renderUi(it) }
-        .launchIn(mainScope)
+      .onEach { binder.renderUi(it) }
+      .launchIn(mainScope)
   }
 
   override fun getLastNonConfigurationInstance(): Presenter {
     return super.getLastNonConfigurationInstance() as? Presenter
-        ?: presenterFactory.get().also { it.start() }
+      ?: presenterFactory.get().also { it.start() }
   }
 
   override fun onRetainNonConfigurationInstance(): Presenter = presenter

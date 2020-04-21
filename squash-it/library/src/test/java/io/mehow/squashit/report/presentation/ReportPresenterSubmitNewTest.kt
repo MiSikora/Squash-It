@@ -31,7 +31,7 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
     presenter.sendEvent(SubmitReport(newIssueModel.input))
     expectItem() shouldBe newIssueModel.withSubmitState(SubmitState.Submitting)
     expectItem() shouldBe newIssueModel.withSubmitState(
-        SubmitState.Submitted(IssueKey("Issue ID"))
+      SubmitState.Submitted(IssueKey("Issue ID"))
     )
   }
 
@@ -55,7 +55,7 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
     presenter.sendEvent(RetrySubmission(newIssueReport))
     expectItem() shouldBe newIssueModel.withSubmitState(SubmitState.Resubmitting)
     expectItem() shouldBe newIssueModel.withSubmitState(
-        SubmitState.Submitted(IssueKey("Issue ID"))
+      SubmitState.Submitted(IssueKey("Issue ID"))
     )
   }
 
@@ -66,7 +66,7 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
       presenter.sendEvent(SubmitReport(newIssueModel.input))
       expectItem()
       expectItem() shouldBe newIssueModel.withSubmitState(
-          SubmitState.Submitted(IssueKey("Issue ID"))
+        SubmitState.Submitted(IssueKey("Issue ID"))
       )
     }
 
@@ -82,7 +82,7 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
     presenter.sendEvent(SubmitReport(newIssueModel.input.withLogs(AttachState.Attach(logsFile))))
     expectItem()
     expectItem() shouldBe model.withSubmitState(
-        SubmitState.FailedToAttach(IssueKey("Issue ID"), attachments)
+      SubmitState.FailedToAttach(IssueKey("Issue ID"), attachments)
     )
   }
 
@@ -106,26 +106,26 @@ internal class ReportPresenterSubmitNewTest : BaseReportPresenterTest() {
     presenter.sendEvent(Reattach(IssueKey("Issue ID"), attachments))
     expectItem() shouldBe model.withSubmitState(SubmitState.Reattaching)
     expectItem() shouldBe model.withSubmitState(
-        SubmitState.AddedAttachments(IssueKey("Issue ID"))
+      SubmitState.AddedAttachments(IssueKey("Issue ID"))
     )
   }
 
   private val newIssueModel = syncedModel
-      .withReporter(User("Reporter Name", "Reporter ID"))
-      .withIssueType(IssueType("Issue ID", "Issue Name"))
-      .withSummary(Summary("Valid Summary"))
-      .withEpic(Epic("Epic ID", "Epic Name"))
-      .withDescription(Description("Description"))
-      .withMentions(User("Mention Name", "Mention ID"))
+    .withReporter(User("Reporter Name", "Reporter ID"))
+    .withIssueType(IssueType("Issue ID", "Issue Name"))
+    .withSummary(Summary("Valid Summary"))
+    .withEpic(Epic("Epic ID", "Epic Name"))
+    .withDescription(Description("Description"))
+    .withMentions(User("Mention Name", "Mention ID"))
 
   private val newIssueReport = Report.NewIssue(
-      description = Description("Description"),
-      mentions = Mentions(setOf(User("Mention Name", "Mention ID"))),
-      attachments = emptySet(),
-      reporter = User("Reporter Name", "Reporter ID"),
-      issueType = IssueType("Issue ID", "Issue Name"),
-      summary = Summary("Valid Summary"),
-      epic = Epic("Epic ID", "Epic Name")
+    description = Description("Description"),
+    mentions = Mentions(setOf(User("Mention Name", "Mention ID"))),
+    attachments = emptySet(),
+    reporter = User("Reporter Name", "Reporter ID"),
+    issueType = IssueType("Issue ID", "Issue Name"),
+    summary = Summary("Valid Summary"),
+    epic = Epic("Epic ID", "Epic Name")
   )
 
   private fun testNewIssueReport(block: suspend FlowAssert<UiModel>.() -> Unit) = testPresenter {

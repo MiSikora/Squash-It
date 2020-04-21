@@ -22,9 +22,9 @@ internal class ReportPresenterFactory(
 ) {
   fun create(): ReportPresenter {
     val moshi = Moshi.Builder()
-        .add(EpicJsonFactory())
-        .add(KotlinJsonAdapterFactory())
-        .build()
+      .add(EpicJsonFactory())
+      .add(KotlinJsonAdapterFactory())
+      .build()
     val projectInfoStore = ProjectInfoStore(projectInfoDir, moshi)
     val jiraApi = JiraApi.create(moshi, config)
     val jiraService = JiraService(config, projectInfoStore, jiraApi)
@@ -39,12 +39,12 @@ internal class ReportPresenterFactory(
     ): JsonAdapter<*>? {
       return when (type) {
         EpicFieldsResponse::class.java -> EpicFieldsResponseJsonAdapter(
-            epicFieldName = config.epicReadFieldName,
-            moshi = moshi
+          epicFieldName = config.epicReadFieldName,
+          moshi = moshi
         )
         NewIssueFieldsRequest::class.java -> NewIssueFieldsRequestJsonAdapter(
-            epicFieldName = config.epicWriteFieldName,
-            moshi = moshi
+          epicFieldName = config.epicWriteFieldName,
+          moshi = moshi
         )
         else -> null
       }

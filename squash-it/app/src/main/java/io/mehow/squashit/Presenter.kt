@@ -32,9 +32,9 @@ class Presenter @Inject constructor(
   }
 
   private val eventConsumers = setOf(
-      UpsertCredentialsConsumer(store, promptDuration.value)::consume,
-      DeleteCredentialsConsumer(store, promptDuration.value)::consume,
-      DismissPromptConsumer::consume
+    UpsertCredentialsConsumer(store, promptDuration.value)::consume,
+    DeleteCredentialsConsumer(store, promptDuration.value)::consume,
+    DismissPromptConsumer::consume
   )
 
   private val presenterScope = CoroutineScope(SupervisorJob().apply {
@@ -48,18 +48,18 @@ class Presenter @Inject constructor(
     presenterScope.launch(context) {
       val events = eventsChannel.consumeAsFlow().shareIn(this)
       (eventConsumers.map { it.invoke(events) } + credentialsAccumulator)
-          .merge()
-          .scan(UiModel(emptyList(), ActionState.Idle)) { model, (update) -> update(model) }
-          .distinctUntilChanged()
-          .onEach(uiModelsChannel::send)
-          .launchIn(this)
+        .merge()
+        .scan(UiModel(emptyList(), ActionState.Idle)) { model, (update) -> update(model) }
+        .distinctUntilChanged()
+        .onEach(uiModelsChannel::send)
+        .launchIn(this)
     }
   }
 
   private val credentialsAccumulator
     get() = store
-        .credentials
-        .map { credentials -> Accumulator { it.copy(credentials = credentials) } }
+      .credentials
+      .map { credentials -> Accumulator { it.copy(credentials = credentials) } }
 
   fun stop() {
     presenterScope.cancel()

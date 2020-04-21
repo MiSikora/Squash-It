@@ -42,17 +42,17 @@ internal class UpdateIssueView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     issueIdInput.textChanges
-        .debounce(200)
-        .mapNotNull { it.trim().toLongOrNull() }
-        .map { IssueKey("${SquashItConfig.Instance.projectKey}-$it") }
-        .onEach { presenter.sendEvent(UpdateInput.issueKey(it)) }
-        .launchIn(viewScope)
+      .debounce(200)
+      .mapNotNull { it.trim().toLongOrNull() }
+      .map { IssueKey("${SquashItConfig.Instance.projectKey}-$it") }
+      .onEach { presenter.sendEvent(UpdateInput.issueKey(it)) }
+      .launchIn(viewScope)
     issueIdInput.focuses
-        .onEach { presenter.sendEvent(UpdateInput.hideError(NoIssueId)) }
-        .launchIn(viewScope)
+      .onEach { presenter.sendEvent(UpdateInput.hideError(NoIssueId)) }
+      .launchIn(viewScope)
     presenter.uiModels
-        .onEach { renderUiModel(it) }
-        .launchIn(viewScope)
+      .onEach { renderUiModel(it) }
+      .launchIn(viewScope)
   }
 
   private fun renderUiModel(uiModel: UiModel) {

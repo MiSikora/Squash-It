@@ -25,8 +25,8 @@ internal class EpicFieldsResponseJsonAdapter(
     while (reader.hasNext()) {
       when (reader.selectName(options)) {
         0 -> epicName = stringAdapter.fromJson(reader) ?: reader.unexpectedNull(
-            "epicName",
-            epicFieldName
+          "epicName",
+          epicFieldName
         )
         -1 -> {
           // Unknown name, skip it.
@@ -37,7 +37,7 @@ internal class EpicFieldsResponseJsonAdapter(
     }
     reader.endObject()
     return EpicFieldsResponse(
-        epicName = epicName ?: reader.missingProperty("epicName", epicFieldName)
+      epicName = epicName ?: reader.missingProperty("epicName", epicFieldName)
     )
   }
 

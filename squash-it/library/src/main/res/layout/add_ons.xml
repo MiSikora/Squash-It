@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="io.mehow.squashit.report.view.AddOnsView">
+    tools:parentTag="io.mehow.squashit.report.view.AddOnsView"
+    >
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/addOnsContent"
@@ -11,7 +12,8 @@
       android:layout_height="wrap_content"
       android:clipChildren="false"
       android:clipToPadding="false"
-      android:padding="16dp">
+      android:padding="16dp"
+      >
 
     <io.mehow.squashit.report.view.EpicView
         android:id="@+id/epic"
@@ -19,7 +21,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <io.mehow.squashit.report.view.MentionsView
         android:id="@+id/mentions"
@@ -27,7 +30,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/epic" />
+        app:layout_constraintTop_toBottomOf="@+id/epic"
+        />
 
     <io.mehow.squashit.report.view.AttachmentsView
         android:id="@+id/attachments"
@@ -36,7 +40,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mentions" />
+        app:layout_constraintTop_toBottomOf="@id/mentions"
+        />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>

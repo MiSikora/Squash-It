@@ -16,20 +16,20 @@ internal class PaintboxView @JvmOverloads constructor(
   defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
   private val brushSizes = listOf(
-      R.dimen.squash_it_brush_tiny,
-      R.dimen.squash_it_brush_small,
-      R.dimen.squash_it_brush_regular,
-      R.dimen.squash_it_brush_large,
-      R.dimen.squash_it_brush_huge
+    R.dimen.squash_it_brush_tiny,
+    R.dimen.squash_it_brush_small,
+    R.dimen.squash_it_brush_regular,
+    R.dimen.squash_it_brush_large,
+    R.dimen.squash_it_brush_huge
   ).map(resources::getDimensionPixelSize)
 
   private val brushColors = listOf(
-      R.color.squash_it_fire_engine_red,
-      R.color.squash_it_harlequin_green,
-      R.color.squash_it_french_blue,
-      R.color.squash_it_spiro_disco_ball,
-      R.color.squash_it_dandelion,
-      R.color.squash_it_flirt
+    R.color.squash_it_fire_engine_red,
+    R.color.squash_it_harlequin_green,
+    R.color.squash_it_french_blue,
+    R.color.squash_it_spiro_disco_ball,
+    R.color.squash_it_dandelion,
+    R.color.squash_it_flirt
   ).map { ContextCompat.getColor(context, it) }
 
   var enableSave = true
@@ -75,8 +75,8 @@ internal class PaintboxView @JvmOverloads constructor(
 
   override fun onSaveInstanceState(): Bundle {
     return bundleOf(
-        "instance" to super.onSaveInstanceState(),
-        "brush" to brush
+      "instance" to super.onSaveInstanceState(),
+      "brush" to brush
     )
   }
 

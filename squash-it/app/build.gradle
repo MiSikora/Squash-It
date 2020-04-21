@@ -34,7 +34,9 @@ android {
     }
     if (useUploadKeystore) {
       final signingProps = new Properties()
-      keystoreProperties.withInputStream { signingProps.load(it) }
+      keystoreProperties.withInputStream {
+        signingProps.load(it)
+      }
       upload {
         keyAlias "squash-it"
         keyPassword signingProps["keyPassword"]

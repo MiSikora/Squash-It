@@ -47,7 +47,8 @@ class ShakeDetector implements SensorEventListener {
     if (accelerometer != null) {
       this.sensorManager = sensorManager;
       sensorManager.registerListener(this, accelerometer,
-          SensorManager.SENSOR_DELAY_FASTEST);
+          SensorManager.SENSOR_DELAY_FASTEST
+      );
     }
     return accelerometer != null;
   }
@@ -79,7 +80,9 @@ class ShakeDetector implements SensorEventListener {
     queue.clear();
   }
 
-  /** Returns true if the device is currently accelerating. */
+  /**
+   * Returns true if the device is currently accelerating.
+   */
   private boolean isAccelerating(SensorEvent event) {
     float ax = event.values[0];
     float ay = event.values[1];
@@ -92,10 +95,14 @@ class ShakeDetector implements SensorEventListener {
     return magnitudeSquared > accelerationThreshold * accelerationThreshold;
   }
 
-  /** Queue of samples. Keeps a running average. */
+  /**
+   * Queue of samples. Keeps a running average.
+   */
   static class SampleQueue {
 
-    /** Window size in ns. Used to compute the average. */
+    /**
+     * Window size in ns. Used to compute the average.
+     */
     private static final long MAX_WINDOW_SIZE = 500000000; // 0.5s
     private static final long MIN_WINDOW_SIZE = MAX_WINDOW_SIZE >> 1; // 0.25s
 
@@ -116,7 +123,7 @@ class ShakeDetector implements SensorEventListener {
     /**
      * Adds a sample.
      *
-     * @param timestamp in nanoseconds of sample
+     * @param timestamp    in nanoseconds of sample
      * @param accelerating true if > {@link #accelerationThreshold}.
      */
     void add(long timestamp, boolean accelerating) {
@@ -143,7 +150,9 @@ class ShakeDetector implements SensorEventListener {
       }
     }
 
-    /** Removes all samples from this queue. */
+    /**
+     * Removes all samples from this queue.
+     */
     void clear() {
       while (oldest != null) {
         Sample removed = oldest;
@@ -155,7 +164,9 @@ class ShakeDetector implements SensorEventListener {
       acceleratingCount = 0;
     }
 
-    /** Purges samples with timestamps older than cutoff. */
+    /**
+     * Purges samples with timestamps older than cutoff.
+     */
     void purge(long cutoff) {
       while (sampleCount >= MIN_QUEUE_SIZE
           && oldest != null && cutoff - oldest.timestamp > 0) {
@@ -174,7 +185,9 @@ class ShakeDetector implements SensorEventListener {
       }
     }
 
-    /** Copies the samples into a list, with the oldest entry at index 0. */
+    /**
+     * Copies the samples into a list, with the oldest entry at index 0.
+     */
     List<Sample> asList() {
       List<Sample> list = new ArrayList<Sample>();
       Sample s = oldest;
@@ -197,23 +210,35 @@ class ShakeDetector implements SensorEventListener {
     }
   }
 
-  /** An accelerometer sample. */
+  /**
+   * An accelerometer sample.
+   */
   static class Sample {
-    /** Time sample was taken. */
+    /**
+     * Time sample was taken.
+     */
     long timestamp;
 
-    /** If acceleration > {@link #accelerationThreshold}. */
+    /**
+     * If acceleration > {@link #accelerationThreshold}.
+     */
     boolean accelerating;
 
-    /** Next sample in the queue or pool. */
+    /**
+     * Next sample in the queue or pool.
+     */
     Sample next;
   }
 
-  /** Pools samples. Avoids garbage collection. */
+  /**
+   * Pools samples. Avoids garbage collection.
+   */
   static class SamplePool {
     private Sample head;
 
-    /** Acquires a sample from the pool. */
+    /**
+     * Acquires a sample from the pool.
+     */
     Sample acquire() {
       Sample acquired = head;
       if (acquired == null) {
@@ -225,7 +250,9 @@ class ShakeDetector implements SensorEventListener {
       return acquired;
     }
 
-    /** Returns a sample to the pool. */
+    /**
+     * Returns a sample to the pool.
+     */
     void release(Sample sample) {
       sample.next = head;
       head = sample;

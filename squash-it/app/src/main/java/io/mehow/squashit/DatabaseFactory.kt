@@ -19,7 +19,7 @@ object DatabaseFactory {
   }
 
   private val credentialsAdapter = Credentials.Adapter(
-      idAdapter = credentialsIdAdapter,
-      secretAdapter = secretAdapter
+    idAdapter = credentialsIdAdapter,
+    secretAdapter = secretAdapter
   )
 }

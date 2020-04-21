@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="android.widget.FrameLayout">
+    tools:parentTag="android.widget.FrameLayout"
+    >
 
   <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/descriptionLayout"
@@ -11,13 +12,15 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:hint="@string/squash_it_description"
-      app:counterEnabled="true">
+      app:counterEnabled="true"
+      >
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/descriptionInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textCapSentences|textMultiLine" />
+        android:inputType="textCapSentences|textMultiLine"
+        />
 
   </com.google.android.material.textfield.TextInputLayout>
 

@@ -70,28 +70,28 @@ internal class AttachmentsView(
 
   private fun emitScreenshotChanges() {
     screenshotCheckBox.checkChanges
-        .mapNotNull { isChecked -> screenshot?.let { isChecked to it } }
-        .onEach { (isChecked, screenshot) ->
-          val state = createAttachState(isChecked, screenshot)
-          presenter.sendEvent(UpdateInput.screenshot(state))
-        }
-        .launchIn(viewScope)
+      .mapNotNull { isChecked -> screenshot?.let { isChecked to it } }
+      .onEach { (isChecked, screenshot) ->
+        val state = createAttachState(isChecked, screenshot)
+        presenter.sendEvent(UpdateInput.screenshot(state))
+      }
+      .launchIn(viewScope)
   }
 
   private fun emitLogsChanges() {
     logsCheckBox.checkChanges
-        .mapNotNull { isChecked -> logs?.let { isChecked to it } }
-        .onEach { (isChecked, logs) ->
-          val state = createAttachState(isChecked, logs)
-          presenter.sendEvent(UpdateInput.logs(state))
-        }
-        .launchIn(viewScope)
+      .mapNotNull { isChecked -> logs?.let { isChecked to it } }
+      .onEach { (isChecked, logs) ->
+        val state = createAttachState(isChecked, logs)
+        presenter.sendEvent(UpdateInput.logs(state))
+      }
+      .launchIn(viewScope)
   }
 
   private fun observeUiModels() {
     presenter.uiModels
-        .onEach(::renderUiModel)
-        .launchIn(viewScope)
+      .onEach(::renderUiModel)
+      .launchIn(viewScope)
   }
 
   private suspend fun renderUiModel(uiModel: UiModel) {
@@ -106,12 +106,12 @@ internal class AttachmentsView(
   private suspend fun renderAttachments(attachments: Set<Attachment>) {
     val items = withContext(Dispatchers.IO) {
       return@withContext attachments
-          .map { AttachmentKey(it.id, thumbnailSize) }
-          .map { key ->
-            return@map withContext(Dispatchers.IO) {
-              AttachmentFactory.create(context.contentResolver, key)
-            }
-          }.filterNotNull()
+        .map { AttachmentKey(it.id, thumbnailSize) }
+        .map { key ->
+          return@map withContext(Dispatchers.IO) {
+            AttachmentFactory.create(context.contentResolver, key)
+          }
+        }.filterNotNull()
     }
     attachmentsAdapter.submitList(items)
   }

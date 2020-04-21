@@ -33,7 +33,7 @@ internal class InitFailureView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     reInitButton.clicks
-        .onEach { presenter.sendEvent(SyncProject) }
-        .launchIn(viewScope)
+      .onEach { presenter.sendEvent(SyncProject) }
+      .launchIn(viewScope)
   }
 }

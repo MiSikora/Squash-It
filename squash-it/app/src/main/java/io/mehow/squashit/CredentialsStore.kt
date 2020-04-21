@@ -29,8 +29,8 @@ class CredentialsStore @Inject constructor(
 
   val credentials: Flow<List<Credentials>>
     get() = queries
-        .getAll()
-        .asFlow()
-        .mapToList(context)
-        .distinctUntilChanged()
+      .getAll()
+      .asFlow()
+      .mapToList(context)
+      .distinctUntilChanged()
 }

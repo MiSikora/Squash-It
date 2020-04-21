@@ -5,7 +5,8 @@
     android:id="@+id/newIssueWithoutAttachmentsRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    >
 
   <com.google.android.material.textview.MaterialTextView
       android:id="@+id/createdReportInfo"
@@ -16,7 +17,8 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_chainStyle="packed" />
+      app:layout_constraintVertical_chainStyle="packed"
+      />
 
   <com.google.android.material.textview.MaterialTextView
       android:id="@+id/errorInfo"
@@ -28,7 +30,8 @@
       app:layout_constraintBottom_toTopOf="@+id/goBack"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/createdReportInfo" />
+      app:layout_constraintTop_toBottomOf="@id/createdReportInfo"
+      />
 
   <com.google.android.material.button.MaterialButton
       android:id="@+id/goBack"
@@ -40,7 +43,8 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@+id/retry"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/errorInfo" />
+      app:layout_constraintTop_toBottomOf="@+id/errorInfo"
+      />
 
   <com.google.android.material.button.MaterialButton
       android:id="@+id/retry"
@@ -50,6 +54,7 @@
       android:text="@string/squash_it_retry"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toEndOf="@+id/goBack"
-      app:layout_constraintTop_toTopOf="@+id/goBack" />
+      app:layout_constraintTop_toTopOf="@+id/goBack"
+      />
 
 </io.mehow.squashit.report.view.FailedToAttachView>

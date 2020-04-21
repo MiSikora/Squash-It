@@ -8,9 +8,9 @@ class SampleApplication : Application() {
   override fun onCreate() {
     super.onCreate()
     SquashItConfigurator
-        .projectKey("MSS")
-        .jiraUrl("https://droidsonroids.atlassian.net")
-        .credentialsProvider(CredentialsProvider("makanibot@droidsonroids.pl"))
-        .configure(this)
+      .projectKey("MSS")
+      .jiraUrl("https://droidsonroids.atlassian.net")
+      .credentialsProvider(CredentialsProvider("makanibot@droidsonroids.pl"))
+      .configure(this)
   }
 }

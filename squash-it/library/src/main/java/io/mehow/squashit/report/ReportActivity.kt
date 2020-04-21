@@ -58,16 +58,16 @@ internal class ReportActivity : Activity(), NoScreenshots {
     setContentView(R.layout.squash_it)
     content = findViewById(R.id.activityContent)
     presenter.uiModels
-        .map { getLayoutId(it) }
-        .distinctUntilChanged()
-        .onEach { switchDisplayedLayout(it) }
-        .launchIn(mainScope)
+      .map { getLayoutId(it) }
+      .distinctUntilChanged()
+      .onEach { switchDisplayedLayout(it) }
+      .launchIn(mainScope)
   }
 
   override fun getLastNonConfigurationInstance(): ReportPresenter {
     val screenshot = intent.getParcelableExtra<Args>(ArgsKey)!!.screenshotFile
     return super.getLastNonConfigurationInstance() as? ReportPresenter
-        ?: createFactory(screenshot).create().also { it.start(Dispatchers.Unconfined) }
+      ?: createFactory(screenshot).create().also { it.start(Dispatchers.Unconfined) }
   }
 
   override fun onRetainNonConfigurationInstance(): ReportPresenter = presenter
@@ -117,10 +117,10 @@ internal class ReportActivity : Activity(), NoScreenshots {
   private fun createFactory(screenshot: File?): ReportPresenterFactory {
     val appContext = applicationContext
     return ReportPresenterFactory(
-        SquashItConfig.Instance,
-        filesDir,
-        { screenshot },
-        { withContext(Dispatchers.IO) { SquashItLogger.createLogFile(appContext) } }
+      SquashItConfig.Instance,
+      filesDir,
+      { screenshot },
+      { withContext(Dispatchers.IO) { SquashItLogger.createLogFile(appContext) } }
     )
   }
 
@@ -132,7 +132,10 @@ internal class ReportActivity : Activity(), NoScreenshots {
       val uri = data?.data ?: return
       mainScope.launch {
         val item = withContext(Dispatchers.IO) {
-          AttachmentFactory.create(applicationContext.contentResolver, AttachmentId("$uri"))
+          AttachmentFactory.create(
+            applicationContext.contentResolver,
+            AttachmentId("$uri")
+          )
         }
         if (item != null) mainScope.launch { presenter.sendEvent(UpdateInput.attach(item)) }
         else showSnackbar(getString(R.string.squash_it_error))

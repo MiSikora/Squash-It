@@ -38,12 +38,12 @@ internal class EpicView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     epicInput.textChanges
-        .mapNotNull { text -> adapter.epics.find { it.name == text } }
-        .onEach { presenter.sendEvent(UpdateInput.epic(it)) }
-        .launchIn(viewScope)
+      .mapNotNull { text -> adapter.epics.find { it.name == text } }
+      .onEach { presenter.sendEvent(UpdateInput.epic(it)) }
+      .launchIn(viewScope)
     presenter.uiModels
-        .onEach { renderUiModel(it) }
-        .launchIn(viewScope)
+      .onEach { renderUiModel(it) }
+      .launchIn(viewScope)
   }
 
   private fun renderUiModel(uiModel: UiModel) {

@@ -22,7 +22,8 @@ import kotlin.reflect.KClass
 internal class ReportInflaterFactory(
   private val presenter: ReportPresenter
 ) : LayoutInflater.Factory2 {
-  private val providers = mapOf<KClass<out View>, (Context, AttributeSet, ReportPresenter) -> View>(
+  private val providers =
+    mapOf<KClass<out View>, (Context, AttributeSet, ReportPresenter) -> View>(
       AttachmentsView::class to ::AttachmentsView,
       MentionsView::class to ::MentionsView,
       EpicView::class to ::EpicView,
@@ -36,7 +37,7 @@ internal class ReportInflaterFactory(
       FailedToAttachView::class to ::FailedToAttachView,
       FailedToSubmitView::class to ::FailedToSubmitView,
       AddedAttachmentsView::class to ::AddedAttachmentsView
-  ).mapKeys { (key, _) -> key.java.canonicalName!! }
+    ).mapKeys { (key, _) -> key.java.canonicalName!! }
 
   override fun onCreateView(
     parent: View?,

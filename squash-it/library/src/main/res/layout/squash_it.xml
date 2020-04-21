@@ -5,4 +5,5 @@
     android:id="@+id/activityContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame"
+    />

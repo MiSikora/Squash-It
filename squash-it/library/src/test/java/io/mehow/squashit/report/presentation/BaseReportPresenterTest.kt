@@ -45,14 +45,14 @@ internal open class BaseReportPresenterTest {
 
   val idleModel = UiModel.Initial
   val syncedModel = idleModel
-      .withInitState(InitState.Idle)
-      .withProjectInfo(
-          ProjectInfo(
-              epics = setOf(Epic("Epic ID", "Epic Name")),
-              users = setOf(User("User Name", "User ID")),
-              issueTypes = setOf(IssueType("Issue ID", "Issue Name"))
-          )
+    .withInitState(InitState.Idle)
+    .withProjectInfo(
+      ProjectInfo(
+        epics = setOf(Epic("Epic ID", "Epic Name")),
+        users = setOf(User("User Name", "User ID")),
+        issueTypes = setOf(IssueType("Issue ID", "Issue Name"))
       )
+    )
 
   internal fun testPresenter(
     skipInitialization: Boolean = true,
@@ -71,29 +71,29 @@ internal open class BaseReportPresenterTest {
   data class ReportPresenterFactory(
     val storageDir: File,
     val config: SquashItConfig = SquashItConfig(
-        projectKey = "SQ",
-        jiraUrl = "https://www.squash.it".toHttpUrl(),
-        subTaskIssueId = "subtask ID",
-        credentials = Credentials("email", "token"),
-        allowReporterOverride = true,
-        userFilter = { true },
-        issueTypeFilter = { true },
-        runtimeInfo = RuntimeInfo(
-            AppInfo("version name", "version code", "package name"),
-            DeviceInfo(
-                manufacturer = "manufacturer",
-                model = "model",
-                supportedAbis = listOf("ABI"),
-                resolution = "resolution",
-                density = "density",
-                locales = listOf(Locale.US),
-                createdAt = Date(0),
-                timeZone = TimeZone.getTimeZone("CEST")
-            ),
-            OsInfo("release", 100)
+      projectKey = "SQ",
+      jiraUrl = "https://www.squash.it".toHttpUrl(),
+      subTaskIssueId = "subtask ID",
+      credentials = Credentials("email", "token"),
+      allowReporterOverride = true,
+      userFilter = { true },
+      issueTypeFilter = { true },
+      runtimeInfo = RuntimeInfo(
+        AppInfo("version name", "version code", "package name"),
+        DeviceInfo(
+          manufacturer = "manufacturer",
+          model = "model",
+          supportedAbis = listOf("ABI"),
+          resolution = "resolution",
+          density = "density",
+          locales = listOf(Locale.US),
+          createdAt = Date(0),
+          timeZone = TimeZone.getTimeZone("CEST")
         ),
-        epicReadFieldName = "customfield_10009",
-        epicWriteFieldName = "customfield_10008"
+        OsInfo("release", 100)
+      ),
+      epicReadFieldName = "customfield_10009",
+      epicWriteFieldName = "customfield_10008"
     ),
     val screenshotFile: File? = null,
     val logsFile: File? = null
@@ -102,9 +102,9 @@ internal open class BaseReportPresenterTest {
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
     private val jiraService = JiraService(
-        config,
-        ProjectInfoStore(storageDir, moshi),
-        jiraApi
+      config,
+      ProjectInfoStore(storageDir, moshi),
+      jiraApi
     )
 
     fun create(): ReportPresenter {

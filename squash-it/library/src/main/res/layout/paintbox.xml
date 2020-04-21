@@ -7,12 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
-    tools:ignore="Overdraw">
+    tools:ignore="Overdraw"
+    >
 
   <Space
       android:layout_width="0dp"
       android:layout_height="0dp"
-      android:layout_weight="1" />
+      android:layout_weight="1"
+      />
 
   <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/clearCanvas"
@@ -21,12 +23,14 @@
       android:background="?android:attr/selectableItemBackgroundBorderless"
       android:contentDescription="@string/squash_it_clear_canvas"
       android:padding="8dp"
-      app:srcCompat="@drawable/ic_clear_canvas" />
+      app:srcCompat="@drawable/ic_clear_canvas"
+      />
 
   <Space
       android:layout_width="0dp"
       android:layout_height="0dp"
-      android:layout_weight="1" />
+      android:layout_weight="1"
+      />
 
   <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/changeBrushColor"
@@ -35,12 +39,14 @@
       android:background="?android:attr/selectableItemBackgroundBorderless"
       android:contentDescription="@string/squash_it_change_brush_color"
       android:padding="8dp"
-      app:srcCompat="@drawable/ic_palette" />
+      app:srcCompat="@drawable/ic_palette"
+      />
 
   <Space
       android:layout_width="0dp"
       android:layout_height="0dp"
-      android:layout_weight="1" />
+      android:layout_weight="1"
+      />
 
   <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/changeBrushSize"
@@ -49,12 +55,14 @@
       android:background="?android:attr/selectableItemBackgroundBorderless"
       android:contentDescription="@string/squash_it_change_brush_size"
       android:padding="8dp"
-      app:srcCompat="@drawable/ic_brush" />
+      app:srcCompat="@drawable/ic_brush"
+      />
 
   <Space
       android:layout_width="0dp"
       android:layout_height="0dp"
-      android:layout_weight="1" />
+      android:layout_weight="1"
+      />
 
   <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/undo"
@@ -63,12 +71,14 @@
       android:background="?android:attr/selectableItemBackgroundBorderless"
       android:contentDescription="@string/squash_it_undo"
       android:padding="8dp"
-      app:srcCompat="@drawable/ic_undo" />
+      app:srcCompat="@drawable/ic_undo"
+      />
 
   <Space
       android:layout_width="0dp"
       android:layout_height="0dp"
-      android:layout_weight="1" />
+      android:layout_weight="1"
+      />
 
   <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/redo"
@@ -77,12 +87,14 @@
       android:background="?android:attr/selectableItemBackgroundBorderless"
       android:contentDescription="@string/squash_it_redo"
       android:padding="8dp"
-      app:srcCompat="@drawable/ic_redo" />
+      app:srcCompat="@drawable/ic_redo"
+      />
 
   <Space
       android:layout_width="0dp"
       android:layout_height="0dp"
-      android:layout_weight="1" />
+      android:layout_weight="1"
+      />
 
   <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/save"
@@ -91,11 +103,13 @@
       android:background="?android:attr/selectableItemBackgroundBorderless"
       android:contentDescription="@string/squash_it_save"
       android:padding="8dp"
-      app:srcCompat="@drawable/ic_save" />
+      app:srcCompat="@drawable/ic_save"
+      />
 
   <Space
       android:layout_width="0dp"
       android:layout_height="0dp"
-      android:layout_weight="1" />
+      android:layout_weight="1"
+      />
 
 </io.mehow.squashit.screenshot.PaintboxView>

@@ -6,19 +6,22 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    >
 
   <com.google.android.material.textview.MaterialTextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/squash_it_init_failure"
-      android:textAppearance="?attr/textAppearanceHeadline4" />
+      android:textAppearance="?attr/textAppearanceHeadline4"
+      />
 
   <com.google.android.material.button.MaterialButton
       android:id="@+id/retryInitialization"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="16dp"
-      android:text="@string/squash_it_retry" />
+      android:text="@string/squash_it_retry"
+      />
 
 </io.mehow.squashit.report.view.InitFailureView>

@@ -17,20 +17,20 @@ class DeleteCredentialsConsumer(
 ) : EventConsumer<DeleteCredentials> {
   override fun transform(events: Flow<DeleteCredentials>): Flow<Accumulator> {
     return events
-        .mapNotNull { store.get(it.id) }
-        .flatMapMerge { credentials ->
-          store.delete(credentials.id)
+      .mapNotNull { store.get(it.id) }
+      .flatMapMerge { credentials ->
+        store.delete(credentials.id)
 
-          flow {
-            val deleteState = Deleted(credentials)
-            emit(Accumulator { currentModel -> currentModel.copy(state = deleteState) })
+        flow {
+          val deleteState = Deleted(credentials)
+          emit(Accumulator { currentModel -> currentModel.copy(state = deleteState) })
 
-            delay(promptDuration.toLongMilliseconds())
-            emit(Accumulator { currentModel ->
-              val state = if (currentModel.state == deleteState) Idle else currentModel.state
-              currentModel.copy(state = state)
-            })
-          }
+          delay(promptDuration.toLongMilliseconds())
+          emit(Accumulator { currentModel ->
+            val state = if (currentModel.state == deleteState) Idle else currentModel.state
+            currentModel.copy(state = state)
+          })
         }
+      }
   }
 }

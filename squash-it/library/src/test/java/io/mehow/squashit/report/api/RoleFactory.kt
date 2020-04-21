@@ -21,7 +21,8 @@ internal class RoleFactory {
 
   fun create(): Response<RoleResponse> {
     val records = queue.poll() ?: listOf(Record("User Name", "User ID"))
-    val actors = records.map { ActorResponse(it.name, it.id?.let { id -> ActorUserResponse(id) }) }
+    val actors =
+      records.map { ActorResponse(it.name, it.id?.let { id -> ActorUserResponse(id) }) }
     return RoleResponse(actors).asResponse(returnErrors)
   }
 

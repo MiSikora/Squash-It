@@ -19,10 +19,20 @@ internal class ReattachConsumer(private val jiraService: JiraService) : EventCon
     }
   }
 
-  private suspend fun addAttachments(key: IssueKey, attachments: Set<AttachmentBody>): Accumulator {
+  private suspend fun addAttachments(
+    key: IssueKey,
+    attachments: Set<AttachmentBody>
+  ): Accumulator {
     return when (jiraService.addAttachments(key, attachments)) {
       is Success -> Accumulator { copy(submitState = SubmitState.AddedAttachments(key)) }
-      is Failure -> Accumulator { copy(submitState = SubmitState.FailedToAttach(key, attachments)) }
+      is Failure -> Accumulator {
+        copy(
+          submitState = SubmitState.FailedToAttach(
+            key,
+            attachments
+          )
+        )
+      }
     }
   }
 }

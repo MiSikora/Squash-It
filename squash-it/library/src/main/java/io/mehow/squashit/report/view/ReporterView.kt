@@ -39,13 +39,13 @@ internal class ReporterView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     reporterInput.textChanges
-        .mapNotNull { text -> adapter.users.find { it.nameHandle == text } }
-        .onEach { presenter.sendEvent(UpdateInput.reporter(it)) }
-        .onEach { presenter.sendEvent(UpdateInput.hideError(NoReporter)) }
-        .launchIn(viewScope)
+      .mapNotNull { text -> adapter.users.find { it.nameHandle == text } }
+      .onEach { presenter.sendEvent(UpdateInput.reporter(it)) }
+      .onEach { presenter.sendEvent(UpdateInput.hideError(NoReporter)) }
+      .launchIn(viewScope)
     presenter.uiModels
-        .onEach { renderUiModel(it) }
-        .launchIn(viewScope)
+      .onEach { renderUiModel(it) }
+      .launchIn(viewScope)
   }
 
   private fun renderUiModel(uiModel: UiModel) {

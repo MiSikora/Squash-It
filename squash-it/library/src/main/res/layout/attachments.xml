@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="io.mehow.squashit.report.view.AttachmentsView">
+    tools:parentTag="io.mehow.squashit.report.view.AttachmentsView"
+    >
 
   <com.google.android.material.textview.MaterialTextView
       android:id="@+id/attachmentsLabel"
@@ -12,7 +13,8 @@
       android:text="@string/squash_it_attachments"
       android:textAppearance="?attr/textAppearanceSubtitle2"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toTopOf="parent"
+      />
 
   <com.google.android.material.checkbox.MaterialCheckBox
       android:id="@+id/screenshotCheckBox"
@@ -22,7 +24,8 @@
       android:text="@string/squash_it_screenshot"
       app:layout_constraintEnd_toStartOf="@+id/logsCheckBox"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/attachmentsLabel" />
+      app:layout_constraintTop_toBottomOf="@+id/attachmentsLabel"
+      />
 
   <com.google.android.material.checkbox.MaterialCheckBox
       android:id="@+id/logsCheckBox"
@@ -32,7 +35,8 @@
       android:text="@string/squash_it_logs"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toEndOf="@+id/screenshotCheckBox"
-      app:layout_constraintTop_toTopOf="@+id/screenshotCheckBox" />
+      app:layout_constraintTop_toTopOf="@+id/screenshotCheckBox"
+      />
 
   <com.google.android.material.button.MaterialButton
       android:id="@+id/addAttachmentButton"
@@ -42,7 +46,8 @@
       android:text="@string/squash_it_attach_custom_file"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/logsCheckBox" />
+      app:layout_constraintTop_toBottomOf="@id/logsCheckBox"
+      />
 
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/additionalAttachments"
@@ -53,6 +58,7 @@
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/addAttachmentButton" />
+      app:layout_constraintTop_toBottomOf="@id/addAttachmentButton"
+      />
 
 </merge>

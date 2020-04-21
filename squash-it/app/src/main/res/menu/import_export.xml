@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
   <item
       android:id="@+id/import_id"
-      android:title="@string/import_credentials" />
+      android:title="@string/import_credentials"
+      />
   <item
       android:id="@+id/export_id"
-      android:title="@string/export_credentials" />
+      android:title="@string/export_credentials"
+      />
 </menu>

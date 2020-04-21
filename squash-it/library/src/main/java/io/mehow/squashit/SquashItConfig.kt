@@ -24,16 +24,16 @@ internal data class SquashItConfig(
   val runtimeInfo: RuntimeInfo
 ) {
   constructor(configurator: SquashItConfigurator) : this(
-      projectKey = configurator.ProjectKey,
-      jiraUrl = configurator.JiraUrl,
-      subTaskIssueId = configurator.SubTaskIssueId,
-      credentials = configurator.Credentials ?: Credentials("", ""),
-      allowReporterOverride = configurator.AllowReporterOverride,
-      userFilter = configurator.UserFilter,
-      issueTypeFilter = configurator.IssueTypeFilter,
-      epicWriteFieldName = configurator.EpicWriteFieldName,
-      epicReadFieldName = configurator.EpicReadFieldName,
-      runtimeInfo = configurator.RuntimeInfo
+    projectKey = configurator.ProjectKey,
+    jiraUrl = configurator.JiraUrl,
+    subTaskIssueId = configurator.SubTaskIssueId,
+    credentials = configurator.Credentials ?: Credentials("", ""),
+    allowReporterOverride = configurator.AllowReporterOverride,
+    userFilter = configurator.UserFilter,
+    issueTypeFilter = configurator.IssueTypeFilter,
+    epicWriteFieldName = configurator.EpicWriteFieldName,
+    epicReadFieldName = configurator.EpicReadFieldName,
+    runtimeInfo = configurator.RuntimeInfo
   )
 
   val hasProjectKey = projectKey.isNotEmpty()

@@ -47,20 +47,21 @@ internal class FailedToAttachView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     presenter.uiModels
-        .map { it.submitState }
-        .onEach { renderSubmitState(it) }
-        .launchIn(viewScope)
+      .map { it.submitState }
+      .onEach { renderSubmitState(it) }
+      .launchIn(viewScope)
     retry.clicks
-        .filter { retry.isActivated }
-        .mapNotNull { retryInput }
-        .onEach { (key, files) -> presenter.sendEvent(Reattach(key, files)) }
-        .launchIn(viewScope)
+      .filter { retry.isActivated }
+      .mapNotNull { retryInput }
+      .onEach { (key, files) -> presenter.sendEvent(Reattach(key, files)) }
+      .launchIn(viewScope)
     goBack.setOnClickListener { activity.onBackPressed() }
   }
 
   private fun renderSubmitState(state: SubmitState) {
     if (state is FailedToAttach) {
-      reportedIssueInfo.text = resources.getString(R.string.squash_it_reported, state.key.value)
+      reportedIssueInfo.text =
+        resources.getString(R.string.squash_it_reported, state.key.value)
       retryInput = RetryInput(state.key, state.attachments)
       if (initFailure) initFailure = false
       else (activity as ReportActivity).showSnackbar(resources.getString(R.string.squash_it_error))

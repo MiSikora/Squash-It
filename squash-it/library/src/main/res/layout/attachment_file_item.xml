@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="8dp"
+    >
 
   <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/thumbnail"
@@ -16,7 +17,8 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      tools:src="@drawable/ic_image" />
+      tools:src="@drawable/ic_image"
+      />
 
   <com.google.android.material.textview.MaterialTextView
       android:id="@+id/fileName"
@@ -29,7 +31,8 @@
       app:layout_constraintEnd_toStartOf="@+id/delete"
       app:layout_constraintStart_toEndOf="@+id/thumbnail"
       app:layout_constraintTop_toTopOf="@id/thumbnail"
-      tools:text="my_video_file.mp4" />
+      tools:text="my_video_file.mp4"
+      />
 
   <com.google.android.material.textview.MaterialTextView
       android:id="@+id/fileSize"
@@ -41,7 +44,8 @@
       app:layout_constraintEnd_toEndOf="@+id/fileName"
       app:layout_constraintStart_toStartOf="@+id/fileName"
       app:layout_constraintTop_toBottomOf="@+id/fileName"
-      tools:text="15.5 MB" />
+      tools:text="15.5 MB"
+      />
 
   <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/delete"
@@ -53,6 +57,7 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@drawable/ic_delete" />
+      app:srcCompat="@drawable/ic_delete"
+      />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

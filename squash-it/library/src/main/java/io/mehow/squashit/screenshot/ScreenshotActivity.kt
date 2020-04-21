@@ -55,7 +55,7 @@ internal class ScreenshotActivity : AppCompatActivity(), NoScreenshots {
   private fun contrastBackground(bitmap: Bitmap) {
     val palette = Palette.from(bitmap).clearFilters().generate()
     val isDark = palette.dominantSwatch
-        ?.let { ColorUtils.calculateLuminance(it.rgb) < 0.25 } == true
+      ?.let { ColorUtils.calculateLuminance(it.rgb) < 0.25 } == true
     delegate.localNightMode = if (isDark) MODE_NIGHT_NO else MODE_NIGHT_YES
   }
 

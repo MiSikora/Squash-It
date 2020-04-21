@@ -58,6 +58,6 @@ class AccelerationDetector(
 
   private fun accelerometer(sensorManager: SensorManager): Sensor {
     return sensorManager.getDefaultSensor(TYPE_GRAVITY)
-        ?: sensorManager.getDefaultSensor(TYPE_ACCELEROMETER)
+      ?: sensorManager.getDefaultSensor(TYPE_ACCELEROMETER)
   }
 }

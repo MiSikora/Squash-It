@@ -30,12 +30,12 @@ internal class ReportPresenter internal constructor(
 
   private val eventsChannel = Channel<Event>()
   private val eventConsumers = setOf(
-      SyncProjectConsumer(jiraService)::consume,
-      UpdateInputConsumer::consume,
-      SubmitReportConsumer(jiraService)::consume,
-      RetrySubmissionConsumer(jiraService)::consume,
-      ReattachConsumer(jiraService)::consume,
-      GoIdleConsumer::consume
+    SyncProjectConsumer(jiraService)::consume,
+    UpdateInputConsumer::consume,
+    SubmitReportConsumer(jiraService)::consume,
+    RetrySubmissionConsumer(jiraService)::consume,
+    ReattachConsumer(jiraService)::consume,
+    GoIdleConsumer::consume
   )
 
   private val presenterScope = CoroutineScope(SupervisorJob().apply {
@@ -55,11 +55,11 @@ internal class ReportPresenter internal constructor(
     presenterScope.launch(dispatcher) {
       val events = eventsChannel.consumeAsFlow().shareIn(this)
       eventConsumers.map { it.invoke(events) }
-          .merge()
-          .scan(UiModel.Initial) { model, (update) -> model.update() }
-          .distinctUntilChanged()
-          .onEach(uiModelsChannel::send)
-          .launchIn(this)
+        .merge()
+        .scan(UiModel.Initial) { model, (update) -> model.update() }
+        .distinctUntilChanged()
+        .onEach(uiModelsChannel::send)
+        .launchIn(this)
       sendInitEvents()
     }
   }

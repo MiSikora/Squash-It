@@ -49,8 +49,8 @@ internal class MisconfigurationActivity : Activity(), NoScreenshots {
   private val isSquashItInstalled: Boolean
     get() {
       return runCatching { packageManager.getApplicationInfo("io.mehow.squashit", 0) }
-          .map { true }
-          .getOrDefault(false)
+        .map { true }
+        .getOrDefault(false)
     }
 
   override fun onBackPressed() {
@@ -78,12 +78,12 @@ internal class MisconfigurationActivity : Activity(), NoScreenshots {
     }
 
     private val playStoreAppIntent = Intent(
-        ACTION_VIEW,
-        "market://details?id=io.mehow.squashit".toUri()
+      ACTION_VIEW,
+      "market://details?id=io.mehow.squashit".toUri()
     )
     private val playStoreWebIntent = Intent(
-        ACTION_VIEW,
-        "https://play.google.com/store/apps/details?id=io.mehow.squashit".toUri()
+      ACTION_VIEW,
+      "https://play.google.com/store/apps/details?id=io.mehow.squashit".toUri()
     )
   }
 }

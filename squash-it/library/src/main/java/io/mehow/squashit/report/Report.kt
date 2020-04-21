@@ -13,10 +13,10 @@ internal interface Report {
 
   fun description(config: SquashItConfig): String {
     return listOfNotNull(
-        descriptionReporter(config),
-        description,
-        config.runtimeInfo,
-        mentions
+      descriptionReporter(config),
+      description,
+      config.runtimeInfo,
+      mentions
     ).joinToString("\n\n", transform = Describable::describe)
   }
 

@@ -55,12 +55,12 @@ internal interface JiraApi {
     fun create(moshi: Moshi, config: SquashItConfig): JiraApi {
       val credentials = Credentials.basic(config.credentials.id, config.credentials.secret)
       return Retrofit.Builder()
-          .baseUrl(config.jiraUrl ?: "www.example.com".toHttpUrl())
-          .withAuthClient(credentials)
-          .addConverterFactory(MoshiConverterFactory.create(moshi))
-          .addCallAdapterFactory(ResponseAdapter.Factory)
-          .build()
-          .create()
+        .baseUrl(config.jiraUrl ?: "www.example.com".toHttpUrl())
+        .withAuthClient(credentials)
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addCallAdapterFactory(ResponseAdapter.Factory)
+        .build()
+        .create()
     }
 
     private fun Retrofit.Builder.withAuthClient(credentials: String): Retrofit.Builder {
@@ -73,14 +73,14 @@ internal interface JiraApi {
     private fun createClient(credentials: String): Lazy<OkHttpClient> {
       return lazy {
         return@lazy OkHttpClient.Builder()
-            .addInterceptor { chain ->
-              val authRequest = chain.request()
-                  .newBuilder()
-                  .header("Authorization", credentials)
-                  .build()
-              return@addInterceptor chain.proceed(authRequest)
-            }
-            .build()
+          .addInterceptor { chain ->
+            val authRequest = chain.request()
+              .newBuilder()
+              .header("Authorization", credentials)
+              .build()
+            return@addInterceptor chain.proceed(authRequest)
+          }
+          .build()
       }
     }
   }

@@ -25,7 +25,7 @@ android {
     }
   }
 
-  variantFilter { variant ->
+  variantFilter {variant ->
     if (variant.name != "debug") setIgnore(true)
   }
 }

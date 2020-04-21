@@ -32,8 +32,8 @@ object SquashItModule {
 
   @Provides fun moshi(): Moshi {
     return Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+      .add(KotlinJsonAdapterFactory())
+      .build()
   }
 
   @Module

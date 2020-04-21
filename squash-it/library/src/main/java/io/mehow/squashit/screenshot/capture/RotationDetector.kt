@@ -66,7 +66,7 @@ internal class RotationDetector(
 
   private fun accelerometer(sensorManager: SensorManager): Sensor {
     return sensorManager.getDefaultSensor(TYPE_GRAVITY)
-        ?: sensorManager.getDefaultSensor(TYPE_ACCELEROMETER)
+      ?: sensorManager.getDefaultSensor(TYPE_ACCELEROMETER)
   }
 
   private fun magnetometer(sensorManager: SensorManager): Sensor {

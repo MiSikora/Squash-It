@@ -1,6 +1,7 @@
 package io.mehow.squashit.report.api
 
 import okhttp3.Request
+import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response as RetrofitResponse
@@ -48,6 +49,10 @@ internal class ResponseCall<T : Any>(private val delegate: Call<T>) : Call<Respo
 
   override fun isExecuted(): Boolean {
     return delegate.isExecuted
+  }
+
+  override fun timeout(): Timeout {
+    return delegate.timeout()
   }
 
   fun RetrofitResponse<T>.toResponse(): Response<T> {

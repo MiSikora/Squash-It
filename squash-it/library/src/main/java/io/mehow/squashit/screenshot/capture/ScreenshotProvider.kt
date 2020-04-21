@@ -85,14 +85,14 @@ internal class ScreenshotProvider(
     val reader = ImageReader.newInstance(width, height, RGBA_8888, 2)
     val surface = reader.surface
     val display = projection.createVirtualDisplay(
-        "SquashIt",
-        width,
-        height,
-        displayMetrics.densityDpi,
-        VIRTUAL_DISPLAY_FLAG_PRESENTATION,
-        surface,
-        null,
-        null
+      "SquashIt",
+      width,
+      height,
+      displayMetrics.densityDpi,
+      VIRTUAL_DISPLAY_FLAG_PRESENTATION,
+      surface,
+      null,
+      null
     )
 
     reader.setOnImageAvailableListener({ reader ->
@@ -107,7 +107,8 @@ internal class ScreenshotProvider(
           takeCanvasScreenshot()
           return@setOnImageAvailableListener
         }
-        val capturedBitmap = createPlaneBitmap(capturedImage, width, height).also { bitmap = it }
+        val capturedBitmap =
+          createPlaneBitmap(capturedImage, width, height).also { bitmap = it }
         val croppedBitmap = Bitmap.createBitmap(capturedBitmap, 0, 0, width, height)
         saveScreenshot(croppedBitmap)
       } catch (_: Exception) {

@@ -9,7 +9,8 @@
     android:clipChildren="false"
     android:clipToPadding="false"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    >
 
   <View
       android:id="@+id/colorSwatch"
@@ -17,13 +18,15 @@
       android:layout_height="48dp"
       android:layout_marginEnd="8dp"
       android:layout_weight="1"
-      tool:background="@color/squash_it_french_blue" />
+      tool:background="@color/squash_it_french_blue"
+      />
 
   <com.google.android.material.radiobutton.MaterialRadioButton
       android:id="@+id/select"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:minWidth="0dp"
-      tool:checked="true" />
+      tool:checked="true"
+      />
 
 </LinearLayout>

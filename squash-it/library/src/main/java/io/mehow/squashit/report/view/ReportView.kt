@@ -44,8 +44,8 @@ internal class ReportView @JvmOverloads constructor(
 
   private fun setUpTabs() {
     toolbar.title = resources.getString(
-        R.string.squash_it_report_an_issue,
-        SquashItConfig.Instance.projectKey
+      R.string.squash_it_report_an_issue,
+      SquashItConfig.Instance.projectKey
     )
     val reportAdapter = ReportAdapter(context.layoutInflater)
     viewPager.apply {

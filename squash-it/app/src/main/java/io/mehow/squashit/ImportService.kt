@@ -47,11 +47,11 @@ class ImportService : Service() {
     }
 
     startForeground(
-        NotificationId,
-        createNotification(
-            R.string.import_service_title_importing,
-            R.string.import_service_text_importing
-        )
+      NotificationId,
+      createNotification(
+        R.string.import_service_title_importing,
+        R.string.import_service_text_importing
+      )
     )
 
     GlobalScope.launch {
@@ -62,11 +62,11 @@ class ImportService : Service() {
       if (stream == null) {
         stopSelf(startId)
         notifications.notify(
-            NotificationId,
-            createNotification(
-                R.string.import_service_title_failed,
-                R.string.import_service_text_read_file_failure
-            )
+          NotificationId,
+          createNotification(
+            R.string.import_service_title_failed,
+            R.string.import_service_text_read_file_failure
+          )
         )
         return@launch
       }
@@ -76,11 +76,11 @@ class ImportService : Service() {
       } catch (_: Exception) {
         stopSelf(startId)
         notifications.notify(
-            NotificationId,
-            createNotification(
-                R.string.import_service_title_failed,
-                R.string.import_service_text_read_credentials_failure
-            )
+          NotificationId,
+          createNotification(
+            R.string.import_service_title_failed,
+            R.string.import_service_text_read_credentials_failure
+          )
         )
         return@launch
       }
@@ -104,11 +104,11 @@ class ImportService : Service() {
 
   private fun createNotification(@StringRes title: Int, @StringRes text: Int): Notification {
     return NotificationCompat.Builder(this, ChannelId)
-        .setSmallIcon(R.drawable.ic_import)
-        .setContentTitle(getString(title))
-        .setContentText(getString(text))
-        .setColor(ContextCompat.getColor(this, R.color.royal_blue_300))
-        .build()
+      .setSmallIcon(R.drawable.ic_import)
+      .setContentTitle(getString(title))
+      .setContentText(getString(text))
+      .setColor(ContextCompat.getColor(this, R.color.royal_blue_300))
+      .build()
   }
 
   override fun onBind(intent: Intent?): IBinder? = null

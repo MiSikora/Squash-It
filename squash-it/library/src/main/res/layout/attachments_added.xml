@@ -5,19 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    >
 
   <com.google.android.material.textview.MaterialTextView
       android:id="@+id/addedAttachmentsInfo"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:textAppearance="?attr/textAppearanceHeadline4" />
+      android:textAppearance="?attr/textAppearanceHeadline4"
+      />
 
   <com.google.android.material.button.MaterialButton
       android:id="@+id/goBack"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="16dp"
-      android:text="@string/squash_it_go_back" />
+      android:text="@string/squash_it_go_back"
+      />
 
 </io.mehow.squashit.report.view.AddedAttachmentsView>

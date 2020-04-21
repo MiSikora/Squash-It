@@ -21,7 +21,10 @@ internal class JiraService(
     return report.toCall(config).execute(jiraApi)
   }
 
-  suspend fun addAttachments(issueKey: IssueKey, attachments: Set<AttachmentBody>): Response<Unit> {
+  suspend fun addAttachments(
+    issueKey: IssueKey,
+    attachments: Set<AttachmentBody>
+  ): Response<Unit> {
     val bodies = attachments.map(AttachmentBody::part)
     return jiraApi.attachFiles(issueKey, bodies)
   }
@@ -55,19 +58,19 @@ internal class JiraService(
       is Failure -> return null
     }
     return issueTypes
-        .filterNot { it.isSubTask }
-        .map { IssueType(it.id, it.name) }
-        .filter(config.issueTypeFilter) to roleIds
+      .filterNot { it.isSubTask }
+      .map { IssueType(it.id, it.name) }
+      .filter(config.issueTypeFilter) to roleIds
   }
 
   private suspend fun getUsers(roleIds: List<String>): List<User> = coroutineScope {
     return@coroutineScope roleIds
-        .map { roleId -> async { jiraApi.getUsers(config.projectKey, roleId) } }
-        .awaitAll()
-        .filterIsInstance<Success<RoleResponse>>()
-        .flatMap { it.value.actors }
-        .mapNotNull { actor -> actor.actorUser?.let { User(actor.displayName, it.accountId) } }
-        .distinct()
-        .filter(config.userFilter)
+      .map { roleId -> async { jiraApi.getUsers(config.projectKey, roleId) } }
+      .awaitAll()
+      .filterIsInstance<Success<RoleResponse>>()
+      .flatMap { it.value.actors }
+      .mapNotNull { actor -> actor.actorUser?.let { User(actor.displayName, it.accountId) } }
+      .distinct()
+      .filter(config.userFilter)
   }
 }

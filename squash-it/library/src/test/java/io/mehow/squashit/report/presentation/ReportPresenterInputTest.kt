@@ -69,7 +69,10 @@ internal class ReportPresenterInputTest : BaseReportPresenterTest() {
     expectItem() shouldBe syncedModel.withMentions(User("Name 1", "ID 1"))
 
     presenter.sendEvent(UpdateInput.mention(User("Name 2", "ID 2")))
-    expectItem() shouldBe syncedModel.withMentions(User("Name 1", "ID 1"), User("Name 2", "ID 2"))
+    expectItem() shouldBe syncedModel.withMentions(
+      User("Name 1", "ID 1"),
+      User("Name 2", "ID 2")
+    )
   }
 
   @Test fun `users can be unmentioned`() = testPresenter {

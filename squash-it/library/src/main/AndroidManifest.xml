@@ -1,6 +1,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.mehow.squashit">
+    package="io.mehow.squashit"
+    >
 
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -12,41 +13,48 @@
         android:launchMode="singleTop"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.SquashIt"
-        android:windowSoftInputMode="adjustPan" />
+        android:windowSoftInputMode="adjustPan"
+        />
 
     <activity
         android:name=".report.MisconfigurationActivity"
         android:exported="false"
         android:launchMode="singleTop"
         android:screenOrientation="portrait"
-        android:theme="@style/Theme.SquashIt" />
+        android:theme="@style/Theme.SquashIt"
+        />
 
     <activity
         android:name=".screenshot.ScreenshotActivity"
         android:exported="false"
         android:launchMode="singleTop"
         android:screenOrientation="portrait"
-        android:theme="@style/Theme.SquashIt" />
+        android:theme="@style/Theme.SquashIt"
+        />
 
     <activity
         android:name=".screenshot.capture.CaptureActivity"
         android:excludeFromRecents="true"
         android:exported="false"
         android:taskAffinity=""
-        android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+        />
 
     <provider
         android:name=".SquashItInitializer"
         android:authorities="${applicationId}.SquashItInitializer"
-        android:exported="false" />
+        android:exported="false"
+        />
 
     <service
         android:name=".screenshot.capture.CaptureService"
         android:exported="false"
-        android:foregroundServiceType="mediaProjection" />
+        android:foregroundServiceType="mediaProjection"
+        />
 
     <meta-data
         android:name="preloaded_fonts"
-        android:resource="@array/squash_it_preloaded_fonts" />
+        android:resource="@array/squash_it_preloaded_fonts"
+        />
   </application>
 </manifest>

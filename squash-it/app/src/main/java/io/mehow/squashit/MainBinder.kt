@@ -96,11 +96,11 @@ class MainBinder(activity: Activity, callback: Callback) {
 
   private fun createPopupMenu(): PopupMenu {
     return PopupMenu(
-        binding.root.context,
-        binding.actions,
-        NO_GRAVITY,
-        0,
-        android.R.style.Widget_Material_PopupMenu_Overflow
+      binding.root.context,
+      binding.actions,
+      NO_GRAVITY,
+      0,
+      android.R.style.Widget_Material_PopupMenu_Overflow
     )
   }
 
