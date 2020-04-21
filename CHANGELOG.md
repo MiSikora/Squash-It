@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 0.7.4 *(2020-04-21)*
+----------------------------
+
+* Rename resources to be library specific.
+* Make progress icon resource not removable by R8 shrinking.
+
 Version 0.7.3 *(2020-02-06)*
 ----------------------------
 
