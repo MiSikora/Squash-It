@@ -12,7 +12,7 @@ internal class AttachmentAdapter(
   private val inflater: LayoutInflater,
   private val onRemoveAttachment: (AttachmentId) -> Unit
 ) : ListAdapter<AttachmentItem, AttachmentViewHolder>(AttachmentsItemCallback) {
-  override fun getItemViewType(position: Int) = R.layout.attachment_file_item
+  override fun getItemViewType(position: Int) = R.layout.squash_it_attachment_file_item
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttachmentViewHolder {
     val view = inflater.inflate(viewType, parent, false)

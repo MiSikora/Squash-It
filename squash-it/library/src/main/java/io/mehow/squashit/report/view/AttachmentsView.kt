@@ -50,7 +50,7 @@ internal class AttachmentsView(
   }
 
   init {
-    LayoutInflater.from(context).inflate(R.layout.attachments, this, true)
+    LayoutInflater.from(context).inflate(R.layout.squash_it_attachments, this, true)
     screenshotCheckBox = findViewById(R.id.screenshotCheckBox)
     logsCheckBox = findViewById(R.id.logsCheckBox)
     val addAttachmentButton = findViewById<Button>(R.id.addAttachmentButton)

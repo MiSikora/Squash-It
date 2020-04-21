@@ -67,8 +67,8 @@ internal class AttachmentViewHolder(
 
   private fun AttachmentType.getDrawable(context: Context): Drawable {
     val id = when (this) {
-      Image -> R.drawable.ic_image
-      Video -> R.drawable.ic_video
+      Image -> R.drawable.squash_it_ic_image
+      Video -> R.drawable.suqash_it_ic_video
     }
     return AppCompatResources.getDrawable(context, id)!!
   }

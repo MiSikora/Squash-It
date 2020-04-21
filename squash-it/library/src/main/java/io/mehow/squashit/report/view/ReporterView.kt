@@ -31,7 +31,7 @@ internal class ReporterView(
   private var adapter = ReporterAdapter(context, emptyList())
 
   init {
-    LayoutInflater.from(context).inflate(R.layout.reporter, this, true)
+    LayoutInflater.from(context).inflate(R.layout.squash_it_reporter, this, true)
     reporterLayout = findViewById(R.id.reporterLayout)
     reporterInput = findViewById(R.id.reporterInput)
   }
@@ -73,7 +73,7 @@ internal class ReporterView(
   private class ReporterAdapter(
     context: Context,
     val users: List<User>
-  ) : ArrayAdapter<String>(context, R.layout.select_text_view) {
+  ) : ArrayAdapter<String>(context, R.layout.squash_it_select_text_view) {
     override fun getCount() = users.size
     override fun getItem(position: Int) = users[position].nameHandle
   }

@@ -31,7 +31,7 @@ internal class EpicView(
   private var adapter = EpicAdapter(context, emptyList())
 
   init {
-    LayoutInflater.from(context).inflate(R.layout.epic, this, true)
+    LayoutInflater.from(context).inflate(R.layout.squash_it_epic, this, true)
     epicInput = findViewById(R.id.epicInput)
   }
 
@@ -68,7 +68,7 @@ internal class EpicView(
   private class EpicAdapter(
     context: Context,
     val epics: List<Epic>
-  ) : ArrayAdapter<String>(context, R.layout.select_text_view) {
+  ) : ArrayAdapter<String>(context, R.layout.squash_it_select_text_view) {
     override fun getCount() = epics.size
     override fun getItem(position: Int) = epics[position].name
   }

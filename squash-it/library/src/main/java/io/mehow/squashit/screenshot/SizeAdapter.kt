@@ -10,7 +10,7 @@ internal class SizeAdapter(
   private val inflater: LayoutInflater,
   private val onSizeSelected: (Int) -> Unit
 ) : ListAdapter<SizeItem, SizeViewHolder>(WidthItemCallback) {
-  override fun getItemViewType(position: Int) = R.layout.brush_size_item
+  override fun getItemViewType(position: Int) = R.layout.squash_it_brush_size_item
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SizeViewHolder {
     val view = inflater.inflate(viewType, parent, false)

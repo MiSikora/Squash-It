@@ -76,7 +76,7 @@ internal class IssueView(
     overScrollMode = OVER_SCROLL_NEVER
     hideKeyboardOnScroll()
 
-    LayoutInflater.from(context).inflate(R.layout.issue, this, true)
+    LayoutInflater.from(context).inflate(R.layout.squash_it_issue, this, true)
     content = findViewById(R.id.issueContent)
     submit = findViewById(R.id.submit)
     updateGroup = findViewById(R.id.updateGroup)
@@ -266,7 +266,7 @@ internal class IssueView(
   private class IssueTypeAdapter(
     context: Context,
     val issueTypes: List<IssueType>
-  ) : ArrayAdapter<String>(context, R.layout.select_text_view) {
+  ) : ArrayAdapter<String>(context, R.layout.squash_it_select_text_view) {
     override fun getCount() = issueTypes.size
     override fun getItem(position: Int) = issueTypes[position].name
   }

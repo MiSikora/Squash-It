@@ -17,7 +17,7 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      tools:src="@drawable/ic_image"
+      tools:src="@drawable/squash_it_ic_image"
       />
 
   <com.google.android.material.textview.MaterialTextView
@@ -57,7 +57,7 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@drawable/ic_delete"
+      app:srcCompat="@drawable/squash_it_ic_delete"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

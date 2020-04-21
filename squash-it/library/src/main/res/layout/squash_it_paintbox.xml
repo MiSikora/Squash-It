@@ -23,7 +23,7 @@
       android:background="?android:attr/selectableItemBackgroundBorderless"
       android:contentDescription="@string/squash_it_clear_canvas"
       android:padding="8dp"
-      app:srcCompat="@drawable/ic_clear_canvas"
+      app:srcCompat="@drawable/squash_it_ic_clear_canvas"
       />
 
   <Space
@@ -39,7 +39,7 @@
       android:background="?android:attr/selectableItemBackgroundBorderless"
       android:contentDescription="@string/squash_it_change_brush_color"
       android:padding="8dp"
-      app:srcCompat="@drawable/ic_palette"
+      app:srcCompat="@drawable/squash_it_ic_palette"
       />
 
   <Space
@@ -55,7 +55,7 @@
       android:background="?android:attr/selectableItemBackgroundBorderless"
       android:contentDescription="@string/squash_it_change_brush_size"
       android:padding="8dp"
-      app:srcCompat="@drawable/ic_brush"
+      app:srcCompat="@drawable/squash_it_ic_brush"
       />
 
   <Space
@@ -71,7 +71,7 @@
       android:background="?android:attr/selectableItemBackgroundBorderless"
       android:contentDescription="@string/squash_it_undo"
       android:padding="8dp"
-      app:srcCompat="@drawable/ic_undo"
+      app:srcCompat="@drawable/squash_it_ic_undo"
       />
 
   <Space
@@ -87,7 +87,7 @@
       android:background="?android:attr/selectableItemBackgroundBorderless"
       android:contentDescription="@string/squash_it_redo"
       android:padding="8dp"
-      app:srcCompat="@drawable/ic_redo"
+      app:srcCompat="@drawable/squash_it_ic_redo"
       />
 
   <Space
@@ -103,7 +103,7 @@
       android:background="?android:attr/selectableItemBackgroundBorderless"
       android:contentDescription="@string/squash_it_save"
       android:padding="8dp"
-      app:srcCompat="@drawable/ic_save"
+      app:srcCompat="@drawable/squash_it_ic_save"
       />
 
   <Space

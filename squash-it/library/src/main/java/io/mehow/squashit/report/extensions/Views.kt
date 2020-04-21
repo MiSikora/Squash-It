@@ -49,7 +49,7 @@ internal fun View.enableEdgeToEdgeAndNightMode() {
 internal fun Button.showProgress(@StringRes text: Int) {
   setText(text)
   if (compoundDrawables.all { it == null }) {
-    val drawable = AnimatedVectorDrawableCompat.create(context, R.drawable.ic_progress)
+    val drawable = AnimatedVectorDrawableCompat.create(context, R.drawable.squash_it_ic_progress)
     setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
     drawable?.start()
   }

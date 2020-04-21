@@ -27,7 +27,7 @@ internal class IssueDescriptionView(
   val descriptionInput: TextInputEditText
 
   init {
-    LayoutInflater.from(context).inflate(R.layout.issue_description, this, true)
+    LayoutInflater.from(context).inflate(R.layout.squash_it_issue_description, this, true)
     descriptionInput = findViewById(R.id.descriptionInput)
   }
 

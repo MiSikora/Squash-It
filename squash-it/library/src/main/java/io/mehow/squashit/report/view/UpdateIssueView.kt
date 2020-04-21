@@ -34,7 +34,7 @@ internal class UpdateIssueView(
   private val issueIdInput: TextInputEditText
 
   init {
-    LayoutInflater.from(context).inflate(R.layout.update_issue, this, true)
+    LayoutInflater.from(context).inflate(R.layout.squash_it_update_issue, this, true)
     issueIdLayout = findViewById(R.id.issueIdLayout)
     issueIdInput = findViewById(R.id.issueIdInput)
   }

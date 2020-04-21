@@ -39,7 +39,7 @@ internal class ScreenshotActivity : AppCompatActivity(), NoScreenshots {
 
     window.decorView.enableEdgeToEdgeAndNightMode()
     contrastBackground(screenshotBitmap)
-    setContentView(R.layout.edit_screenshot)
+    setContentView(R.layout.squash_it_edit_screenshot)
     setUpScreenshot(screenshotBitmap)
     val paintbox = setUpPaintbox()
     val canvas = setUpScreenshotCanvas(paintbox)
@@ -91,7 +91,7 @@ internal class ScreenshotActivity : AppCompatActivity(), NoScreenshots {
     fun start(activity: Activity, args: Args) {
       val start = Intent(activity, ScreenshotActivity::class.java).putExtra(ArgsKey, args)
       activity.startActivity(start)
-      activity.overridePendingTransition(R.anim.slide_up, R.anim.no_op)
+      activity.overridePendingTransition(R.anim.squash_it_slide_up, R.anim.squash_it_no_op)
     }
   }
 

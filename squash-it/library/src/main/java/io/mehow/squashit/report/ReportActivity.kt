@@ -74,14 +74,14 @@ internal class ReportActivity : Activity(), NoScreenshots {
 
   @Suppress("MaxLineLength")
   @LayoutRes private fun getLayoutId(uiModel: UiModel) = when (uiModel.initState) {
-    InitState.Initializing -> R.layout.init_progress
-    InitState.Failure -> R.layout.init_failure
+    InitState.Initializing -> R.layout.squash_it_init_progress
+    InitState.Failure -> R.layout.squash_it_init_failure
     else -> when (uiModel.submitState) {
-      is Idle, is Submitting -> R.layout.report
-      is Submitted -> R.layout.created_report
-      is FailedToAttach, is Reattaching -> R.layout.failed_to_attach
-      is Failed, is Resubmitting -> R.layout.submit_failure
-      is AddedAttachments -> R.layout.attachments_added
+      is Idle, is Submitting -> R.layout.squash_it_report
+      is Submitted -> R.layout.squash_it_created_report
+      is FailedToAttach, is Reattaching -> R.layout.squash_it_failed_to_attach
+      is Failed, is Resubmitting -> R.layout.squash_it_submit_failure
+      is AddedAttachments -> R.layout.squash_it_attachments_added
     }
   }
 
@@ -105,7 +105,7 @@ internal class ReportActivity : Activity(), NoScreenshots {
       mainScope.launch { presenter.sendEvent(GoIdle) }
     } else {
       super.onBackPressed()
-      overridePendingTransition(R.anim.no_op, R.anim.slide_down)
+      overridePendingTransition(R.anim.squash_it_no_op, R.anim.squash_it_slide_down)
     }
   }
 
@@ -155,7 +155,7 @@ internal class ReportActivity : Activity(), NoScreenshots {
     fun start(activity: Activity, args: Args) {
       val start = Intent(activity, ReportActivity::class.java).putExtra(ArgsKey, args)
       activity.startActivity(start)
-      activity.overridePendingTransition(R.anim.slide_up, R.anim.no_op)
+      activity.overridePendingTransition(R.anim.squash_it_slide_up, R.anim.squash_it_no_op)
     }
   }
 

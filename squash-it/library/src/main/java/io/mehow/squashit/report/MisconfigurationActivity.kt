@@ -55,7 +55,7 @@ internal class MisconfigurationActivity : Activity(), NoScreenshots {
 
   override fun onBackPressed() {
     super.onBackPressed()
-    overridePendingTransition(R.anim.no_op, R.anim.slide_down)
+    overridePendingTransition(R.anim.squash_it_no_op, R.anim.squash_it_slide_down)
   }
 
   private fun openSquashIt() {
@@ -74,7 +74,7 @@ internal class MisconfigurationActivity : Activity(), NoScreenshots {
     fun start(activity: Activity) {
       val start = Intent(activity, MisconfigurationActivity::class.java)
       activity.startActivity(start)
-      activity.overridePendingTransition(R.anim.slide_up, R.anim.no_op)
+      activity.overridePendingTransition(R.anim.squash_it_slide_up, R.anim.squash_it_no_op)
     }
 
     private val playStoreAppIntent = Intent(

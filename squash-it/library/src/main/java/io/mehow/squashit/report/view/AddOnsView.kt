@@ -16,7 +16,7 @@ internal class AddOnsView @JvmOverloads constructor(
 ) : NestedScrollView(context, attrs, defStyleAttr) {
   init {
     overScrollMode = OVER_SCROLL_NEVER
-    LayoutInflater.from(context).inflate(R.layout.add_ons, this, true)
+    LayoutInflater.from(context).inflate(R.layout.squash_it_add_ons, this, true)
     setUpInsets(findViewById(R.id.addOnsContent))
   }
 

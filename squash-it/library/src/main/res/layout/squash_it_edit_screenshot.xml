@@ -32,7 +32,7 @@
 
   <include
       android:id="@+id/paintbox"
-      layout="@layout/paintbox"
+      layout="@layout/squash_it_paintbox"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       app:layout_constraintBottom_toBottomOf="parent"

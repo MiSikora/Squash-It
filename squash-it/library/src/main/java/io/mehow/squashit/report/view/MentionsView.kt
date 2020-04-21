@@ -33,7 +33,7 @@ internal class MentionsView(
   init {
     orientation = VERTICAL
 
-    LayoutInflater.from(context).inflate(R.layout.mentions, this, true)
+    LayoutInflater.from(context).inflate(R.layout.squash_it_mentions, this, true)
     mentionsChipGroup = findViewById(R.id.mentionsChipGroup)
   }
 
@@ -55,7 +55,7 @@ internal class MentionsView(
     val inflater = context.layoutInflater
     val newUsers = users.filterNot { it.nameHandle in currentNameHandles }
     for (user in newUsers.sortedBy { it.nameHandle }) {
-      val chip = inflater.doInflate<Chip>(R.layout.user_chip, mentionsChipGroup)
+      val chip = inflater.doInflate<Chip>(R.layout.squash_it_user_chip, mentionsChipGroup)
       chip.text = user.nameHandle
       chip.isChecked = user in mentions.users
       chip.setOnCheckedChangeListener { _, isChecked ->

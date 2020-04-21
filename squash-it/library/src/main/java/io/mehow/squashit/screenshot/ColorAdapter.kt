@@ -10,7 +10,7 @@ internal class ColorAdapter(
   private val inflater: LayoutInflater,
   private val onColorSelected: (Int) -> Unit
 ) : ListAdapter<ColorItem, ColorViewHolder>(ColorItemCallback) {
-  override fun getItemViewType(position: Int) = R.layout.brush_color_item
+  override fun getItemViewType(position: Int) = R.layout.squash_it_brush_color_item
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorViewHolder {
     val view = inflater.inflate(viewType, parent, false)
