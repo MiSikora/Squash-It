@@ -12,6 +12,7 @@ internal class AccelerationSample(
     } else Start
   }
 
+  @Suppress("UnusedPrivateMember")
   private operator fun TwistState.contains(sample: AccelerationSample): Boolean {
     return sample.az in accelerationRange
   }

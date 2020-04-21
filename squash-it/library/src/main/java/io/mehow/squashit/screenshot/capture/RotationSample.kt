@@ -12,6 +12,7 @@ internal class RotationSample(
     } else Start
   }
 
+  @Suppress("UnusedPrivateMember")
   private operator fun TwistState.contains(sample: RotationSample): Boolean {
     return sample.planeOrientation in rotationRange
   }
