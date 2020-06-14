@@ -28,7 +28,7 @@ buildscript {
               "paletteKtx": "androidx.palette:palette-ktx:1.0.0",
           ],
           "material": "com.google.android.material:material:1.2.0-alpha06",
-          "gradlePlugin": "com.android.tools.build:gradle:4.0.0-beta04",
+          "gradlePlugin": "com.android.tools.build:gradle:4.0.0",
       ],
       "kotlin": [
           "stdLib": [
