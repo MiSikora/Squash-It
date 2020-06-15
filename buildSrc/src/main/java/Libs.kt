@@ -42,7 +42,7 @@ object Libs {
   }
 
   object Retrofit {
-    const val Version = "2.8.1"
+    const val Version = "2.9.0"
 
     const val Core = "com.squareup.retrofit2:retrofit:$Version"
 
