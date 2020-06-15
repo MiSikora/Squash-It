@@ -31,7 +31,7 @@ object Libs {
 
   const val Okio = "com.squareup.okio:okio:2.4.1"
 
-  const val OkHttp = "com.squareup.okhttp3:okhttp:4.5.0"
+  const val OkHttp = "com.squareup.okhttp3:okhttp:4.7.2"
 
   object Moshi {
     const val Version = "1.9.3"
