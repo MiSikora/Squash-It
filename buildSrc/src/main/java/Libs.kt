@@ -20,7 +20,7 @@ object Libs {
   object AndroidX {
     const val AppCompat = "androidx.appcompat:appcompat:1.1.0"
 
-    const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
+    const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:2.0.0-beta7"
 
     const val CoreKtx = "androidx.core:core-ktx:1.3.0"
 
