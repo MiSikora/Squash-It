@@ -1,6 +1,6 @@
 package io.mehow.squashit.report.presentation
 
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mehow.squashit.report.InputError.NoIssueId
 import io.mehow.squashit.report.InputError.NoIssueType
 import io.mehow.squashit.report.InputError.NoReporter

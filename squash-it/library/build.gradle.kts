@@ -24,7 +24,7 @@ dependencies {
   implementation(Libs.ByteUnits)
 
   testImplementation(Libs.JUnit)
-  testImplementation(Libs.KotlinTestAssertions)
+  testImplementation(Libs.KotestTestAssertions)
   testImplementation(Libs.Kotlin.Coroutines.Test)
 }
 

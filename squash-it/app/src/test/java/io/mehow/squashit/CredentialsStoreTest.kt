@@ -1,7 +1,7 @@
 package io.mehow.squashit
 
-import io.kotlintest.matchers.types.shouldBeNull
-import io.kotlintest.shouldBe
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope

@@ -1,6 +1,6 @@
 package io.mehow.squashit
 
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mehow.squashit.ActionState.Added
 import io.mehow.squashit.ActionState.Deleted
 import io.mehow.squashit.ActionState.Idle

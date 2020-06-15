@@ -79,7 +79,7 @@ object Libs {
 
   const val JUnit = "junit:junit:4.13"
 
-  const val KotlinTestAssertions = "io.kotlintest:kotlintest-assertions:3.4.2"
+  const val KotestTestAssertions = "io.kotest:kotest-assertions-core-jvm:4.0.6"
 
   object Detekt {
     const val Version = "1.9.1"

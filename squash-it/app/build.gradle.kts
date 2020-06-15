@@ -110,7 +110,7 @@ dependencies {
   kapt(Libs.Moshi.Compiler)
 
   testImplementation(Libs.JUnit)
-  testImplementation(Libs.KotlinTestAssertions)
+  testImplementation(Libs.KotestTestAssertions)
   testImplementation(Libs.Kotlin.Coroutines.Test)
   testImplementation(Libs.SqlDelight.DriverJvm)
 }

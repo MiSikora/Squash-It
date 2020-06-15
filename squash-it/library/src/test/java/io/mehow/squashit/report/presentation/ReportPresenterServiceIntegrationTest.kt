@@ -1,8 +1,8 @@
 package io.mehow.squashit.report.presentation
 
-import io.kotlintest.matchers.collections.shouldHaveSize
-import io.kotlintest.matchers.types.shouldBeNull
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.shouldBe
 import io.mehow.squashit.report.AttachState
 import io.mehow.squashit.report.Description
 import io.mehow.squashit.report.Epic
@@ -285,7 +285,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
     sendEvent(SubmitReport(newIssueInput.withLogs(AttachState.Attach(file))))
 
     presenterFactory.jiraApi.attachmentRecords.test {
-      expectItem().files.shouldHaveSize(1)
+      expectItem().files shouldHaveSize 1
       expectComplete()
     }
   }
@@ -305,7 +305,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
     sendEvent(SubmitReport(newIssueInput.withScreenshot(AttachState.Attach(file))))
 
     presenterFactory.jiraApi.attachmentRecords.test {
-      expectItem().files.shouldHaveSize(1)
+      expectItem().files shouldHaveSize 1
       expectComplete()
     }
   }
@@ -325,7 +325,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
     sendEvent(SubmitReport(addCommentInput.withLogs(AttachState.Attach(file))))
 
     presenterFactory.jiraApi.attachmentRecords.test {
-      expectItem().files.shouldHaveSize(1)
+      expectItem().files shouldHaveSize 1
       expectComplete()
     }
   }
@@ -345,7 +345,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
     sendEvent(SubmitReport(addCommentInput.withScreenshot(AttachState.Attach(file))))
 
     presenterFactory.jiraApi.attachmentRecords.test {
-      expectItem().files.shouldHaveSize(1)
+      expectItem().files shouldHaveSize 1
       expectComplete()
     }
   }

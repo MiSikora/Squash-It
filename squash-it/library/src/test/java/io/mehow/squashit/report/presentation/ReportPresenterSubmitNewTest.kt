@@ -1,6 +1,6 @@
 package io.mehow.squashit.report.presentation
 
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mehow.squashit.FlowAssert
 import io.mehow.squashit.report.AttachState
 import io.mehow.squashit.report.Description
