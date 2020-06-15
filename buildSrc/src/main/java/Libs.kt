@@ -82,7 +82,7 @@ object Libs {
   const val KotlinTestAssertions = "io.kotlintest:kotlintest-assertions:3.4.2"
 
   object Detekt {
-    const val Version = "1.8.0"
+    const val Version = "1.9.1"
 
     const val GradlePluginId = "io.gitlab.arturbosch.detekt"
 

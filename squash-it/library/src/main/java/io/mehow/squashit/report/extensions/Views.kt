@@ -1,3 +1,4 @@
+@file:Suppress("TopLevelPropertyNaming")
 package io.mehow.squashit.report.extensions
 
 import android.app.Activity
