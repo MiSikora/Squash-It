@@ -54,7 +54,7 @@ object Libs {
   const val ByteUnits = "com.jakewharton.byteunits:byteunits:0.9.1"
 
   object Dagger {
-    const val Version = "2.27"
+    const val Version = "2.28"
 
     const val Runtime = "com.google.dagger:dagger:$Version"
 
