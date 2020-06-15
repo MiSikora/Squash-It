@@ -34,7 +34,7 @@ object Libs {
   const val OkHttp = "com.squareup.okhttp3:okhttp:4.5.0"
 
   object Moshi {
-    const val Version = "1.9.2"
+    const val Version = "1.9.3"
 
     const val Runtime = "com.squareup.moshi:moshi-kotlin:$Version"
 
