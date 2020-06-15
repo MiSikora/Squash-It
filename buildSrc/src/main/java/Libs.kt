@@ -22,7 +22,7 @@ object Libs {
 
     const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
 
-    const val CoreKtx = "androidx.core:core-ktx:1.2.0"
+    const val CoreKtx = "androidx.core:core-ktx:1.3.0"
 
     const val PaletteKtx = "androidx.palette:palette-ktx:1.0.0"
   }
