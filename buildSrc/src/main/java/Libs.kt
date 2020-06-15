@@ -27,7 +27,7 @@ object Libs {
     const val PaletteKtx = "androidx.palette:palette-ktx:1.0.0"
   }
 
-  const val Material = "com.google.android.material:material:1.2.0-alpha06"
+  const val Material = "com.google.android.material:material:1.2.0-beta01"
 
   const val Okio = "com.squareup.okio:okio:2.4.1"
 
