@@ -9,7 +9,7 @@ object Libs {
     const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
 
     object Coroutines {
-      const val Version = "1.3.5"
+      const val Version = "1.3.7"
 
       const val Android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$Version"
 
