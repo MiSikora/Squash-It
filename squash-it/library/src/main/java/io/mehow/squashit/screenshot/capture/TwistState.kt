@@ -23,8 +23,8 @@ internal enum class TwistState(
     override val nextState get() = Finish
   },
   Finish(
-    rotationRange = Double.MIN_VALUE..Double.MAX_VALUE,
-    accelerationRange = Float.MIN_VALUE..Float.MAX_VALUE
+    rotationRange = -Double.MAX_VALUE..Double.MAX_VALUE,
+    accelerationRange = -Float.MAX_VALUE..Float.MAX_VALUE
   ) {
     override val nextState get() = Start
   };
