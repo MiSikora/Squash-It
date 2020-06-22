@@ -12,8 +12,7 @@ internal class AddCommentCall(
   config: SquashItConfig
 ) : ReportCall {
   private val key = report.issueKey
-  private val request =
-    AddCommentRequest(report.description(config))
+  private val request = AddCommentRequest(report.description(config))
 
   override suspend fun execute(jiraApi: JiraApi): CreateReportAttempt {
     return when (jiraApi.addComment(key, request)) {

@@ -26,12 +26,11 @@ import kotlin.coroutines.resume
 
 internal object AttachmentFactory {
   const val RequestCode = 200
-  private val bitmapCache =
-    object : LruCache<AttachmentKey, Bitmap>(MEGABYTES.toBytes(2).toInt()) {
-      override fun sizeOf(key: AttachmentKey, value: Bitmap): Int {
-        return value.byteCount
-      }
+  private val bitmapCache = object : LruCache<AttachmentKey, Bitmap>(MEGABYTES.toBytes(2).toInt()) {
+    override fun sizeOf(key: AttachmentKey, value: Bitmap): Int {
+      return value.byteCount
     }
+  }
 
   suspend fun create(resolver: ContentResolver, id: AttachmentId): Attachment? {
     return suspendCancellableCoroutine { continuation ->
@@ -72,8 +71,7 @@ internal object AttachmentFactory {
       val diskSize = DiskSize(size, BYTES)
 
       val mimeIndex = cursor.getColumnIndex(MIME_TYPE)
-      val type =
-        cursor.getStringOrNull(mimeIndex)?.let { fromMimeType(it) } ?: return@use null
+      val type = cursor.getStringOrNull(mimeIndex)?.let { fromMimeType(it) } ?: return@use null
 
       return@use AttachmentBuilder(id, type, name, diskSize)
     }

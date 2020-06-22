@@ -60,8 +60,7 @@ internal class MentionsView(
       chip.isChecked = user in mentions.users
       chip.setOnCheckedChangeListener { _, isChecked ->
         viewScope.launch {
-          val event =
-            if (isChecked) UpdateInput.mention(user) else UpdateInput.unmention(user)
+          val event = if (isChecked) UpdateInput.mention(user) else UpdateInput.unmention(user)
           presenter.sendEvent(event)
         }
       }

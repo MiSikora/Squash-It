@@ -22,22 +22,21 @@ import kotlin.reflect.KClass
 internal class ReportInflaterFactory(
   private val presenter: ReportPresenter
 ) : LayoutInflater.Factory2 {
-  private val providers =
-    mapOf<KClass<out View>, (Context, AttributeSet, ReportPresenter) -> View>(
-      AttachmentsView::class to ::AttachmentsView,
-      MentionsView::class to ::MentionsView,
-      EpicView::class to ::EpicView,
-      UpdateIssueView::class to ::UpdateIssueView,
-      IssueView::class to ::IssueView,
-      IssueDescriptionView::class to ::IssueDescriptionView,
-      ReporterView::class to ::ReporterView,
-      EpicView::class to ::EpicView,
-      InitFailureView::class to ::InitFailureView,
-      ReportCreatedView::class to ::ReportCreatedView,
-      FailedToAttachView::class to ::FailedToAttachView,
-      FailedToSubmitView::class to ::FailedToSubmitView,
-      AddedAttachmentsView::class to ::AddedAttachmentsView
-    ).mapKeys { (key, _) -> key.java.canonicalName!! }
+  private val providers = mapOf<KClass<out View>, (Context, AttributeSet, ReportPresenter) -> View>(
+    AttachmentsView::class to ::AttachmentsView,
+    MentionsView::class to ::MentionsView,
+    EpicView::class to ::EpicView,
+    UpdateIssueView::class to ::UpdateIssueView,
+    IssueView::class to ::IssueView,
+    IssueDescriptionView::class to ::IssueDescriptionView,
+    ReporterView::class to ::ReporterView,
+    EpicView::class to ::EpicView,
+    InitFailureView::class to ::InitFailureView,
+    ReportCreatedView::class to ::ReportCreatedView,
+    FailedToAttachView::class to ::FailedToAttachView,
+    FailedToSubmitView::class to ::FailedToSubmitView,
+    AddedAttachmentsView::class to ::AddedAttachmentsView
+  ).mapKeys { (key, _) -> key.java.canonicalName!! }
 
   override fun onCreateView(
     parent: View?,

@@ -11,8 +11,7 @@ internal sealed class AttachState : Attachable {
   data class Attach(override val file: File) : AttachState() {
     override val body: AttachmentBody?
       get() {
-        val part =
-          MultipartBody.Part.createFormData("file", file.name, file.asRequestBody())
+        val part = MultipartBody.Part.createFormData("file", file.name, file.asRequestBody())
         return AttachmentBody(file.name, part)
       }
   }

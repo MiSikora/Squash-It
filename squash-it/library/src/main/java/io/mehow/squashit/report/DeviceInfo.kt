@@ -15,10 +15,9 @@ internal data class DeviceInfo(
   val createdAt: Date,
   val timeZone: TimeZone
 ) : Describable {
-  private val timeFormatter =
-    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", Locale.US).apply {
-      timeZone = this@DeviceInfo.timeZone
-    }
+  private val timeFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", Locale.US).apply {
+    timeZone = this@DeviceInfo.timeZone
+  }
 
   override fun describe(): String {
     return """

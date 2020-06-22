@@ -199,8 +199,7 @@ internal class IssueView(
   }
 
   private fun renderSummaryError(shortSummary: Boolean) {
-    summaryLayout.error =
-      if (shortSummary) "Summary must be at least 10 characters long" else ""
+    summaryLayout.error = if (shortSummary) "Summary must be at least 10 characters long" else ""
   }
 
   private fun hideKeyboardOnScroll() {

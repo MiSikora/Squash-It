@@ -107,8 +107,7 @@ internal class ScreenshotProvider(
           takeCanvasScreenshot()
           return@setOnImageAvailableListener
         }
-        val capturedBitmap =
-          createPlaneBitmap(capturedImage, width, height).also { bitmap = it }
+        val capturedBitmap = createPlaneBitmap(capturedImage, width, height).also { bitmap = it }
         val croppedBitmap = Bitmap.createBitmap(capturedBitmap, 0, 0, width, height)
         saveScreenshot(croppedBitmap)
       } catch (_: Exception) {

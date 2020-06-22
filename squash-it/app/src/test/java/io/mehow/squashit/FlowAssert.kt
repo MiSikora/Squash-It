@@ -50,8 +50,7 @@ suspend fun <T> Flow<T>.test(timeoutMs: Long = 1_000L, validate: suspend FlowAss
       }
       events.close()
     }
-    val flowAssert =
-      FlowAssert(events, collectJob, timeoutMs)
+    val flowAssert = FlowAssert(events, collectJob, timeoutMs)
     val ensureConsumed = try {
       flowAssert.validate()
       true

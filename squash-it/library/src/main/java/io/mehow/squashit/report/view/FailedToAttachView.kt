@@ -60,8 +60,7 @@ internal class FailedToAttachView(
 
   private fun renderSubmitState(state: SubmitState) {
     if (state is FailedToAttach) {
-      reportedIssueInfo.text =
-        resources.getString(R.string.squash_it_reported, state.key.value)
+      reportedIssueInfo.text = resources.getString(R.string.squash_it_reported, state.key.value)
       retryInput = RetryInput(state.key, state.attachments)
       if (initFailure) initFailure = false
       else (activity as ReportActivity).showSnackbar(resources.getString(R.string.squash_it_error))
