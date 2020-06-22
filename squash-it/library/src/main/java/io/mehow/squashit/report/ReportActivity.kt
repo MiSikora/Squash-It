@@ -72,7 +72,6 @@ internal class ReportActivity : Activity(), NoScreenshots {
 
   override fun onRetainNonConfigurationInstance(): ReportPresenter = presenter
 
-  @Suppress("MaxLineLength")
   @LayoutRes private fun getLayoutId(uiModel: UiModel) = when (uiModel.initState) {
     InitState.Initializing -> R.layout.squash_it_init_progress
     InitState.Failure -> R.layout.squash_it_init_failure
