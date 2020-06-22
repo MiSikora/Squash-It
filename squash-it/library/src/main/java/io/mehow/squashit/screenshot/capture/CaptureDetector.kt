@@ -2,10 +2,10 @@ package io.mehow.squashit.screenshot.capture
 
 import android.app.Activity
 import android.content.Context
-import android.content.Context.SENSOR_SERVICE
 import android.hardware.Sensor
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import androidx.core.content.getSystemService
 
 abstract class CaptureDetector(
   private val onCapture: () -> Unit
@@ -25,7 +25,7 @@ abstract class CaptureDetector(
     }
 
     private fun hasMagnetometer(context: Context): Boolean {
-      val sensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
+      val sensorManager = context.getSystemService<SensorManager>()!!
       return sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null
     }
   }

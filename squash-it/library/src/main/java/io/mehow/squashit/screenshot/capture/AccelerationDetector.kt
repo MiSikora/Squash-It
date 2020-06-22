@@ -1,7 +1,6 @@
 package io.mehow.squashit.screenshot.capture
 
 import android.app.Activity
-import android.content.Context.SENSOR_SERVICE
 import android.hardware.Sensor
 import android.hardware.Sensor.TYPE_ACCELEROMETER
 import android.hardware.Sensor.TYPE_GRAVITY
@@ -9,6 +8,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorManager
 import android.hardware.SensorManager.GRAVITY_EARTH
 import android.hardware.SensorManager.SENSOR_DELAY_FASTEST
+import androidx.core.content.getSystemService
 import io.mehow.squashit.screenshot.capture.TwistState.Finish
 import io.mehow.squashit.screenshot.capture.TwistState.Start
 
@@ -45,13 +45,13 @@ class AccelerationDetector(
   }
 
   override fun attach(activity: Activity) {
-    val sensorManager = activity.getSystemService(SENSOR_SERVICE) as SensorManager
+    val sensorManager = activity.getSystemService<SensorManager>()!!
     sensorManager.registerListener(this, accelerometer(sensorManager), SENSOR_DELAY_FASTEST)
     shakeDetector.start(sensorManager)
   }
 
   override fun detach(activity: Activity) {
-    val sensorManager = activity.getSystemService(SENSOR_SERVICE) as SensorManager
+    val sensorManager = activity.getSystemService<SensorManager>()!!
     sensorManager.unregisterListener(this, accelerometer(sensorManager))
     shakeDetector.stop()
   }
