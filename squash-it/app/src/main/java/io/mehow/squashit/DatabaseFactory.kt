@@ -5,21 +5,21 @@ import com.squareup.sqldelight.db.SqlDriver
 
 object DatabaseFactory {
   fun create(driver: SqlDriver): Database {
-    return Database(driver, credentialsAdapter)
+    return Database(driver, CredentialsAdapter)
   }
 
-  private val credentialsIdAdapter = object : ColumnAdapter<CredentialsId, String> {
+  private val CredentialsIdAdapter = object : ColumnAdapter<CredentialsId, String> {
     override fun decode(databaseValue: String) = CredentialsId(databaseValue)
     override fun encode(value: CredentialsId): String = value.value
   }
 
-  private val secretAdapter = object : ColumnAdapter<Secret, String> {
+  private val SecretAdapter = object : ColumnAdapter<Secret, String> {
     override fun decode(databaseValue: String) = Secret(databaseValue)
     override fun encode(value: Secret): String = value.value
   }
 
-  private val credentialsAdapter = Credentials.Adapter(
-    idAdapter = credentialsIdAdapter,
-    secretAdapter = secretAdapter
+  private val CredentialsAdapter = Credentials.Adapter(
+    idAdapter = CredentialsIdAdapter,
+    secretAdapter = SecretAdapter
   )
 }

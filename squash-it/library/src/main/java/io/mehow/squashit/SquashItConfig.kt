@@ -52,11 +52,11 @@ internal data class SquashItConfig(
   }
 
   companion object {
-    private val configured = AtomicBoolean()
+    private val Configured = AtomicBoolean()
 
     fun configure() {
       @SuppressLint("SyntheticAccessor") // Lint is wrong.
-      if (configured.getAndSet(true)) {
+      if (Configured.getAndSet(true)) {
         error("Plugin can be configured only once.")
       }
       SquashItLogger.setLogsCapacity(SquashItConfigurator.LogsCapacity)

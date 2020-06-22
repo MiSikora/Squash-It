@@ -155,7 +155,7 @@ naming:
     active: true
     constantPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
     propertyPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
-    privatePropertyPattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
+    privatePropertyPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
   PackageNaming:
     active: true
     packagePattern: '^[a-z]+(\.[a-z][a-z]*)*$'
@@ -163,7 +163,7 @@ naming:
     active: true
     constantPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
     propertyPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
-    privatePropertyPattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
+    privatePropertyPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
   VariableNaming:
     active: true
     variablePattern: '^[a-z]+(?:[A-Z][a-z]+)*$'

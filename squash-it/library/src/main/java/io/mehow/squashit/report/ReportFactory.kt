@@ -23,6 +23,7 @@ internal object ReportFactory {
     else ReportAttempt.Invalid(errors)
   }
 
+  @Suppress("ObjectPropertyNaming")
   private val UserInput.newReportErrors: Set<InputError>
     get() {
       val hasReporter = reporter != null
@@ -51,6 +52,7 @@ internal object ReportFactory {
     else ReportAttempt.Invalid(errors)
   }
 
+  @Suppress("ObjectPropertyNaming")
   private val UserInput.addCommentErrors: Set<InputError>
     get() {
       val hasReporter = reporter != null
@@ -75,6 +77,7 @@ internal object ReportFactory {
     else ReportAttempt.Invalid(errors)
   }
 
+  @Suppress("ObjectPropertyNaming")
   private val UserInput.createSubTaskErrors: Set<InputError>
     get() {
       val hasReporter = reporter != null
@@ -96,6 +99,7 @@ internal object ReportFactory {
     parent = issueKey!!
   )
 
+  @Suppress("ObjectPropertyNaming")
   private val UserInput.allAttachments: Set<AttachmentBody>
     get() {
       return (attachments + screenshotState + logsState)

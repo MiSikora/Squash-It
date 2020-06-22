@@ -89,6 +89,7 @@ internal data class RuntimeInfo(
       return OsInfo(VERSION.RELEASE, VERSION.SDK_INT)
     }
 
+    @Suppress("ObjectPropertyNaming")
     private val DisplayMetrics.densityBucket: String
       get() {
         return when (densityDpi) {

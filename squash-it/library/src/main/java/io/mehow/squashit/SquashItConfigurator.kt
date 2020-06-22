@@ -20,7 +20,7 @@ object SquashItConfigurator {
   internal var EpicReadFieldName: String = "customfield_10009"
   internal var EpicWriteFieldName: String = "customfield_10008"
   internal var RuntimeInfo: Info = Info.Null
-  private var credentialsProvider: CredentialsProvider = object : CredentialsProvider {
+  private var CredentialsProvider: CredentialsProvider = object : CredentialsProvider {
     override fun provide(context: Context): Credentials? = null
   }
 
@@ -40,14 +40,14 @@ object SquashItConfigurator {
   }
 
   @JvmStatic fun credentialsProvider(provider: (Context) -> Credentials?): SquashItConfigurator {
-    credentialsProvider = object : CredentialsProvider {
+    CredentialsProvider = object : CredentialsProvider {
       override fun provide(context: Context) = provider(context)
     }
     return this
   }
 
   @JvmStatic fun credentialsProvider(provider: CredentialsProvider): SquashItConfigurator {
-    credentialsProvider = provider
+    CredentialsProvider = provider
     return this
   }
 
@@ -84,7 +84,7 @@ object SquashItConfigurator {
 
   @JvmStatic fun configure(context: Context) {
     RuntimeInfo = Info.create(context.applicationContext)
-    Credentials = credentialsProvider.provide(context)
+    Credentials = CredentialsProvider.provide(context)
     SquashItConfig.configure()
   }
 }

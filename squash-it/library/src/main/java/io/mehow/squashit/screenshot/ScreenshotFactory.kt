@@ -17,8 +17,8 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 internal object ScreenshotFactory {
-  private val fileNameFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.'jpeg'", Locale.US)
-  private val mainThreadHandler = Handler(Looper.getMainLooper())
+  private val FileNameFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.'jpeg'", Locale.US)
+  private val MainThreadHandler = Handler(Looper.getMainLooper())
 
   suspend fun createScreenshotFile(context: Context, bitmap: Bitmap): File? {
     return suspendCoroutine { continuation ->
@@ -28,7 +28,7 @@ internal object ScreenshotFactory {
 
   @Suppress("LongMethod")
   private fun createScreenshotFile(context: Context, bitmap: Bitmap, onCreated: (File?) -> Unit) {
-    fun sendScreenshotFile(file: File?) = mainThreadHandler.post {
+    fun sendScreenshotFile(file: File?) = MainThreadHandler.post {
       onCreated(file)
     }
 
@@ -38,7 +38,7 @@ internal object ScreenshotFactory {
       return
     }
     try {
-      val output = File(dir, fileNameFormatter.format(Date()))
+      val output = File(dir, FileNameFormatter.format(Date()))
       output.sink().buffer().use { sink ->
         val bitmapStream = ByteArrayOutputStream()
         bitmap.compress(JPEG, 100, bitmapStream)
@@ -57,6 +57,7 @@ internal object ScreenshotFactory {
     }
   }
 
+  @Suppress("ObjectPropertyNaming")
   private val Context.screenshotDirectory: File?
     get() {
       val externalDir = getExternalFilesDir(null) ?: return null

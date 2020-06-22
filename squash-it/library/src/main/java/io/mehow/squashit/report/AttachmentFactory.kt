@@ -26,7 +26,7 @@ import kotlin.coroutines.resume
 
 internal object AttachmentFactory {
   const val RequestCode = 200
-  private val bitmapCache = object : LruCache<AttachmentKey, Bitmap>(MEGABYTES.toBytes(2).toInt()) {
+  private val BitmapCache = object : LruCache<AttachmentKey, Bitmap>(MEGABYTES.toBytes(2).toInt()) {
     override fun sizeOf(key: AttachmentKey, value: Bitmap): Int {
       return value.byteCount
     }
@@ -82,12 +82,12 @@ internal object AttachmentFactory {
     resolver: ContentResolver,
     signal: CancellationSignal
   ): Bitmap? {
-    return bitmapCache.get(key) ?: try {
+    return BitmapCache.get(key) ?: try {
       val uri = key.id.value.toUri()
       val bitmap = DocumentsContract.getDocumentThumbnail(resolver, uri, key.point, signal)
       if (bitmap != null) {
-        synchronized(bitmapCache) {
-          if (bitmapCache.get(key) == null) bitmapCache.put(key, bitmap)
+        synchronized(BitmapCache) {
+          if (BitmapCache.get(key) == null) BitmapCache.put(key, bitmap)
         }
       }
       bitmap

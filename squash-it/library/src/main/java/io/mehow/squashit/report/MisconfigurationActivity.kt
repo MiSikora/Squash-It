@@ -64,9 +64,9 @@ internal class MisconfigurationActivity : Activity(), NoScreenshots {
 
   private fun showSquashItInPlayStore() {
     try {
-      startActivity(playStoreAppIntent)
+      startActivity(PlayStoreAppIntent)
     } catch (_: Throwable) {
-      startActivity(playStoreWebIntent)
+      startActivity(PlayStoreWebIntent)
     }
   }
 
@@ -77,11 +77,11 @@ internal class MisconfigurationActivity : Activity(), NoScreenshots {
       activity.overridePendingTransition(R.anim.squash_it_slide_up, R.anim.squash_it_no_op)
     }
 
-    private val playStoreAppIntent = Intent(
+    private val PlayStoreAppIntent = Intent(
       ACTION_VIEW,
       "market://details?id=io.mehow.squashit".toUri()
     )
-    private val playStoreWebIntent = Intent(
+    private val PlayStoreWebIntent = Intent(
       ACTION_VIEW,
       "https://play.google.com/store/apps/details?id=io.mehow.squashit".toUri()
     )
