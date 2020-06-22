@@ -12,7 +12,7 @@ import androidx.core.content.getSystemService
 import io.mehow.squashit.screenshot.capture.TwistState.Finish
 import io.mehow.squashit.screenshot.capture.TwistState.Start
 
-class AccelerationDetector(
+internal class AccelerationDetector(
   onCapture: () -> Unit
 ) : CaptureDetector(onCapture) {
   private var startTimestamp = 0L

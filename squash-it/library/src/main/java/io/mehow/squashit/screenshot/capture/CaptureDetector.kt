@@ -7,7 +7,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.core.content.getSystemService
 
-abstract class CaptureDetector(
+internal abstract class CaptureDetector(
   private val onCapture: () -> Unit
 ) : SensorEventListener {
   protected fun detectCapture() = onCapture()
