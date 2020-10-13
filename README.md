@@ -7,7 +7,7 @@
 
 ## How it works?
 
-Squash It allows you to report JIRA issues or add comments to existing ones. You can open the tool by tapping on a notification action in the system menu. This will capture an editable screenshot of the app's current window and let you provide the issue details.
+Squash It allows you to report JIRA issues or add comments to existing ones. You can open the tool by tapping on a notification in the system menu. This will capture an editable screenshot of the app's current window and let you provide the issue details.
 
 ![](images/sample-report.gif)
 
@@ -39,7 +39,7 @@ android {
 To integrate the tool with your app you need to add the dependency to your project and configure it. Plugin should be configured before it attaches itself to any Activity. The best place for it is the Application object. Check [the sample](sample/) for more information.
 
 ```groovy
-debugImplementation "io.mehow.squashit:squashit:0.7.4"
+debugImplementation "io.mehow.squashit:squashit:0.7.5"
 ```
 
 ```kotlin
@@ -68,7 +68,7 @@ myLogger.log { priority, tag, message -> SquashItLogger.log(priority, tag, messa
 If you use [Timber](https://github.com/JakeWharton/timber) you can skip this step and just depend on the Timber artifact instead.
 
 ```groovy
-debugImplementation "io.mehow.squashit:timber:0.7.4"
+debugImplementation "io.mehow.squashit:timber:0.7.5"
 ```
 
 By default last 2000 logs are kept in a journal. You can configure the capacity of the log file. Keep in mind, however, that logs are kept in memory prior to writing them to a file, so you should be mindful of the capacity.

@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.7.5 *(2020-10-13)*
+----------------------------
+
+* Screenshot are now triggered from a notification in the system menu bar.
+
 Version 0.7.4 *(2020-04-21)*
 ----------------------------
 
