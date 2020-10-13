@@ -23,11 +23,11 @@ internal class CaptureService : Service() {
       notifications.createNotificationChannel(channel)
     }
     startForeground(
-      NotificationId,
-      NotificationCompat.Builder(this, ChannelId)
-        .setSmallIcon(R.drawable.squash_it_screenshot_capture)
-        .setColor(ContextCompat.getColor(this, R.color.squash_it_royal_blue_300))
-        .build()
+        NotificationId,
+        NotificationCompat.Builder(this, ChannelId)
+            .setSmallIcon(R.drawable.squash_it_screenshot_capture)
+            .setColor(ContextCompat.getColor(this, R.color.squash_it_royal_blue_300))
+            .build()
     )
 
     return START_NOT_STICKY

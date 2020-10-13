@@ -2,7 +2,7 @@ package io.mehow.squashit.screenshot.capture
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.NotificationManager.IMPORTANCE_DEFAULT
+import android.app.NotificationManager.IMPORTANCE_LOW
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
@@ -20,7 +20,7 @@ internal class TriggerScreenshotService : Service() {
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     val notifications = getSystemService<NotificationManager>()!!
     if (Build.VERSION.SDK_INT >= 26 && notifications.getNotificationChannel(ChannelId) == null) {
-      val channel = NotificationChannel(ChannelId, "SquashIt", IMPORTANCE_DEFAULT)
+      val channel = NotificationChannel(ChannelId, "SquashIt", IMPORTANCE_LOW)
       notifications.createNotificationChannel(channel)
     }
 
