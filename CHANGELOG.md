@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.7.6 *(2020-10-13)*
+----------------------------
+
+* Lower importance of notification channel. It disables vibrations.
+
 Version 0.7.5 *(2020-10-13)*
 ----------------------------
 
