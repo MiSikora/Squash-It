@@ -24,7 +24,6 @@ internal class CaptureCallback(
   override fun onActivityStarted(activity: Activity) {
     val trigger = screenshotTriggers[activity]
     if (trigger != null) {
-      println("LOG_TAG: START")
       TriggerScreenshotService.start(activity)
       trigger.register(activity)
     }
@@ -33,7 +32,6 @@ internal class CaptureCallback(
   override fun onActivityStopped(activity: Activity) {
     val trigger = screenshotTriggers[activity]
     if (trigger != null) {
-      println("LOG_TAG: STOP")
       trigger.unregister(activity)
       TriggerScreenshotService.stop(activity)
     }
