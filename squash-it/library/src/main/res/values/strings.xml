@@ -49,4 +49,7 @@
   <string name="squash_it_select_brush_size">Select brush size</string>
   <string name="squash_it_cancel">Cancel</string>
   <string name="squash_it_select">Select</string>
+  <string name="squash_it_report_notification_title">Report an issue</string>
+  <string name="squash_it_report_notification_message">Capture a screenshot and report it in JIRA</string>
+  <string name="squash_it_report_notification_action">Report</string>
 </resources>

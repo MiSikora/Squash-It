@@ -9,26 +9,34 @@ import java.io.File
 internal class CaptureCallback(
   private val onScreenshot: (Activity, File?) -> Unit
 ) : ActivityLifecycleCallbacks {
-  private val detectors = mutableMapOf<Activity, Pair<CaptureDetector, ScreenshotProvider>>()
+  private val screenshotTriggers = mutableMapOf<Activity, TriggerScreenshotReceiver>()
 
   override fun onActivityCreated(activity: Activity, inState: Bundle?) {
     if (activity is NoScreenshots) return
-    val screenshotProvider = ScreenshotProvider(activity) { onScreenshot(activity, it) }
-    detectors[activity] = CaptureDetector.create(activity) {
-      screenshotProvider.takeScreenshot()
-    } to screenshotProvider
+    val provider = ScreenshotProvider(activity) { onScreenshot(activity, it) }
+    screenshotTriggers[activity] = TriggerScreenshotReceiver(provider)
   }
 
   override fun onActivityDestroyed(activity: Activity) {
-    detectors.remove(activity)?.second?.stopBackgroundThread()
+    screenshotTriggers.remove(activity)?.stopTrigger()
   }
 
   override fun onActivityStarted(activity: Activity) {
-    detectors[activity]?.first?.attach(activity)
+    val trigger = screenshotTriggers[activity]
+    if (trigger != null) {
+      println("LOG_TAG: START")
+      TriggerScreenshotService.start(activity)
+      trigger.register(activity)
+    }
   }
 
   override fun onActivityStopped(activity: Activity) {
-    detectors[activity]?.first?.detach(activity)
+    val trigger = screenshotTriggers[activity]
+    if (trigger != null) {
+      println("LOG_TAG: STOP")
+      trigger.unregister(activity)
+      TriggerScreenshotService.stop(activity)
+    }
   }
 
   override fun onActivityResumed(activity: Activity) = Unit

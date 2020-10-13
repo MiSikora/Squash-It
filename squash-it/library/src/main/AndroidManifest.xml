@@ -52,6 +52,11 @@
         android:foregroundServiceType="mediaProjection"
         />
 
+    <service
+        android:name=".screenshot.capture.TriggerScreenshotService"
+        android:exported="false"
+        />
+
     <meta-data
         android:name="preloaded_fonts"
         android:resource="@array/squash_it_preloaded_fonts"

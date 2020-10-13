@@ -7,7 +7,7 @@
 
 ## How it works?
 
-Squash It allows you to report JIRA issues or add comments to existing ones. You can open the tool by twisting or flipping the device 180 degrees and back. This will capture an editable screenshot of the app's current window and let you provide the issue details.
+Squash It allows you to report JIRA issues or add comments to existing ones. You can open the tool by tapping on a notification action in the system menu. This will capture an editable screenshot of the app's current window and let you provide the issue details.
 
 ![](images/sample-report.gif)
 
