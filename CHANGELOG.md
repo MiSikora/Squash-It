@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 0.7.7 *(2020-10-14)*
+----------------------------
+
+* Fix a bug where trigger notification disappeared between switching activities
+
+
 Version 0.7.6 *(2020-10-13)*
 ----------------------------
 
