@@ -21,7 +21,7 @@ internal class CaptureCallback(
     screenshotTriggers.remove(activity)?.stopTrigger()
   }
 
-  override fun onActivityStarted(activity: Activity) {
+  override fun onActivityResumed(activity: Activity) {
     val trigger = screenshotTriggers[activity]
     if (trigger != null) {
       TriggerScreenshotService.start(activity)
@@ -29,7 +29,7 @@ internal class CaptureCallback(
     }
   }
 
-  override fun onActivityStopped(activity: Activity) {
+  override fun onActivityPaused(activity: Activity) {
     val trigger = screenshotTriggers[activity]
     if (trigger != null) {
       trigger.unregister(activity)
@@ -37,7 +37,7 @@ internal class CaptureCallback(
     }
   }
 
-  override fun onActivityResumed(activity: Activity) = Unit
-  override fun onActivityPaused(activity: Activity) = Unit
+  override fun onActivityStarted(activity: Activity) = Unit
+  override fun onActivityStopped(activity: Activity) = Unit
   override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
 }
