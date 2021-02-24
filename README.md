@@ -1,4 +1,6 @@
-# Squash It - JIRA reporting tool \[🚧 👷‍♀️⛏ Project is currently under major overhaul 👷🔧️ 🚧 \]
+# 🚧 👷‍♀️⛏ Project is currently under major overhaul 👷🔧️ 🚧 
+
+# Squash It - JIRA reporting tool
 
 Project is currently under major overhaul.
 
