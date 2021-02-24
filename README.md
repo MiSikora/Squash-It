@@ -1,6 +1,6 @@
-# Squash It - JIRA reporting tool
+# Squash It - JIRA reporting tool \[🚧 👷‍♀️⛏ Project is currently under major overhaul 👷🔧️ 🚧 \]
 
-[![Build Status](https://app.bitrise.io/app/d05c685963b4f009/status.svg?token=BcDiRXjSbF_95LiAmxH26w&branch=master)](https://app.bitrise.io/app/d05c685963b4f009)
+Project is currently under major overhaul.
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.mehow.squashit/squashit/badge.svg)](https://search.maven.org/search?q=g:io.mehow.squashit)
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0)
