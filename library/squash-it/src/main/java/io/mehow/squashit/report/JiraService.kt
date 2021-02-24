@@ -15,7 +15,7 @@ import kotlinx.coroutines.coroutineScope
 internal class JiraService(
   private val config: SquashItConfig,
   private val projectInfoStore: ProjectInfoStore,
-  private val jiraApi: JiraApi
+  private val jiraApi: JiraApi,
 ) {
   suspend fun report(report: Report): CreateReportAttempt {
     return report.toCall(config).execute(jiraApi)
@@ -23,7 +23,7 @@ internal class JiraService(
 
   suspend fun addAttachments(
     issueKey: IssueKey,
-    attachments: Set<AttachmentBody>
+    attachments: Set<AttachmentBody>,
   ): Response<Unit> {
     val bodies = attachments.map(AttachmentBody::part)
     return jiraApi.attachFiles(issueKey, bodies)
@@ -58,19 +58,19 @@ internal class JiraService(
       is Failure -> return null
     }
     return issueTypes
-      .filterNot { it.isSubTask }
-      .map { IssueType(it.id, it.name) }
-      .filter(config.issueTypeFilter) to roleIds
+        .filterNot { it.isSubTask }
+        .map { IssueType(it.id, it.name) }
+        .filter(config.issueTypeFilter) to roleIds
   }
 
   private suspend fun getUsers(roleIds: List<String>): List<User> = coroutineScope {
     return@coroutineScope roleIds
-      .map { roleId -> async { jiraApi.getUsers(config.projectKey, roleId) } }
-      .awaitAll()
-      .filterIsInstance<Success<RoleResponse>>()
-      .flatMap { it.value.actors }
-      .mapNotNull { actor -> actor.actorUser?.let { User(actor.displayName, it.accountId) } }
-      .distinct()
-      .filter(config.userFilter)
+        .map { roleId -> async { jiraApi.getUsers(config.projectKey, roleId) } }
+        .awaitAll()
+        .filterIsInstance<Success<RoleResponse>>()
+        .flatMap { it.value.actors }
+        .mapNotNull { actor -> actor.actorUser?.let { User(actor.displayName, it.accountId) } }
+        .distinct()
+        .filter(config.userFilter)
   }
 }

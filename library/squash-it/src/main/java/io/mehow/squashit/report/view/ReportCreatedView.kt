@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.onEach
 internal class ReportCreatedView(
   context: Context,
   attrs: AttributeSet?,
-  private val presenter: ReportPresenter
+  private val presenter: ReportPresenter,
 ) : LinearLayout(context, attrs) {
   private lateinit var reportedIssueInfo: TextView
   private lateinit var goBack: Button
@@ -38,13 +38,13 @@ internal class ReportCreatedView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     presenter.uiModels
-      .map { it.submitState }
-      .filterIsInstance<Submitted>()
-      .onEach { submitState ->
-        val text = resources.getString(R.string.squash_it_reported, submitState.key.value)
-        reportedIssueInfo.text = text
-      }
-      .launchIn(viewScope)
+        .map { it.submitState }
+        .filterIsInstance<Submitted>()
+        .onEach { submitState ->
+          val text = resources.getString(R.string.squash_it_reported, submitState.key.value)
+          reportedIssueInfo.text = text
+        }
+        .launchIn(viewScope)
     goBack.setOnClickListener { activity.onBackPressed() }
   }
 }

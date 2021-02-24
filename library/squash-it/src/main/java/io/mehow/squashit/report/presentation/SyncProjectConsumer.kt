@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transformLatest
 
 internal class SyncProjectConsumer(
-  private val jiraService: JiraService
+  private val jiraService: JiraService,
 ) : EventConsumer<SyncProject> {
   override fun transform(events: Flow<SyncProject>): Flow<Accumulator> {
     return events.transformLatest {

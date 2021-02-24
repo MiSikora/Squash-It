@@ -14,11 +14,11 @@ import kotlin.String
 @Suppress("LongMethod", "ComplexMethod", "StringLiteralDuplication")
 internal class NewIssueFieldsRequestJsonAdapter(
   private val epicFieldName: String,
-  moshi: Moshi
+  moshi: Moshi,
 ) : JsonAdapter<NewIssueFieldsRequest>() {
   private val options: JsonReader.Options = JsonReader.Options.of(
-    "project", "parent", "issuetype", "summary",
-    "reporter", "description", epicFieldName
+      "project", "parent", "issuetype", "summary",
+      "reporter", "description", epicFieldName
   )
 
   private val projectRequestAdapter: JsonAdapter<ProjectRequest> =
@@ -53,22 +53,22 @@ internal class NewIssueFieldsRequestJsonAdapter(
     while (reader.hasNext()) {
       when (reader.selectName(options)) {
         0 -> project = projectRequestAdapter.fromJson(reader) ?: reader.unexpectedNull(
-          "project",
-          "project"
+            "project",
+            "project"
         )
         1 -> parentKey = nullableParentKeyAdapter.fromJson(reader)
         2 -> issueType = issueTypeRequestAdapter.fromJson(reader) ?: reader.unexpectedNull(
-          "issueType",
-          "issuetype"
+            "issueType",
+            "issuetype"
         )
         3 -> summary = stringAdapter.fromJson(reader) ?: reader.unexpectedNull(
-          "summary",
-          "summary"
+            "summary",
+            "summary"
         )
         4 -> reporter = nullableReporterRequestAdapter.fromJson(reader)
         5 -> description = stringAdapter.fromJson(reader) ?: reader.unexpectedNull(
-          "description",
-          "description"
+            "description",
+            "description"
         )
         6 -> epic = nullableStringAdapter.fromJson(reader)
         -1 -> {
@@ -80,13 +80,13 @@ internal class NewIssueFieldsRequestJsonAdapter(
     }
     reader.endObject()
     return NewIssueFieldsRequest(
-      project = project ?: reader.missingProperty("project", "project"),
-      parent = parentKey,
-      issueType = issueType ?: reader.missingProperty("issueType", "issuetype"),
-      summary = summary ?: reader.missingProperty("summary", "summary"),
-      reporter = reporter,
-      description = description ?: reader.missingProperty("description", "description"),
-      epic = epic
+        project = project ?: reader.missingProperty("project", "project"),
+        parent = parentKey,
+        issueType = issueType ?: reader.missingProperty("issueType", "issuetype"),
+        summary = summary ?: reader.missingProperty("summary", "summary"),
+        reporter = reporter,
+        description = description ?: reader.missingProperty("description", "description"),
+        epic = epic
     )
   }
 

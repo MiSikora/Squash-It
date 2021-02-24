@@ -13,19 +13,19 @@ import io.mehow.squashit.report.api.Response.Success
 
 internal class CreateIssueCall(
   private val report: NewIssue,
-  config: SquashItConfig
+  config: SquashItConfig,
 ) : ReportCall {
   private val request = NewIssueRequest(
-    NewIssueFieldsRequest(
-      project = ProjectRequest(config.projectKey),
-      parent = null,
-      issueType = IssueTypeRequest(report.issueType.id),
-      summary = report.summary.value,
-      reporter = if (config.allowReporterOverride) ReporterRequest(report.reporter.accountId)
-      else null,
-      description = report.description(config),
-      epic = report.epic?.id
-    )
+      NewIssueFieldsRequest(
+          project = ProjectRequest(config.projectKey),
+          parent = null,
+          issueType = IssueTypeRequest(report.issueType.id),
+          summary = report.summary.value,
+          reporter = if (config.allowReporterOverride) ReporterRequest(report.reporter.accountId)
+          else null,
+          description = report.description(config),
+          epic = report.epic?.id
+      )
   )
 
   override suspend fun execute(jiraApi: JiraApi): CreateReportAttempt {

@@ -13,10 +13,10 @@ internal interface Report {
 
   fun description(config: SquashItConfig): String {
     return listOfNotNull(
-      descriptionReporter(config),
-      description,
-      config.runtimeInfo,
-      mentions
+        descriptionReporter(config),
+        description,
+        config.runtimeInfo,
+        mentions
     ).joinToString("\n\n", transform = Describable::describe)
   }
 
@@ -31,7 +31,7 @@ internal interface Report {
     override val reporter: User,
     val issueType: IssueType,
     val summary: Summary,
-    val epic: Epic?
+    val epic: Epic?,
   ) : Report {
     override fun toCall(config: SquashItConfig) = CreateIssueCall(this, config)
   }
@@ -41,7 +41,7 @@ internal interface Report {
     override val mentions: Mentions,
     override val attachments: Set<AttachmentBody>,
     override val reporter: User,
-    val issueKey: IssueKey
+    val issueKey: IssueKey,
   ) : Report {
     override fun toCall(config: SquashItConfig) = AddCommentCall(this, config)
     override fun descriptionReporter(config: SquashItConfig) = Reporter(reporter)
@@ -53,7 +53,7 @@ internal interface Report {
     override val attachments: Set<AttachmentBody>,
     override val reporter: User,
     val summary: Summary,
-    val parent: IssueKey
+    val parent: IssueKey,
   ) : Report {
     override fun toCall(config: SquashItConfig) = AddSubTaskCall(this, config)
   }

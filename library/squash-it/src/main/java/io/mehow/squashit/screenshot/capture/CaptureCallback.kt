@@ -7,7 +7,7 @@ import io.mehow.squashit.NoScreenshots
 import java.io.File
 
 internal class CaptureCallback(
-  private val onScreenshot: (Activity, File?) -> Unit
+  private val onScreenshot: (Activity, File?) -> Unit,
 ) : ActivityLifecycleCallbacks {
   private val screenshotTriggers = mutableMapOf<Activity, TriggerScreenshotReceiver>()
 

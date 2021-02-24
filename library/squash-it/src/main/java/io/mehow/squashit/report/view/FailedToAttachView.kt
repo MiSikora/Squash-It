@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.onEach
 internal class FailedToAttachView(
   context: Context,
   attrs: AttributeSet?,
-  private val presenter: ReportPresenter
+  private val presenter: ReportPresenter,
 ) : ConstraintLayout(context, attrs) {
   private lateinit var reportedIssueInfo: TextView
   private lateinit var goBack: Button
@@ -47,14 +47,14 @@ internal class FailedToAttachView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     presenter.uiModels
-      .map { it.submitState }
-      .onEach { renderSubmitState(it) }
-      .launchIn(viewScope)
+        .map { it.submitState }
+        .onEach { renderSubmitState(it) }
+        .launchIn(viewScope)
     retry.clicks
-      .filter { retry.isActivated }
-      .mapNotNull { retryInput }
-      .onEach { (key, files) -> presenter.sendEvent(Reattach(key, files)) }
-      .launchIn(viewScope)
+        .filter { retry.isActivated }
+        .mapNotNull { retryInput }
+        .onEach { (key, files) -> presenter.sendEvent(Reattach(key, files)) }
+        .launchIn(viewScope)
     goBack.setOnClickListener { activity.onBackPressed() }
   }
 

@@ -7,7 +7,7 @@ import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 internal class ResponseAdapter<T : Any>(
-  private val type: Type
+  private val type: Type,
 ) : CallAdapter<T, Call<Response<T>>> {
   override fun responseType(): Type {
     return type
@@ -21,7 +21,7 @@ internal class ResponseAdapter<T : Any>(
     override fun get(
       returnType: Type,
       annotations: Array<Annotation>,
-      retrofit: Retrofit
+      retrofit: Retrofit,
     ): CallAdapter<*, *>? {
       val rawType = getRawType(returnType)
       if (rawType != Call::class.java) return null

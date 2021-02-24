@@ -21,10 +21,10 @@ import io.mehow.squashit.FileParceler
 import io.mehow.squashit.NoScreenshots
 import io.mehow.squashit.R
 import io.mehow.squashit.report.extensions.enableEdgeToEdgeAndNightMode
-import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.TypeParceler
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.TypeParceler
 import java.io.File
 
 internal class ScreenshotActivity : AppCompatActivity(), NoScreenshots {
@@ -55,7 +55,7 @@ internal class ScreenshotActivity : AppCompatActivity(), NoScreenshots {
   private fun contrastBackground(bitmap: Bitmap) {
     val palette = Palette.from(bitmap).clearFilters().generate()
     val isDark = palette.dominantSwatch
-      ?.let { ColorUtils.calculateLuminance(it.rgb) < 0.25 } == true
+        ?.let { ColorUtils.calculateLuminance(it.rgb) < 0.25 } == true
     delegate.localNightMode = if (isDark) MODE_NIGHT_NO else MODE_NIGHT_YES
   }
 

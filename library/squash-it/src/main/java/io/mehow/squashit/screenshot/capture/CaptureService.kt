@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import io.mehow.squashit.R
+import io.mehow.squashit.SquashItConfig
 
 internal class CaptureService : Service() {
   override fun onBind(intent: Intent?): IBinder? = null
@@ -19,7 +20,7 @@ internal class CaptureService : Service() {
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     val notifications = getSystemService<NotificationManager>()!!
     if (Build.VERSION.SDK_INT >= 26 && notifications.getNotificationChannel(ChannelId) == null) {
-      val channel = NotificationChannel(ChannelId, "SquashIt", IMPORTANCE_LOW)
+      val channel = NotificationChannel(ChannelId, SquashItConfig.Name, IMPORTANCE_LOW)
       notifications.createNotificationChannel(channel)
     }
     startForeground(

@@ -70,8 +70,8 @@ internal class ReportPresenterInputTest : BaseReportPresenterTest() {
 
     presenter.sendEvent(UpdateInput.mention(User("Name 2", "ID 2")))
     expectItem() shouldBe syncedModel.withMentions(
-      User("Name 1", "ID 1"),
-      User("Name 2", "ID 2")
+        User("Name 1", "ID 1"),
+        User("Name 2", "ID 2")
     )
   }
 

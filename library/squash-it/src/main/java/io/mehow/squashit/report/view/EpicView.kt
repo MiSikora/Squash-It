@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.onEach
 internal class EpicView(
   context: Context,
   attrs: AttributeSet?,
-  private val presenter: ReportPresenter
+  private val presenter: ReportPresenter,
 ) : FrameLayout(context, attrs) {
   private val epicInput: AutoCompleteTextView
   private var adapter = EpicAdapter(context, emptyList())
@@ -38,12 +38,12 @@ internal class EpicView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     epicInput.textChanges
-      .mapNotNull { text -> adapter.epics.find { it.name == text } }
-      .onEach { presenter.sendEvent(UpdateInput.epic(it)) }
-      .launchIn(viewScope)
+        .mapNotNull { text -> adapter.epics.find { it.name == text } }
+        .onEach { presenter.sendEvent(UpdateInput.epic(it)) }
+        .launchIn(viewScope)
     presenter.uiModels
-      .onEach { renderUiModel(it) }
-      .launchIn(viewScope)
+        .onEach { renderUiModel(it) }
+        .launchIn(viewScope)
   }
 
   private fun renderUiModel(uiModel: UiModel) {
@@ -67,7 +67,7 @@ internal class EpicView(
 
   private class EpicAdapter(
     context: Context,
-    val epics: List<Epic>
+    val epics: List<Epic>,
   ) : ArrayAdapter<String>(context, R.layout.squash_it_select_text_view) {
     override fun getCount() = epics.size
     override fun getItem(position: Int) = epics[position].name

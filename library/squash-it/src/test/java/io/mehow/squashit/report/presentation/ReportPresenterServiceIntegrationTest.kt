@@ -1,5 +1,6 @@
 package io.mehow.squashit.report.presentation
 
+import app.cash.turbine.test
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
@@ -18,21 +19,20 @@ import io.mehow.squashit.report.api.RoleFactory.Record
 import io.mehow.squashit.report.presentation.Event.SubmitReport
 import io.mehow.squashit.report.presentation.Event.UpdateInput
 import io.mehow.squashit.report.presentation.extensions.withProjectInfo
-import io.mehow.squashit.test
 import org.junit.Test
 
 internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest() {
   @Test fun `blacklisted users are unavailable`() {
     val factory = presenterFactory.copy(
-      config = presenterFactory.config.copy(userFilter = {
-        it.accountId !in listOf("ID 1", "ID 4", "ID 5")
-      })
+        config = presenterFactory.config.copy(userFilter = {
+          it.accountId !in listOf("ID 1", "ID 4", "ID 5")
+        })
     )
     factory.jiraApi.roleFactory.enqueue(
-      Record("User 1", "ID 1"),
-      Record("User 2", "ID 2"),
-      Record("User 3", "ID 3"),
-      Record("User 4", "ID 4")
+        Record("User 1", "ID 1"),
+        Record("User 2", "ID 2"),
+        Record("User 3", "ID 3"),
+        Record("User 4", "ID 4")
     )
     presenterFactory = factory
 
@@ -46,15 +46,15 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
 
   @Test fun `whitelisted users are available`() {
     val factory = presenterFactory.copy(
-      config = presenterFactory.config.copy(userFilter = {
-        it.accountId in listOf("ID 1", "ID 4", "ID 5")
-      })
+        config = presenterFactory.config.copy(userFilter = {
+          it.accountId in listOf("ID 1", "ID 4", "ID 5")
+        })
     )
     factory.jiraApi.roleFactory.enqueue(
-      Record("User 1", "ID 1"),
-      Record("User 2", "ID 2"),
-      Record("User 3", "ID 3"),
-      Record("User 4", "ID 4")
+        Record("User 1", "ID 1"),
+        Record("User 2", "ID 2"),
+        Record("User 3", "ID 3"),
+        Record("User 4", "ID 4")
     )
     presenterFactory = factory
 
@@ -68,20 +68,20 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
 
   @Test fun `blacklisted issue types are unavailable`() {
     val factory = presenterFactory.copy(
-      config = presenterFactory.config.copy(issueTypeFilter = {
-        it.id !in listOf("ID 2", "ID 5")
-      })
+        config = presenterFactory.config.copy(issueTypeFilter = {
+          it.id !in listOf("ID 2", "ID 5")
+        })
     )
     factory.jiraApi.projectFactory.enqueue(
-      ProjectResponse(
-        listOf(
-          IssueTypeResponse("ID 1", "Name 1", false),
-          IssueTypeResponse("ID 2", "Name 2", false),
-          IssueTypeResponse("ID 3", "Name 3", true),
-          IssueTypeResponse("ID 4", "Name 4", false)
-        ),
-        mapOf("Role Name" to "Role ID")
-      )
+        ProjectResponse(
+            listOf(
+                IssueTypeResponse("ID 1", "Name 1", false),
+                IssueTypeResponse("ID 2", "Name 2", false),
+                IssueTypeResponse("ID 3", "Name 3", true),
+                IssueTypeResponse("ID 4", "Name 4", false)
+            ),
+            mapOf("Role Name" to "Role ID")
+        )
     )
     presenterFactory = factory
 
@@ -95,20 +95,20 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
 
   @Test fun `whitelisted issue types are available`() {
     val factory = presenterFactory.copy(
-      config = presenterFactory.config.copy(issueTypeFilter = {
-        it.id in listOf("ID 2", "ID 5")
-      })
+        config = presenterFactory.config.copy(issueTypeFilter = {
+          it.id in listOf("ID 2", "ID 5")
+        })
     )
     factory.jiraApi.projectFactory.enqueue(
-      ProjectResponse(
-        listOf(
-          IssueTypeResponse("ID 1", "Name 1", false),
-          IssueTypeResponse("ID 2", "Name 2", false),
-          IssueTypeResponse("ID 3", "Name 3", true),
-          IssueTypeResponse("ID 4", "Name 4", false)
-        ),
-        mapOf("Role Name" to "Role ID")
-      )
+        ProjectResponse(
+            listOf(
+                IssueTypeResponse("ID 1", "Name 1", false),
+                IssueTypeResponse("ID 2", "Name 2", false),
+                IssueTypeResponse("ID 3", "Name 3", true),
+                IssueTypeResponse("ID 4", "Name 4", false)
+            ),
+            mapOf("Role Name" to "Role ID")
+        )
     )
     presenterFactory = factory
 
@@ -162,7 +162,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
 
   @Test fun `description contains reporter for non-overriding config`() {
     presenterFactory = presenterFactory.copy(
-      config = presenterFactory.config.copy(allowReporterOverride = false)
+        config = presenterFactory.config.copy(allowReporterOverride = false)
     )
 
     recordWithNewIssue {
@@ -212,7 +212,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
 
   @Test fun `reporter is not set for non-overriding config`() {
     presenterFactory = presenterFactory.copy(
-      config = presenterFactory.config.copy(allowReporterOverride = false)
+        config = presenterFactory.config.copy(allowReporterOverride = false)
     )
 
     recordWithNewIssue {
@@ -230,7 +230,7 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
 
     presenterFactory.jiraApi.newIssueRecords.test {
       expectItem().request.fields.reporter shouldBe ReporterRequest(
-        newIssueInput.reporter!!.accountId
+          newIssueInput.reporter!!.accountId
       )
       expectComplete()
     }
@@ -361,12 +361,12 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
   }
 
   private val newIssueInput = syncedModel.input
-    .withReporter(User("Reporter Name", "Reporter ID"))
-    .withIssueType(IssueType("Issue ID", "Issue Name"))
-    .withSummary(Summary("Valid Summary"))
-    .withIssueEpic(Epic("Epic ID", "Epic Name"))
-    .withDescription(Description("Description"))
-    .withMentions(User("Mention Name", "Mention ID"))
+      .withReporter(User("Reporter Name", "Reporter ID"))
+      .withIssueType(IssueType("Issue ID", "Issue Name"))
+      .withSummary(Summary("Valid Summary"))
+      .withIssueEpic(Epic("Epic ID", "Epic Name"))
+      .withDescription(Description("Description"))
+      .withMentions(User("Mention Name", "Mention ID"))
 
   private fun recordWithNewIssue(block: suspend ReportPresenter.() -> Unit) = testPresenter {
     presenter.sendEvent(UpdateInput { newIssueInput })
@@ -375,11 +375,11 @@ internal class ReportPresenterServiceIntegrationTest : BaseReportPresenterTest()
   }
 
   private val addCommentInput = syncedModel.input
-    .withReportType(AddCommentToIssue)
-    .withReporter(User("Reporter Name", "Reporter ID"))
-    .withIssueKey(IssueKey("Issue ID"))
-    .withDescription(Description("Description"))
-    .withMentions(User("Mention Name", "Mention ID"))
+      .withReportType(AddCommentToIssue)
+      .withReporter(User("Reporter Name", "Reporter ID"))
+      .withIssueKey(IssueKey("Issue ID"))
+      .withDescription(Description("Description"))
+      .withMentions(User("Mention Name", "Mention ID"))
 
   private fun recordWithAddComment(block: suspend ReportPresenter.() -> Unit) = testPresenter {
     presenter.sendEvent(UpdateInput { addCommentInput })

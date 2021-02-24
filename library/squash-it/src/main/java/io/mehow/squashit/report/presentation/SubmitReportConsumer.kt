@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transformLatest
 
 internal class SubmitReportConsumer(
-  private val jiraService: JiraService
+  private val jiraService: JiraService,
 ) : EventConsumer<SubmitReport> {
   override fun transform(events: Flow<SubmitReport>): Flow<Accumulator> {
     return events.transformLatest { event ->

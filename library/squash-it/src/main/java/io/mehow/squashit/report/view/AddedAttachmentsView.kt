@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.onEach
 internal class AddedAttachmentsView(
   context: Context,
   attrs: AttributeSet?,
-  private val presenter: ReportPresenter
+  private val presenter: ReportPresenter,
 ) : LinearLayout(context, attrs) {
   private lateinit var addedAttachmentsInfo: TextView
   private lateinit var goBack: Button
@@ -38,13 +38,13 @@ internal class AddedAttachmentsView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     presenter.uiModels
-      .map { it.submitState }
-      .filterIsInstance<AddedAttachments>()
-      .onEach { state ->
-        val text = resources.getString(R.string.squash_it_added_attachments, state.key.value)
-        addedAttachmentsInfo.text = text
-      }
-      .launchIn(viewScope)
+        .map { it.submitState }
+        .filterIsInstance<AddedAttachments>()
+        .onEach { state ->
+          val text = resources.getString(R.string.squash_it_added_attachments, state.key.value)
+          addedAttachmentsInfo.text = text
+        }
+        .launchIn(viewScope)
     goBack.setOnClickListener { activity.onBackPressed() }
   }
 }

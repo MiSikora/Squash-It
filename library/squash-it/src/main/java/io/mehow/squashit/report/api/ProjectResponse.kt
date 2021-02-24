@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 internal data class ProjectResponse(
   val issueTypes: List<IssueTypeResponse>,
-  val roles: Map<String, String>
+  val roles: Map<String, String>,
 ) {
   val roleIds = roles.values.map { it.substringAfterLast('/') }
 }

@@ -7,5 +7,5 @@ internal data class AttachmentItem(
   val type: AttachmentType,
   val name: String,
   val size: DiskSize,
-  val thumbnail: Bitmap?
+  val thumbnail: Bitmap?,
 )

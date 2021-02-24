@@ -59,7 +59,7 @@ import kotlin.math.absoluteValue
 internal class IssueView(
   context: Context,
   attrs: AttributeSet?,
-  private val presenter: ReportPresenter
+  private val presenter: ReportPresenter,
 ) : NestedScrollView(context, attrs) {
   private val content: ConstraintLayout
   private val submit: Button
@@ -110,45 +110,45 @@ internal class IssueView(
 
   private fun emitReportTypeChanges() {
     updateGroup.checkChanges
-      .map { reportType }
-      .onEach { presenter.sendEvent(UpdateInput.reportType(it)) }
-      .launchIn(viewScope)
+        .map { reportType }
+        .onEach { presenter.sendEvent(UpdateInput.reportType(it)) }
+        .launchIn(viewScope)
   }
 
   private fun emitIssueTypeChanges() {
     issueTypeInput.textChanges
-      .mapNotNull { text -> adapter.issueTypes.find { it.name == text } }
-      .onEach { presenter.sendEvent(UpdateInput.issueType(it)) }
-      .onEach { presenter.sendEvent(UpdateInput.hideError(NoIssueType)) }
-      .launchIn(viewScope)
+        .mapNotNull { text -> adapter.issueTypes.find { it.name == text } }
+        .onEach { presenter.sendEvent(UpdateInput.issueType(it)) }
+        .onEach { presenter.sendEvent(UpdateInput.hideError(NoIssueType)) }
+        .launchIn(viewScope)
   }
 
   private fun emitSummaryChanges() {
     summaryInput.textChanges
-      .debounce(200)
-      .map { it.trim() }
-      .onEach { presenter.sendEvent(UpdateInput.summary(Summary(it))) }
-      .launchIn(viewScope)
+        .debounce(200)
+        .map { it.trim() }
+        .onEach { presenter.sendEvent(UpdateInput.summary(Summary(it))) }
+        .launchIn(viewScope)
   }
 
   private fun hideSummaryErrors() {
     summaryInput.focuses
-      .onEach { presenter.sendEvent(UpdateInput.hideError(ShortSummary)) }
-      .launchIn(viewScope)
+        .onEach { presenter.sendEvent(UpdateInput.hideError(ShortSummary)) }
+        .launchIn(viewScope)
   }
 
   private fun observeUiModels() {
     presenter.uiModels
-      .onEach { renderUiModel(it) }
-      .launchIn(viewScope)
+        .onEach { renderUiModel(it) }
+        .launchIn(viewScope)
   }
 
   private fun emitSubmissions() {
     submit.clicks
-      .filter { submit.isActivated }
-      .mapNotNull { userInput }
-      .onEach { presenter.sendEvent(SubmitReport(it)) }
-      .launchIn(viewScope)
+        .filter { submit.isActivated }
+        .mapNotNull { userInput }
+        .onEach { presenter.sendEvent(SubmitReport(it)) }
+        .launchIn(viewScope)
   }
 
   private fun renderUiModel(uiModel: UiModel) {
@@ -264,7 +264,7 @@ internal class IssueView(
 
   private class IssueTypeAdapter(
     context: Context,
-    val issueTypes: List<IssueType>
+    val issueTypes: List<IssueType>,
   ) : ArrayAdapter<String>(context, R.layout.squash_it_select_text_view) {
     override fun getCount() = issueTypes.size
     override fun getItem(position: Int) = issueTypes[position].name

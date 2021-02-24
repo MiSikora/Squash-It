@@ -8,5 +8,5 @@ import androidx.annotation.LayoutRes
 internal inline fun <reified T : View> LayoutInflater.doInflate(
   @LayoutRes resource: Int,
   parent: ViewGroup?,
-  attachToRoot: Boolean = false
+  attachToRoot: Boolean = false,
 ): T = inflate(resource, parent, attachToRoot) as T

@@ -9,7 +9,7 @@ import android.os.Handler
 import android.os.Looper
 
 internal class TriggerScreenshotReceiver(
-  private val screenshotProvider: ScreenshotProvider
+  private val screenshotProvider: ScreenshotProvider,
 ) : BroadcastReceiver() {
   private var isRegistered = false
 

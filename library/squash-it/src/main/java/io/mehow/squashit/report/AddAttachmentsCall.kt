@@ -8,7 +8,7 @@ import io.mehow.squashit.report.api.Response.Success
 
 internal class AddAttachmentsCall(
   private val key: IssueKey,
-  private val attachments: Set<AttachmentBody>
+  private val attachments: Set<AttachmentBody>,
 ) : ReportCall {
   override suspend fun execute(jiraApi: JiraApi): CreateReportAttempt {
     val bodies = attachments.map(AttachmentBody::part)

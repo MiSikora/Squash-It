@@ -32,7 +32,7 @@ internal class SquashItInitializer : ContentProvider() {
     projection: Array<out String>?,
     selection: String?,
     selectionArgs: Array<out String>?,
-    sortOrder: String?
+    sortOrder: String?,
   ): Cursor? {
     return null
   }
@@ -41,7 +41,7 @@ internal class SquashItInitializer : ContentProvider() {
     uri: Uri,
     values: ContentValues?,
     selection: String?,
-    selectionArgs: Array<out String>?
+    selectionArgs: Array<out String>?,
   ): Int {
     return 0
   }

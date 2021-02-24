@@ -31,7 +31,7 @@ internal interface JiraApi {
   @GET("rest/api/2/project/{projectKey}/role/{roleId}")
   suspend fun getUsers(
     @Path("projectKey") projectKey: String,
-    @Path("roleId") roleId: String
+    @Path("roleId") roleId: String,
   ): Response<RoleResponse>
 
   @POST("rest/api/2/issue")
@@ -40,7 +40,7 @@ internal interface JiraApi {
   @POST("rest/api/2/issue/{issueKey}/comment")
   suspend fun addComment(
     @Path("issueKey") issueKey: IssueKey,
-    @Body request: AddCommentRequest
+    @Body request: AddCommentRequest,
   ): Response<Unit>
 
   @Multipart
@@ -48,19 +48,19 @@ internal interface JiraApi {
   @POST("/rest/api/2/issue/{issueKey}/attachments")
   suspend fun attachFiles(
     @Path("issueKey") issueKey: IssueKey,
-    @Part files: List<MultipartBody.Part>
+    @Part files: List<MultipartBody.Part>,
   ): Response<Unit>
 
   companion object {
     fun create(moshi: Moshi, config: SquashItConfig): JiraApi {
       val credentials = Credentials.basic(config.credentials.id, config.credentials.secret)
       return Retrofit.Builder()
-        .baseUrl(config.jiraUrl ?: "www.example.com".toHttpUrl())
-        .withAuthClient(credentials)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(ResponseAdapter.Factory)
-        .build()
-        .create()
+          .baseUrl(config.jiraUrl ?: "www.example.com".toHttpUrl())
+          .withAuthClient(credentials)
+          .addConverterFactory(MoshiConverterFactory.create(moshi))
+          .addCallAdapterFactory(ResponseAdapter.Factory)
+          .build()
+          .create()
     }
 
     private fun Retrofit.Builder.withAuthClient(credentials: String): Retrofit.Builder {
@@ -73,14 +73,14 @@ internal interface JiraApi {
     private fun createClient(credentials: String): Lazy<OkHttpClient> {
       return lazy {
         return@lazy OkHttpClient.Builder()
-          .addInterceptor { chain ->
-            val authRequest = chain.request()
-              .newBuilder()
-              .header("Authorization", credentials)
-              .build()
-            return@addInterceptor chain.proceed(authRequest)
-          }
-          .build()
+            .addInterceptor { chain ->
+              val authRequest = chain.request()
+                  .newBuilder()
+                  .header("Authorization", credentials)
+                  .build()
+              return@addInterceptor chain.proceed(authRequest)
+            }
+            .build()
       }
     }
   }

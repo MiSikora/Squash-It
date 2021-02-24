@@ -8,14 +8,17 @@ import android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_PRESENTATION
 import android.media.Image
 import android.media.ImageReader
 import android.media.projection.MediaProjection
+import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Process.THREAD_PRIORITY_BACKGROUND
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams.FLAG_SECURE
 import androidx.core.content.getSystemService
 import androidx.core.graphics.createBitmap
+import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.screenshot.ScreenshotFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -25,13 +28,13 @@ import java.io.File
 
 internal class ScreenshotProvider(
   private val activity: Activity,
-  private val onScreenshot: (File?) -> Unit
+  private val onScreenshot: (File?) -> Unit,
 ) {
   @Volatile private var isCapturing = false
   private var useCanvasScreenshots = false
   private val screenshotTarget = activity.window.decorView
   private val windowManager = activity.getSystemService<WindowManager>()!!
-  private val backgroundThread = HandlerThread("SquashIt", THREAD_PRIORITY_BACKGROUND).apply {
+  private val backgroundThread = HandlerThread(SquashItConfig.Name, THREAD_PRIORITY_BACKGROUND).apply {
     start()
   }
   private val backgroundHandler = Handler(backgroundThread.looper)
@@ -67,6 +70,7 @@ internal class ScreenshotProvider(
     isCapturing = false
   }
 
+  @Suppress("DEPRECATION")
   private fun takeCanvasScreenshot() {
     screenshotTarget.isDrawingCacheEnabled = true
     val screenshot = Bitmap.createBitmap(screenshotTarget.drawingCache)
@@ -74,28 +78,33 @@ internal class ScreenshotProvider(
     saveScreenshot(screenshot)
   }
 
-  @Suppress("LongMethod")
+  @Suppress("LongMethod", "DEPRECATION")
   private fun takeNativeScreenshot(projection: MediaProjection) {
+    val display = (if (Build.VERSION.SDK_INT >= 30) activity.display else windowManager.defaultDisplay) ?: run {
+      Log.w(SquashItConfig.Name, "Failed to get display for device")
+      return
+    }
     val displayMetrics = DisplayMetrics()
-    windowManager.defaultDisplay.getRealMetrics(displayMetrics)
+    display.getRealMetrics(displayMetrics)
+
     val width = displayMetrics.widthPixels
     val height = displayMetrics.heightPixels
 
     @SuppressLint("WrongConstant")
-    val reader = ImageReader.newInstance(width, height, RGBA_8888, 2)
-    val surface = reader.surface
-    val display = projection.createVirtualDisplay(
-      "SquashIt",
-      width,
-      height,
-      displayMetrics.densityDpi,
-      VIRTUAL_DISPLAY_FLAG_PRESENTATION,
-      surface,
-      null,
-      null
+    val imageReader = ImageReader.newInstance(width, height, RGBA_8888, 2)
+    val surface = imageReader.surface
+    val virtualDisplay = projection.createVirtualDisplay(
+        SquashItConfig.Name,
+        width,
+        height,
+        displayMetrics.densityDpi,
+        VIRTUAL_DISPLAY_FLAG_PRESENTATION,
+        surface,
+        null,
+        null,
     )
 
-    reader.setOnImageAvailableListener({ reader ->
+    imageReader.setOnImageAvailableListener({ reader ->
       var image: Image? = null
       var bitmap: Bitmap? = null
 
@@ -117,7 +126,7 @@ internal class ScreenshotProvider(
         bitmap?.recycle()
         image?.close()
         reader.close()
-        display.release()
+        virtualDisplay.release()
         projection.stop()
       }
     }, backgroundHandler)

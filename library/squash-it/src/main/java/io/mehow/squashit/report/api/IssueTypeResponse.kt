@@ -7,5 +7,5 @@ import com.squareup.moshi.JsonClass
 internal data class IssueTypeResponse(
   val id: String,
   val name: String,
-  @Json(name = "subtask") val isSubTask: Boolean
+  @Json(name = "subtask") val isSubTask: Boolean,
 )

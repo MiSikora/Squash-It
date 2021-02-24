@@ -21,19 +21,19 @@ internal data class SquashItConfig(
   val issueTypeFilter: (IssueType) -> Boolean,
   val epicReadFieldName: String,
   val epicWriteFieldName: String,
-  val runtimeInfo: RuntimeInfo
+  val runtimeInfo: RuntimeInfo,
 ) {
   constructor(configurator: SquashItConfigurator) : this(
-    projectKey = configurator.ProjectKey,
-    jiraUrl = configurator.JiraUrl,
-    subTaskIssueId = configurator.SubTaskIssueId,
-    credentials = configurator.Credentials ?: Credentials("", ""),
-    allowReporterOverride = configurator.AllowReporterOverride,
-    userFilter = configurator.UserFilter,
-    issueTypeFilter = configurator.IssueTypeFilter,
-    epicWriteFieldName = configurator.EpicWriteFieldName,
-    epicReadFieldName = configurator.EpicReadFieldName,
-    runtimeInfo = configurator.RuntimeInfo
+      projectKey = configurator.projectKey,
+      jiraUrl = configurator.jiraUrl,
+      subTaskIssueId = configurator.subTaskIssueId,
+      credentials = configurator.credentials ?: Credentials("", ""),
+      allowReporterOverride = configurator.allowReporterOverride,
+      userFilter = configurator.uUserFilter,
+      issueTypeFilter = configurator.issueTypeFilter,
+      epicWriteFieldName = configurator.epicWriteFieldName,
+      epicReadFieldName = configurator.epicReadFieldName,
+      runtimeInfo = configurator.runtimeInfo
   )
 
   val hasProjectKey = projectKey.isNotEmpty()
@@ -52,14 +52,16 @@ internal data class SquashItConfig(
   }
 
   companion object {
-    private val Configured = AtomicBoolean()
+    private val isConfigured = AtomicBoolean()
+
+    internal const val Name = "SquashIt"
 
     fun configure() {
       @SuppressLint("SyntheticAccessor") // Lint is wrong.
-      if (Configured.getAndSet(true)) {
+      if (isConfigured.getAndSet(true)) {
         error("Plugin can be configured only once.")
       }
-      SquashItLogger.setLogsCapacity(SquashItConfigurator.LogsCapacity)
+      SquashItLogger.setLogsCapacity(SquashItConfigurator.logsCapacity)
       Instance = SquashItConfig(SquashItConfigurator)
     }
 

@@ -18,7 +18,7 @@ import io.mehow.squashit.report.extensions.layoutInflater
 internal class ReportView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
-  defStyleAttr: Int = 0
+  defStyleAttr: Int = 0,
 ) : LinearLayout(context, attrs, defStyleAttr) {
   private lateinit var toolbar: Toolbar
   private lateinit var viewPager: ViewPager2
@@ -44,8 +44,8 @@ internal class ReportView @JvmOverloads constructor(
 
   private fun setUpTabs() {
     toolbar.title = resources.getString(
-      R.string.squash_it_report_an_issue,
-      SquashItConfig.Instance.projectKey
+        R.string.squash_it_report_an_issue,
+        SquashItConfig.Instance.projectKey
     )
     val reportAdapter = ReportAdapter(context.layoutInflater)
     viewPager.apply {

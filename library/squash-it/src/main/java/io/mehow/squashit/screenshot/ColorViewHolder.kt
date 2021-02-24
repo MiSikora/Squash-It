@@ -7,7 +7,7 @@ import io.mehow.squashit.R
 
 internal class ColorViewHolder(
   view: View,
-  private val onColorSelected: (Int) -> Unit
+  private val onColorSelected: (Int) -> Unit,
 ) : ViewHolder(view) {
   private val colorSwatch = itemView.findViewById<View>(R.id.colorSwatch)
   private val select = itemView.findViewById<RadioButton>(R.id.select)

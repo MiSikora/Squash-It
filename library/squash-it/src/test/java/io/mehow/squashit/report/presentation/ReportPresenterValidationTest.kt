@@ -114,8 +114,8 @@ internal class ReportPresenterValidationTest : BaseReportPresenterTest() {
 
     presenter.sendEvent(UpdateInput.hideError(NoReporter))
     var expected = syncedModel
-      .withReportType(ReportType.AddCommentToIssue)
-      .withErrors(NoIssueId)
+        .withReportType(ReportType.AddCommentToIssue)
+        .withErrors(NoIssueId)
     expectItem() shouldBe expected
 
     presenter.sendEvent(UpdateInput.reporter(User("Bob", "123")))
@@ -136,8 +136,8 @@ internal class ReportPresenterValidationTest : BaseReportPresenterTest() {
     expectItem()
 
     var expected = syncedModel
-      .withReportType(ReportType.AddCommentToIssue)
-      .withErrors(NoReporter, NoIssueId)
+        .withReportType(ReportType.AddCommentToIssue)
+        .withErrors(NoReporter, NoIssueId)
 
     presenter.sendEvent(UpdateInput.hideError(NoIssueId))
     expected = expected.withoutError(NoIssueId)
@@ -173,8 +173,8 @@ internal class ReportPresenterValidationTest : BaseReportPresenterTest() {
 
     presenter.sendEvent(UpdateInput.hideError(NoReporter))
     var expected = syncedModel
-      .withReportType(ReportType.AddSubTaskToIssue)
-      .withErrors(NoIssueId, ShortSummary)
+        .withReportType(ReportType.AddSubTaskToIssue)
+        .withErrors(NoIssueId, ShortSummary)
     expectItem() shouldBe expected
 
     presenter.sendEvent(UpdateInput.reporter(User("Bob", "123")))
@@ -195,8 +195,8 @@ internal class ReportPresenterValidationTest : BaseReportPresenterTest() {
     expectItem()
 
     var expected = syncedModel
-      .withReportType(ReportType.AddSubTaskToIssue)
-      .withErrors(NoReporter, NoIssueId, ShortSummary)
+        .withReportType(ReportType.AddSubTaskToIssue)
+        .withErrors(NoReporter, NoIssueId, ShortSummary)
 
     presenter.sendEvent(UpdateInput.hideError(NoIssueId))
     expected = expected.withoutError(NoIssueId)

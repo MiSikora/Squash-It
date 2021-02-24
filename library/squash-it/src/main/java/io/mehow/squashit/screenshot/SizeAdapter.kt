@@ -8,7 +8,7 @@ import io.mehow.squashit.R
 
 internal class SizeAdapter(
   private val inflater: LayoutInflater,
-  private val onSizeSelected: (Int) -> Unit
+  private val onSizeSelected: (Int) -> Unit,
 ) : ListAdapter<SizeItem, SizeViewHolder>(WidthItemCallback) {
   override fun getItemViewType(position: Int) = R.layout.squash_it_brush_size_item
 

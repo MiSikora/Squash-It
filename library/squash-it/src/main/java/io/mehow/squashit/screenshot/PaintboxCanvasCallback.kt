@@ -13,7 +13,7 @@ import java.io.File
 internal class PaintboxCanvasCallback(
   private val paintboxView: PaintboxView,
   private val canvasView: CanvasView,
-  private val activity: ScreenshotActivity
+  private val activity: ScreenshotActivity,
 ) : PaintboxView.Callback {
   override fun onClearCanvas() {
     canvasView.clearCanvas()
@@ -51,7 +51,7 @@ internal class PaintboxCanvasCallback(
     width: Int,
     height: Int,
     screenshotBitmap: Bitmap,
-    canvasBitmap: Bitmap
+    canvasBitmap: Bitmap,
   ): File? {
     val bitmap = createBitmap(width, height).applyCanvas {
       drawBitmap(screenshotBitmap, Matrix(), null)

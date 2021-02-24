@@ -1,7 +1,7 @@
 package io.mehow.squashit.report.presentation
 
+import app.cash.turbine.FlowTurbine
 import io.kotest.matchers.shouldBe
-import io.mehow.squashit.FlowAssert
 import io.mehow.squashit.report.AttachState
 import io.mehow.squashit.report.Description
 import io.mehow.squashit.report.IssueKey
@@ -30,7 +30,7 @@ internal class ReportPresenterSubmitSubTaskTest : BaseReportPresenterTest() {
     presenter.sendEvent(SubmitReport(createSubTaskModel.input))
     expectItem() shouldBe createSubTaskModel.withSubmitState(SubmitState.Submitting)
     expectItem() shouldBe createSubTaskModel.withSubmitState(
-      SubmitState.Submitted(IssueKey("Issue ID"))
+        SubmitState.Submitted(IssueKey("Issue ID"))
     )
   }
 
@@ -40,7 +40,7 @@ internal class ReportPresenterSubmitSubTaskTest : BaseReportPresenterTest() {
     presenter.sendEvent(SubmitReport(createSubTaskModel.input))
     expectItem()
     expectItem() shouldBe createSubTaskModel.withSubmitState(
-      SubmitState.Failed(createSubTaskReport)
+        SubmitState.Failed(createSubTaskReport)
     )
   }
 
@@ -56,7 +56,7 @@ internal class ReportPresenterSubmitSubTaskTest : BaseReportPresenterTest() {
     presenter.sendEvent(RetrySubmission(createSubTaskReport))
     expectItem() shouldBe createSubTaskModel.withSubmitState(SubmitState.Resubmitting)
     expectItem() shouldBe createSubTaskModel.withSubmitState(
-      SubmitState.Submitted(IssueKey("Issue ID"))
+        SubmitState.Submitted(IssueKey("Issue ID"))
     )
   }
 
@@ -67,7 +67,7 @@ internal class ReportPresenterSubmitSubTaskTest : BaseReportPresenterTest() {
       presenter.sendEvent(SubmitReport(createSubTaskModel.input))
       expectItem()
       expectItem() shouldBe createSubTaskModel.withSubmitState(
-        SubmitState.Submitted(IssueKey("Issue ID"))
+          SubmitState.Submitted(IssueKey("Issue ID"))
       )
     }
 
@@ -81,11 +81,11 @@ internal class ReportPresenterSubmitSubTaskTest : BaseReportPresenterTest() {
     expectItem()
 
     presenter.sendEvent(
-      SubmitReport(createSubTaskModel.input.withLogs(AttachState.Attach(logsFile)))
+        SubmitReport(createSubTaskModel.input.withLogs(AttachState.Attach(logsFile)))
     )
     expectItem()
     expectItem() shouldBe model.withSubmitState(
-      SubmitState.FailedToAttach(IssueKey("Issue ID"), attachments)
+        SubmitState.FailedToAttach(IssueKey("Issue ID"), attachments)
     )
   }
 
@@ -97,7 +97,7 @@ internal class ReportPresenterSubmitSubTaskTest : BaseReportPresenterTest() {
     expectItem()
 
     presenter.sendEvent(
-      SubmitReport(createSubTaskModel.input.withLogs(AttachState.Attach(logsFile)))
+        SubmitReport(createSubTaskModel.input.withLogs(AttachState.Attach(logsFile)))
     )
     expectItem()
     expectItem()
@@ -114,23 +114,23 @@ internal class ReportPresenterSubmitSubTaskTest : BaseReportPresenterTest() {
   }
 
   private val createSubTaskModel = syncedModel
-    .withReportType(ReportType.AddSubTaskToIssue)
-    .withReporter(User("Reporter Name", "Reporter ID"))
-    .withIssueKey(IssueKey("Issue ID"))
-    .withDescription(Description("Description"))
-    .withMentions(User("Mention Name", "Mention ID"))
-    .withSummary(Summary("Valid Summary"))
+      .withReportType(ReportType.AddSubTaskToIssue)
+      .withReporter(User("Reporter Name", "Reporter ID"))
+      .withIssueKey(IssueKey("Issue ID"))
+      .withDescription(Description("Description"))
+      .withMentions(User("Mention Name", "Mention ID"))
+      .withSummary(Summary("Valid Summary"))
 
   private val createSubTaskReport = Report.AddSubTask(
-    reporter = User("Reporter Name", "Reporter ID"),
-    parent = IssueKey("Issue ID"),
-    description = Description("Description"),
-    mentions = Mentions(setOf(User("Mention Name", "Mention ID"))),
-    attachments = emptySet(),
-    summary = Summary("Valid Summary")
+      reporter = User("Reporter Name", "Reporter ID"),
+      parent = IssueKey("Issue ID"),
+      description = Description("Description"),
+      mentions = Mentions(setOf(User("Mention Name", "Mention ID"))),
+      attachments = emptySet(),
+      summary = Summary("Valid Summary")
   )
 
-  private fun testNewIssueReport(block: suspend FlowAssert<UiModel>.() -> Unit) = testPresenter {
+  private fun testNewIssueReport(block: suspend FlowTurbine<UiModel>.() -> Unit) = testPresenter {
     presenter.sendEvent(UpdateInput { createSubTaskModel.input })
     expectItem()
     block()

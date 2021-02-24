@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.onEach
 internal class InitFailureView(
   context: Context,
   attrs: AttributeSet?,
-  private val presenter: ReportPresenter
+  private val presenter: ReportPresenter,
 ) : LinearLayout(context, attrs) {
   private lateinit var reInitButton: Button
 
@@ -33,7 +33,7 @@ internal class InitFailureView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     reInitButton.clicks
-      .onEach { presenter.sendEvent(SyncProject) }
-      .launchIn(viewScope)
+        .onEach { presenter.sendEvent(SyncProject) }
+        .launchIn(viewScope)
   }
 }

@@ -31,8 +31,6 @@ import io.mehow.squashit.report.presentation.Event.UpdateInput
 import io.mehow.squashit.report.presentation.ReportPresenter
 import io.mehow.squashit.report.presentation.ReportPresenterFactory
 import io.mehow.squashit.report.presentation.UiModel
-import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.TypeParceler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -42,6 +40,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.TypeParceler
 import java.io.File
 
 internal class ReportActivity : Activity(), NoScreenshots {
@@ -58,16 +58,16 @@ internal class ReportActivity : Activity(), NoScreenshots {
     setContentView(R.layout.squash_it)
     content = findViewById(R.id.activityContent)
     presenter.uiModels
-      .map { getLayoutId(it) }
-      .distinctUntilChanged()
-      .onEach { switchDisplayedLayout(it) }
-      .launchIn(mainScope)
+        .map { getLayoutId(it) }
+        .distinctUntilChanged()
+        .onEach { switchDisplayedLayout(it) }
+        .launchIn(mainScope)
   }
 
   override fun getLastNonConfigurationInstance(): ReportPresenter {
     val screenshot = intent.getParcelableExtra<Args>(ArgsKey)!!.screenshotFile
     return super.getLastNonConfigurationInstance() as? ReportPresenter
-      ?: createFactory(screenshot).create().also { it.start(Dispatchers.Unconfined) }
+        ?: createFactory(screenshot).create().also { it.start(Dispatchers.Unconfined) }
   }
 
   override fun onRetainNonConfigurationInstance(): ReportPresenter = presenter
@@ -116,10 +116,10 @@ internal class ReportActivity : Activity(), NoScreenshots {
   private fun createFactory(screenshot: File?): ReportPresenterFactory {
     val appContext = applicationContext
     return ReportPresenterFactory(
-      SquashItConfig.Instance,
-      filesDir,
-      { screenshot },
-      { withContext(Dispatchers.IO) { SquashItLogger.createLogFile(appContext) } }
+        SquashItConfig.Instance,
+        filesDir,
+        { screenshot },
+        { withContext(Dispatchers.IO) { SquashItLogger.createLogFile(appContext) } }
     )
   }
 
@@ -127,13 +127,13 @@ internal class ReportActivity : Activity(), NoScreenshots {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode != RESULT_OK) return
 
-    if (requestCode == AttachmentFactory.RequestCode) {
+    if (requestCode == AttachmentFactory.requestCode) {
       val uri = data?.data ?: return
       mainScope.launch {
         val item = withContext(Dispatchers.IO) {
           AttachmentFactory.create(
-            applicationContext.contentResolver,
-            AttachmentId("$uri")
+              applicationContext.contentResolver,
+              AttachmentId("$uri")
           )
         }
         if (item != null) mainScope.launch { presenter.sendEvent(UpdateInput.attach(item)) }

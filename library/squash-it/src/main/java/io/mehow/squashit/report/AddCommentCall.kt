@@ -9,7 +9,7 @@ import io.mehow.squashit.report.api.Response.Success
 
 internal class AddCommentCall(
   private val report: AddComment,
-  config: SquashItConfig
+  config: SquashItConfig,
 ) : ReportCall {
   private val key = report.issueKey
   private val request = AddCommentRequest(report.description(config))

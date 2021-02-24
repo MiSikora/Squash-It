@@ -3,7 +3,7 @@ package io.mehow.squashit.report
 internal data class AppInfo(
   val versionName: String,
   val versionCode: String,
-  val packageName: String
+  val packageName: String,
 ) : Describable {
   override fun describe(): String {
     return """

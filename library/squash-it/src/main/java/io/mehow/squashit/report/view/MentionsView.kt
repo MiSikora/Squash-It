@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 internal class MentionsView(
   context: Context,
   attrs: AttributeSet?,
-  private val presenter: ReportPresenter
+  private val presenter: ReportPresenter,
 ) : LinearLayout(context, attrs) {
   private val mentionsChipGroup: ChipGroup
   private val currentNameHandles = mutableSetOf<String>()
@@ -40,8 +40,8 @@ internal class MentionsView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     presenter.uiModels
-      .onEach { renderUiModel(it) }
-      .launchIn(viewScope)
+        .onEach { renderUiModel(it) }
+        .launchIn(viewScope)
   }
 
   private fun renderUiModel(uiModel: UiModel) {

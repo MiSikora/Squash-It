@@ -21,8 +21,8 @@ internal class ProjectFactory {
 
   fun create(): Response<ProjectResponse> {
     val project = queue.poll() ?: ProjectResponse(
-      listOf(IssueTypeResponse("Issue ID", "Issue Name", false)),
-      mapOf("Role Name" to "Role ID")
+        listOf(IssueTypeResponse("Issue ID", "Issue Name", false)),
+        mapOf("Role Name" to "Role ID")
     )
     return project.asResponse(returnErrors)
   }

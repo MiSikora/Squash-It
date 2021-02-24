@@ -4,4 +4,5 @@ import android.content.Context
 import android.view.LayoutInflater
 
 @Suppress("TopLevelPropertyNaming")
-internal val Context.layoutInflater get() = LayoutInflater.from(this)
+internal val Context.layoutInflater
+  get() = LayoutInflater.from(this)

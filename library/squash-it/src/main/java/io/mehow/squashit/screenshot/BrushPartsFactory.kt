@@ -15,7 +15,7 @@ import io.mehow.squashit.report.extensions.layoutInflater
 internal class BrushPartsFactory(
   private val context: Context,
   private val colors: List<Int>,
-  private val sizes: List<Int>
+  private val sizes: List<Int>,
 ) {
   @ColorInt private var colorChoice: Int = 0
   private val colorAdapter = ColorAdapter(context.layoutInflater) { colorChoice = it }
@@ -28,12 +28,12 @@ internal class BrushPartsFactory(
       adapter = colorAdapter
     }
     MaterialAlertDialogBuilder(context)
-      .setView(colorRecycler)
-      .setTitle(R.string.squash_it_select_brush_color)
-      .setNegativeButton(R.string.squash_it_cancel, null)
-      .setPositiveButton(R.string.squash_it_select) { _, _ -> onColorSelected(colorChoice) }
-      .create()
-      .show()
+        .setView(colorRecycler)
+        .setTitle(R.string.squash_it_select_brush_color)
+        .setNegativeButton(R.string.squash_it_cancel, null)
+        .setPositiveButton(R.string.squash_it_select) { _, _ -> onColorSelected(colorChoice) }
+        .create()
+        .show()
   }
 
   @Px private var sizeChoice: Int = 0
@@ -47,11 +47,11 @@ internal class BrushPartsFactory(
       adapter = sizeAdapter
     }
     MaterialAlertDialogBuilder(context)
-      .setView(sizeRecycler)
-      .setTitle(R.string.squash_it_select_brush_size)
-      .setNegativeButton(R.string.squash_it_cancel, null)
-      .setPositiveButton(R.string.squash_it_select) { _, _ -> onWidthSelected(sizeChoice) }
-      .create()
-      .show()
+        .setView(sizeRecycler)
+        .setTitle(R.string.squash_it_select_brush_size)
+        .setNegativeButton(R.string.squash_it_cancel, null)
+        .setPositiveButton(R.string.squash_it_select) { _, _ -> onWidthSelected(sizeChoice) }
+        .create()
+        .show()
   }
 }

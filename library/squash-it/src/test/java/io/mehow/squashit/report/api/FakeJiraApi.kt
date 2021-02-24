@@ -38,7 +38,7 @@ internal class FakeJiraApi : JiraApi {
 
   override suspend fun addComment(
     issueKey: IssueKey,
-    request: AddCommentRequest
+    request: AddCommentRequest,
   ): Response<Unit> {
     _addCommentRecords.add(AddCommentRecord(issueKey, request))
     return commentFactory.create()

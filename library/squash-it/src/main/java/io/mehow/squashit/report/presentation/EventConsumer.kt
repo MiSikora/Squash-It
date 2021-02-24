@@ -8,5 +8,5 @@ internal interface EventConsumer<in EventT : Event> {
 }
 
 internal inline fun <reified T : Event> EventConsumer<T>.consume(
-  events: Flow<Event>
+  events: Flow<Event>,
 ): Flow<Accumulator> = transform(events.filterIsInstance())

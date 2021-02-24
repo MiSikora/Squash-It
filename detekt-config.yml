@@ -92,11 +92,10 @@ formatting:
     active: true
   CommentSpacing:
     active: true
-  #  TODO: Enable after https://youtrack.jetbrains.com/issue/KT-10974
-  #  ImportOrdering:
-  #    active: true
-  Indentation:
+  ImportOrdering:
     active: true
+  Indentation:
+    active: false # TODO: https://github.com/pinterest/ktlint/issues/854
     indentSize: 2
     continuationIndentSize: 4
   NoBlankLineBeforeRbrace:
@@ -153,17 +152,17 @@ naming:
     active: true
   ObjectPropertyNaming:
     active: true
-    constantPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
-    propertyPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
-    privatePropertyPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
+    constantPattern: '^[a-zA-Z]+(?:[A-Z][a-z]+)*$'
+    propertyPattern: '^[a-zA-Z]+(?:[A-Z][a-z]+)*$'
+    privatePropertyPattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
   PackageNaming:
     active: true
     packagePattern: '^[a-z]+(\.[a-z][a-z]*)*$'
   TopLevelPropertyNaming:
     active: true
-    constantPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
-    propertyPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
-    privatePropertyPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
+    constantPattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
+    propertyPattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
+    privatePropertyPattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
   VariableNaming:
     active: true
     variablePattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
@@ -226,7 +225,7 @@ style:
     maxJumpCount: 1
   MaxLineLength:
     active: true
-    maxLineLength: 100
+    maxLineLength: 120
     excludePackageStatements: true
     excludeImportStatements: true
     excludeCommentStatements: true
@@ -247,7 +246,7 @@ style:
   ProtectedMemberInFinalClass:
     active: true
   RedundantVisibilityModifierRule:
-    active: true
+    active: false
   SafeCast:
     active: true
   SerialVersionUIDInSerializableClass:
@@ -280,8 +279,6 @@ style:
   UseArrayLiteralsInAnnotations:
     active: true
   UseCheckOrError:
-    active: true
-  UseIfInsteadOfWhen:
     active: true
   UseRequire:
     active: true

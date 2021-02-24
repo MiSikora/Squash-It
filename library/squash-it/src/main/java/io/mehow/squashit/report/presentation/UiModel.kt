@@ -11,27 +11,27 @@ internal data class UiModel(
   val initState: InitState,
   val projectInfo: ProjectInfo?,
   val input: UserInput,
-  val submitState: SubmitState
+  val submitState: SubmitState,
 ) {
   companion object {
     val Initial = UiModel(
-      initState = InitState.Initializing,
-      projectInfo = null,
-      input = UserInput(
-        reporter = null,
-        reportType = CreateNewIssue,
-        type = null,
-        summary = null,
-        epic = null,
-        issueKey = null,
-        description = null,
-        mentions = Mentions(emptySet()),
-        screenshotState = Unavailable,
-        logsState = Unavailable,
-        attachments = emptySet(),
-        errors = emptySet()
-      ),
-      submitState = SubmitState.Idle
+        initState = InitState.Initializing,
+        projectInfo = null,
+        input = UserInput(
+            reporter = null,
+            reportType = CreateNewIssue,
+            type = null,
+            summary = null,
+            epic = null,
+            issueKey = null,
+            description = null,
+            mentions = Mentions(emptySet()),
+            screenshotState = Unavailable,
+            logsState = Unavailable,
+            attachments = emptySet(),
+            errors = emptySet()
+        ),
+        submitState = SubmitState.Idle
     )
   }
 }

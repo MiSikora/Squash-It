@@ -1,7 +1,7 @@
 package io.mehow.squashit
 
 import android.os.Parcel
-import kotlinx.android.parcel.Parceler
+import kotlinx.parcelize.Parceler
 import java.io.File
 
 internal object FileParceler : Parceler<File?> {

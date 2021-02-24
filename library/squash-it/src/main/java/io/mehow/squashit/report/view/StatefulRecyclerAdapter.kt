@@ -12,13 +12,13 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewpager2.adapter.StatefulAdapter
-import kotlinx.android.parcel.Parceler
-import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.TypeParceler
+import kotlinx.parcelize.Parceler
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.TypeParceler
 
 internal abstract class StatefulRecyclerAdapter(
   private val inflater: LayoutInflater,
-  capacity: Int
+  capacity: Int,
 ) : RecyclerView.Adapter<ViewHolder>(), StatefulAdapter {
   private val attachedViews = SparseArray<View>(capacity)
   private var detachedState = SparseArray<SparseArray<Parcelable>>()

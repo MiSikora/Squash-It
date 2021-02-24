@@ -25,7 +25,7 @@ import androidx.core.os.bundleOf
 internal class CanvasView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
-  defStyleAttr: Int = 0
+  defStyleAttr: Int = 0,
 ) : View(context, attrs, defStyleAttr) {
   private var paint = newPaint()
   private var brush: Brush? = null
@@ -169,10 +169,10 @@ internal class CanvasView @JvmOverloads constructor(
 
   override fun onSaveInstanceState(): Bundle {
     return bundleOf(
-      "instance" to super.onSaveInstanceState(),
-      "brush" to brush,
-      "strokeHistory" to strokeHistory,
-      "strokeRedoHistory" to strokeRedoHistory
+        "instance" to super.onSaveInstanceState(),
+        "brush" to brush,
+        "strokeHistory" to strokeHistory,
+        "strokeRedoHistory" to strokeRedoHistory
     )
   }
 }

@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.onEach
 internal class FailedToSubmitView(
   context: Context,
   attrs: AttributeSet?,
-  private val presenter: ReportPresenter
+  private val presenter: ReportPresenter,
 ) : ConstraintLayout(context, attrs) {
   private lateinit var goBack: Button
   private lateinit var retry: Button
@@ -44,14 +44,14 @@ internal class FailedToSubmitView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     presenter.uiModels
-      .map { it.submitState }
-      .onEach { renderSubmitState(it) }
-      .launchIn(viewScope)
+        .map { it.submitState }
+        .onEach { renderSubmitState(it) }
+        .launchIn(viewScope)
     retry.clicks
-      .filter { retry.isActivated }
-      .mapNotNull { report }
-      .onEach { presenter.sendEvent(RetrySubmission(it)) }
-      .launchIn(viewScope)
+        .filter { retry.isActivated }
+        .mapNotNull { report }
+        .onEach { presenter.sendEvent(RetrySubmission(it)) }
+        .launchIn(viewScope)
     goBack.setOnClickListener { activity.onBackPressed() }
   }
 

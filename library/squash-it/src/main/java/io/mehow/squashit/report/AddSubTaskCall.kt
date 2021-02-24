@@ -14,19 +14,19 @@ import io.mehow.squashit.report.api.Response.Success
 
 internal class AddSubTaskCall(
   private val report: AddSubTask,
-  config: SquashItConfig
+  config: SquashItConfig,
 ) : ReportCall {
   private val request = NewIssueRequest(
-    NewIssueFieldsRequest(
-      project = ProjectRequest(config.projectKey),
-      parent = ParentKeyRequest(report.parent.value),
-      issueType = IssueTypeRequest(config.subTaskIssueId),
-      summary = report.summary.value,
-      reporter = if (!config.allowReporterOverride) null
-      else ReporterRequest(report.reporter.accountId),
-      description = report.description(config),
-      epic = null
-    )
+      NewIssueFieldsRequest(
+          project = ProjectRequest(config.projectKey),
+          parent = ParentKeyRequest(report.parent.value),
+          issueType = IssueTypeRequest(config.subTaskIssueId),
+          summary = report.summary.value,
+          reporter = if (!config.allowReporterOverride) null
+          else ReporterRequest(report.reporter.accountId),
+          description = report.description(config),
+          epic = null
+      )
   )
 
   override suspend fun execute(jiraApi: JiraApi): CreateReportAttempt {

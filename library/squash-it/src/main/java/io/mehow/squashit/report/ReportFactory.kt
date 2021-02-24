@@ -30,20 +30,20 @@ internal object ReportFactory {
       val hasIssueType = type != null
       val hasSummary = summary?.value?.length ?: 0 >= 10
       return listOfNotNull(
-        if (!hasReporter) NoReporter else null,
-        if (!hasIssueType) NoIssueType else null,
-        if (!hasSummary) ShortSummary else null
+          if (!hasReporter) NoReporter else null,
+          if (!hasIssueType) NoIssueType else null,
+          if (!hasSummary) ShortSummary else null
       ).toSet()
     }
 
   private fun UserInput.asNewIssueReport() = Report.NewIssue(
-    description = description,
-    mentions = mentions,
-    attachments = allAttachments,
-    reporter = reporter!!,
-    issueType = type!!,
-    summary = summary!!,
-    epic = epic
+      description = description,
+      mentions = mentions,
+      attachments = allAttachments,
+      reporter = reporter!!,
+      issueType = type!!,
+      summary = summary!!,
+      epic = epic
   )
 
   private fun createCommentReport(userInput: UserInput): ReportAttempt {
@@ -58,17 +58,17 @@ internal object ReportFactory {
       val hasReporter = reporter != null
       val hasIssueId = issueKey != null
       return listOfNotNull(
-        if (!hasReporter) NoReporter else null,
-        if (!hasIssueId) NoIssueId else null
+          if (!hasReporter) NoReporter else null,
+          if (!hasIssueId) NoIssueId else null
       ).toSet()
     }
 
   private fun UserInput.asAddCommentReport() = Report.AddComment(
-    description = description,
-    mentions = mentions,
-    attachments = allAttachments,
-    reporter = reporter!!,
-    issueKey = issueKey!!
+      description = description,
+      mentions = mentions,
+      attachments = allAttachments,
+      reporter = reporter!!,
+      issueKey = issueKey!!
   )
 
   private fun createSubTaskReport(userInput: UserInput): ReportAttempt {
@@ -84,26 +84,26 @@ internal object ReportFactory {
       val hasIssueId = issueKey != null
       val hasSummary = summary?.value?.length ?: 0 >= 10
       return listOfNotNull(
-        if (!hasReporter) NoReporter else null,
-        if (!hasIssueId) NoIssueId else null,
-        if (!hasSummary) ShortSummary else null
+          if (!hasReporter) NoReporter else null,
+          if (!hasIssueId) NoIssueId else null,
+          if (!hasSummary) ShortSummary else null
       ).toSet()
     }
 
   private fun UserInput.asAddSubTaskReport() = Report.AddSubTask(
-    description = description,
-    mentions = mentions,
-    attachments = allAttachments,
-    reporter = reporter!!,
-    summary = summary!!,
-    parent = issueKey!!
+      description = description,
+      mentions = mentions,
+      attachments = allAttachments,
+      reporter = reporter!!,
+      summary = summary!!,
+      parent = issueKey!!
   )
 
   @Suppress("ObjectPropertyNaming")
   private val UserInput.allAttachments: Set<AttachmentBody>
     get() {
       return (attachments + screenshotState + logsState)
-        .mapNotNull(Attachable::body)
-        .toSet()
+          .mapNotNull(Attachable::body)
+          .toSet()
     }
 }

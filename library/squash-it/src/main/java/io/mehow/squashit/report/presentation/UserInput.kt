@@ -25,7 +25,7 @@ internal data class UserInput(
   val screenshotState: AttachState,
   val logsState: AttachState,
   val attachments: Set<Attachment>,
-  val errors: Set<InputError>
+  val errors: Set<InputError>,
 ) {
   fun withReporter(reporter: User): UserInput {
     return copy(reporter = reporter)

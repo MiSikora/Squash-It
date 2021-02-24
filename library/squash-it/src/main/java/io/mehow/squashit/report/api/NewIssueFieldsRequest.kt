@@ -7,5 +7,5 @@ internal data class NewIssueFieldsRequest(
   val summary: String,
   val reporter: ReporterRequest?,
   val description: String,
-  val epic: String?
+  val epic: String?,
 )

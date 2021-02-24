@@ -10,9 +10,9 @@ import okio.Source
 internal class Attachment(
   val id: AttachmentId,
   val name: String,
-  private val source: () -> Source?
+  private val source: () -> Source?,
 ) : Attachable {
-  override val body: AttachmentBody?
+  override val body: AttachmentBody
     get() {
       val part = MultipartBody.Part.createFormData("file", name, asRequestBody())
       return AttachmentBody(name, part)

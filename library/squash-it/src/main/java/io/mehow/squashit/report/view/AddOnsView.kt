@@ -12,7 +12,7 @@ import io.mehow.squashit.R
 internal class AddOnsView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
-  defStyleAttr: Int = 0
+  defStyleAttr: Int = 0,
 ) : NestedScrollView(context, attrs, defStyleAttr) {
   init {
     overScrollMode = OVER_SCROLL_NEVER

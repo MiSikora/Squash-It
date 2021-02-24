@@ -9,7 +9,7 @@ import io.mehow.squashit.R
 
 internal class SizeViewHolder(
   view: View,
-  private val onSizeSelected: (Int) -> Unit
+  private val onSizeSelected: (Int) -> Unit,
 ) : ViewHolder(view) {
   private val sizeSwatch = itemView.findViewById<View>(R.id.sizeSwatch)
   private val select = itemView.findViewById<RadioButton>(R.id.select)

@@ -1,9 +1,9 @@
 package io.mehow.squashit.report.presentation
 
+import app.cash.turbine.FlowTurbine
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.mehow.squashit.Credentials
-import io.mehow.squashit.FlowAssert
 import io.mehow.squashit.SquashItConfig
 import io.mehow.squashit.report.AppInfo
 import io.mehow.squashit.report.DeviceInfo
@@ -45,18 +45,18 @@ internal open class BaseReportPresenterTest {
 
   val idleModel = UiModel.Initial
   val syncedModel = idleModel
-    .withInitState(InitState.Idle)
-    .withProjectInfo(
-      ProjectInfo(
-        epics = setOf(Epic("Epic ID", "Epic Name")),
-        users = setOf(User("User Name", "User ID")),
-        issueTypes = setOf(IssueType("Issue ID", "Issue Name"))
+      .withInitState(InitState.Idle)
+      .withProjectInfo(
+          ProjectInfo(
+              epics = setOf(Epic("Epic ID", "Epic Name")),
+              users = setOf(User("User Name", "User ID")),
+              issueTypes = setOf(IssueType("Issue ID", "Issue Name"))
+          )
       )
-    )
 
   internal fun testPresenter(
     skipInitialization: Boolean = true,
-    block: suspend FlowAssert<UiModel>.() -> Unit
+    block: suspend FlowTurbine<UiModel>.() -> Unit,
   ) = runBlockingTest {
     presenter = presenterFactory.create()
     presenter.test(testDispatcher) {
@@ -71,40 +71,40 @@ internal open class BaseReportPresenterTest {
   data class ReportPresenterFactory(
     val storageDir: File,
     val config: SquashItConfig = SquashItConfig(
-      projectKey = "SQ",
-      jiraUrl = "https://www.squash.it".toHttpUrl(),
-      subTaskIssueId = "subtask ID",
-      credentials = Credentials("email", "token"),
-      allowReporterOverride = true,
-      userFilter = { true },
-      issueTypeFilter = { true },
-      runtimeInfo = RuntimeInfo(
-        AppInfo("version name", "version code", "package name"),
-        DeviceInfo(
-          manufacturer = "manufacturer",
-          model = "model",
-          supportedAbis = listOf("ABI"),
-          resolution = "resolution",
-          density = "density",
-          locales = listOf(Locale.US),
-          createdAt = Date(0),
-          timeZone = TimeZone.getTimeZone("CEST")
+        projectKey = "SQ",
+        jiraUrl = "https://www.squash.it".toHttpUrl(),
+        subTaskIssueId = "subtask ID",
+        credentials = Credentials("email", "token"),
+        allowReporterOverride = true,
+        userFilter = { true },
+        issueTypeFilter = { true },
+        runtimeInfo = RuntimeInfo(
+            AppInfo("version name", "version code", "package name"),
+            DeviceInfo(
+                manufacturer = "manufacturer",
+                model = "model",
+                supportedAbis = listOf("ABI"),
+                resolution = "resolution",
+                density = "density",
+                locales = listOf(Locale.US),
+                createdAt = Date(0),
+                timeZone = TimeZone.getTimeZone("CEST")
+            ),
+            OsInfo("release", 100)
         ),
-        OsInfo("release", 100)
-      ),
-      epicReadFieldName = "customfield_10009",
-      epicWriteFieldName = "customfield_10008"
+        epicReadFieldName = "customfield_10009",
+        epicWriteFieldName = "customfield_10008"
     ),
     val screenshotFile: File? = null,
-    val logsFile: File? = null
+    val logsFile: File? = null,
   ) {
     internal val jiraApi = FakeJiraApi()
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
     private val jiraService = JiraService(
-      config,
-      ProjectInfoStore(storageDir, moshi),
-      jiraApi
+        config,
+        ProjectInfoStore(storageDir, moshi),
+        jiraApi
     )
 
     fun create(): ReportPresenter {

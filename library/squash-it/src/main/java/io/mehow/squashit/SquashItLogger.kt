@@ -17,25 +17,25 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 object SquashItLogger {
-  private var Capacity = 2_000
-  private var LogEntries = ArrayDeque<LogEntry>(Capacity)
-  private val FileNameFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.'log'", Locale.US)
-  private val MainThreadHandler = Handler(Looper.getMainLooper())
+  private var capacity = 2_000
+  private var logEntries = ArrayDeque<LogEntry>(capacity)
+  private val fileNameFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.'log'", Locale.US)
+  private val mainThreadHandler = Handler(Looper.getMainLooper())
 
   @JvmStatic fun log(priority: Int, tag: String, message: String) {
     addLogEntry(LogEntry(priority, tag, message))
   }
 
   private fun addLogEntry(entry: LogEntry) = synchronized(this) {
-    if (LogEntries.size == Capacity) LogEntries.remove()
-    LogEntries.add(entry)
+    if (logEntries.size == capacity) logEntries.remove()
+    logEntries.add(entry)
   }
 
   internal fun setLogsCapacity(capacity: Int) = synchronized(this) {
-    this.Capacity = capacity
+    this.capacity = capacity
     val newQueue = ArrayDeque<LogEntry>(capacity)
-    newQueue.addAll(LogEntries.take(capacity))
-    LogEntries = newQueue
+    newQueue.addAll(logEntries.take(capacity))
+    logEntries = newQueue
   }
 
   internal suspend fun createLogFile(context: Context): File? {
@@ -46,11 +46,11 @@ object SquashItLogger {
 
   @Suppress("LongMethod")
   private fun createLogFile(context: Context, onCreated: (File?) -> Unit) {
-    fun sendLogFile(file: File?) = MainThreadHandler.post {
+    fun sendLogFile(file: File?) = mainThreadHandler.post {
       onCreated(file)
     }
 
-    val entries = LogEntries.toList()
+    val entries = logEntries.toList()
     if (entries.isEmpty()) {
       sendLogFile(null)
       return
@@ -61,9 +61,9 @@ object SquashItLogger {
       sendLogFile(null)
       return
     }
-    val output = File(dir, FileNameFormatter.format(Date()))
+    val output = File(dir, fileNameFormatter.format(Date()))
 
-    val longestTagLength = entries.map { it.tag.length }.max()!!
+    val longestTagLength = entries.map { it.tag.length }.maxOrNull()!!
     try {
       output.sink().buffer().use { sink ->
         for (entry in entries) {

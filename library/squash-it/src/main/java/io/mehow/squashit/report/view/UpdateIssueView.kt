@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.onEach
 internal class UpdateIssueView(
   context: Context,
   attrs: AttributeSet?,
-  private val presenter: ReportPresenter
+  private val presenter: ReportPresenter,
 ) : FrameLayout(context, attrs) {
   private val issueIdLayout: TextInputLayout
   private val issueIdInput: TextInputEditText
@@ -42,17 +42,17 @@ internal class UpdateIssueView(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     issueIdInput.textChanges
-      .debounce(200)
-      .mapNotNull { it.trim().toLongOrNull() }
-      .map { IssueKey("${SquashItConfig.Instance.projectKey}-$it") }
-      .onEach { presenter.sendEvent(UpdateInput.issueKey(it)) }
-      .launchIn(viewScope)
+        .debounce(200)
+        .mapNotNull { it.trim().toLongOrNull() }
+        .map { IssueKey("${SquashItConfig.Instance.projectKey}-$it") }
+        .onEach { presenter.sendEvent(UpdateInput.issueKey(it)) }
+        .launchIn(viewScope)
     issueIdInput.focuses
-      .onEach { presenter.sendEvent(UpdateInput.hideError(NoIssueId)) }
-      .launchIn(viewScope)
+        .onEach { presenter.sendEvent(UpdateInput.hideError(NoIssueId)) }
+        .launchIn(viewScope)
     presenter.uiModels
-      .onEach { renderUiModel(it) }
-      .launchIn(viewScope)
+        .onEach { renderUiModel(it) }
+        .launchIn(viewScope)
   }
 
   private fun renderUiModel(uiModel: UiModel) {

@@ -1,7 +1,7 @@
 package io.mehow.squashit.report.presentation
 
+import app.cash.turbine.FlowTurbine
 import io.kotest.matchers.shouldBe
-import io.mehow.squashit.FlowAssert
 import io.mehow.squashit.report.AttachState
 import io.mehow.squashit.report.Description
 import io.mehow.squashit.report.IssueKey
@@ -28,7 +28,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     presenter.sendEvent(SubmitReport(addCommentModel.input))
     expectItem() shouldBe addCommentModel.withSubmitState(SubmitState.Submitting)
     expectItem() shouldBe addCommentModel.withSubmitState(
-      SubmitState.Submitted(IssueKey("Issue ID"))
+        SubmitState.Submitted(IssueKey("Issue ID"))
     )
   }
 
@@ -52,7 +52,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     presenter.sendEvent(RetrySubmission(addCommentReport))
     expectItem() shouldBe addCommentModel.withSubmitState(SubmitState.Resubmitting)
     expectItem() shouldBe addCommentModel.withSubmitState(
-      SubmitState.Submitted(IssueKey("Issue ID"))
+        SubmitState.Submitted(IssueKey("Issue ID"))
     )
   }
 
@@ -63,7 +63,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
       presenter.sendEvent(SubmitReport(addCommentModel.input))
       expectItem()
       expectItem() shouldBe addCommentModel.withSubmitState(
-        SubmitState.Submitted(IssueKey("Issue ID"))
+          SubmitState.Submitted(IssueKey("Issue ID"))
       )
     }
 
@@ -79,7 +79,7 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
     presenter.sendEvent(SubmitReport(addCommentModel.input.withLogs(AttachState.Attach(logsFile))))
     expectItem()
     expectItem() shouldBe model.withSubmitState(
-      SubmitState.FailedToAttach(IssueKey("Issue ID"), attachments)
+        SubmitState.FailedToAttach(IssueKey("Issue ID"), attachments)
     )
   }
 
@@ -106,21 +106,21 @@ internal class ReportPresenterSubmitCommentTest : BaseReportPresenterTest() {
   }
 
   private val addCommentModel = syncedModel
-    .withReportType(ReportType.AddCommentToIssue)
-    .withReporter(User("Reporter Name", "Reporter ID"))
-    .withIssueKey(IssueKey("Issue ID"))
-    .withDescription(Description("Description"))
-    .withMentions(User("Mention Name", "Mention ID"))
+      .withReportType(ReportType.AddCommentToIssue)
+      .withReporter(User("Reporter Name", "Reporter ID"))
+      .withIssueKey(IssueKey("Issue ID"))
+      .withDescription(Description("Description"))
+      .withMentions(User("Mention Name", "Mention ID"))
 
   private val addCommentReport = Report.AddComment(
-    reporter = User("Reporter Name", "Reporter ID"),
-    issueKey = IssueKey("Issue ID"),
-    description = Description("Description"),
-    mentions = Mentions(setOf(User("Mention Name", "Mention ID"))),
-    attachments = emptySet()
+      reporter = User("Reporter Name", "Reporter ID"),
+      issueKey = IssueKey("Issue ID"),
+      description = Description("Description"),
+      mentions = Mentions(setOf(User("Mention Name", "Mention ID"))),
+      attachments = emptySet()
   )
 
-  private fun testNewIssueReport(block: suspend FlowAssert<UiModel>.() -> Unit) = testPresenter {
+  private fun testNewIssueReport(block: suspend FlowTurbine<UiModel>.() -> Unit) = testPresenter {
     presenter.sendEvent(UpdateInput { addCommentModel.input })
     expectItem()
     block()

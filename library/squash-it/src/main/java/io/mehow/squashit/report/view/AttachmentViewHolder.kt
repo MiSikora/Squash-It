@@ -20,7 +20,7 @@ import io.mehow.squashit.report.DiskSize
 
 internal class AttachmentViewHolder(
   view: View,
-  private val onRemoveAttachment: (AttachmentId) -> Unit
+  private val onRemoveAttachment: (AttachmentId) -> Unit,
 ) : ViewHolder(view) {
   private val thumbnail = itemView.findViewById<ImageView>(R.id.thumbnail)
   private val fileName = itemView.findViewById<TextView>(R.id.fileName)

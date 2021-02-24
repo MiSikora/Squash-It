@@ -6,7 +6,7 @@ import android.graphics.Paint.Join
 import android.graphics.Paint.Style.STROKE
 import android.graphics.Path
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 internal data class Stroke(val dots: MutableList<Dot>, val brush: Brush) : Parcelable {

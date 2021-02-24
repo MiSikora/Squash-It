@@ -25,8 +25,8 @@ import java.io.IOException
 import kotlin.coroutines.resume
 
 internal object AttachmentFactory {
-  const val RequestCode = 200
-  private val BitmapCache = object : LruCache<AttachmentKey, Bitmap>(MEGABYTES.toBytes(2).toInt()) {
+  const val requestCode = 200
+  private val bitmapCache = object : LruCache<AttachmentKey, Bitmap>(MEGABYTES.toBytes(2).toInt()) {
     override fun sizeOf(key: AttachmentKey, value: Bitmap): Int {
       return value.byteCount
     }
@@ -58,7 +58,7 @@ internal object AttachmentFactory {
   private fun createBuilder(
     resolver: ContentResolver,
     id: AttachmentId,
-    signal: CancellationSignal
+    signal: CancellationSignal,
   ): AttachmentBuilder? {
     return resolver.query(id.value.toUri(), null, null, null, null, signal)?.use { cursor ->
       if (!cursor.moveToFirst()) return@use null
@@ -80,14 +80,14 @@ internal object AttachmentFactory {
   private fun getThumbnail(
     key: AttachmentKey,
     resolver: ContentResolver,
-    signal: CancellationSignal
+    signal: CancellationSignal,
   ): Bitmap? {
-    return BitmapCache.get(key) ?: try {
+    return bitmapCache.get(key) ?: try {
       val uri = key.id.value.toUri()
       val bitmap = DocumentsContract.getDocumentThumbnail(resolver, uri, key.point, signal)
       if (bitmap != null) {
-        synchronized(BitmapCache) {
-          if (BitmapCache.get(key) == null) BitmapCache.put(key, bitmap)
+        synchronized(bitmapCache) {
+          if (bitmapCache.get(key) == null) bitmapCache.put(key, bitmap)
         }
       }
       bitmap
@@ -102,14 +102,14 @@ internal object AttachmentFactory {
       type = "*/*"
       putExtra(EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
     }
-    activity.startActivityForResult(intent, RequestCode)
+    activity.startActivityForResult(intent, requestCode)
   }
 
   private class AttachmentBuilder(
     val id: AttachmentId,
     val type: AttachmentType,
     val name: String,
-    val size: DiskSize
+    val size: DiskSize,
   ) {
     fun toAttachment(resolver: ContentResolver): Attachment {
       return Attachment(id, name) {

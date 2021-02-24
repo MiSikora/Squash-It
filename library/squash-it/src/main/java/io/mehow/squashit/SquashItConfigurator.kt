@@ -9,82 +9,82 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import io.mehow.squashit.report.RuntimeInfo as Info
 
 object SquashItConfigurator {
-  internal var ProjectKey: String = ""
-  internal var JiraUrl: HttpUrl? = null
-  internal var SubTaskIssueId: String = "5"
-  internal var Credentials: Credentials? = null
-  internal var AllowReporterOverride = true
-  internal var UserFilter: (User) -> Boolean = { true }
-  internal var IssueTypeFilter: (IssueType) -> Boolean = { true }
-  internal var LogsCapacity: Int = 2_000
-  internal var EpicReadFieldName: String = "customfield_10009"
-  internal var EpicWriteFieldName: String = "customfield_10008"
-  internal var RuntimeInfo: Info = Info.Null
-  private var CredentialsProvider: CredentialsProvider = object : CredentialsProvider {
+  internal var projectKey: String = ""
+  internal var jiraUrl: HttpUrl? = null
+  internal var subTaskIssueId: String = "5"
+  internal var credentials: Credentials? = null
+  internal var allowReporterOverride = true
+  internal var uUserFilter: (User) -> Boolean = { true }
+  internal var issueTypeFilter: (IssueType) -> Boolean = { true }
+  internal var logsCapacity: Int = 2_000
+  internal var epicReadFieldName: String = "customfield_10009"
+  internal var epicWriteFieldName: String = "customfield_10008"
+  internal var runtimeInfo: Info = Info.Null
+  private var credentialsProvider: CredentialsProvider = object : CredentialsProvider {
     override fun provide(context: Context): Credentials? = null
   }
 
   @JvmStatic fun projectKey(key: String): SquashItConfigurator {
-    ProjectKey = key.trim()
+    projectKey = key.trim()
     return this
   }
 
   @JvmStatic fun jiraUrl(url: String): SquashItConfigurator {
-    JiraUrl = url.trim().toHttpUrlOrNull()
+    jiraUrl = url.trim().toHttpUrlOrNull()
     return this
   }
 
   @JvmStatic fun subTaskIssueId(id: String): SquashItConfigurator {
-    SubTaskIssueId = id
+    subTaskIssueId = id
     return this
   }
 
   @JvmStatic fun credentialsProvider(provider: (Context) -> Credentials?): SquashItConfigurator {
-    CredentialsProvider = object : CredentialsProvider {
+    credentialsProvider = object : CredentialsProvider {
       override fun provide(context: Context) = provider(context)
     }
     return this
   }
 
   @JvmStatic fun credentialsProvider(provider: CredentialsProvider): SquashItConfigurator {
-    CredentialsProvider = provider
+    credentialsProvider = provider
     return this
   }
 
   @JvmStatic fun allowReporterOverride(allow: Boolean): SquashItConfigurator {
-    AllowReporterOverride = allow
+    allowReporterOverride = allow
     return this
   }
 
   @JvmStatic fun userFilter(filter: (User) -> Boolean): SquashItConfigurator {
-    UserFilter = filter
+    uUserFilter = filter
     return this
   }
 
   @JvmStatic fun issueTypeFilter(filter: (IssueType) -> Boolean): SquashItConfigurator {
-    IssueTypeFilter = filter
+    issueTypeFilter = filter
     return this
   }
 
   @JvmStatic fun logsCapacity(@IntRange(from = 1) capacity: Int): SquashItConfigurator {
     require(capacity >= 1) { "Logs capacity must be at least 1." }
-    LogsCapacity = capacity
+    logsCapacity = capacity
     return this
   }
 
   @JvmStatic fun epicReadFieldName(name: String): SquashItConfigurator {
-    EpicReadFieldName = name.trim()
+    epicReadFieldName = name.trim()
     return this
   }
 
   @JvmStatic fun epicWriteFieldName(name: String): SquashItConfigurator {
-    EpicWriteFieldName = name.trim()
+    epicWriteFieldName = name.trim()
     return this
   }
 
   @JvmStatic fun configure(context: Context) {
-    RuntimeInfo = Info.create(context.applicationContext)
-    Credentials = CredentialsProvider.provide(context)
+    runtimeInfo = Info.create(context.applicationContext)
+    credentials = credentialsProvider.provide(context)
     SquashItConfig.configure()
   }
 }

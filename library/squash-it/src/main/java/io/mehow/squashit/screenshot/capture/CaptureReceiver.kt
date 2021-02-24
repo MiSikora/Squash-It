@@ -7,15 +7,16 @@ import android.content.IntentFilter
 import android.media.projection.MediaProjection
 import android.media.projection.MediaProjectionManager
 import android.os.Handler
+import android.os.Looper
 import androidx.core.content.getSystemService
 
 internal class CaptureReceiver private constructor(
   context: Context,
   private val takeScreenshot: (MediaProjection?) -> Unit,
-  private val cancelScreenshot: () -> Unit
+  private val cancelScreenshot: () -> Unit,
 ) : BroadcastReceiver() {
   private val projectionManager = context.getSystemService<MediaProjectionManager>()!!
-  private val handler = Handler()
+  private val handler = Handler(Looper.getMainLooper())
 
   override fun onReceive(context: Context, intent: Intent) {
     context.applicationContext.unregisterReceiver(this)
@@ -44,7 +45,7 @@ internal class CaptureReceiver private constructor(
     fun register(
       context: Context,
       captureScreenshot: (MediaProjection?) -> Unit,
-      captureCancelled: () -> Unit
+      captureCancelled: () -> Unit,
     ) {
       val receiver = CaptureReceiver(context, captureScreenshot, captureCancelled)
       context.applicationContext.registerReceiver(receiver, IntentFilter(BroadcastAction))

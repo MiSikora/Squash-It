@@ -1,13 +1,11 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.mehow.squashit.timber"
-    >
+    package="io.mehow.squashit.timber">
 
   <application>
     <provider
         android:name="io.mehow.squashit.timber.SquashItTimberInitializer"
         android:authorities="${applicationId}.SquashItTimberInitializer"
-        android:exported="false"
-        />
+        android:exported="false" />
   </application>
 </manifest>
