@@ -5,4 +5,8 @@ public data class Credentials(
   val secret: String,
 ) {
   override fun toString(): String = "Credentials(██)"
+
+  internal companion object {
+    val Empty = Credentials("", "")
+  }
 }
