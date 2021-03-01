@@ -50,10 +50,9 @@ allprojects {
       jvmTarget = "1.8"
       freeCompilerArgs += [
           "-progressive",
-          "-Xjvm-default=enable",
           "-Xopt-in=kotlin.RequiresOptIn",
-          "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-          "-Xopt-in=kotlin.time.ExperimentalTime",
+          // TODO: Remove API in tests https://youtrack.jetbrains.com/issue/KT-42718
+          "-Xexplicit-api=strict",
       ]
     }
   }
@@ -82,6 +81,10 @@ allprojects {
         variant.outputs.all {
           outputFileName = "${archivesBaseName}-${version}.aar"
         }
+      }
+
+      testOptions.unitTests.all {
+        useJUnitPlatform()
       }
 
       lintOptions {
