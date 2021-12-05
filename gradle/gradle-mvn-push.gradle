@@ -1,9 +1,0 @@
-apply plugin: libs.dokka.gradlePluginId
-apply plugin: libs.mavenPublish.gradlePluginId
-
-signing {
-  def signingKey = findProperty("mavenCentralSigningKey") ?: ""
-  if (!signingKey.isEmpty()) {
-    useInMemoryPgpKeys signingKey, ""
-  }
-}
